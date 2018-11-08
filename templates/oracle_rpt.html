@@ -816,7 +816,7 @@ function submittype(){
          axisPointer: {
              snap: true
          },
-         max:{{ max_db_time }},
+         max:{{ max_db }},
          min:0
      },
      series: [
@@ -824,12 +824,44 @@ function submittype(){
              name:'DB time',
              type:'line',
              smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#79d4bc"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#79d4bc"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#79d4bc",
+                opacity: 0.8
+               }
+             },
              data: [{% for i in dbgrow_list %}{{ i.dbtime }},{% endfor %}]
          },
                {
              name:'DB cpu',
              type:'line',
              smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#d44e5a"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#d44e5a"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#d44e5a",
+                opacity: 0.8
+               }
+             },
              data: [{% for i in dbgrow_list %}{{ i.dbcpu }},{% endfor %}]
          }
      ]
@@ -840,61 +872,6 @@ function submittype(){
      myChart_db_grow.setOption(option_db_grow, true);
  },500);
 
-   // ####################  【exec count&user commit趋势】图形  ####################
- var myChart_exec_grow = echarts.init(document.getElementById('exec-grow-chart'));
- option_exec_grow = {
-     tooltip: {
-         trigger: 'axis',
-         axisPointer: {
-             type: 'cross'
-         }
-     },
-         legend: {
-        data:['exec count','user commits']
-    },
-     toolbox: {
-         show: true,
-         feature: {
-             saveAsImage: {}
-         }
-     },
-     xAxis:  {
-         type: 'category',
-         boundaryGap: false,
-         zlevel: 1,
-         data: [{% for i in dbgrow_list %}'{{ i.chk_time | date:"m-d H:i:s" }}',{% endfor %}]
-     },
-     yAxis: {
-         type: 'value',
-         axisLabel: {
-             formatter: '{value}'
-         },
-         axisPointer: {
-             snap: true
-         },
-         max:100,
-         min:0
-     },
-     series: [
-         {
-             name:'exec count',
-             type:'line',
-             smooth: true,
-             data: [{% for i in dbgrow_list %}{{ i.exec_count }},{% endfor %}]
-         },
-               {
-             name:'user commits',
-             type:'line',
-             smooth: true,
-             data: [{% for i in dbgrow_list %}{{ i.user_commits }},{% endfor %}]
-         }
-     ]
- };
- myChart_exec_grow.showLoading();  //显示loading
- setInterval(function () {
-     myChart_exec_grow.hideLoading();  //显示完成后不显示loading
-     myChart_exec_grow.setOption(option_db_grow, true);
- },500);
 
 </script>
 </body>

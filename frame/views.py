@@ -2413,11 +2413,16 @@ def oracle_rpt(request):
     dbgrow_list = list(dbgrow)
     dbgrow_list.reverse()
     if dbgrow:
-        db_grow_max = models_oracle.OracleDbHis.objects.filter(tags=tagsdefault, dbtime__isnull=False).filter(
+        db_time_grow_max = models_oracle.OracleDbHis.objects.filter(tags=tagsdefault, dbtime__isnull=False).filter(
             chk_time__gt=db_begin_time, chk_time__lt=end_time).order_by('-dbtime')[0]
-        max_db_time =  db_grow_max.dbtime
+        max_db_time =  db_time_grow_max.dbtime
+        db_cpu_grow_max = models_oracle.OracleDbHis.objects.filter(tags=tagsdefault, dbtime__isnull=False).filter(
+            chk_time__gt=db_begin_time, chk_time__lt=end_time).order_by('-dbcpu')[0]
+        max_db_cpu = db_cpu_grow_max.dbtime
     else:
         max_db_time = 0
+        max_db_cpu = 0
+    max_db = max(max_db_time,max_db_cpu)
 
     # 获取快照
     snap_range = tools.snap_range(db_range_default)
@@ -2508,7 +2513,7 @@ def oracle_rpt(request):
         tim_last = ''
     return render(request,'oracle_rpt.html', {'tagsdefault': tagsdefault,'typedefault':typedefault,'tagsinfo': tagsinfo,'msg_num':msg_num,
                                                       'msg_last_content': msg_last_content, 'tim_last': tim_last,'dbgrow_list':dbgrow_list,
-                                                  'oracle_snap_shots':oracle_snap_shots,'oracle_reports':oracle_reports,'max_db_time':max_db_time,
+                                                  'oracle_snap_shots':oracle_snap_shots,'oracle_reports':oracle_reports,'max_db':max_db,
                                                   'oracle_events':oracle_events})
 
 @login_required(login_url='/login')
@@ -2543,11 +2548,17 @@ def oracle_rpt_ash(request):
     dbgrow_list = list(dbgrow)
     dbgrow_list.reverse()
     if dbgrow:
-        db_grow_max = models_oracle.OracleDbHis.objects.filter(tags=tagsdefault, dbtime__isnull=False).filter(
+        db_time_grow_max = models_oracle.OracleDbHis.objects.filter(tags=tagsdefault, dbtime__isnull=False).filter(
             chk_time__gt=db_begin_time, chk_time__lt=end_time).order_by('-dbtime')[0]
-        max_db_time =  db_grow_max.dbtime
+        max_db_time =  db_time_grow_max.dbtime
+        db_cpu_grow_max = models_oracle.OracleDbHis.objects.filter(tags=tagsdefault, dbtime__isnull=False).filter(
+            chk_time__gt=db_begin_time, chk_time__lt=end_time).order_by('-dbcpu')[0]
+        max_db_cpu = db_cpu_grow_max.dbtime
     else:
         max_db_time = 0
+        max_db_cpu = 0
+    max_db = max(max_db_time,max_db_cpu)
+
 
     # 获取快照
     snap_range = tools.snap_range(db_range_default)
@@ -2636,7 +2647,7 @@ def oracle_rpt_ash(request):
         tim_last = ''
     return render_to_response('oracle_rpt_ash.html', {'tagsdefault': tagsdefault,'typedefault':typedefault,'tagsinfo': tagsinfo,'msg_num':msg_num,
                                                       'msg_last_content': msg_last_content, 'tim_last': tim_last,'dbgrow_list':dbgrow_list,
-                                                  'oracle_snap_shots':oracle_snap_shots,'oracle_reports':oracle_reports,'max_db_time':max_db_time,
+                                                  'oracle_snap_shots':oracle_snap_shots,'oracle_reports':oracle_reports,'max_db':max_db,
                                                       'oracle_events':oracle_events})
 
 
@@ -2812,9 +2823,6 @@ def oracle_perf(request):
     dbgrow_list = list(dbgrow)
     dbgrow_list.reverse()
     if dbgrow:
-        db_grow_max = models_oracle.OracleDbHis.objects.filter(tags=tagsdefault, dbtime__isnull=False).filter(
-            chk_time__gt=db_begin_time, chk_time__lt=end_time).order_by('-dbtime')[0]
-        max_db_time =  db_grow_max.dbtime
         sga_grow_max = models_oracle.OracleDbHis.objects.filter(tags=tagsdefault, dbtime__isnull=False).filter(
             chk_time__gt=db_begin_time, chk_time__lt=end_time).order_by('-sga_size')[0]
         max_sga_size =  sga_grow_max.sga_size
@@ -2822,7 +2830,6 @@ def oracle_perf(request):
             chk_time__gt=db_begin_time, chk_time__lt=end_time).order_by('-pga_size')[0]
         max_pga_size = pga_grow_max.pga_size
     else:
-        max_db_time = 0
         max_sga_size = 0
         max_pga_size = 0
     max_mem_size = max(max_pga_size,max_sga_size)
@@ -2848,4 +2855,4 @@ def oracle_perf(request):
         tim_last = ''
     return render(request,'oracle_perf.html', {'tagsdefault': tagsdefault,'tagsinfo': tagsinfo,'msg_num':msg_num,
                                                 'msg_last_content': msg_last_content, 'tim_last': tim_last,
-                                               'dbgrow_list':dbgrow_list,'max_db_time':max_db_time,'max_mem_size':max_mem_size})
+                                               'dbgrow_list':dbgrow_list,'max_mem_size':max_mem_size})
