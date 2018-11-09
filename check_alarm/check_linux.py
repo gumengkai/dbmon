@@ -41,11 +41,10 @@ def format_stat(label, stat_vals):
 
 
 class LinuxStat(object):
-    def __init__(self,host,user,password,lifetime):
+    def __init__(self,host,user,password):
         self.host = host
         self.user = user
         self.password = password
-        self.lifetime = lifetime
         self.curr_stat = {}
         self.stat = {}
         self.last_time = time.time()
@@ -87,15 +86,9 @@ class LinuxStat(object):
 
         # update timestamp
         self.last_time = curr_time
-        self.lifetime -= 1
         self.loop_cnt += 1
         return linux_stat
 
-    def get_lifetime(self):
-        return self.lifetime
-
-    def set_lifetime(self, lifetime):
-        self.lifetime = lifetime
 
     def get_cpu_stat(self):
         #usr, sys, idle, iowait, steal
@@ -391,7 +384,7 @@ class LinuxStat(object):
 
 
 if __name__ == '__main__':
-    linuxstat = LinuxStat('192.168.48.10', 'root', 'oracle', 100)
+    linuxstat = LinuxStat('192.168.48.10', 'root', 'oracle')
     while True:
         stat = linuxstat.get_linux()
         print stat

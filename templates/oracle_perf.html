@@ -481,6 +481,99 @@ desired effect
 
         </div>
         <!-- /.col -->
+
+                       <!-- /.col -->
+            <div class="col-xs-6">
+          <!-- interactive chart -->
+          <div class="box box-solid">
+            <div class="box-header with-border">
+              <i class="fa fa-bar-chart-o"></i>
+              <h3 class="box-title">session logical reads&physical reads</h3>
+                 <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+
+            <div class="box-body">
+              <div class="conn" id="reads-grow-chart" style="height: 300px;"></div>
+            </div>
+            <!-- /.box-body-->
+          </div>
+          <!-- /.box -->
+
+        </div>
+        <!-- /.col -->
+               <!-- /.col -->
+            <div class="col-xs-6">
+          <!-- interactive chart -->
+          <div class="box box-solid">
+            <div class="box-header with-border">
+              <i class="fa fa-bar-chart-o"></i>
+              <h3 class="box-title">redo size(KB)</h3>
+                 <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+
+            <div class="box-body">
+              <div class="conn" id="redo-grow-chart" style="height: 300px;"></div>
+            </div>
+            <!-- /.box-body-->
+          </div>
+          <!-- /.box -->
+
+        </div>
+        <!-- /.col -->
+
+            <div class="col-xs-6">
+          <!-- interactive chart -->
+          <div class="box box-solid">
+            <div class="box-header with-border">
+              <i class="fa fa-bar-chart-o"></i>
+              <h3 class="box-title">session</h3>
+                 <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+
+            <div class="box-body">
+              <div class="conn" id="sess-grow-chart" style="height: 300px;"></div>
+            </div>
+            <!-- /.box-body-->
+          </div>
+          <!-- /.box -->
+
+        </div>
+        <!-- /.col -->
+
+               <div class="col-xs-6">
+          <!-- interactive chart -->
+          <div class="box box-solid">
+            <div class="box-header with-border">
+              <i class="fa fa-bar-chart-o"></i>
+              <h3 class="box-title">blocked session</h3>
+                 <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+
+            <div class="box-body">
+              <div class="conn" id="block-grow-chart" style="height: 300px;"></div>
+            </div>
+            <!-- /.box-body-->
+          </div>
+          <!-- /.box -->
+
+        </div>
+        <!-- /.col -->
       </div>
       </div>
         <div class="tab-pane" id="event">
@@ -673,7 +766,7 @@ function submittype(){
          axisPointer: {
              snap: true
          },
-         max:100,
+         max:{{ max_exec }},
          min:0
      },
      series: [
@@ -812,6 +905,335 @@ function submittype(){
      myChart_mem_grow.setOption(option_mem_grow, true);
  },500);
 
+   // ####################  【session logical reads&physical reads趋势】图形  ####################
+ var myChart_reads_grow = echarts.init(document.getElementById('reads-grow-chart'));
+ option_reads_grow = {
+     tooltip: {
+         trigger: 'axis',
+         axisPointer: {
+             type: 'cross'
+         }
+     },
+         legend: {
+        data:['session logical reads','physical reads']
+    },
+     toolbox: {
+         show: true,
+         feature: {
+             saveAsImage: {}
+         }
+     },
+     xAxis:  {
+         type: 'category',
+         boundaryGap: false,
+         zlevel: 1,
+         data: [{% for i in dbgrow_list %}'{{ i.chk_time | date:"m-d H:i:s" }}',{% endfor %}]
+     },
+     yAxis: {
+         type: 'value',
+         axisLabel: {
+             formatter: '{value}'
+         },
+         axisPointer: {
+             snap: true
+         },
+         max:100,
+         min:0
+     },
+     series: [
+         {
+             name:'session logical reads',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#84d4c5"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#84d4c5"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#84d4c5",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in dbgrow_list %}{{ i.logr }},{% endfor %}]
+         },
+               {
+             name:'physical reads',
+             type:'line',
+             smooth: true,
+              itemStyle: {
+              normal: {
+                color: "#d44e5a"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#d44e5a"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#d44e5a",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in dbgrow_list %}{{ i.phyr }},{% endfor %}]
+         }
+     ]
+ };
+ myChart_reads_grow.showLoading();  //显示loading
+ setInterval(function () {
+     myChart_reads_grow.hideLoading();  //显示完成后不显示loading
+     myChart_reads_grow.setOption(option_reads_grow, true);
+ },500);
+
+    // ####################  【redo size产生redo量趋势】图形  ####################
+ var myChart_redo_grow = echarts.init(document.getElementById('redo-grow-chart'));
+ option_redo_grow = {
+     tooltip: {
+         trigger: 'axis',
+         axisPointer: {
+             type: 'cross'
+         }
+     },
+         legend: {
+        data:['redo size']
+    },
+     toolbox: {
+         show: true,
+         feature: {
+             saveAsImage: {}
+         }
+     },
+     xAxis:  {
+         type: 'category',
+         boundaryGap: false,
+         zlevel: 1,
+         data: [{% for i in dbgrow_list %}'{{ i.chk_time | date:"m-d H:i:s" }}',{% endfor %}]
+     },
+     yAxis: {
+         type: 'value',
+         axisLabel: {
+             formatter: '{value}'
+         },
+         axisPointer: {
+             snap: true
+         },
+         max:100,
+         min:0
+     },
+     series: [
+         {
+             name:'redo size',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#84d4c5"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#84d4c5"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#84d4c5",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in dbgrow_list %}{{ i.redo }},{% endfor %}]
+         }
+     ]
+ };
+ myChart_redo_grow.showLoading();  //显示loading
+ setInterval(function () {
+     myChart_redo_grow.hideLoading();  //显示完成后不显示loading
+     myChart_redo_grow.setOption(option_redo_grow, true);
+ },500);
+
+    // ####################  【session趋势】图形  ####################
+ var myChart_sess_grow = echarts.init(document.getElementById('sess-grow-chart'));
+ option_sess_grow = {
+     tooltip: {
+         trigger: 'axis',
+         axisPointer: {
+             type: 'cross'
+         }
+     },
+         legend: {
+        data:['total sessions','active sessions','trans sessions']
+    },
+     toolbox: {
+         show: true,
+         feature: {
+             saveAsImage: {}
+         }
+     },
+     xAxis:  {
+         type: 'category',
+         boundaryGap: false,
+         zlevel: 1,
+         data: [{% for i in dbgrow_list %}'{{ i.chk_time | date:"m-d H:i:s" }}',{% endfor %}]
+     },
+     yAxis: {
+         type: 'value',
+         axisLabel: {
+             formatter: '{value}'
+         },
+         axisPointer: {
+             snap: true
+         },
+         max:100,
+         min:0
+     },
+     series: [
+         {
+             name:'total sessions',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#d4d098"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#d4d098"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#d4d098",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in dbgrow_list %}{{ i.total_sess }},{% endfor %}]
+         },
+          {
+             name:'trans sessions',
+             type:'line',
+             smooth: true,
+              itemStyle: {
+              normal: {
+                color: "#79d4bc"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#79d4bc"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#79d4bc",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in dbgrow_list %}{{ i.act_trans }},{% endfor %}]
+         },
+                  {
+             name:'active sessions',
+             type:'line',
+             smooth: true,
+              itemStyle: {
+              normal: {
+                color: "#d44e5a"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#d44e5a"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#d44e5a",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in dbgrow_list %}{{ i.act_sess }},{% endfor %}]
+         }
+     ]
+ };
+ myChart_sess_grow.showLoading();  //显示loading
+ setInterval(function () {
+     myChart_sess_grow.hideLoading();  //显示完成后不显示loading
+     myChart_sess_grow.setOption(option_sess_grow, true);
+ },500);
+
+     // ####################  【blocked session趋势】图形  ####################
+ var myChart_block_grow = echarts.init(document.getElementById('block-grow-chart'));
+ option_block_grow = {
+     tooltip: {
+         trigger: 'axis',
+         axisPointer: {
+             type: 'cross'
+         }
+     },
+         legend: {
+        data:['redo size']
+    },
+     toolbox: {
+         show: true,
+         feature: {
+             saveAsImage: {}
+         }
+     },
+     xAxis:  {
+         type: 'category',
+         boundaryGap: false,
+         zlevel: 1,
+         data: [{% for i in dbgrow_list %}'{{ i.chk_time | date:"m-d H:i:s" }}',{% endfor %}]
+     },
+     yAxis: {
+         type: 'value',
+         axisLabel: {
+             formatter: '{value}'
+         },
+         axisPointer: {
+             snap: true
+         },
+         max:100,
+         min:0
+     },
+     series: [
+         {
+             name:'blocked session',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#84d4c5"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#84d4c5"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#84d4c5",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in dbgrow_list %}{{ i.blocked_sess }},{% endfor %}]
+         }
+     ]
+ };
+ myChart_block_grow.showLoading();  //显示loading
+ setInterval(function () {
+     myChart_block_grow.hideLoading();  //显示完成后不显示loading
+     myChart_block_grow.setOption(option_block_grow, true);
+ },500);
 </script>
 </body>
 </html>

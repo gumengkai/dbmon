@@ -2823,6 +2823,12 @@ def oracle_perf(request):
     dbgrow_list = list(dbgrow)
     dbgrow_list.reverse()
     if dbgrow:
+        exec_count_grow_max = models_oracle.OracleDbHis.objects.filter(tags=tagsdefault, dbtime__isnull=False).filter(
+            chk_time__gt=db_begin_time, chk_time__lt=end_time).order_by('-exec_count')[0]
+        max_exec_count = exec_count_grow_max.exec_count
+        user_commits_grow_max = models_oracle.OracleDbHis.objects.filter(tags=tagsdefault, dbtime__isnull=False).filter(
+            chk_time__gt=db_begin_time, chk_time__lt=end_time).order_by('-user_commits')[0]
+        max_user_commits = user_commits_grow_max.pga_size
         sga_grow_max = models_oracle.OracleDbHis.objects.filter(tags=tagsdefault, dbtime__isnull=False).filter(
             chk_time__gt=db_begin_time, chk_time__lt=end_time).order_by('-sga_size')[0]
         max_sga_size =  sga_grow_max.sga_size
@@ -2832,7 +2838,10 @@ def oracle_perf(request):
     else:
         max_sga_size = 0
         max_pga_size = 0
+        max_exec_count = 0
+        max_user_commits = 0
     max_mem_size = max(max_pga_size,max_sga_size)
+    max_exec = max(max_exec_count,max_user_commits)
 
 
     if request.method == 'POST':
@@ -2855,4 +2864,4 @@ def oracle_perf(request):
         tim_last = ''
     return render(request,'oracle_perf.html', {'tagsdefault': tagsdefault,'tagsinfo': tagsinfo,'msg_num':msg_num,
                                                 'msg_last_content': msg_last_content, 'tim_last': tim_last,
-                                               'dbgrow_list':dbgrow_list,'max_mem_size':max_mem_size})
+                                               'dbgrow_list':dbgrow_list,'max_mem_size':max_mem_size,'max_exec':max_exec})

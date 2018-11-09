@@ -36,7 +36,7 @@ def check_linux(tags,host,host_name,user,password):
         delete_sql = "delete from os_info where tags = '%s'" % tags
         tools.mysql_exec(delete_sql, '')
 
-        linuxstat = LinuxStat(host,user,password,100)
+        linuxstat = LinuxStat(host,user,password)
         uptime = linuxstat.get_uptime()
         up_days = round(float(uptime)/60/60/24,2)
         stat = linuxstat.get_linux()
@@ -260,58 +260,17 @@ def check_oracle(tags,host,port,service_name,user,password,user_os,password_os):
         asm = check_ora.check_asm(conn)
         archive_used = check_ora.get_archived(conn)
         audit_trail = check_ora.get_para(conn,'audit_trail')
-        # 内存使用情况
+        #Oraclestat
         oraclestat = Oraclestat(conn)
-        oraclestat.get_oracle_mem()
-        pga_size = oraclestat.stat['pga size']
-        sga_size = oraclestat.stat['sga size']
-        # 获取Oracle状态信息
-        # 系统状态
-        oacle_osstat = {}
-        rs_os = check_ora.oracle_osstat(conn)
-        for stat_name,value in rs_os:
-            oacle_osstat[stat_name] = value
-        # CPU time,DB time
-        oracle_time_stat1 = {}
-        rs_db1 = check_ora.oracle_time(conn)
-        for stat_name,value in rs_db1:
-            oracle_time_stat1[stat_name] = value
-        # Oracle性能数据
-        oracle_stat1 = {}
-        res1 = check_ora.oracle_stat(conn)
-        for stat_name, stat_value in res1:
-            oracle_stat1[stat_name] = stat_value
-        print '等待1s获取Oracle实时状态数据'
+        oraclestat.get_oracle_stat()
         time.sleep(1)
-        res2 = check_ora.oracle_stat(conn)
-        stat_delta = {}
-        for stat_name, stat_value in res2:
-            stat_delta[stat_name] = stat_value - oracle_stat1[stat_name]
-        oracle_stats = {
-            'qps':stat_delta['execute count'],
-            'tps':stat_delta['user commits'] + stat_delta['transaction rollbacks'],
-            'gets':stat_delta['consistent gets'],
-            'phyr':stat_delta['physical reads'],
-            'phyw':stat_delta['physical writes'],
-            'blockchange':stat_delta['db block changes'],
-            'redo':math.ceil(stat_delta['redo size']/1024),
-            'parse':stat_delta['parse count (total)'],
-            'hardparse':stat_delta['parse count (hard)'],
-            'netin':math.ceil(stat_delta['bytes received via SQL*Net from client']/1024),
-            'netout':math.ceil(stat_delta['bytes sent via SQL*Net to client']/1024),
-            "execute count":stat_delta['execute count'],
-            "user commits": stat_delta['user commits']
-        }
-        oracle_time_stat2 = {}
-        num_cpu = oacle_osstat.get('NUM_CPUS', 1)
-        rs_db2 = check_ora.oracle_time(conn)
-        for stat_name, value in rs_db2:
-            diff_val = max((value - oracle_time_stat1[stat_name]) * 1.0 , 0)
-            if stat_name in ('DB time', 'DB CPU', 'background cpu time'):
-                diff_val /= 10000.0 * num_cpu
-            oracle_time_stat2[stat_name] = round(diff_val, 2)
-        dbtime = oracle_time_stat2['DB time']
-        dbcpu = oracle_time_stat2['DB CPU']
+        oracle_data = oraclestat.get_oracle_stat()
+        oracle_mem = oracle_data['mem']
+        pga_size = oracle_mem['pga size']
+        sga_size = oracle_mem['sga size']
+        oracle_stat = oracle_data['stat']
+        oracle_time = oracle_data['time']
+        oracle_sess = oracle_data['sess']
 
         if not archive_used:
             archive_used = [('None'), 0]
@@ -344,7 +303,11 @@ def check_oracle(tags,host,port,service_name,user,password,user_os,password_os):
             else:
                 apply_rate_level = 'green'
 
-            insert_db_sql = "insert into oracle_db(tags,host,port,service_name,dbname,db_unique_name,database_role,uptime,audit_trail,open_mode,log_mode,archive_used,archive_rate_level,inst_id,instance_name,host_name,max_process,current_process,percent_process,conn_rate_level,adg_transport_lag,adg_apply_lag,adg_transport_value,adg_transport_rate_level,adg_apply_value,adg_apply_rate_level,mon_status,err_info,sga_size,pga_size,qps,tps,exec_count,user_commits,gets,phyr,phyw,blockchange,redo,parse,hardparse,netin,netout,dbtime,dbcpu,rate_level) values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+            insert_db_sql = "insert into oracle_db(tags,host,port,service_name,dbname,db_unique_name,database_role,uptime,audit_trail," \
+                        "open_mode,log_mode,archive_used,archive_rate_level,inst_id,instance_name,host_name,max_process,current_process,percent_process,conn_rate_level,adg_" \
+                        "transport_lag,adg_apply_lag,adg_transport_value,adg_transport_rate_level,adg_apply_value,adg_apply_rate_level,mon_status,err_info,sga_size,pga_size,qps,tps," \
+                        "exec_count,user_commits,gets,logr,phyr,phyw,blockchange,redo,parse,hardparse,netin,netout,total_sess,act_sess,act_trans,blocked_sess,dbtime,dbcpu,rate_level)" \
+                        " values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
             value = (
                 tags, host, port, service_name, dbnameinfo[0][0], dbnameinfo[0][1], dbnameinfo[0][2],up_days,audit_trail[0][0],dbnameinfo[0][3],
                 dbnameinfo[0][4], archive_used[0][0], archive_rate_level,
@@ -353,15 +316,15 @@ def check_oracle(tags,host,port,service_name,user,password,user_os,password_os):
                 instance_info[0][2], process[0][2], process[0][1], process[0][3], conn_rate_level, adg_trs[0][0],
                 adg_apl[0][0],
                 adg_trs[0][1], transport_rate_level, adg_apl[0][1], apply_rate_level, 'connected', err_info,sga_size,pga_size,
-                oracle_stats['qps'],oracle_stats['tps'],oracle_stats['execute count'],oracle_stats['user commits'],oracle_stats['gets'],oracle_stats['phyr'],oracle_stats['phyw'],oracle_stats['blockchange'],oracle_stats['redo'],oracle_stats['parse'],oracle_stats['hardparse'],oracle_stats['netin'],oracle_stats['netout'],
-                dbtime,dbcpu,db_rate_level)
+                oracle_stat['qps'],oracle_stat['tps'],oracle_stat['execute count'],oracle_stat['user commits'],oracle_stat['gets'],oracle_stat['logr'],oracle_stat['phyr'],oracle_stat['phyw'],oracle_stat['blockchange'],oracle_stat['redo'],oracle_stat['parse'],oracle_stat['hardparse'],oracle_stat['netin'],oracle_stat['netout'],
+                oracle_sess['total'],oracle_sess['act'],oracle_sess['act_trans'],oracle_sess['blocked'],oracle_time['dbtime'],oracle_time['dbcpu'],db_rate_level)
             tools.mysql_exec(insert_db_sql, value)
             my_log.logger.info('%s：获取Oracle数据库监控数据(数据库名：%s 数据库角色：%s 数据库状态：%s 连接数使用率：%s )' % (
                 tags, dbnameinfo[0][0], dbnameinfo[0][2], dbnameinfo[0][3], process[0][3]))
 
         # not adg
         else:
-            insert_db_sql = "insert into oracle_db(tags,host,port,service_name,dbname,db_unique_name,database_role,uptime,audit_trail,open_mode,log_mode,archive_used,archive_rate_level,inst_id,instance_name,host_name,max_process,current_process,percent_process,conn_rate_level,mon_status,err_info,sga_size,pga_size,qps,tps,exec_count,user_commits,gets,phyr,phyw,blockchange,redo,parse,hardparse,netin,netout,dbtime,dbcpu,rate_level) values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+            insert_db_sql = "insert into oracle_db(tags,host,port,service_name,dbname,db_unique_name,database_role,uptime,audit_trail,open_mode,log_mode,archive_used,archive_rate_level,inst_id,instance_name,host_name,max_process,current_process,percent_process,conn_rate_level,mon_status,err_info,sga_size,pga_size,qps,tps,exec_count,user_commits,gets,logr,phyr,phyw,blockchange,redo,parse,hardparse,netin,netout,total_sess,act_sess,act_trans,blocked_sess,dbtime,dbcpu,rate_level) values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
             value = (
                 tags, host, port, service_name, dbnameinfo[0][0], dbnameinfo[0][1], dbnameinfo[0][2],up_days,audit_trail[0][0], dbnameinfo[0][3],
                 dbnameinfo[0][4], archive_used[0][0], archive_rate_level,
@@ -369,11 +332,11 @@ def check_oracle(tags,host,port,service_name,user,password,user_os,password_os):
                 instance_info[0][1],
                 instance_info[0][2], process[0][2], process[0][1], process[0][3], conn_rate_level, 'connected',
                 err_info,sga_size,pga_size,
-                oracle_stats['qps'], oracle_stats['tps'],oracle_stats['execute count'],oracle_stats['user commits'],
-                oracle_stats['gets'], oracle_stats['phyr'],
-                oracle_stats['phyw'], oracle_stats['blockchange'], oracle_stats['redo'], oracle_stats['parse'],
-                oracle_stats['hardparse'], oracle_stats['netin'], oracle_stats['netout'],
-                dbtime,dbcpu,db_rate_level)
+                oracle_stat['qps'], oracle_stat['tps'],oracle_stat['execute count'],oracle_stat['user commits'],
+                oracle_stat['gets'], oracle_stat['logr'],oracle_stat['phyr'],
+                oracle_stat['phyw'], oracle_stat['blockchange'], oracle_stat['redo'], oracle_stat['parse'],
+                oracle_stat['hardparse'], oracle_stat['netin'], oracle_stat['netout'],
+                oracle_sess['total'], oracle_sess['act'], oracle_sess['act_trans'], oracle_sess['blocked'], oracle_time['dbtime'],oracle_time['dbcpu'],db_rate_level)
             tools.mysql_exec(insert_db_sql, value)
             my_log.logger.info('%s：获取Oracle数据库监控数据(数据库名：%s 数据库角色：%s 数据库状态：%s 连接数使用率：%s )' % (
                 tags, dbnameinfo[0][0], dbnameinfo[0][2], dbnameinfo[0][3], process[0][3]))
