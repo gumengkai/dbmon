@@ -41,10 +41,11 @@ def format_stat(label, stat_vals):
 
 
 class LinuxStat(object):
-    def __init__(self,host,user,password):
+    def __init__(self,host,user,password,lifetime):
         self.host = host
         self.user = user
         self.password = password
+        self.lifetime = lifetime
         self.curr_stat = {}
         self.stat = {}
         self.last_time = time.time()
@@ -56,6 +57,16 @@ class LinuxStat(object):
             'vm': tuple(0 for _ in xrange(6))
         }
 
+    def get_linux(self):
+        # 初始化网卡流量数据
+        net_nics = self.get_net_nics()
+        for nic in net_nics:
+            self.old_stat['net_' + nic] = (0,0)
+        # 第一次状态采集
+        stat1 = self.get_linux_stat()
+        # 第二次状态采集
+        stat2 = self.get_linux_stat()
+        return stat2
 
     def get_linux_stat(self):
         curr_time = time.time()
@@ -74,11 +85,17 @@ class LinuxStat(object):
         linux_stat['tcpstat'] = self.get_tcp_conn_stat()
         linux_stat['net'] = self.get_net_stat(elapsed)
 
-
-        #update timestamp
+        # update timestamp
         self.last_time = curr_time
+        self.lifetime -= 1
         self.loop_cnt += 1
         return linux_stat
+
+    def get_lifetime(self):
+        return self.lifetime
+
+    def set_lifetime(self, lifetime):
+        self.lifetime = lifetime
 
     def get_cpu_stat(self):
         #usr, sys, idle, iowait, steal
@@ -268,8 +285,6 @@ class LinuxStat(object):
     def get_net_stat(self, elapsed):
         stat_name = 'net'
         net_nics = self.get_net_nics()
-        for nic in net_nics:
-            self.old_stat['net_' + nic] = (0,0)
         ret = []
         label = ('recv', 'send')
         for l in self.get_stat(stat_name,':'):
@@ -376,8 +391,7 @@ class LinuxStat(object):
 
 
 if __name__ == '__main__':
+    linuxstat = LinuxStat('192.168.48.10', 'root', 'oracle', 100)
     while True:
-        linuxstat = LinuxStat('192.168.48.10', 'root', 'oracle')
-        stat = linuxstat.get_linux_stat()
+        stat = linuxstat.get_linux()
         print stat
-        time.sleep(5)

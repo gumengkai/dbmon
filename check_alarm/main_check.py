@@ -36,10 +36,10 @@ def check_linux(tags,host,host_name,user,password):
         delete_sql = "delete from os_info where tags = '%s'" % tags
         tools.mysql_exec(delete_sql, '')
 
-        linuxstat = LinuxStat(host,user,password)
+        linuxstat = LinuxStat(host,user,password,100)
         uptime = linuxstat.get_uptime()
         up_days = round(float(uptime)/60/60/24,2)
-        stat = linuxstat.get_linux_stat()
+        stat = linuxstat.get_linux()
         # 网卡流量
         my_log.logger.info('%s：初始化linux_net表' % tags)
         insert_sql = "insert into linux_net_his select * from linux_net where tags = '%s'" % tags
