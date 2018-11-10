@@ -30,25 +30,20 @@ def check_linux(tags,host,host_name,user,password):
     password = base64.decodestring(password)
     my_log.logger.info('%s：开始获取系统监控信息' % tags)
     try:
-        my_log.logger.info('%s：初始化os_info表' % tags)
-        insert_sql = "insert into os_info_his select * from os_info where tags = '%s'" % tags
-        tools.mysql_exec(insert_sql, '')
-        delete_sql = "delete from os_info where tags = '%s'" % tags
-        tools.mysql_exec(delete_sql, '')
 
         linuxstat = LinuxStat(host,user,password)
         uptime = linuxstat.get_uptime()
         up_days = round(float(uptime)/60/60/24,2)
         stat = linuxstat.get_linux()
         # 网卡流量
+        net_stat = stat['net']
+        recv_kbps = 0
+        send_kbps = 0
         my_log.logger.info('%s：初始化linux_net表' % tags)
         insert_sql = "insert into linux_net_his select * from linux_net where tags = '%s'" % tags
         tools.mysql_exec(insert_sql, '')
         delete_sql = "delete from linux_net where tags = '%s'" % tags
         tools.mysql_exec(delete_sql, '')
-        net_stat = stat['net']
-        recv_kbps = 0
-        send_kbps = 0
         for nic in net_stat:
             nic_name  = nic['nic']
             nic_recv = nic['recv']
@@ -93,6 +88,14 @@ def check_linux(tags,host,host_name,user,password):
         mem_rate_level = tools.get_rate_level(float(mem_used))
         # 主机状态评级
         os_rate_level = 'green'
+
+        # 归档osinfo历史数据
+        my_log.logger.info('%s：初始化os_info表' % tags)
+        insert_sql = "insert into os_info_his select * from os_info where tags = '%s'" % tags
+        tools.mysql_exec(insert_sql, '')
+        delete_sql = "delete from os_info where tags = '%s'" % tags
+        tools.mysql_exec(delete_sql, '')
+
         insert_os_used_sql = 'insert into os_info(tags,host,host_name,updays,recv_kbps,send_kbps,load1,load5,load15,cpu_sys,cpu_iowait,cpu_user,cpu_used,cpu_rate_level,mem_used,mem_rate_level,tcp_close,tcp_timewait,tcp_connected,tcp_syn,tcp_listen,mon_status,rate_level) value(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)'
         value = (tags,host, host_name, up_days,recv_kbps,send_kbps,load1,load5,load15,cpu_sys,cpu_iowait,cpu_user,cpu_used,cpu_rate_level, mem_used,mem_rate_level,tcp_close,tcp_timewait,tcp_connected,tcp_syn,tcp_listen, 'connected',os_rate_level)
 
@@ -101,13 +104,16 @@ def check_linux(tags,host,host_name,user,password):
         tools.mysql_exec(insert_os_used_sql, value)
 
         my_log.logger.info('%s：开始获取文件系统监控信息' % tags)
+
+        file_sys = check_os.os_get_disk(host, user, password)
+
+        # 归档os_filesystem_his历史数据
         my_log.logger.info('%s：初始化os_filesystem表' % tags)
         insert_sql = "insert into os_filesystem_his select * from os_filesystem where tags = '%s'" % tags
         tools.mysql_exec(insert_sql, '')
         delete_sql = "delete from os_filesystem where tags = '%s'" % tags
         tools.mysql_exec(delete_sql, '')
 
-        file_sys = check_os.os_get_disk(host, user, password)
         for i in xrange(len(file_sys)):
             disk_rate = float(file_sys[i]['used'].replace('%', ''))
             disk_rate_level = tools.get_rate_level(float(file_sys[i]['used'].replace('%', '')))
@@ -120,8 +126,6 @@ def check_linux(tags,host,host_name,user,password):
 
         # 更新主机评分信息
         my_log.logger.info('%s :开始更新Linux主机评分信息' % tags)
-        delete_sql = "delete from linux_rate where tags= '%s'" % tags
-        tools.mysql_exec(delete_sql, '')
 
         # 内存使用率扣分
         linux_mem_decute_reason = ''
@@ -166,13 +170,16 @@ def check_linux(tags,host,host_name,user,password):
             linux_rate_level = 'danger'
         linux_all_decute_reason =   linux_cpu_decute_reason + linux_mem_decute_reason
 
+        # 删除历史数据
+        delete_sql = "delete from linux_rate where tags= '%s'" % tags
+        tools.mysql_exec(delete_sql, '')
+
         # 插入总评分及扣分明细
         insert_sql = "insert into linux_rate(host,tags,cpu_decute,mem_decute,linux_rate,linux_rate_level,linux_rate_color,linux_rate_reason) select host,tags,'%s','%s','%s','%s','%s','%s' from tab_linux_servers where tags ='%s'" % (
              linux_cpu_decute, linux_mem_decute, linux_all_rate, linux_rate_level, linux_rate_color,
             linux_all_decute_reason, tags)
         tools.mysql_exec(insert_sql, '')
         my_log.logger.info('%s扣分明细，cpu使用率扣分:%s，内存使用率扣分:%s，总评分:%s,扣分原因:%s' %(tags,linux_cpu_decute,linux_mem_decute,linux_all_rate,linux_all_decute_reason))
-
 
 
     except Exception, e:
@@ -222,13 +229,13 @@ def check_oracle(tags,host,port,service_name,user,password,user_os,password_os):
         # 表空间监控
         my_log.logger.info('%s：开始获取Oracle数据库表空间监控信息' % tags)
 
+        tbs = check_ora.check_tbs(conn)
+        # 归档历史数据
         my_log.logger.info('%s：初始化oracle_tbs表' % tags)
         insert_sql = "insert into oracle_tbs_his select * from oracle_tbs where tags = '%s'" % tags
         tools.mysql_exec(insert_sql, '')
         delete_sql = "delete from oracle_tbs where tags = '%s' " % tags
         tools.mysql_exec(delete_sql, '')
-
-        tbs = check_ora.check_tbs(conn)
         for line in tbs:
             if not line[6]:
                 tbs_percent = 0
@@ -246,11 +253,6 @@ def check_oracle(tags,host,port,service_name,user,password,user_os,password_os):
         # db信息监控
         my_log.logger.info('%s：开始获取Oracle数据库监控信息' % tags)
 
-        my_log.logger.info('%s：初始化oracle_db表' % tags)
-        insert_sql = "insert into oracle_db_his select * from oracle_db where tags = '%s'" % tags
-        tools.mysql_exec(insert_sql, '')
-        delete_sql = "delete from oracle_db where tags = '%s'" % tags
-        tools.mysql_exec(delete_sql, '')
         # 基础信息
         dbnameinfo = check_ora.get_dbname_info(conn)
         instance_info = check_ora.get_instance_info(conn)
@@ -284,6 +286,12 @@ def check_oracle(tags,host,port,service_name,user,password,user_os,password_os):
         # 连接数评级
         conn_percent = float(process[0][3])
         conn_rate_level = tools.get_rate_level(conn_percent)
+        # 归档历史数据
+        my_log.logger.info('%s：初始化oracle_db表' % tags)
+        insert_sql = "insert into oracle_db_his select * from oracle_db where tags = '%s'" % tags
+        tools.mysql_exec(insert_sql, '')
+        delete_sql = "delete from oracle_db where tags = '%s'" % tags
+        tools.mysql_exec(delete_sql, '')
         # adg
         if len(adg_trs) > 0:
             # adg传输评级
@@ -343,11 +351,11 @@ def check_oracle(tags,host,port,service_name,user,password,user_os,password_os):
 
         # 密码过期信息监控
         my_log.logger.info('%s：开始获取Oracle数据库用户密码过期信息' % tags)
-
+        pwd_info = check_ora.get_pwd_info(conn)
+        # 删除历史数据
         my_log.logger.info('%s：初始化oracle_expired_pwd表' % tags)
         delete_sql = "delete from oracle_expired_pwd where tags = '%s'" % tags
         tools.mysql_exec(delete_sql, '')
-        pwd_info = check_ora.get_pwd_info(conn)
         for line in pwd_info:
             insert_pwd_info_sql = "insert into oracle_expired_pwd(tags,host,port,service_name,username,result_number) values(%s,%s,%s,%s,%s,%s)"
             value = (tags, host, port, service_name, line[0], line[1])
@@ -356,12 +364,13 @@ def check_oracle(tags,host,port,service_name,user,password,user_os,password_os):
         # 等待事件监控
         my_log.logger.info('%s：开始获取Oracle数据库等待事件信息' % tags)
 
+        event_info = check_ora.get_event_info(conn)
+        # 归档历史数据
         my_log.logger.info('%s：初始化oracle_db_event表' % tags)
         insert_sql = "insert into oracle_db_event_his select * from oracle_db_event where tags = '%s'" % tags
         tools.mysql_exec(insert_sql, '')
         delete_sql = "delete from oracle_db_event where tags = '%s'" % tags
         tools.mysql_exec(delete_sql, '')
-        event_info = check_ora.get_event_info(conn)
         for line in event_info:
             insert_event_info_sql = "insert into oracle_db_event(tags,host,port,service_name,event_no,event_name,event_cnt) values(%s,%s,%s,%s,%s,%s,%s)"
             value = (tags, host, port, service_name, line[0], line[1], line[2])
@@ -370,10 +379,11 @@ def check_oracle(tags,host,port,service_name,user,password,user_os,password_os):
         # 锁等待监控
         my_log.logger.info('%s：开始获取Oracle数据库锁等待信息' % tags)
 
+        lock_info = check_ora.get_lock_info(conn)
+        # 删除历史数据
         my_log.logger.info('%s：初始化oracle_Lock表' % tags)
         delete_sql = "delete from oracle_lock where tags = '%s'" % tags
         tools.mysql_exec(delete_sql, '')
-        lock_info = check_ora.get_lock_info(conn)
         for line in lock_info:
             insert_lock_info_sql = "insert into oracle_lock(tags,host,port,service_name,session,lmode,ctime,inst_id,lmode1,type,session_id) values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
             value = (tags, host, port, service_name, line[0], line[1], line[2], line[3], line[6], line[8],line[9])
@@ -383,10 +393,11 @@ def check_oracle(tags,host,port,service_name,user,password,user_os,password_os):
         # 无效索引监控
         my_log.logger.info('%s：开始获取Oracle数据库无效索引信息' % tags)
 
+        invalid_index_info = check_ora.get_invalid_index(conn)
+        # 删除历史数据
         my_log.logger.info('%s：初始化oracle_invalid_index表' % tags)
         delete_sql = "delete from oracle_invalid_index where tags = '%s'" % tags
         tools.mysql_exec(delete_sql, '')
-        invalid_index_info = check_ora.get_invalid_index(conn)
         for line in invalid_index_info:
             insert_invalid_index_info_sql = "insert into oracle_invalid_index(tags,host,port,service_name,owner,index_name,partition_name,status) values(%s,%s,%s,%s,%s,%s,%s,%s)"
             value = (tags, host, port, service_name, line[0], line[1], line[2], line[3])
@@ -396,13 +407,13 @@ def check_oracle(tags,host,port,service_name,user,password,user_os,password_os):
         # 临时表空间监控
         my_log.logger.info('%s：开始获取Oracle数据库临时表空间监控信息' % tags)
 
+        tmp_tbs = check_ora.check_tmp_tbs(conn)
+        # 归档历史数据
         my_log.logger.info('%s：初始化oracle_tmp_tbs表' % tags)
         insert_sql = "insert into oracle_tmp_tbs_his select * from oracle_tmp_tbs where tags = '%s'" % tags
         tools.mysql_exec(insert_sql, '')
         delete_sql = "delete from oracle_tmp_tbs where tags = '%s'" % tags
         tools.mysql_exec(delete_sql, '')
-
-        tmp_tbs = check_ora.check_tmp_tbs(conn)
         for line in tmp_tbs:
             tmp_pct_used = float(line[3])
             tmp_rate_level = tools.get_rate_level(tmp_pct_used)
@@ -413,12 +424,13 @@ def check_oracle(tags,host,port,service_name,user,password,user_os,password_os):
 
         # undo表空间监控
         my_log.logger.info('%s：开始获取Oracle数据库undo表空间监控信息' % tags)
+        undo_tbs = check_ora.check_undo_tbs(conn)
+        # 归档历史数据
         my_log.logger.info('%s：初始化oracle_undo_tbs表' % tags)
         insert_sql = "insert into oracle_undo_tbs_his select * from oracle_undo_tbs where tags = '%s'" % tags
         tools.mysql_exec(insert_sql, '')
         delete_sql = "delete from oracle_undo_tbs where tags = '%s'" % tags
         tools.mysql_exec(delete_sql, '')
-        undo_tbs = check_ora.check_undo_tbs(conn)
         for line in undo_tbs:
             undo_pct_used = float(line[3])
             undo_rate_level = tools.get_rate_level(undo_pct_used)
@@ -429,8 +441,6 @@ def check_oracle(tags,host,port,service_name,user,password,user_os,password_os):
 
         # 更新数据库打分信息
         my_log.logger.info('%s :开始更新Oracle数据库评分信息' % tags)
-        delete_sql = "delete from oracle_db_rate where tags= '%s'" % tags
-        tools.mysql_exec(delete_sql, '')
 
         # 内存使用率扣分
         mem_stat = tools.mysql_query(
@@ -594,6 +604,9 @@ def check_oracle(tags,host,port,service_name,user,password,user_os,password_os):
             db_rate_level = 'danger'
         db_all_decute_reason = db_conn_decute_reason + db_archive_decute_reason + db_event_decute_reason + db_tbs_decute_reason + db_cpu_decute_reason + db_mem_decute_reason + db_tmp_tbs_decute_reason + db_undo_tbs_decute_reason
 
+        delete_sql = "delete from oracle_db_rate where tags= '%s'" % tags
+        tools.mysql_exec(delete_sql, '')
+
         # 插入总评分及扣分明细
         insert_sql = "insert into oracle_db_rate(tags,host,port,service_name,conn_decute,archive_decute,event_decute,tbs_decute,tmp_decute,undo_decute,cpu_decute,mem_decute,db_rate,db_rate_level,db_rate_color,db_rate_reason) values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
         value = (
@@ -631,17 +644,10 @@ def check_oracle(tags,host,port,service_name,user,password,user_os,password_os):
 
 def check_mysql(tags, host,port,user,password):
     my_log.logger.info('等待2秒待Linux主机信息采集完毕')
-    time.sleep(2)
     password = base64.decodestring(password)
     try:
         conn = MySQLdb.connect(host=host, user=user, passwd=password, port=int(port), connect_timeout=5, charset='utf8')
         my_log.logger.info('%s：开始获取mysql数据库监控信息' % tags)
-        # 归档历史监控数据
-        my_log.logger.info('%s：初始化mysql_db表' % tags)
-        insert_sql = "insert into mysql_db_his select * from mysql_db where tags = '%s'" % tags
-        tools.mysql_exec(insert_sql, '')
-        delete_sql = "delete from mysql_db where tags = '%s'" % tags
-        tools.mysql_exec(delete_sql, '')
 
         db_rate_level = 'green'
         # 获取两次状态值
@@ -676,6 +682,13 @@ def check_mysql(tags, host,port,user,password):
         # 连接数评级
         conn_rate_level = tools.get_rate_level(float(mysql_conn_rate))
 
+        # 归档历史监控数据
+        my_log.logger.info('%s：初始化mysql_db表' % tags)
+        insert_sql = "insert into mysql_db_his select * from mysql_db where tags = '%s'" % tags
+        tools.mysql_exec(insert_sql, '')
+        delete_sql = "delete from mysql_db where tags = '%s'" % tags
+        tools.mysql_exec(delete_sql, '')
+
         insert_db_sql = "insert into mysql_db(host,port,tags,version,uptime,max_connections,threads_connected,threads_running,threads_created,threads_cached,threads_waited,conn_rate,conn_rate_level,QPS,TPS,bytes_received,bytes_send,mon_status,rate_level) values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
         value = (host, port, tags, mysql_version, mysql_uptime, mysql_max_connections, current_conn, threads_running,
                  threads_created, threads_cached, threads_waited, mysql_conn_rate,
@@ -685,12 +698,6 @@ def check_mysql(tags, host,port,user,password):
             tags, host, port, mysql_conn_rate, 'connected'))
 
         # 复制
-        # 初始化mysql_repl表
-        my_log.logger.info('%s：初始化mysql_repl表' % tags)
-        insert_sql = "insert into mysql_repl_his select * from mysql_repl where tags = '%s'" % tags
-        tools.mysql_exec(insert_sql, '')
-        delete_sql = "delete from mysql_repl where tags = '%s'" % tags
-        tools.mysql_exec(delete_sql, '')
 
         server_id = check_msql.get_mysql_para(conn,'server_id')
         is_slave = ''
@@ -777,6 +784,13 @@ def check_mysql(tags, host,port,user,password):
                     binlogs = binlogs + row[1]
             master_binlog_space = int(binlogs)/1024/1024
 
+        # 初始化mysql_repl表
+        my_log.logger.info('%s：初始化mysql_repl表' % tags)
+        insert_sql = "insert into mysql_repl_his select * from mysql_repl where tags = '%s'" % tags
+        tools.mysql_exec(insert_sql, '')
+        delete_sql = "delete from mysql_repl where tags = '%s'" % tags
+        tools.mysql_exec(delete_sql, '')
+
         insert_repl_sql = "insert into mysql_repl(tags,server_id,host,port,is_master,is_slave,mysql_role,read_only,master_server,master_port,slave_io_run,slave_io_rate,slave_sql_run,slave_sql_rate,delay,delay_rate,current_binlog_file,current_binlog_pos,master_binlog_file,master_binlog_pos,master_binlog_space) values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
         value = (tags,server_id,host,port,is_master,is_slave,mysql_role,read_only_result,master_server,master_port,slave_io_run,slave_io_rate,slave_sql_run,slave_sql_rate,delay,delay_rate,current_binlog_file,current_binlog_pos,master_binlog_file,master_binlog_pos,master_binlog_space)
         tools.mysql_exec(insert_repl_sql, value)
@@ -785,8 +799,6 @@ def check_mysql(tags, host,port,user,password):
 
         # 更新数据库打分信息
         my_log.logger.info('%s :开始更新Mysql数据库评分信息' % tags)
-        delete_sql = "delete from mysql_db_rate where tags= '%s'" % tags
-        tools.mysql_exec(delete_sql, '')
 
         # 内存使用率扣分
         db_mem_decute = 0
@@ -840,6 +852,9 @@ def check_mysql(tags, host,port,user,password):
             db_rate_color = 'red'
             db_rate_level = 'danger'
         db_all_decute_reason = db_conn_decute_reason + db_cpu_decute_reason + db_mem_decute_reason
+
+        delete_sql = "delete from mysql_db_rate where tags= '%s'" % tags
+        tools.mysql_exec(delete_sql, '')
 
         # 插入总评分及扣分明细
         insert_sql = "insert into mysql_db_rate(host,port,tags,conn_decute,cpu_decute,mem_decute,db_rate,db_rate_level,db_rate_color,db_rate_reason) select host,port,tags,'%s','%s','%s','%s','%s','%s','%s' from tab_mysql_servers where tags ='%s'" % (
