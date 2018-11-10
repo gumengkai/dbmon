@@ -574,11 +574,102 @@ desired effect
 
         </div>
         <!-- /.col -->
+               <div class="col-xs-6">
+          <!-- interactive chart -->
+          <div class="box box-solid">
+            <div class="box-header with-border">
+              <i class="fa fa-bar-chart-o"></i>
+              <h3 class="box-title">parse/hard parse</h3>
+                 <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+
+            <div class="box-body">
+              <div class="conn" id="parse-grow-chart" style="height: 300px;"></div>
+            </div>
+            <!-- /.box-body-->
+          </div>
+          <!-- /.box -->
+
+        </div>
+        <!-- /.col -->
+                      <!-- /.col -->
+               <div class="col-xs-6">
+          <!-- interactive chart -->
+          <div class="box box-solid">
+            <div class="box-header with-border">
+              <i class="fa fa-bar-chart-o"></i>
+              <h3 class="box-title">memory used percent</h3>
+                 <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+
+            <div class="box-body">
+              <div class="conn" id="mpct-grow-chart" style="height: 300px;"></div>
+            </div>
+            <!-- /.box-body-->
+          </div>
+          <!-- /.box -->
+
+        </div>
+        <!-- /.col -->
+                                     <!-- /.col -->
+         <div class="col-xs-6">
+          <!-- interactive chart -->
+          <div class="box box-solid">
+            <div class="box-header with-border">
+              <i class="fa fa-bar-chart-o"></i>
+              <h3 class="box-title">bytes sent/received via SQL*Net to client(KB)</h3>
+                 <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+
+            <div class="box-body">
+              <div class="conn" id="net-grow-chart" style="height: 300px;"></div>
+            </div>
+            <!-- /.box-body-->
+          </div>
+          <!-- /.box -->
+
+        </div>
+        <!-- /.col -->
+               <div class="col-xs-6">
+          <!-- interactive chart -->
+          <div class="box box-solid">
+            <div class="box-header with-border">
+              <i class="fa fa-bar-chart-o"></i>
+              <h3 class="box-title">IO throughtput(MB)</h3>
+                 <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+
+            <div class="box-body">
+              <div class="conn" id="io-grow-chart" style="height: 300px;"></div>
+            </div>
+            <!-- /.box-body-->
+          </div>
+          <!-- /.box -->
+
+        </div>
+        <!-- /.col -->
       </div>
       </div>
         <div class="tab-pane" id="event">
 
-              </div>
+
+        </div>
 
             </div>
             <!-- /.tab-content -->
@@ -1228,6 +1319,314 @@ function submittype(){
      myChart_block_grow.hideLoading();  //显示完成后不显示loading
      myChart_block_grow.setOption(option_block_grow, true);
  },500);
+
+      // ####################  【parse/hard parse趋势】图形  ####################
+ var myChart_parse_grow = echarts.init(document.getElementById('parse-grow-chart'));
+ option_parse_grow = {
+     tooltip: {
+         trigger: 'axis',
+         axisPointer: {
+             type: 'cross'
+         }
+     },
+         legend: {
+        data:['parse count','parse count(hard)']
+    },
+     toolbox: {
+         show: true,
+         feature: {
+             saveAsImage: {}
+         }
+     },
+     xAxis:  {
+         type: 'category',
+         boundaryGap: false,
+         zlevel: 1,
+         data: [{% for i in dbgrow_list %}'{{ i.chk_time | date:"m-d H:i:s" }}',{% endfor %}]
+     },
+     yAxis: {
+         type: 'value',
+         axisLabel: {
+             formatter: '{value}'
+         },
+         axisPointer: {
+             snap: true
+         },
+         scale: true
+     },
+     series: [
+         {
+             name:'parse count',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#84d4c5"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#84d4c5"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#84d4c5",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in dbgrow_list %}{{ i.parse }},{% endfor %}]
+         },
+          {
+             name:'parse count(hard)',
+             type:'line',
+             smooth: true,
+              itemStyle: {
+              normal: {
+                color: "#d45356"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#d45356"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#d45356",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in dbgrow_list %}{{ i.hardparse }},{% endfor %}]
+         }
+     ]
+ };
+ myChart_parse_grow.showLoading();  //显示loading
+ setInterval(function () {
+     myChart_parse_grow.hideLoading();  //显示完成后不显示loading
+     myChart_parse_grow.setOption(option_parse_grow, true);
+ },500);
+
+       // ####################  【趋势】图形  ####################
+ var myChart_mpct_grow = echarts.init(document.getElementById('mpct-grow-chart'));
+ option_mpct_grow = {
+     tooltip: {
+         trigger: 'axis',
+         axisPointer: {
+             type: 'cross'
+         }
+     },
+         legend: {
+        data:['mem used']
+    },
+     toolbox: {
+         show: true,
+         feature: {
+             saveAsImage: {}
+         }
+     },
+     xAxis:  {
+         type: 'category',
+         boundaryGap: false,
+         zlevel: 1,
+         data: [{% for i in dbgrow_list %}'{{ i.chk_time | date:"m-d H:i:s" }}',{% endfor %}]
+     },
+     yAxis: {
+         type: 'value',
+         axisLabel: {
+             formatter: '{value}'
+         },
+         axisPointer: {
+             snap: true
+         },
+         min:0,
+         max:100
+     },
+     series: [
+         {
+             name:'mem used',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#84d4c5"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#84d4c5"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#84d4c5",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in dbgrow_list %}{{ i.mem_pct }},{% endfor %}]
+         }
+     ]
+ };
+ myChart_mpct_grow.showLoading();  //显示loading
+ setInterval(function () {
+     myChart_mpct_grow.hideLoading();  //显示完成后不显示loading
+     myChart_mpct_grow.setOption(option_mpct_grow, true);
+ },500);
+
+       // ####################  【bytes sent/received via SQL*Net to client(KB)趋势】图形  ####################
+ var myChart_net_grow = echarts.init(document.getElementById('net-grow-chart'));
+ option_net_grow = {
+     tooltip: {
+         trigger: 'axis',
+         axisPointer: {
+             type: 'cross'
+         }
+     },
+         legend: {
+        data:['bytes received via SQL*Net from client','bytes sent via SQL*Net to client']
+    },
+     toolbox: {
+         show: true,
+         feature: {
+             saveAsImage: {}
+         }
+     },
+     xAxis:  {
+         type: 'category',
+         boundaryGap: false,
+         zlevel: 1,
+         data: [{% for i in dbgrow_list %}'{{ i.chk_time | date:"m-d H:i:s" }}',{% endfor %}]
+     },
+     yAxis: {
+         type: 'value',
+         axisLabel: {
+             formatter: '{value}'
+         },
+         axisPointer: {
+             snap: true
+         },
+         min:0,
+         scale: true
+     },
+     series: [
+         {
+             name:'bytes received via SQL*Net from client',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#84d4c5"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#84d4c5"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#84d4c5",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in dbgrow_list %}{{ i.netin }},{% endfor %}]
+         },
+          {
+             name:'bytes sent via SQL*Net to client',
+             type:'line',
+             smooth: true,
+              itemStyle: {
+              normal: {
+                color: "#d44e5a"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#d44e5a"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#d44e5a",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in dbgrow_list %}{{ i.netout }},{% endfor %}]
+         }
+     ]
+ };
+ myChart_net_grow.showLoading();  //显示loading
+ setInterval(function () {
+     myChart_net_grow.hideLoading();  //显示完成后不显示loading
+     myChart_net_grow.setOption(option_net_grow, true);
+ },500);
+
+        // ####################  【bytes sent/received via SQL*Net to client(KB)趋势】图形  ####################
+ var myChart_io_grow = echarts.init(document.getElementById('io-grow-chart'));
+ option_io_grow = {
+     tooltip: {
+         trigger: 'axis',
+         axisPointer: {
+             type: 'cross'
+         }
+     },
+         legend: {
+        data:['IO throunght']
+    },
+     toolbox: {
+         show: true,
+         feature: {
+             saveAsImage: {}
+         }
+     },
+     xAxis:  {
+         type: 'category',
+         boundaryGap: false,
+         zlevel: 1,
+         data: [{% for i in dbgrow_list %}'{{ i.chk_time | date:"m-d H:i:s" }}',{% endfor %}]
+     },
+     yAxis: {
+         type: 'value',
+         axisLabel: {
+             formatter: '{value}'
+         },
+         axisPointer: {
+             snap: true
+         },
+         min:0,
+         scale: true
+     },
+     series: [
+         {
+             name:'bIO throunght',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#84d4c5"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#84d4c5"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#84d4c5",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in dbgrow_list %}{{ i.io }},{% endfor %}]
+         }
+     ]
+ };
+ myChart_io_grow.showLoading();  //显示loading
+ setInterval(function () {
+     myChart_io_grow.hideLoading();  //显示完成后不显示loading
+     myChart_io_grow.setOption(option_io_grow, true);
+ },500);
+
 </script>
 </body>
 </html>

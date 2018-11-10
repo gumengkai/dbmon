@@ -63,7 +63,9 @@ class Oraclestat(object):
             "gcs messages sent",
             "ges messages sent",
             "db block changes",
-            "redo writes"
+            "redo writes",
+            "physical read total bytes",
+            "physical write total bytes"
         )
         self.wait_events = (
             "db file sequential read",
@@ -78,6 +80,12 @@ class Oraclestat(object):
             'background cpu time'
         )
 
+        self.os_stats = (
+            'PHYSICAL_MEMORY_BYTES', 'NUM_CPUS', 'IDLE_TIME', 'BUSY_TIME'
+        )
+
+
+
         self.old_stat = {}
 
         for stat in self.ora_stats:
@@ -90,6 +98,9 @@ class Oraclestat(object):
         for stat_name in self.time_model:
             self.old_stat[stat_name] = 0
 
+        for stat_name in self.os_stats:
+            self.old_stat[stat_name] = 0
+
     def get_uptime(self):
         cur = self.conn.cursor()
         sql = "select startup_time, version, parallel from v$instance "
@@ -98,9 +109,6 @@ class Oraclestat(object):
         uptime = datetime.now() - startup_time
         up_seconds = uptime.days * 86400 + uptime.seconds
         return up_seconds
-
-    def get_oracle_stats(self):
-        self.get_oracle_mem()
 
     def get_oracle_pga(self):
         stat_name = 'sga size'
@@ -135,10 +143,13 @@ class Oraclestat(object):
     def get_oracle_mem(self):
         sga = self.get_oracle_sga()
         pga = self.get_oracle_pga()
+        mem_phy = self.old_stat['PHYSICAL_MEMORY_BYTES']/1024/1024
+        mem_pct = round(100*(pga+sga)/mem_phy,2)
 
         return {
             'sga size': sga,
-            'pga size': pga
+            'pga size': pga,
+            'mem pct':mem_pct
         }
 
     def get_oracle_stat(self):
@@ -149,7 +160,7 @@ class Oraclestat(object):
 
         self.last_time = time.time()
         self.loop_cnt += 1
-
+        self.oracle_osstat()
         orastat = {}
         orastat['stat'] = self.get_ora_stat(elapsed)
         orastat['wait'] = self.get_wait_events(elapsed)
@@ -190,7 +201,8 @@ class Oraclestat(object):
             'netout': math.ceil(stat_delta['bytes sent via SQL*Net to client'] / 1024),
             'execute count': stat_delta['execute count'],
             'user commits': stat_delta['user commits'],
-            'redow': stat_delta['redo writes']
+            'redow': stat_delta['redo writes'],
+            'io_throughput':round(stat_delta['physical read total bytes']/1024/1024 + stat_delta['physical write total bytes']/1024/1024,2)
         }
 
     def get_wait_events(self, elapsed):
