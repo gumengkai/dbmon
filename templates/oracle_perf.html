@@ -432,7 +432,7 @@ desired effect
                   <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
               <li class="active"><a href="#report" data-toggle="tab" aria-expanded="false">基础指标</a></li>
-              <li class=""><a href="#event" data-toggle="tab" aria-expanded="false">等待事件</a></li>
+              <li class=""><a href="#wait" data-toggle="tab"  aria-expanded="false">等待事件</a></li>
             </ul>
             <div class="tab-content">
                 <div class="active tab-pane" id="report">
@@ -666,9 +666,124 @@ desired effect
         <!-- /.col -->
       </div>
       </div>
-        <div class="tab-pane" id="event">
+        <div class="tab-pane" id="wait">
+           <div class="row">
+        <!-- /.col -->
+            <div class="col-xs-6">
+          <!-- interactive chart -->
+          <div class="box box-solid">
+            <div class="box-header with-border">
+              <i class="fa fa-bar-chart-o"></i>
+              <h3 class="box-title">log file sync(等待次数)</h3>
+                 <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
 
+            <div class="box-body">
+              <div class="conn" id="lsync-grow-chart" style="height: 300px; width: 437px"></div>
+            </div>
+            <!-- /.box-body-->
+          </div>
+          <!-- /.box -->
 
+        </div>
+        <!-- /.col -->
+        <!-- /.col -->
+            <div class="col-xs-6">
+          <!-- interactive chart -->
+          <div class="box box-solid">
+            <div class="box-header with-border">
+              <i class="fa fa-bar-chart-o"></i>
+              <h3 class="box-title">log file sync/log file parallel write(平均等待时间)</h3>
+                 <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+
+            <div class="box-body">
+              <div class="conn" id="lsynct-grow-chart" style="height: 300px; width: 437px"></div>
+            </div>
+            <!-- /.box-body-->
+          </div>
+          <!-- /.box -->
+
+        </div>
+        <!-- /.col -->
+               <!-- /.col -->
+            <div class="col-xs-6">
+          <!-- interactive chart -->
+          <div class="box box-solid">
+            <div class="box-header with-border">
+              <i class="fa fa-bar-chart-o"></i>
+              <h3 class="box-title">db file sequential/scattered read(次数)</h3>
+                 <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+
+            <div class="box-body">
+              <div class="conn" id="sread-grow-chart" style="height: 300px; width: 437px"></div>
+            </div>
+            <!-- /.box-body-->
+          </div>
+          <!-- /.box -->
+
+        </div>
+        <!-- /.col -->
+                       <!-- /.col -->
+            <div class="col-xs-6">
+          <!-- interactive chart -->
+          <div class="box box-solid">
+            <div class="box-header with-border">
+              <i class="fa fa-bar-chart-o"></i>
+              <h3 class="box-title">db file sequential/scattered read(平均等待时间)</h3>
+                 <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+
+            <div class="box-body">
+              <div class="conn" id="sreadt-grow-chart" style="height: 300px; width: 437px"></div>
+            </div>
+            <!-- /.box-body-->
+          </div>
+          <!-- /.box -->
+
+        </div>
+        <!-- /.col -->
+                                      <!-- /.col -->
+            <div class="col-xs-6">
+          <!-- interactive chart -->
+          <div class="box box-solid">
+            <div class="box-header with-border">
+              <i class="fa fa-bar-chart-o"></i>
+              <h3 class="box-title">row lock wait(次数)</h3>
+                 <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+
+            <div class="box-body">
+              <div class="conn" id="lock-grow-chart" style="height: 300px; width: 437px"></div>
+            </div>
+            <!-- /.box-body-->
+          </div>
+          <!-- /.box -->
+
+        </div>
+        <!-- /.col -->
+        </div>
         </div>
 
             </div>
@@ -1625,6 +1740,402 @@ function submittype(){
  setInterval(function () {
      myChart_io_grow.hideLoading();  //显示完成后不显示loading
      myChart_io_grow.setOption(option_io_grow, true);
+ },500);
+
+       // ####################  【log file sync】图形  ####################
+ var myChart_lsync_grow = echarts.init(document.getElementById('lsync-grow-chart'));
+ option_lsync_grow = {
+     tooltip: {
+         trigger: 'axis',
+         axisPointer: {
+             type: 'cross'
+         }
+     },
+         legend: {
+        data:['log file sync']
+    },
+     toolbox: {
+         show: true,
+         feature: {
+             saveAsImage: {}
+         }
+     },
+     xAxis:  {
+         type: 'category',
+         boundaryGap: false,
+         zlevel: 1,
+         data: [{% for i in dbgrow_list %}'{{ i.chk_time | date:"m-d H:i:s" }}',{% endfor %}]
+     },
+     yAxis: {
+         type: 'value',
+         axisLabel: {
+             formatter: '{value}'
+         },
+         axisPointer: {
+             snap: true
+         },
+         min:0,
+         max:100
+     },
+     series: [
+         {
+             name:'log file sync',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#84d4c5"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#84d4c5"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#84d4c5",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in dbgrow_list %}{{ i.log_sync_cnt }},{% endfor %}]
+         }
+     ]
+ };
+ myChart_lsync_grow.showLoading();  //显示loading
+ setInterval(function () {
+     myChart_lsync_grow.hideLoading();  //显示完成后不显示loading
+     myChart_lsync_grow.setOption(option_lsync_grow, true);
+ },500);
+
+        // ####################  【log file sync】图形  ####################
+ var myChart_lsynct_grow = echarts.init(document.getElementById('lsynct-grow-chart'));
+ option_lsynct_grow = {
+     tooltip: {
+         trigger: 'axis',
+         axisPointer: {
+             type: 'cross'
+         }
+     },
+         legend: {
+        data:['log file sync(ms)','log file parallel write(ms)']
+    },
+     toolbox: {
+         show: true,
+         feature: {
+             saveAsImage: {}
+         }
+     },
+     xAxis:  {
+         type: 'category',
+         boundaryGap: false,
+         zlevel: 1,
+         data: [{% for i in dbgrow_list %}'{{ i.chk_time | date:"m-d H:i:s" }}',{% endfor %}]
+     },
+     yAxis: {
+         type: 'value',
+         axisLabel: {
+             formatter: '{value}'
+         },
+         axisPointer: {
+             snap: true
+         },
+         min:0,
+         max:100
+     },
+      series: [
+         {
+             name:'log file sync(ms)',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#84d4c5"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#84d4c5"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#84d4c5",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in dbgrow_list %}{{ i.log_sync_wait }},{% endfor %}]
+         },
+          {
+             name:'log file parallel write(ms)',
+             type:'line',
+             smooth: true,
+              itemStyle: {
+              normal: {
+                color: "#d44e5a"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#d44e5a"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#d44e5a",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in dbgrow_list %}{{ i.log_para_wait }},{% endfor %}]
+         }
+     ]
+ };
+ myChart_lsynct_grow.showLoading();  //显示loading
+ setInterval(function () {
+     myChart_lsynct_grow.hideLoading();  //显示完成后不显示loading
+     myChart_lsynct_grow.setOption(option_lsynct_grow, true);
+ },500);
+
+        // ####################  【db file sequential/scattered read(次数)趋势】图形  ####################
+ var myChart_sread_grow = echarts.init(document.getElementById('sread-grow-chart'));
+ option_sread_grow = {
+     tooltip: {
+         trigger: 'axis',
+         axisPointer: {
+             type: 'cross'
+         }
+     },
+         legend: {
+        data:['db file sequential read','db file scattered read']
+    },
+     toolbox: {
+         show: true,
+         feature: {
+             saveAsImage: {}
+         }
+     },
+     xAxis:  {
+         type: 'category',
+         boundaryGap: false,
+         zlevel: 1,
+         data: [{% for i in dbgrow_list %}'{{ i.chk_time | date:"m-d H:i:s" }}',{% endfor %}]
+     },
+     yAxis: {
+         type: 'value',
+         axisLabel: {
+             formatter: '{value}'
+         },
+         axisPointer: {
+             snap: true
+         },
+         min:0,
+         scale: true
+     },
+     series: [
+         {
+             name:'db file sequential read',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#84d4c5"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#84d4c5"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#84d4c5",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in dbgrow_list %}{{ i.seq_read_cnt }},{% endfor %}]
+         },
+          {
+             name:'db file scattered read',
+             type:'line',
+             smooth: true,
+              itemStyle: {
+              normal: {
+                color: "#d44e5a"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#d44e5a"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#d44e5a",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in dbgrow_list %}{{ i.scat_read_cnt }},{% endfor %}]
+         }
+     ]
+ };
+ myChart_sread_grow.showLoading();  //显示loading
+ setInterval(function () {
+     myChart_sread_grow.hideLoading();  //显示完成后不显示loading
+     myChart_sread_grow.setOption(option_sread_grow, true);
+ },500);
+
+         // ####################  【db file sequential/scattered read(平均等待时间)趋势】图形  ####################
+ var myChart_sreadt_grow = echarts.init(document.getElementById('sreadt-grow-chart'));
+ option_sreadt_grow = {
+     tooltip: {
+         trigger: 'axis',
+         axisPointer: {
+             type: 'cross'
+         }
+     },
+         legend: {
+        data:['db file sequential read(ms)','db file scattered read(ms)']
+    },
+     toolbox: {
+         show: true,
+         feature: {
+             saveAsImage: {}
+         }
+     },
+     xAxis:  {
+         type: 'category',
+         boundaryGap: false,
+         zlevel: 1,
+         data: [{% for i in dbgrow_list %}'{{ i.chk_time | date:"m-d H:i:s" }}',{% endfor %}]
+     },
+     yAxis: {
+         type: 'value',
+         axisLabel: {
+             formatter: '{value}'
+         },
+         axisPointer: {
+             snap: true
+         },
+         min:0,
+         scale: true
+     },
+     series: [
+         {
+             name:'db file sequential read(ms)',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#84d4c5"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#84d4c5"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#84d4c5",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in dbgrow_list %}{{ i.seq_wait }},{% endfor %}]
+         },
+          {
+             name:'db file scattered read(ms)',
+             type:'line',
+             smooth: true,
+              itemStyle: {
+              normal: {
+                color: "#d44e5a"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#d44e5a"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#d44e5a",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in dbgrow_list %}{{ i.scat_wait }},{% endfor %}]
+         }
+     ]
+ };
+ myChart_sreadt_grow.showLoading();  //显示loading
+ setInterval(function () {
+     myChart_sreadt_grow.hideLoading();  //显示完成后不显示loading
+     myChart_sreadt_grow.setOption(option_sreadt_grow, true);
+ },500);
+
+        // ####################  【行锁数量趋势】图形  ####################
+ var myChart_lock_grow = echarts.init(document.getElementById('lock-grow-chart'));
+ option_lock_grow = {
+     tooltip: {
+         trigger: 'axis',
+         axisPointer: {
+             type: 'cross'
+         }
+     },
+         legend: {
+        data:['enq: TX - row lock contention']
+    },
+     toolbox: {
+         show: true,
+         feature: {
+             saveAsImage: {}
+         }
+     },
+     xAxis:  {
+         type: 'category',
+         boundaryGap: false,
+         zlevel: 1,
+         data: [{% for i in dbgrow_list %}'{{ i.chk_time | date:"m-d H:i:s" }}',{% endfor %}]
+     },
+     yAxis: {
+         type: 'value',
+         axisLabel: {
+             formatter: '{value}'
+         },
+         axisPointer: {
+             snap: true
+         },
+         min:0,
+         max:100
+     },
+     series: [
+         {
+             name:'enq: TX - row lock contention',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#84d4c5"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#84d4c5"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#84d4c5",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in dbgrow_list %}{{ i.row_lock_cnt }},{% endfor %}]
+         }
+     ]
+ };
+ myChart_lock_grow.showLoading();  //显示loading
+ setInterval(function () {
+     myChart_lock_grow.hideLoading();  //显示完成后不显示loading
+     myChart_lock_grow.setOption(option_lock_grow, true);
  },500);
 
 </script>

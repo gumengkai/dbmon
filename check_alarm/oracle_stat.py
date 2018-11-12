@@ -72,7 +72,8 @@ class Oraclestat(object):
             "db file scattered read",
             "log file parallel write",
             "log file sync",
-            "log file parallel write"
+            "log file parallel write",
+            "enq: TX - row lock contention"
         )
         self.time_model = (
             'DB time',
@@ -223,17 +224,25 @@ class Oraclestat(object):
             waits = total_waits - self.old_stat[event]
             if waits == 0:
                 stat_delta[event + "/avg waitim"] = 0
+                stat_delta[event] = 0
             else:
                 stat_delta[event + "/avg waitim"] = math.ceil(
                     (time_waited - self.old_stat[event + "/time waited"]) * 1.0 / waits)
+                stat_delta[event] = math.ceil(
+                    (total_waits - self.old_stat[event]))
 
             self.old_stat[event] = total_waits
             self.old_stat[event + "/time waited"] = time_waited
 
         return {
-            'sync': stat_delta['db file sequential read/avg waitim'],
-            'scat': stat_delta['db file scattered read/avg waitim'],
-            'seq': stat_delta['log file sync/avg waitim']
+            'log_sync_wait': stat_delta['log file sync/avg waitim'],
+            'log_sync_cnt': stat_delta['log file sync'],
+            'log_para_wait': stat_delta['log file parallel write/avg waitim'],
+            'scat_wait': stat_delta['db file scattered read/avg waitim'],
+            'scat_read_cnt': stat_delta['db file scattered read'],
+            'seq_wait': stat_delta['db file sequential read/avg waitim'],
+            'seq_read_cnt': stat_delta['db file sequential read'],
+            'row_lock_cnt': stat_delta['enq: TX - row lock contention']
         }
 
     def get_oracle_session_count(self):

@@ -274,6 +274,7 @@ def check_oracle(tags,host,port,service_name,user,password,user_os,password_os):
         oracle_stat = oracle_data['stat']
         oracle_time = oracle_data['time']
         oracle_sess = oracle_data['sess']
+        oracle_wait = oracle_data['wait']
 
         if not archive_used:
             archive_used = [('None'), 0]
@@ -315,8 +316,9 @@ def check_oracle(tags,host,port,service_name,user,password,user_os,password_os):
             insert_db_sql = "insert into oracle_db(tags,host,port,service_name,dbname,db_unique_name,database_role,uptime,audit_trail," \
                         "open_mode,log_mode,archive_used,archive_rate_level,inst_id,instance_name,host_name,max_process,current_process,percent_process,conn_rate_level,adg_" \
                         "transport_lag,adg_apply_lag,adg_transport_value,adg_transport_rate_level,adg_apply_value,adg_apply_rate_level,mon_status,err_info,sga_size,pga_size,mem_pct,qps,tps," \
-                        "exec_count,user_commits,gets,logr,phyr,phyw,blockchange,redo,parse,hardparse,netin,netout,io,total_sess,act_sess,act_trans,blocked_sess,dbtime,dbcpu,rate_level)" \
-                        " values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+                        "exec_count,user_commits,gets,logr,phyr,phyw,blockchange,redo,parse,hardparse,netin,netout,io,total_sess,act_sess,act_trans,blocked_sess,dbtime,dbcpu,log_para_wait,log_sync_wait,log_sync_cnt," \
+                         "scat_wait,scat_read_cnt,seq_wait,seq_read_cnt,row_lock_cnt,rate_level)" \
+                        " values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
             value = (
                 tags, host, port, service_name, dbnameinfo[0][0], dbnameinfo[0][1], dbnameinfo[0][2],up_days,audit_trail[0][0],dbnameinfo[0][3],
                 dbnameinfo[0][4], archive_used[0][0], archive_rate_level,
@@ -326,14 +328,15 @@ def check_oracle(tags,host,port,service_name,user,password,user_os,password_os):
                 adg_apl[0][0],
                 adg_trs[0][1], transport_rate_level, adg_apl[0][1], apply_rate_level, 'connected', err_info,sga_size,pga_size,mem_pct,
                 oracle_stat['qps'],oracle_stat['tps'],oracle_stat['execute count'],oracle_stat['user commits'],oracle_stat['gets'],oracle_stat['logr'],oracle_stat['phyr'],oracle_stat['phyw'],oracle_stat['blockchange'],oracle_stat['redo'],oracle_stat['parse'],oracle_stat['hardparse'],oracle_stat['netin'],oracle_stat['netout'],oracle_stat['io_throughput'],
-                oracle_sess['total'],oracle_sess['act'],oracle_sess['act_trans'],oracle_sess['blocked'],oracle_time['dbtime'],oracle_time['dbcpu'],db_rate_level)
+                oracle_sess['total'],oracle_sess['act'],oracle_sess['act_trans'],oracle_sess['blocked'],oracle_time['dbtime'],oracle_time['dbcpu'],oracle_wait['log_para_wait'],oracle_wait['log_sync_wait'],oracle_wait['log_sync_cnt'],oracle_wait['scat_wait'],oracle_wait['scat_read_cnt'],oracle_wait['seq_wait'],oracle_wait['seq_read_cnt'],oracle_wait['row_lock_cnt'],db_rate_level)
             tools.mysql_exec(insert_db_sql, value)
             my_log.logger.info('%s：获取Oracle数据库监控数据(数据库名：%s 数据库角色：%s 数据库状态：%s 连接数使用率：%s )' % (
                 tags, dbnameinfo[0][0], dbnameinfo[0][2], dbnameinfo[0][3], process[0][3]))
 
         # not adg
         else:
-            insert_db_sql = "insert into oracle_db(tags,host,port,service_name,dbname,db_unique_name,database_role,uptime,audit_trail,open_mode,log_mode,archive_used,archive_rate_level,inst_id,instance_name,host_name,max_process,current_process,percent_process,conn_rate_level,mon_status,err_info,sga_size,pga_size,mem_pct,qps,tps,exec_count,user_commits,gets,logr,phyr,phyw,blockchange,redo,parse,hardparse,netin,netout,io,total_sess,act_sess,act_trans,blocked_sess,dbtime,dbcpu,rate_level) values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+            insert_db_sql = "insert into oracle_db(tags,host,port,service_name,dbname,db_unique_name,database_role,uptime,audit_trail,open_mode,log_mode,archive_used,archive_rate_level,inst_id,instance_name,host_name,max_process,current_process,percent_process,conn_rate_level,mon_status,err_info,sga_size,pga_size,mem_pct,qps,tps,exec_count,user_commits,gets,logr,phyr,phyw,blockchange,redo,parse,hardparse,netin,netout,io,total_sess,act_sess,act_trans,blocked_sess,dbtime,dbcpu,log_para_wait,log_sync_wait,log_sync_cnt," \
+                         "scat_wait,scat_read_cnt,seq_wait,seq_read_cnt,row_lock_cnt,rate_level) values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
             value = (
                 tags, host, port, service_name, dbnameinfo[0][0], dbnameinfo[0][1], dbnameinfo[0][2],up_days,audit_trail[0][0], dbnameinfo[0][3],
                 dbnameinfo[0][4], archive_used[0][0], archive_rate_level,
@@ -345,7 +348,9 @@ def check_oracle(tags,host,port,service_name,user,password,user_os,password_os):
                 oracle_stat['gets'], oracle_stat['logr'],oracle_stat['phyr'],
                 oracle_stat['phyw'], oracle_stat['blockchange'], oracle_stat['redo'], oracle_stat['parse'],
                 oracle_stat['hardparse'], oracle_stat['netin'], oracle_stat['netout'],oracle_stat['io_throughput'],
-                oracle_sess['total'], oracle_sess['act'], oracle_sess['act_trans'], oracle_sess['blocked'], oracle_time['dbtime'],oracle_time['dbcpu'],db_rate_level)
+                oracle_sess['total'], oracle_sess['act'], oracle_sess['act_trans'], oracle_sess['blocked'], oracle_time['dbtime'],oracle_time['dbcpu'],
+                oracle_wait['log_para_wait'],oracle_wait['log_sync_wait'],oracle_wait['log_sync_cnt'],oracle_wait['scat_wait'],oracle_wait['scat_read_cnt'],
+                oracle_wait['seq_wait'],oracle_wait['seq_read_cnt'],oracle_wait['row_lock_cnt'],db_rate_level)
             tools.mysql_exec(insert_db_sql, value)
             my_log.logger.info('%s：获取Oracle数据库监控数据(数据库名：%s 数据库角色：%s 数据库状态：%s 连接数使用率：%s )' % (
                 tags, dbnameinfo[0][0], dbnameinfo[0][2], dbnameinfo[0][3], process[0][3]))
