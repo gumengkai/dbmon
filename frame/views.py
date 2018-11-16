@@ -1357,7 +1357,7 @@ def mysql_install(request):
         if request.POST.has_key('commit'):
             host_name = request.POST.get('host_name', None)
             host = request.POST.get('host', None)
-            password = base64.encodestring(request.POST.get('password', None))
+            password = request.POST.get('password', None)
             linux_version = request.POST.get('linux_version', None)
             mysql_version = request.POST.get('oracle_version', None)
             soft_dir = request.POST.get('soft_dir', None)

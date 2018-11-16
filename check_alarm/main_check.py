@@ -942,6 +942,11 @@ if __name__ =='__main__':
         # tools.mysql_exec(insert_sql, '')
         delete_sql = "delete from oracle_db_rate where tags not in (select tags from tab_oracle_servers)"
         tools.mysql_exec(delete_sql, '')
+        my_log.logger.info('清除mysql_db表无效监控数据')
+        insert_sql = "insert into mysql_db_his select * from mysql_db_rate where tags not in (select tags from tab_mysql_servers)"
+        # tools.mysql_exec(insert_sql, '')
+        delete_sql = "delete from mysql_db where tags not in (select tags from tab_mysql_servers)"
+        tools.mysql_exec(delete_sql, '')
         my_log.logger.info('清除mysql_db_rate表无效监控数据')
         insert_sql = "insert into mysql_db_rate_his select * from mysql_db_rate where tags not in (select tags from tab_mysql_servers)"
         # tools.mysql_exec(insert_sql, '')

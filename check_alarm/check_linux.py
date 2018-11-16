@@ -5,7 +5,6 @@ import paramiko
 import re
 import os
 
-
 stat_file_config = {
     'cpu': '/proc/stat',
     'net': '/proc/net/dev',
@@ -384,7 +383,7 @@ class LinuxStat(object):
 
 
 if __name__ == '__main__':
-    linuxstat = LinuxStat('192.168.48.10', 'root', 'oracle')
+    linuxstat = LinuxStat('114.115.244.52', 'root', 'Mysql_123')
     while True:
         stat = linuxstat.get_linux()
         print stat

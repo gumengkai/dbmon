@@ -56,31 +56,6 @@ def mysql_install(host,user,password):
     log_type = 'Mysql部署'
     tools.mysql_exec("delete from many_logs where log_type = 'Mysql部署'", '')
 
-    # 清除目标目录
-    cmd = 'rm -rf /tmp/mysql_install'
-    exec_command(host, user, password, cmd)
-    # 创建文件目录
-    cmd = 'mkdir -p /tmp/mysql_install'
-    exec_command(host, user, password, cmd)
-    # 上传安装部署文件
-    sftp_upload_dir(host,user,password,'/tmp','mysql_install')
-    tools.my_log(log_type, '预上传文件完成！','')
-
-    # 1. 移除自带MySQL用户及安装包
-    cmd = 'sh /tmp/mysql_install/0_mysql_delold.sh > /tmp/mysql_install/0_mysql_delold.log'
-    exec_command(host, user, password, cmd)
-    tools.my_log(log_type, '执行0_mysql_delold.sh，移除自带mysql完成！', '')
-
-    # 1. 安装rpm包
-    cmd = 'sh /tmp/mysql_install/1_mysql_yum.sh > /tmp/mysql_install/1_mysql_yum.log'
-    exec_command(host, user, password, cmd)
-    tools.my_log(log_type, '执行1_mysql_yum.sh，rpm包安装完成！', '')
-
-    #2. 配置资源限制，内核参数
-    cmd = 'sh /tmp/mysql_install/2_mysql_init.sh > /tmp/mysql_install/2_mysql_init.log'
-    exec_command(host, user, password, cmd)
-    tools.my_log(log_type, '执行2_mysql_init.sh，环境初始化完成！','')
-
     #3. 配置MySQL用户环境变量
     cmd = 'sh /tmp/mysql_install/3_mysql_profile.sh > /tmp/mysql_install/3_mysql_profile.log'
     exec_command(host, user, password, cmd)
@@ -122,9 +97,9 @@ def mysql_startup(host,user,password):
     tools.my_log(log_type, 'mysql_startup.sh，Mysql数据库启动成功！', '')
 
 if __name__ == '__main__':
-    host = '192.168.48.10'
+    host = '114.115.244.52'
     user = 'root'
-    password = 'oracle'
+    password = 'Mysql_123'
     mysql_install(host,user,password)
 
 

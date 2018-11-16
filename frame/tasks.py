@@ -101,4 +101,14 @@ def get_report(tags,url,user,password,report_type,begin_snap,end_snap):
 # mysql安装
 @shared_task
 def mysql_install(host,user,password):
-    mysql.mysql_install(host,user,password)
+    oper_type = '安装mysql数据库'
+    server_type = 'Mysql'
+    task_id = uuid.uuid1()
+    task_name = '%s:mysql_install' % host
+    args = 'host：' + host + '，' + 'user：' + user + '，' + 'password：' + password
+    tools.begin_task(task_id, oper_type, server_type, host, task_name, args)
+    mysql.mysql_install(host, user, password)
+    result = ''
+    state = 'SUCCESS'
+    tools.end_task(task_id, result, state)
+

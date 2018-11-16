@@ -17,7 +17,7 @@ def login_in(request):
     error_msg = ''
     if request.method == "POST":
         request_meta = request.META
-        print request_meta
+        # print request_meta
         username = request.POST.get('username',None)
         password = request.POST.get('password',None)
         user = authenticate(username=username,password=password)
