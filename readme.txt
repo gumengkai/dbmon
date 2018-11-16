@@ -19,3 +19,7 @@ cx-Oracle (6.0.2)
 
 注：
 Oracle top sql功能为存储过程实现，需要先在被监控库执行脚本oracle/scripts/*
+
+示例访问地址：
+http://www.dbmon.cn/login/
+用户名密码：admin/111111
