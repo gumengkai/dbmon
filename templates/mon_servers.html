@@ -411,7 +411,9 @@ desired effect
         {% endif %}
            </span>
             <div class="pull-right">
-                <a href="/linux_servers_add" class="btn btn-primary btn-block btn-flat">新增</a>
+                 <a href="#">
+            <button type="button" class="btn btn-primary btn-block btn-flat" onclick="return pop_linux_add()">新增</button>
+                 </a>
               </div>
          </div>
             <!-- /.box-body -->
@@ -498,8 +500,10 @@ desired effect
         {% endif %}
            </span>
             <div class="pull-right">
-                <a href="/oracle_servers_add" class="btn btn-primary btn-block btn-flat">新增</a>
-              </div>
+                 <a href="#">
+            <button type="button" class="btn btn-primary btn-block btn-flat" onclick="return pop_oracle_add()">新增</button>
+                 </a>
+            </div>
          </div>
             <!-- /.box-body -->
           </div>
@@ -573,8 +577,10 @@ desired effect
         {% endif %}
            </span>
             <div class="pull-right">
-                <a href="/mysql_servers_add" class="btn btn-primary btn-block btn-flat">新增</a>
-              </div>
+                 <a href="#">
+            <button type="button" class="btn btn-primary btn-block btn-flat" onclick="return pop_mysql_add()">新增</button>
+                 </a>
+            </div>
          </div>
             <!-- /.box-body -->
           </div>
@@ -625,7 +631,7 @@ desired effect
 function pop_linux(n){
     layer.open({
     type: 2,
-    title: '编辑主机信息',
+    title: '编辑主机配置',
     closeBtn: 1,
     area: ['700px', '550px'],
     shadeClose: true, //点击遮罩关闭
@@ -641,6 +647,35 @@ function pop_linux(n){
                 });
             } else if ( handle_status == '2' ) {
                 layer.msg('修改失败！',{
+                    icon: 2,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                },function(){
+                    history.go(0);
+                });
+            }
+        }
+  });
+}
+
+function pop_linux_add(){
+    layer.open({
+    type: 2,
+    title: '新增主机监控',
+    closeBtn: 1,
+    area: ['700px', '550px'],
+    shadeClose: true, //点击遮罩关闭
+    content: ['/linux_servers_add',],
+    end:function(){
+            var handle_status = $("#handle_status").val();
+            if ( handle_status == '1' ) {
+                layer.msg('添加成功！',{
+                    icon: 1,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                },function(){
+                    history.go(0);
+                });
+            } else if ( handle_status == '2' ) {
+                layer.msg('添加失败！',{
                     icon: 2,
                     time: 2000 //2秒关闭（如果不配置，默认是3秒）
                 },function(){
@@ -680,6 +715,35 @@ function pop_oracle(n){
   });
 }
 
+function pop_oracle_add(){
+    layer.open({
+    type: 2,
+    title: '添加Oracle数据库监控',
+    closeBtn: 1,
+    area: ['700px', '550px'],
+    shadeClose: true, //点击遮罩关闭
+    content: ['/oracle_servers_add',],
+    end:function(){
+            var handle_status = $("#handle_status").val();
+            if ( handle_status == '1' ) {
+                layer.msg('添加成功！',{
+                    icon: 1,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                },function(){
+                    history.go(0);
+                });
+            } else if ( handle_status == '2' ) {
+                layer.msg('修改失败！',{
+                    icon: 2,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                },function(){
+                    history.go(0);
+                });
+            }
+        }
+  });
+}
+
 function pop_mysql(n){
     layer.open({
     type: 2,
@@ -698,7 +762,7 @@ function pop_mysql(n){
                     history.go(0);
                 });
             } else if ( handle_status == '2' ) {
-                layer.msg('修改失败！',{
+                layer.msg('添加失败！',{
                     icon: 2,
                     time: 2000 //2秒关闭（如果不配置，默认是3秒）
                 },function(){
@@ -708,6 +772,36 @@ function pop_mysql(n){
         }
   });
 }
+
+function pop_mysql_add(){
+    layer.open({
+    type: 2,
+    title: '添加Mysql数据库监控',
+    closeBtn: 1,
+    area: ['700px', '550px'],
+    shadeClose: true, //点击遮罩关闭
+    content: ['/mysql_servers_add',],
+    end:function(){
+            var handle_status = $("#handle_status").val();
+            if ( handle_status == '1' ) {
+                layer.msg('添加成功！',{
+                    icon: 1,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                },function(){
+                    history.go(0);
+                });
+            } else if ( handle_status == '2' ) {
+                layer.msg('添加失败！',{
+                    icon: 2,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                },function(){
+                    history.go(0);
+                });
+            }
+        }
+  });
+}
+
 </script>
 
 <script>

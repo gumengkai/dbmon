@@ -354,7 +354,7 @@ desired effect
                   <th>下限阈值</th>
                    <th>时间阈值(秒)</th>
                     <th>数量阈值(个)</th>
-                   <th style="width: 10px"></th>
+                   <th>编辑</th>
                 </tr>
                 </thead>
                 {% for alarm_setting in alarm_settings %}
@@ -368,8 +368,8 @@ desired effect
                  <td>{{ alarm_setting.num_max }} </td>
                  <td>
               <div class="box-tools pull-right">
-                <a href="/alarm_settings_edit?id={{ alarm_setting.id }}">
-                  <button type="button" class="btn btn-default btn-sm"><i class="fa fa-edit"></i></button></a>
+                <a href="#">
+            <button type="button" class="btn btn-default btn-sm" onclick="return pop(this.value)" value="{{ alarm_setting.id }}"><i class="fa fa-edit"></i></button></a>
               </div>
                  </td>
                  </tr>
@@ -398,6 +398,7 @@ desired effect
     </section>
     </section>
     <!-- /.content -->
+        <input id="handle_status" value="" hidden="hidden">
   </div>
   <!-- /.content-wrapper -->
 
@@ -426,8 +427,40 @@ desired effect
 <!-- AdminLTE App -->
 <script src="/static/dist/js/adminlte.min.js"></script>
 
+<script src="/static/layer/layer.js"></script>
+
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
      user experience. -->
+<script>
+function pop(n){
+    layer.open({
+    type: 2,
+    title: '编辑告警策略',
+    closeBtn: 1,
+    area: ['700px', '550px'],
+    shadeClose: true, //点击遮罩关闭
+    content: ['/alarm_settings_edit?id='+n,],
+    end:function(){
+            var handle_status = $("#handle_status").val();
+            if ( handle_status == '1' ) {
+                layer.msg('保存成功！',{
+                    icon: 1,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                },function(){
+                    history.go(0);
+                });
+            } else if ( handle_status == '2' ) {
+                layer.msg('修改失败！',{
+                    icon: 2,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                },function(){
+                    history.go(0);
+                });
+            }
+        }
+  });
+}
+</script>
 </body>
 </html>
