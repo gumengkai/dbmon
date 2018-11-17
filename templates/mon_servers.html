@@ -367,8 +367,8 @@ desired effect
                     <th>CPU使用率告警</th>
                     <th>内存使用率告警</th>
                     <th>磁盘使用率告警</th>
-                    <th style="width: 10px"></th>
-                    <th style="width: 10px"></th>
+                    <th>编辑</th>
+                    <th>删除</th>
                 </tr>
                 </thead>
                 {% for linux_server in linuxs_servers %}
@@ -384,14 +384,14 @@ desired effect
                  <td align="center">{{ linux_server.disk_cn }} </td>
                  <td>
               <div class="box-tools pull-right">
-                <a href="/linux_servers_edit?id={{ linux_server.id }}">
-            <button type="button" class="btn btn-default btn-sm"><i class="fa fa-edit"></i></button></a>
+                <a href="#">
+            <button type="button" class="btn btn-default btn-sm" onclick="return pop_linux(this.value)" value="{{ linux_server.id }}"><i class="fa fa-edit"></i></button></a>
               </div>
                  </td>
                  <td>
               <div class="box-tools pull-right">
                 <a href="/linux_servers_del?id={{ linux_server.id }}">
-            <button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button></a>
+            <button type="button" class="btn btn-default btn-sm" onclick="javascript:return del();"><i class="fa fa-trash-o"></i></button></a>
               </div>
                  </td>
                  </tr>
@@ -472,14 +472,14 @@ desired effect
                  <td align="center" valign="center" >{{ oracle_server.oracle_lock_cn }} </td>
                  <td align="center" valign="center" >{{ oracle_server.oracle_pwd_cn }} </td>
                  <td align="center" valign="center" >{{ oracle_server.pga_cn }} </td>
-                 <td align="center" valign="center" >{{ oracle_server.archive_cn }} </td
+                 <td align="center" valign="center" >{{ oracle_server.archive_cn }} </td>
                  <td>
-                <a href="/oracle_servers_edit?id={{ oracle_server.id }}">
-            <button type="button" class="btn btn-default btn-sm"><i class="fa fa-edit"></i></button></a>
+                <a href="#">
+            <button type="button" class="btn btn-default btn-sm" onclick="return pop_oracle(this.value)" value="{{ oracle_server.id }}"><i class="fa fa-edit"></i></button></a>
                  </td>
                  <td>
                 <a href="/oracle_servers_del?id={{ oracle_server.id }}">
-            <button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button></a>
+            <button type="button" class="btn btn-default btn-sm" onclick="javascript:return del();"><i class="fa fa-trash-o"></i></button></a>
                  </td>
                  </tr>
                  {% endfor %}
@@ -528,6 +528,8 @@ desired effect
                     <th>复制延迟告警</th>
                     <th>连接数告警</th>
                     <th>后台日志告警</th>
+                    <th>编辑</th>
+                    <th>删除</th>
                 </tr>
                 </thead>
                 {% for mysql_server in mysql_servers %}
@@ -544,14 +546,14 @@ desired effect
                      <td>{{ mysql_server.err_info_cn}} </td>
                  <td>
               <div class="box-tools pull-right">
-                <a href="/mysql_servers_edit?id={{ mysql_server.id }}">
-            <button type="button" class="btn btn-default btn-sm"><i class="fa fa-edit"></i></button></a>
+                <a href="#">
+            <button type="button" class="btn btn-default btn-sm" onclick="return pop_mysql(this.value)" value="{{ mysql_server.id }}"><i class="fa fa-edit"></i></button></a>
               </div>
                  </td>
                  <td>
               <div class="box-tools pull-right">
                 <a href="/mysql_servers_del?id={{ mysql_server.id }}">
-            <button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button></a>
+            <button type="button" class="btn btn-default btn-sm" onclick="javascript:return del();"><i class="fa fa-trash-o"></i></button></a>
               </div>
                  </td>
                  </tr>
@@ -585,6 +587,7 @@ desired effect
     </section>
     </section>
     <!-- /.content -->
+      <input id="handle_status" value="" hidden="hidden">
   </div>
   <!-- /.content-wrapper -->
 
@@ -613,8 +616,109 @@ desired effect
 <!-- AdminLTE App -->
 <script src="/static/dist/js/adminlte.min.js"></script>
 
+<script src="/static/layer/layer.js"></script>
+
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
      user experience. -->
+<script>
+function pop_linux(n){
+    layer.open({
+    type: 2,
+    title: '编辑主机信息',
+    closeBtn: 1,
+    area: ['700px', '550px'],
+    shadeClose: true, //点击遮罩关闭
+    content: ['/linux_servers_edit?id='+n,],
+    end:function(){
+            var handle_status = $("#handle_status").val();
+            if ( handle_status == '1' ) {
+                layer.msg('保存成功！',{
+                    icon: 1,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                },function(){
+                    history.go(0);
+                });
+            } else if ( handle_status == '2' ) {
+                layer.msg('修改失败！',{
+                    icon: 2,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                },function(){
+                    history.go(0);
+                });
+            }
+        }
+  });
+}
+
+function pop_oracle(n){
+    layer.open({
+    type: 2,
+    title: '编辑Oracle数据库配置',
+    closeBtn: 1,
+    area: ['700px', '550px'],
+    shadeClose: true, //点击遮罩关闭
+    content: ['/oracle_servers_edit?id='+n,],
+    end:function(){
+            var handle_status = $("#handle_status").val();
+            if ( handle_status == '1' ) {
+                layer.msg('保存成功！',{
+                    icon: 1,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                },function(){
+                    history.go(0);
+                });
+            } else if ( handle_status == '2' ) {
+                layer.msg('修改失败！',{
+                    icon: 2,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                },function(){
+                    history.go(0);
+                });
+            }
+        }
+  });
+}
+
+function pop_mysql(n){
+    layer.open({
+    type: 2,
+    title: '编辑mysql数据库配置',
+    closeBtn: 1,
+    area: ['700px', '550px'],
+    shadeClose: true, //点击遮罩关闭
+    content: ['/mysql_servers_edit?id='+n,],
+    end:function(){
+            var handle_status = $("#handle_status").val();
+            if ( handle_status == '1' ) {
+                layer.msg('保存成功！',{
+                    icon: 1,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                },function(){
+                    history.go(0);
+                });
+            } else if ( handle_status == '2' ) {
+                layer.msg('修改失败！',{
+                    icon: 2,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                },function(){
+                    history.go(0);
+                });
+            }
+        }
+  });
+}
+</script>
+
+<script>
+function del() {
+var msg = "确定要删除？\n\n请确认！";
+if (confirm(msg)==true){
+return true;
+}else{
+return false;
+}
+}
+</script>
 </body>
 </html>

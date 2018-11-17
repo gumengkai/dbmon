@@ -214,7 +214,7 @@ def alarm_settings_edit(request):
 
 @login_required(login_url='/login')
 def linux_servers_edit(request):
-    messageinfo_list = models_frame.TabAlarmInfo.objects.all()
+    status = 0
     rid = request.GET.get('id')
     linux_server_edit = models_linux.TabLinuxServers.objects.get(id=rid)
     if request.method == "POST":
@@ -237,20 +237,12 @@ def linux_servers_edit(request):
                                                                  connect=connect,
                                                                  cpu_cn=cpu_cn, cpu=cpu, mem_cn=mem_cn, mem=mem,
                                                                  disk_cn=disk_cn, disk=disk)
-            return HttpResponseRedirect('/mon_servers/')
+            status = 1
         elif request.POST.has_key('logout'):
             logout(request)
             return HttpResponseRedirect('/login/')
 
-    if messageinfo_list:
-        msg_num = len(messageinfo_list)
-        msg_last = models_frame.TabAlarmInfo.objects.latest('id')
-        msg_last_content = msg_last.alarm_content
-        tim_last = (datetime.datetime.now() - msg_last.alarm_time).seconds / 60
-        return render_to_response('linux_servers_edit.html', {'linux_server_edit': linux_server_edit, 'messageinfo_list': messageinfo_list, 'msg_num': msg_num,
-                                   'msg_last_content': msg_last_content, 'tim_last': tim_last})
-    else:
-        return render_to_response('linux_servers_edit.html', {'linux_server_edit': linux_server_edit})
+    return render_to_response('linux_servers_edit.html', {'linux_server_edit': linux_server_edit,'status':status})
 
 @login_required(login_url='/login')
 def linux_servers_add(request):
@@ -366,7 +358,7 @@ def oracle_servers_del(request):
 
 @login_required(login_url='/login')
 def oracle_servers_edit(request):
-    messageinfo_list = models_frame.TabAlarmInfo.objects.all()
+    status = 0
     rid = request.GET.get('id')
     oracle_server_edit = models_oracle.TabOracleServers.objects.get(id=rid)
     if request.method == "POST":
@@ -420,22 +412,12 @@ def oracle_servers_edit(request):
                                                                   conn=conn, conn_cn=conn_cn, err_info=err_info,
                                                                   err_info_cn=err_info_cn,invalid_index=invalid_index,invalid_index_cn=invalid_index_cn,
                                                           oracle_lock =oracle_lock,oracle_lock_cn=oracle_lock_cn,oracle_pwd =oracle_pwd,oracle_pwd_cn=oracle_pwd_cn,pga=oracle_pga,pga_cn=oracle_pga_cn,archive=oracle_archive,archive_cn=oracle_archive_cn)
-            return HttpResponseRedirect('/mon_servers/')
-
+            status = 1
         elif request.POST.has_key('logout'):
             logout(request)
             return HttpResponseRedirect('/login/')
 
-
-    if messageinfo_list:
-        msg_num = len(messageinfo_list)
-        msg_last = models_frame.TabAlarmInfo.objects.latest('id')
-        msg_last_content = msg_last.alarm_content
-        tim_last = (datetime.datetime.now() - msg_last.alarm_time).seconds / 60
-        return render_to_response('oracle_servers_edit.html', {'oracle_server_edit': oracle_server_edit,'messageinfo_list': messageinfo_list, 'msg_num': msg_num,
-                                   'msg_last_content': msg_last_content, 'tim_last': tim_last})
-    else:
-        return render_to_response('oracle_servers_edit.html',{'oracle_server_edit': oracle_server_edit})
+    return render_to_response('oracle_servers_edit.html',{'oracle_server_edit': oracle_server_edit,'status':status})
 
 @login_required(login_url='/login')
 def mysql_servers_add(request):
@@ -488,7 +470,7 @@ def mysql_servers_del(request):
 
 @login_required(login_url='/login')
 def mysql_servers_edit(request):
-    messageinfo_list = models_frame.TabAlarmInfo.objects.all()
+    status = 0
     rid = request.GET.get('id')
     mysql_server_edit = models_mysql.TabMysqlServers.objects.get(id=rid)
     if request.method == "POST":
@@ -522,22 +504,13 @@ def mysql_servers_edit(request):
                                                                   repl=repl, repl_cn=repl_cn,
                                                                   conn=conn, conn_cn=conn_cn, err_info=err_info,
                                                                   err_info_cn=err_info_cn)
-            return HttpResponseRedirect('/mon_servers/')
+            status = 1
 
         elif request.POST.has_key('logout'):
             logout(request)
             return HttpResponseRedirect('/login/')
 
-
-    if messageinfo_list:
-        msg_num = len(messageinfo_list)
-        msg_last = models_frame.TabAlarmInfo.objects.latest('id')
-        msg_last_content = msg_last.alarm_content
-        tim_last = (datetime.datetime.now() - msg_last.alarm_time).seconds / 60
-        return render_to_response('mysql_servers_edit.html', {'mysql_server_edit': mysql_server_edit,'messageinfo_list': messageinfo_list, 'msg_num': msg_num,
-                                   'msg_last_content': msg_last_content, 'tim_last': tim_last})
-    else:
-        return render_to_response('mysql_servers_edit.html',{'mysql_servers_edit': mysql_server_edit})
+    return render_to_response('mysql_servers_edit.html',{'mysql_server_edit': mysql_server_edit,'status':status})
 
 @login_required(login_url='/login')
 def show_alarm(request):
