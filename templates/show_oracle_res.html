@@ -738,8 +738,8 @@ desired effect
                  <td><span class="badge bg-{{ oracle_user.EXPIRY_COLOR }}">{{ oracle_user.EXPIRY_DATE }}</span></td>
                  <td>{{ oracle_user.DEFAULT_TABLESPACE }} </td>
                  <td>{{ oracle_user.TEMPORARY_TABLESPACE }} </td>
-                 <td> <li><a href="/oracle_profile?tags={{ tagsdefault }}&profile_name={{ oracle_user.PROFILE }}" >{{ oracle_user.PROFILE }}</a></li> </td>
-                 <td> <li><a href="/oracle_grant?tags={{ tagsdefault }}&username={{ oracle_user.USERNAME }}" > 权限</a></li> </td>
+                 <td> <a href="#" ><li onclick="return pop_profile('{{ tagsdefault }}','{{ oracle_user.PROFILE }}')">{{ oracle_user.PROFILE }}</li></a></td>
+                 <td> <a href="#" ><li onclick="return pop_grant('{{ tagsdefault }}','{{ oracle_user.USERNAME }}')">{{ oracle_user.USERNAME }}</li></a></td>
                  </tr>
                  {% endfor %}
               </table>
@@ -808,6 +808,8 @@ desired effect
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
      user experience. -->
+<script src="/static/layer/layer.js"></script>
+
 <script>
   $(function () {
     //Initialize Select2 Elements
@@ -933,6 +935,29 @@ option = {
 ;
 if (option && typeof option === "object") {
     myChart.setOption(option, true);
+}
+</script>
+<script>
+function pop_profile(m,n){
+    layer.open({
+    type: 2,
+    title: '用户配置信息',
+    closeBtn: 1,
+    area: ['700px', '550px'],
+    shadeClose: true, //点击遮罩关闭
+    content: ['/oracle_profile?tags='+ m + '&profile_name=' + n]
+  });
+}
+
+function pop_grant(m,n){
+    layer.open({
+    type: 2,
+    title: '用户权限信息',
+    closeBtn: 1,
+    area: ['700px', '550px'],
+    shadeClose: true, //点击遮罩关闭
+    content: ['/oracle_grant?tags='+ m + '&username=' + n]
+  });
 }
 </script>
 </body>

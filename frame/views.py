@@ -719,7 +719,7 @@ def recorder_del(request):
 
 @login_required(login_url='/login')
 def recorder_add(request):
-    messageinfo_list = models_frame.TabAlarmInfo.objects.all()
+    status = 0
     recorder_list = models_frame.EventRecorder.objects.order_by('record_time')
     all_nums = len(recorder_list)
     sys_nums =  len(models_frame.EventRecorder.objects.filter(event_section='系统'))
@@ -741,29 +741,17 @@ def recorder_add(request):
             event_content = request.POST.get('event_content', None)
             models_frame.EventRecorder.objects.create(event_section=event_section, event_type=event_type,
                                                 event_type_color=event_type_color, event_content=event_content)
-            return HttpResponseRedirect('/recorder/')
+            status = 1
         elif request.POST.has_key('logout'):
             logout(request)
             return HttpResponseRedirect('/login/')
 
 
-    if messageinfo_list:
-        msg_num = len(messageinfo_list)
-        msg_last = models_frame.TabAlarmInfo.objects.latest('id')
-        msg_last_content = msg_last.alarm_content
-        tim_last = (datetime.datetime.now() - msg_last.alarm_time).seconds / 60
-        if request.method == 'POST':
-            logout(request)
-            return HttpResponseRedirect('/login/')
-        return render_to_response('recorder_add.html',
+
+    return render_to_response('recorder_add.html',
                                   {'recorder_list': recorder_list, 'all_nums': all_nums, 'sys_nums': sys_nums,
                                    'db_nums': db_nums, 'other_nums': other_nums,
-                                   'err_nums': err_nums, 'chg_nums': chg_nums, 'upg_nums': upg_nums,
-                                   'messageinfo_list': messageinfo_list,
-                                   'msg_num': msg_num,
-                                   'msg_last_content': msg_last_content, 'tim_last': tim_last})
-    else:
-        return render_to_response('recorder_add.html', {'recorder_list': recorder_list})
+                                   'err_nums': err_nums, 'chg_nums': chg_nums, 'upg_nums': upg_nums,'status':status})
 
 
 
@@ -1031,7 +1019,7 @@ def log_collect(request):
 
 @login_required(login_url='/login')
 def log_collects_edit(request):
-    messageinfo_list = models_frame.TabAlarmInfo.objects.all()
+    status = 0
     rid = request.GET.get('id')
     log_collect_edit = models_frame.LogCollectConf.objects.get(id=rid)
     if request.method == "POST":
@@ -1045,24 +1033,17 @@ def log_collects_edit(request):
             models_frame.LogCollectConf.objects.filter(id=rid).update(app_name=app_name,host=host, user=user,
                                                                  password=password, log_name = log_name,
                                                                  log_path = log_path)
-            return HttpResponseRedirect('/log_collect/')
+            status = 1
         elif request.POST.has_key('logout'):
             logout(request)
             return HttpResponseRedirect('/login/')
 
-    if messageinfo_list:
-        msg_num = len(messageinfo_list)
-        msg_last = models_frame.TabAlarmInfo.objects.latest('id')
-        msg_last_content = msg_last.alarm_content
-        tim_last = (datetime.datetime.now() - msg_last.alarm_time).seconds / 60
-        return render_to_response('log_collects_edit.html', {'log_collect_edit': log_collect_edit, 'messageinfo_list': messageinfo_list, 'msg_num': msg_num,
-                                   'msg_last_content': msg_last_content, 'tim_last': tim_last})
-    else:
-        return render_to_response('log_collects_edit.html', {'log_collect_edit': log_collect_edit})
+
+    return render_to_response('log_collects_edit.html', {'log_collect_edit': log_collect_edit,'status':status})
 
 @login_required(login_url='/login')
 def log_collects_add(request):
-    messageinfo_list = models_frame.TabAlarmInfo.objects.all()
+    status = 0
     if request.method == "POST":
         if request.POST.has_key('commit'):
             app_name = request.POST.get('app_name', None)
@@ -1073,21 +1054,12 @@ def log_collects_add(request):
             log_path = request.POST.get('log_path', None)
             models_frame.LogCollectConf.objects.create(app_name=app_name,host=host, user=user, password=password,
                                                        log_name=log_name, log_path=log_path)
-            return HttpResponseRedirect('/log_collect/')
+            status = 1
         elif request.POST.has_key('logout'):
             logout(request)
             return HttpResponseRedirect('/login/')
 
-    if messageinfo_list:
-        msg_num = len(messageinfo_list)
-        msg_last = models_frame.TabAlarmInfo.objects.latest('id')
-        msg_last_content = msg_last.alarm_content
-        tim_last = (datetime.datetime.now() - msg_last.alarm_time).seconds / 60
-        return render_to_response('log_collects_add.html',
-                                  { 'messageinfo_list': messageinfo_list, 'msg_num': msg_num,
-                                   'msg_last_content': msg_last_content, 'tim_last': tim_last})
-    else:
-        return render_to_response('log_collects_add.html', )
+    return render_to_response('log_collects_add.html',{'status':status})
 
 @login_required(login_url='/login')
 def log_collects_del(request):
@@ -1146,7 +1118,7 @@ def easy_start(request):
 
 @login_required(login_url='/login')
 def easy_starts_edit(request):
-    messageinfo_list = models_frame.TabAlarmInfo.objects.all()
+    status = 0
     rid = request.GET.get('id')
     easy_start_edit = models_frame.EasyStartConf.objects.get(id=rid)
     if request.method == "POST":
@@ -1163,24 +1135,16 @@ def easy_starts_edit(request):
             models_frame.EasyStartConf.objects.filter(id=rid).update(oper_type=oper_type,app_name=app_name,host=host, user=user,
                                                                  password=password,name=name, do_cmd = do_cmd,process_check = process_check,
                                                                      check_log = check_log)
-            return HttpResponseRedirect('/easy_start/')
+            status = 1
         elif request.POST.has_key('logout'):
             logout(request)
             return HttpResponseRedirect('/login/')
 
-    if messageinfo_list:
-        msg_num = len(messageinfo_list)
-        msg_last = models_frame.TabAlarmInfo.objects.latest('id')
-        msg_last_content = msg_last.alarm_content
-        tim_last = (datetime.datetime.now() - msg_last.alarm_time).seconds / 60
-        return render_to_response('easy_starts_edit.html', {'easy_start_edit': easy_start_edit, 'messageinfo_list': messageinfo_list, 'msg_num': msg_num,
-                                   'msg_last_content': msg_last_content, 'tim_last': tim_last})
-    else:
-        return render_to_response('easy_starts_edit.html', {'easy_start_edit': easy_start_edit})
+    return render_to_response('easy_starts_edit.html', {'easy_start_edit': easy_start_edit,'status':status})
 
 @login_required(login_url='/login')
 def easy_starts_add(request):
-    messageinfo_list = models_frame.TabAlarmInfo.objects.all()
+    status = 0
     if request.method == "POST":
         if request.POST.has_key('commit'):
             oper_type = request.POST.get('oper_type', None)
@@ -1195,21 +1159,12 @@ def easy_starts_add(request):
             models_frame.EasyStartConf.objects.create(oper_type=oper_type,app_name=app_name,host=host, user=user,
                                                                  password=password, do_cmd = do_cmd, name = name,process_check = process_check,
                                                                      check_log = check_log)
-            return HttpResponseRedirect('/easy_start/')
+            status = 1
         elif request.POST.has_key('logout'):
             logout(request)
             return HttpResponseRedirect('/login/')
 
-    if messageinfo_list:
-        msg_num = len(messageinfo_list)
-        msg_last = models_frame.TabAlarmInfo.objects.latest('id')
-        msg_last_content = msg_last.alarm_content
-        tim_last = (datetime.datetime.now() - msg_last.alarm_time).seconds / 60
-        return render_to_response('easy_starts_add.html',
-                                  { 'messageinfo_list': messageinfo_list, 'msg_num': msg_num,
-                                   'msg_last_content': msg_last_content, 'tim_last': tim_last})
-    else:
-        return render_to_response('easy_starts_add.html', )
+    return render_to_response('easy_starts_add.html', {'status':status})
 
 @login_required(login_url='/login')
 def easy_starts_del(request):

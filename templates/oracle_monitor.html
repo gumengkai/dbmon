@@ -79,6 +79,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
       z-index: 7;
     }
 pre { border:none 1px blue;}
+
+li{list-style: none;}/*这里设置*/
   </style>
 <!--
 BODY TAG OPTIONS:
@@ -450,7 +452,9 @@ desired effect
         <div class="col-md-4">
           <!-- AREA CHART -->
             <div class="box-header">
-              <h3 class="box-title"><a href="/oracle_process?tags={{ tagsdefault }}">连接数使用率</a></h3>
+              <h3 class="box-title">
+                  <a href="#" ><li onclick="return pop_conn('{{ tagsdefault }}')">连接数使用率</li></a>
+              </h3>
             </div>
             <div class="box-body chart-responsive">
               <div class="chart" id="conn-chart" style="height: 300px; "></div>
@@ -461,7 +465,9 @@ desired effect
         <div class="col-md-4">
           <!-- AREA CHART -->
             <div class="box-header">
-              <h3 class="box-title"><a href="/oracle_undo?tags={{ tagsdefault }}">undo使用率</a></h3>
+              <h3 class="box-title">
+                  <a href="#" ><li onclick="return pop_undo('{{ tagsdefault }}')">undo使用率</li></a>
+              </h3>
             </div>
             <div class="box-body chart-responsive">
               <div class="chart" id="undo-chart" style="height: 300px; "></div>
@@ -472,7 +478,9 @@ desired effect
                <div class="col-md-4">
           <!-- AREA CHART -->
             <div class="box-header">
-                <h3 class="box-title"><a href="/oracle_temp?tags={{ tagsdefault }}">TMP使用率(default:TEMP)</a></h3>
+                <h3 class="box-title">
+                  <a href="#" ><li onclick="return pop_tmp('{{ tagsdefault }}')">tmp使用率</li></a>
+                   </h3>
             </div>
             <div class="box-body chart-responsive">
               <div class="chart" id="tmp-chart" style="height: 300px; "></div>
@@ -785,6 +793,9 @@ desired effect
 <script src="/static/bower_components/fastclick/lib/fastclick.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="/static/dist/js/demo.js"></script>
+
+<script src="/static/layer/layer.js"></script>
+
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
      user experience. -->
@@ -1358,5 +1369,42 @@ function submitForm_ps(){
      myChart_ps_grow.setOption(option_ps_grow, true);
  },500);
 </script>
+
+<script>
+function pop_conn(m){
+    layer.open({
+    type: 2,
+    title: '连接数分析',
+    closeBtn: 1,
+    area: ['700px', '350px'],
+    shadeClose: true, //点击遮罩关闭
+    content: ['/oracle_process?tags='+ m,]
+  });
+}
+
+function pop_undo(m){
+    layer.open({
+    type: 2,
+    title: 'undo使用情况分析',
+    closeBtn: 1,
+    area: ['700px', '550px'],
+    shadeClose: true, //点击遮罩关闭
+    content: ['/oracle_undo?tags='+ m]
+  });
+}
+
+function pop_tmp(m){
+    layer.open({
+    type: 2,
+    title: 'tmp使用情况分析',
+    closeBtn: 1,
+    area: ['700px', '350px'],
+    shadeClose: true, //点击遮罩关闭
+    content: ['/oracle_temp?tags='+ m]
+  });
+}
+
+</script>
+
 </body>
 </html>

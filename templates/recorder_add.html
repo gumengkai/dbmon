@@ -59,346 +59,15 @@ desired effect
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
-  <!-- Main Header -->
-  <header class="main-header">
-
-    <!-- Logo -->
-    <a href="/begin" class="logo">
-      <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>DB</b>m</span>
-      <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>DB</b>monitor</span>
-    </a>
-
-    <!-- Header Navbar -->
-    <nav class="navbar navbar-static-top" role="navigation">
-      <!-- Sidebar toggle button-->
-      <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-        <span class="sr-only">Toggle navigation</span>
-      </a>
-      <!-- Navbar Right Menu -->
-      <div class="navbar-custom-menu">
-        <ul class="nav navbar-nav">
-          <!-- Messages: style can be found in dropdown.less-->
-          <li class="dropdown messages-menu">
-            <!-- Menu toggle button -->
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <i class="fa fa-envelope-o"></i>
-              <span class="label label-danger">{{ msg_num }} </span>
-            </a>
-            <ul class="dropdown-menu">
-              <li class="header">您有 {{ msg_num }} 条告警信息</li>
-              <li>
-                <!-- inner menu: contains the messages -->
-                <ul class="menu">
-                  <li><!-- start message -->
-                    <a href="#">
-                      <div class="pull-left">
-                        <!-- User Image -->
-                        <img src="/static/dist/img/oracle.jpg" class="img-circle" alt="User Image">
-                      </div>
-                      <!-- Message title and timestamp -->
-                      <h4>
-                        DB monitor
-                        <small><i class="fa fa-clock-o"></i> {{ tim_last }} mins</small>
-                      </h4>
-                      <!-- The message -->
-                      <p>{{ msg_last_content }}</p>
-                    </a>
-                  </li>
-                  <!-- end message -->
-                </ul>
-                <!-- /.menu -->
-              </li>
-              <li class="footer"><a href=/show_alarm>查看所有消息</a></li>
-            </ul>
-          </li>
-          <!-- /.messages-menu -->
-
-          <!-- Notifications Menu -->
-          <li class="dropdown notifications-menu">
-            <!-- Menu toggle button -->
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <i class="fa fa-bell-o"></i>
-              <span class="label label-warning">10</span>
-            </a>
-            <ul class="dropdown-menu">
-              <li class="header">You have 10 notifications</li>
-              <li>
-                <!-- Inner Menu: contains the notifications -->
-                <ul class="menu">
-                  <li><!-- start notification -->
-                    <a href="#">
-                      <i class="fa fa-users text-aqua"></i> 5 new members joined today
-                    </a>
-                  </li>
-                  <!-- end notification -->
-                </ul>
-              </li>
-              <li class="footer"><a href="#">View all</a></li>
-            </ul>
-          </li>
-          <!-- Tasks Menu -->
-          <li class="dropdown tasks-menu">
-            <!-- Menu Toggle Button -->
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <i class="fa fa-flag-o"></i>
-              <span class="label label-danger">9</span>
-            </a>
-            <ul class="dropdown-menu">
-              <li class="header">You have 9 tasks</li>
-              <li>
-                <!-- Inner menu: contains the tasks -->
-                <ul class="menu">
-                  <li><!-- Task item -->
-                    <a href="#">
-                      <!-- Task title and progress text -->
-                      <h3>
-                        Design some buttons
-                        <small class="pull-right">20%</small>
-                      </h3>
-                      <!-- The progress bar -->
-                      <div class="progress xs">
-                        <!-- Change the css width attribute to simulate progress -->
-                        <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar"
-                             aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                          <span class="sr-only">20% Complete</span>
-                        </div>
-                      </div>
-                    </a>
-                  </li>
-                  <!-- end task item -->
-                </ul>
-              </li>
-              <li class="footer">
-                <a href="#">View all tasks</a>
-              </li>
-            </ul>
-          </li>
-          <!-- User Account Menu -->
-          <li class="dropdown user user-menu">
-            <!-- Menu Toggle Button -->
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <!-- The user image in the navbar-->
-              <img src="/static/dist/img/user3-128x128.jpg" class="user-image" alt="User Image">
-              <!-- hidden-xs hides the username on small devices so only the image appears. -->
-              <span class="hidden-xs">Admin</span>
-            </a>
-            <ul class="dropdown-menu">
-              <!-- The user image in the menu -->
-              <li class="user-header">
-                <img src="/static/dist/img/user3-128x128.jpg" class="img-circle" alt="User Image">
-
-                <p>
-                  Admin - 数据库管理员
-                  <small>2018.03</small>
-                </p>
-              </li>
-               <!-- Menu Footer-->
-                <form action="" method="post">
-              <li class="user-footer">
-                <div class="pull-left">
-                  <a href="/sys_setting" class="btn btn-default btn-flat">系统设置</a>
-                </div>
-                <div class="pull-right">
-                  <button type="submit" class="btn btn-default btn-flat" name="logout">退出登录</button>
-                </div>
-              </li>
-                </form>
-            </ul>
-        </ul>
-      </div>
-    </nav>
-  </header>
-  <!-- Left side column. contains the logo and sidebar -->
-  <aside class="main-sidebar">
-
-    <!-- sidebar: style can be found in sidebar.less -->
-    <section class="sidebar">
-
-      <!-- Sidebar user panel (optional) -->
-      <div class="user-panel">
-        <div class="pull-left image">
-          <img src="/static/dist/img/user3-128x128.jpg" class="img-circle" alt="User Image">
-        </div>
-        <div class="pull-left info">
-          <p>Admin</p>
-          <!-- Status -->
-          <a href="#"><i class="fa fa-circle text-success"></i> 在线</a>
-        </div>
-      </div>
-
-      <!-- search form (Optional) -->
-      <form action="#" method="get" class="sidebar-form">
-        <div class="input-group">
-          <input type="text" name="q" class="form-control" placeholder="Search...">
-          <span class="input-group-btn">
-              <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-              </button>
-            </span>
-        </div>
-      </form>
-      <!-- /.search form -->
-
-          <!-- Sidebar Menu -->
-     <ul class="sidebar-menu tree" data-widget="tree">
-        <li class="header">主导航</li>
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-dashboard"></i> <span>评分板</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu" style="display: none;">
-              <li><a href="/show_oracle_rate"><i class="fa fa-circle-o"></i>Oracle</a></li>
-              <li><a href="/show_mysql_rate"><i class="fa fa-circle-o"></i>Mysql</a></li>
-              <li><a href="/show_linux_rate"><i class="fa fa-circle-o"></i>Linux主机</a></li>
-          </ul>
-        </li>
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-database"></i> <span>Oracle</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-            <ul class="treeview-menu">
-              <li><a href="/oracle_monitor"><i class="fa fa-circle-o"></i>实时监控</a></li>
-            <li><a href="/show_oracle"><i class="fa fa-circle-o"></i>概览</a></li>
-            <li><a href="/show_oracle_resource"><i class="fa fa-circle-o"></i>资源监控</a></li>
-            <li><a href="/oracle_top_sql"><i class="fa fa-circle-o"></i>TOP SQL</a></li>
-              <li><a href="/oracle_rpt"><i class="fa fa-circle-o"></i>诊断报告</a></li> <li><a href="/oracle_perf"><i class="fa fa-circle-o"></i>性能图示</a></li>
-          </ul>
-        </li>
-          <li class="treeview">
-          <a href="#">
-            <i class="fa fa-cubes"></i> <span>Mysql</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-              <li><a href="/mysql_monitor"><i class="fa fa-circle-o"></i>实时监控</a></li>
-            <li><a href="/show_mysql"><i class="fa fa-circle-o"></i>概览</a></li>
-              <li><a href="/show_mysql_repl"><i class="fa fa-circle-o"></i>复制监控</a></li>
-          </ul>
-        </li>
-            <li class="treeview">
-          <a href="#">
-            <i class="fa fa-linux"></i> <span>Linux主机</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-              <li><a href="/linux_monitor"><i class="fa fa-circle-o"></i>实时监控</a></li>
-            <li><a href="/show_linux"><i class="fa fa-circle-o"></i>概览</a></li>
-          </ul>
-        </li>
-         <li>
-          <a href="/my_check">
-            <i class="fa fa-th"></i> <span>巡检</span>
-              <span class="pull-right-container">
-              <small class="label pull-right bg-green">new</small>
-            </span>
-          </a>
-        </li>
-         <li class="treeview">
-          <a href="#">
-            <i class="fa fa-cogs"></i> <span>自动化运维</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-              <li><a href="/my_tools"><i class="fa fa-circle-o"></i>工具包</a></li>
-            <li><a href="/show_linux"><i class="fa fa-circle-o"></i>任务编排</a></li>
-          </ul>
-        </li>
-          <li class="treeview">
-          <a href="#">
-            <i class="fa fa-pencil-square-o"></i> <span>配置管理</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="/mon_servers"><i class="fa fa-circle-o"></i>监控设备</a></li>
-            <li><a href="/alarm_settings"><i class="fa fa-circle-o"></i>告警策略</a></li>
-          </ul>
-        </li>
-        <li class="header">消息列表</li>
-        <li><a href=/show_alarm><i class="fa fa-circle-o text-red"></i> <span>监控告警</span></a></li>
-        <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>待办事项</span></a></li>
-        <li><a href="/recorder"><i class="fa fa-circle-o text-aqua"></i> <span>事件记录</span></a></li> <li><a href="/my_task"><i class="fa fa-circle-o text-green"></i> <span>任务管理器</span></a></li>
-      </ul>
-      <!-- /.sidebar-menu -->
-    </section>
-    <!-- /.sidebar -->
-  </aside>
-
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
 
   <section class="content container-fluid">
 
-      <!--------------------------
-        | Your Page Content Here |
-        -------------------------->
-        <section class="content-header">
-      <h1>
-        事件管理
-        <small>{{ all_nums }}条事件记录</small>
-      </h1>
-    </section>
-
 
     <section class="content">
-      <div class="row">
-        <div class="col-md-3">
-          <a href="/recorder_add" class="btn btn-primary btn-block margin-bottom">新增</a>
-
           <div class="box box-solid">
-            <div class="box-header with-border">
-              <h3 class="box-title">归属版块</h3>
-            </div>
-              <div class="box-body no-padding">
-              <ul class="nav nav-pills nav-stacked">
-                <li><a href="/recorder_os"><i class="fa fa-tasks"></i> 系统
-                  <span class="label label-primary pull-right">{{ sys_nums }}</span></a></li>
-                <li><a href="/recorder_db"><i class="fa fa-database"></i> 数据库
-                 <span class="label label-primary pull-right">{{ db_nums }}</span></a></li>
-                <li><a href="/recorder_others"><i class="fa fa-file-text-o"></i> 其他
-                 <span class="label label-primary pull-right">{{ other_nums }}</span></a></li>
-              </ul>
-            </div>
-            <!-- /.box-body -->
-          </div>
-          <!-- /. box -->
-          <div class="box box-solid">
-            <div class="box-header with-border">
-              <h3 class="box-title">事件分类</h3>
-            </div>
-            <div class="box-body no-padding">
-              <ul class="nav nav-pills nav-stacked">
-                <li><a href="#"><i class="fa fa-circle-o text-red"></i> 故障</a></li>
-                <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> 变更</a></li>
-                <li><a href="#"><i class="fa fa-circle-o text-light-blue"></i> 升级</a></li>
-              </ul>
-            </div>
-            <!-- /.box-body -->
-          </div>
-          <!-- /.box -->
-        </div>
-        <!-- /.col -->
-         <div class="col-md-9">
-          <div class="box box-primary">
-            <div class="box-header with-border">
-              <h3 class="box-title">新增事件记录</h3>
-            </div>
-            <!-- /.box-header -->
             <div class="box-body">
                 <form action="" method="post">
               <div class="form-group has-feedback">
@@ -408,10 +77,9 @@ desired effect
                 <input class="form-control" placeholder="事件分类" name="event_type">
               </div>
               <div class="form-group">
-                  <textarea id="compose-textarea" class="form-control" style="height: 200px" name="event_content">
+                  <textarea id="compose-textarea"  class="form-control" style="height: 200px" name="event_content">
                   </textarea>
               </div>
-                    <form action="" method="post">
             <!-- /.box-body -->
             <div class="box-footer">
               <div class="pull-right">
@@ -419,26 +87,18 @@ desired effect
               </div>
             </div>
             <!-- /.box-footer -->
+                </form>
           </div>
           <!-- /. box -->
         </div>
             <!-- /.box-body -->
-          </div>
           <!-- /. box -->
-        </section></section>
+        </section>
+  </section>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
 
-  <!-- Main Footer -->
-  <footer class="main-footer">
-    <!-- To the right -->
-    <div class="pull-right hidden-xs">
-      Anything you want
-    </div>
-    <!-- Default to the left -->
-    <strong>Copyright &copy; 2018 <a href="#">eko</a>.</strong> All rights reserved.
-  </footer>
   <!-- Add the sidebar's background. This div must be placed
   immediately after the control sidebar -->
   <div class="control-sidebar-bg"></div>
@@ -457,5 +117,17 @@ desired effect
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
      user experience. -->
+{#回传参数至父层#}
+<script type="text/javascript">
+        var index = parent.layer.getFrameIndex(window.name);
+        var success = {{ status }};
+        if ( success == '1' ) {
+            parent.$("#handle_status").val('1');
+              parent.layer.close(index);
+        } else if( success == '2' ) {
+            parent.$("#handle_status").val('2');
+            parent.layer.close(index);
+        }
+</script>
 </body>
 </html>

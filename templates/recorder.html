@@ -358,8 +358,9 @@ desired effect
     <section class="content">
       <div class="row">
         <div class="col-md-3">
-          <a href="/recorder_add" class="btn btn-primary btn-block margin-bottom">新增</a>
-
+                <a href="#">
+            <button type="button" class="btn btn-primary btn-block btn-flat" onclick="return pop_add()">新增</button>
+                </a>
           <div class="box box-solid">
             <div class="box-header with-border">
               <h3 class="box-title">归属版块</h3>
@@ -397,7 +398,6 @@ desired effect
         </div>
         <!-- /.col -->
         <div class="col-md-9">
-          <div class="box box-solid">
               {% for recorder in recorder_list %}
      <div class="box box-primary">
         <div class="box-header with-border">
@@ -414,7 +414,7 @@ desired effect
           {{ recorder.event_content }}
             <div class="box-tools pull-right">
                 <a href="/recorder_del?id={{ recorder.id }}">
-            <button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button></a>
+            <button type="button" class="btn btn-default btn-sm" onclick="javascript:return del();"><i class="fa fa-trash-o"></i></button></a>
             </div>
         </div>
         <!-- /.box-body -->
@@ -423,20 +423,13 @@ desired effect
               {% endfor %}
       <!-- /.box -->
 
-              </div>
               <!-- /.mail-box-messages -->
             </div>
-            <!-- /.box-body -->
-            <div class="box-footer no-padding">
-              <div class="mailbox-controls">
-                <!-- Check all button -->
-                <!-- /.btn-group -->
-                <!-- /.pull-right -->
-              </div>
-            </div>
+          <input id="handle_status" value="" hidden="hidden">
           </div>
           <!-- /. box -->
-        </section></section>
+        </section>
+  </section>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
@@ -466,8 +459,80 @@ desired effect
 <!-- AdminLTE App -->
 <script src="/static/dist/js/adminlte.min.js"></script>
 
+<script src="/static/layer/layer.js"></script>
+
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
      user experience. -->
+<script>
+
+function pop_edit(n){
+    layer.open({
+    type: 2,
+    title: '编辑程序启停配置',
+    closeBtn: 1,
+    area: ['700px', '550px'],
+    shadeClose: true, //点击遮罩关闭
+    content: ['/easy_starts_edit?id='+n,],
+    end:function(){
+            var handle_status = $("#handle_status").val();
+            if ( handle_status == '1' ) {
+                layer.msg('保存成功！',{
+                    icon: 1,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                },function(){
+                    history.go(0);
+                });
+            } else if ( handle_status == '2' ) {
+                layer.msg('添加失败！',{
+                    icon: 2,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                },function(){
+                    history.go(0);
+                });
+            }
+        }
+  });
+}
+
+function del() {
+var msg = "确定要删除？\n\n请确认！";
+if (confirm(msg)==true){
+return true;
+}else{
+return false;
+}
+}
+
+function pop_add(){
+    layer.open({
+    type: 2,
+    title: '添加事件记录',
+    closeBtn: 1,
+    area: ['700px', '550px'],
+    shadeClose: true, //点击遮罩关闭
+    content: ['/recorder_add',],
+    end:function(){
+            var handle_status = $("#handle_status").val();
+            if ( handle_status == '1' ) {
+                layer.msg('添加成功！',{
+                    icon: 1,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                },function(){
+                    history.go(0);
+                });
+            } else if ( handle_status == '2' ) {
+                layer.msg('添加失败！',{
+                    icon: 2,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                },function(){
+                    history.go(0);
+                });
+            }
+        }
+  });
+}
+
+</script>
 </body>
 </html>

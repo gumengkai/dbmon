@@ -422,6 +422,8 @@ desired effect
                     <th>操作命令</th>
                     <th>进程检查</th>
                     <th>日志检查</th>
+                    <th>编辑</th>
+                    <th>删除</th>
                 </tr>
                 </thead>
                 {% for start in easy_starts %}
@@ -437,14 +439,16 @@ desired effect
                  <td><span class="badge bg-{{ start.check_log_result }}">{{ start.check_log }}</span></td>
                  <td>
               <div class="box-tools pull-right">
-                <a href="/easy_starts_edit?id={{ start.id }}">
-            <button type="button" class="btn btn-default btn-sm"><i class="fa fa-edit"></i></button></a>
+                <a href="#">
+            <button type="button" class="btn btn-default btn-sm" onclick="return pop_edit(this.value)" value="{{ start.id }}"><i class="fa fa-edit"></i></button></a>
               </div>
                  </td>
                  <td>
               <div class="box-tools pull-right">
-                <a href="/easy_starts_del?id={{ log.id }}">
-            <button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button></a>
+                 <div class="box-tools pull-left">
+                <a href="/easy_starts_del?id={{ start.id }}">
+            <button type="button" class="btn btn-default btn-sm" onclick="javascript:return del();"><i class="fa fa-trash-o"></i></button></a>
+              </div>
               </div>
                  </td>
                  </tr>
@@ -463,13 +467,15 @@ desired effect
             <a href="?page_log={{ easy_starts.next_page_number }}">下一页</a>
         {% endif %}
            </span>
-            <div class="pull-right">
-                <a href="/easy_starts_add" class="btn btn-primary btn-block btn-flat">新增</a>
+                <div class="pull-right">
+                <a href="#">
+            <button type="button" class="btn btn-primary btn-block btn-flat" onclick="return pop_add()">新增</button>
+                </a>
               </div>
          </div>
       </div>
+          <input id="handle_status" value="" hidden="hidden">
       </div>
-
             <!-- /.box-body -->
 
       <!-- /.row -->
@@ -511,6 +517,77 @@ desired effect
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
      user experience. -->
+<script src="/static/layer/layer.js"></script>
 
+<script>
+
+function pop_edit(n){
+    layer.open({
+    type: 2,
+    title: '编辑程序启停配置',
+    closeBtn: 1,
+    area: ['700px', '550px'],
+    shadeClose: true, //点击遮罩关闭
+    content: ['/easy_starts_edit?id='+n,],
+    end:function(){
+            var handle_status = $("#handle_status").val();
+            if ( handle_status == '1' ) {
+                layer.msg('保存成功！',{
+                    icon: 1,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                },function(){
+                    history.go(0);
+                });
+            } else if ( handle_status == '2' ) {
+                layer.msg('添加失败！',{
+                    icon: 2,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                },function(){
+                    history.go(0);
+                });
+            }
+        }
+  });
+}
+
+function del() {
+var msg = "确定要删除？\n\n请确认！";
+if (confirm(msg)==true){
+return true;
+}else{
+return false;
+}
+}
+
+function pop_add(){
+    layer.open({
+    type: 2,
+    title: '新增程序启停配置',
+    closeBtn: 1,
+    area: ['700px', '550px'],
+    shadeClose: true, //点击遮罩关闭
+    content: ['/easy_starts_add',],
+    end:function(){
+            var handle_status = $("#handle_status").val();
+            if ( handle_status == '1' ) {
+                layer.msg('添加成功！',{
+                    icon: 1,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                },function(){
+                    history.go(0);
+                });
+            } else if ( handle_status == '2' ) {
+                layer.msg('添加失败！',{
+                    icon: 2,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                },function(){
+                    history.go(0);
+                });
+            }
+        }
+  });
+}
+
+</script>
 </body>
 </html>
