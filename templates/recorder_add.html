@@ -71,12 +71,28 @@ desired effect
             <div class="box-body">
                 <form action="" method="post">
               <div class="form-group has-feedback">
-                <input type="text" class="form-control" placeholder="归属版块" name="event_section">
+                  <label>归属板块:</label>
+                  <select class="form-control select2" style="width: 100%;" name="event_section">
+                <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                  <option selected="selected">------</option>
+                  <option>系统</option>
+                      <option>数据库</option>
+                      <option>其他</option>
+                </select>
               </div>
-              <div class="fform-group has-feedback">
-                <input class="form-control" placeholder="事件分类" name="event_type">
+                <div class="form-group has-feedback">
+                    <label>事件分类:</label>
+                  <select class="form-control select2" style="width: 100%;" name="event_type">
+                <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                  <option selected="selected">------</option>
+                  <option>故障</option>
+                      <option>变更</option>
+                      <option>升级</option>
+                </select>
               </div>
+
               <div class="form-group">
+                  <label>记录内容:</label>
                   <textarea id="compose-textarea"  class="form-control" style="height: 200px" name="event_content">
                   </textarea>
               </div>
