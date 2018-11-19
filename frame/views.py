@@ -747,7 +747,6 @@ def recorder_add(request):
             return HttpResponseRedirect('/login/')
 
 
-
     return render_to_response('recorder_add.html',
                                   {'recorder_list': recorder_list, 'all_nums': all_nums, 'sys_nums': sys_nums,
                                    'db_nums': db_nums, 'other_nums': other_nums,
@@ -770,6 +769,7 @@ def sys_setting(request):
     password_email = conf.get("email", "password")
     receiver = conf.get("email", "receiver")
     msg_from = conf.get("email", "msg_from")
+    is_send = conf.get("email", "is_send")
     # 采集周期
     check_sleep_time = conf.get("policy", "check_sleep_time")
     alarm_sleep_time = conf.get("policy", "alarm_sleep_time")
@@ -837,21 +837,19 @@ def sys_setting(request):
         msg_last = models_frame.TabAlarmInfo.objects.latest('id')
         msg_last_content = msg_last.alarm_content
         tim_last = (datetime.datetime.now() - msg_last.alarm_time).seconds / 60
-        return render_to_response('sys_setting.html',
-                                  {'messageinfo_list': messageinfo_list, 'msg_num': msg_num,
-                                   'msg_last_content': msg_last_content, 'tim_last': tim_last,
-                                   'sender': sender,'smtpserver':smtpserver,'username':username,
-                                   'password_email': password_email,'receiver':receiver,'msg_from':msg_from,
-                                   'check_sleep_time':check_sleep_time,'alarm_sleep_time':alarm_sleep_time,
-                                   'next_send_email_time':next_send_email_time,'host':host,'port':port,'user':user,
-                                   'password_mysql': password_mysql,'dbname':dbname,'now':now})
     else:
-        return render_to_response('sys_setting.html', {'messageinfo_list': messageinfo_list,
-                                   'sender': sender,'smtpserver':smtpserver,'username':username,
-                                   'password_email': password_email,'receiver':receiver,'msg_from':msg_from,
-                                   'check_sleep_time':check_sleep_time,'alarm_sleep_time':alarm_sleep_time,
-                                   'next_send_email_time':next_send_email_time,'host':host,'port':port,'user':user,
-                                   'password_mysql': password_mysql,'dbname':dbname,'now':now} )
+        msg_num = 0
+        msg_last_content = ''
+        tim_last = ''
+    return render_to_response('sys_setting.html',
+                              {'messageinfo_list': messageinfo_list, 'msg_num': msg_num,
+                               'msg_last_content': msg_last_content, 'tim_last': tim_last,
+                               'sender': sender, 'smtpserver': smtpserver, 'username': username,
+                               'password_email': password_email, 'receiver': receiver, 'msg_from': msg_from,
+                               'check_sleep_time': check_sleep_time, 'alarm_sleep_time': alarm_sleep_time,
+                               'next_send_email_time': next_send_email_time, 'host': host, 'port': port, 'user': user,
+                               'password_mysql': password_mysql, 'dbname': dbname, 'now': now,'is_send':is_send})
+
 
 @login_required(login_url='/login')
 def my_check(request):
