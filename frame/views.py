@@ -239,7 +239,6 @@ def linux_servers_edit(request):
 @login_required(login_url='/login')
 def linux_servers_add(request):
     status = 0
-    messageinfo_list = models_frame.TabAlarmInfo.objects.all()
     if request.method == "POST":
         if request.POST.has_key('commit'):
             tags = request.POST.get('tags', None)
@@ -306,6 +305,8 @@ def oracle_servers_add(request):
             oracle_lock = tools.isno(oracle_lock_cn)
             oracle_pwd_cn = request.POST.get('oracle_pwd', None)
             oracle_pwd = tools.isno(oracle_pwd_cn)
+            oracle_event_cn = request.POST.get('oracle_event', None)
+            oracle_event = tools.isno(oracle_event_cn)
             oracle_pga_cn = request.POST.get('oracle_pga', None)
             oracle_pga = tools.isno(oracle_pga_cn)
             oracle_archive_cn = request.POST.get('oracle_archive', None)
@@ -318,7 +319,8 @@ def oracle_servers_add(request):
                                                    undo_tbs=undo_tbs, undo_tbs_cn=undo_tbs_cn,
                                                    conn=conn, conn_cn=conn_cn, err_info=err_info,
                                                    err_info_cn=err_info_cn,invalid_index=invalid_index,invalid_index_cn=invalid_index_cn,
-                                                          oracle_lock =oracle_lock,oracle_lock_cn=oracle_lock_cn,oracle_pwd =oracle_pwd,oracle_pwd_cn=oracle_pwd_cn,pga=oracle_pga,pga_cn=oracle_pga_cn,archive=oracle_archive,archive_cn=oracle_archive_cn)
+                                                   oracle_lock =oracle_lock,oracle_lock_cn=oracle_lock_cn,oracle_pwd =oracle_pwd,oracle_pwd_cn=oracle_pwd_cn,
+                                                   oracle_event=oracle_event,oracle_event_cn=oracle_event_cn,pga=oracle_pga,pga_cn=oracle_pga_cn,archive=oracle_archive,archive_cn=oracle_archive_cn)
             status = 1
         elif request.POST.has_key('logout'):
             logout(request)
@@ -373,6 +375,8 @@ def oracle_servers_edit(request):
             oracle_lock = tools.isno(oracle_lock_cn)
             oracle_pwd_cn = request.POST.get('oracle_pwd', None)
             oracle_pwd = tools.isno(oracle_pwd_cn)
+            oracle_event_cn = request.POST.get('oracle_event', None)
+            oracle_event = tools.isno(oracle_event_cn)
             oracle_pga_cn = request.POST.get('oracle_pga', None)
             oracle_pga = tools.isno(oracle_pga_cn)
             oracle_archive_cn = request.POST.get('oracle_archive', None)
@@ -387,7 +391,8 @@ def oracle_servers_edit(request):
                                                                   undo_tbs=undo_tbs, undo_tbs_cn=undo_tbs_cn,
                                                                   conn=conn, conn_cn=conn_cn, err_info=err_info,
                                                                   err_info_cn=err_info_cn,invalid_index=invalid_index,invalid_index_cn=invalid_index_cn,
-                                                          oracle_lock =oracle_lock,oracle_lock_cn=oracle_lock_cn,oracle_pwd =oracle_pwd,oracle_pwd_cn=oracle_pwd_cn,pga=oracle_pga,pga_cn=oracle_pga_cn,archive=oracle_archive,archive_cn=oracle_archive_cn)
+                                                          oracle_lock =oracle_lock,oracle_lock_cn=oracle_lock_cn,oracle_pwd =oracle_pwd,oracle_pwd_cn=oracle_pwd_cn,
+                                                          oracle_event=oracle_event,oracle_event_cn=oracle_event_cn,pga=oracle_pga,pga_cn=oracle_pga_cn,archive=oracle_archive,archive_cn=oracle_archive_cn)
             status = 1
         elif request.POST.has_key('logout'):
             logout(request)

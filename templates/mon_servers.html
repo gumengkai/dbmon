@@ -32,6 +32,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Google Font -->
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+-
+<style>
+.table tbody tr td {
+text-align: center;
+vertical-align: middle;
+}
+</style>
+
 </head>
 <!--
 BODY TAG OPTIONS:
@@ -374,14 +382,22 @@ desired effect
                 {% for linux_server in linuxs_servers %}
                  <tr>
                  <td>{{ forloop.counter }} </td>
-                     <td>{{ linux_server.tags}} </td>
+                 <td>{{ linux_server.tags}} </td>
                  <td>{{ linux_server.host}} </td>
                  <td>{{ linux_server.host_name}} </td>
                  <td>{{ linux_server.user}} </td>
-                 <td align="center">{{ linux_server.connect_cn}} </td>
-                 <td align="center">{{ linux_server.cpu_cn }} </td>
-                 <td align="center">{{ linux_server.mem_cn }} </td>
-                 <td align="center">{{ linux_server.disk_cn }} </td>
+                 <td><div class="checkbox"><label>
+                 <input type="checkbox"  value="1" name="check_box" {% if linux_server.connect == '1' %} checked {% endif %} disabled>
+                 </label> </div></td>
+                 <td><div class="checkbox"><label>
+                 <input type="checkbox"  value="1" name="check_box" {% if linux_server.cpu == '1' %} checked {% endif %} disabled>
+                 </label> </div></td>
+                 <td><div class="checkbox"><label>
+                 <input type="checkbox"  value="1" name="check_box" {% if linux_server.mem == '1' %} checked {% endif %} disabled>
+                 </label> </div></td>
+                 <td><div class="checkbox"><label>
+                 <input type="checkbox"  value="1" name="check_box" {% if linux_server.disk == '1' %} checked {% endif %} disabled>
+                 </label> </div></td>
                  <td>
               <div class="box-tools pull-right">
                 <a href="#">
@@ -448,6 +464,7 @@ desired effect
                     <th>失效索引告警</th>
                     <th>锁异常告警</th>
                     <th>密码过期告警</th>
+                    <th>综合性能告警</th>
                     <th>pga使用率告警</th>
                     <th>归档使用率告警</th>
                     <th>编辑</th>
@@ -463,18 +480,84 @@ desired effect
                  <td>{{ oracle_server.service_name}} </td>
                  <td>{{ oracle_server.user}} </td>
                  <td>{{ oracle_server.user_os}} </td>
-                 <td align="center" valign="center">{{ oracle_server.connect_cn}} </td>
-                 <td align="center" valign="center" >{{ oracle_server.tbs_cn }} </td>
-                 <td align="center" valign="center" >{{ oracle_server.adg_cn }} </td>
-                 <td align="center" valign="center" >{{ oracle_server.temp_tbs_cn }} </td>
-                 <td align="center" valign="center" >{{ oracle_server.undo_tbs_cn }} </td>
-                 <td align="center" valign="center" >{{ oracle_server.conn_cn }} </td>
-                 <td align="center" valign="center" >{{ oracle_server.err_info_cn }} </td>
-                 <td align="center" valign="center" >{{ oracle_server.invalid_index_cn }} </td>
-                 <td align="center" valign="center" >{{ oracle_server.oracle_lock_cn }} </td>
-                 <td align="center" valign="center" >{{ oracle_server.oracle_pwd_cn }} </td>
-                 <td align="center" valign="center" >{{ oracle_server.pga_cn }} </td>
-                 <td align="center" valign="center" >{{ oracle_server.archive_cn }} </td>
+                 <td>
+                     <div class="checkbox"><label>
+                 <input type="checkbox"  value="1" name="check_box" {% if oracle_server.connect == '1' %} checked {% endif %} disabled>
+                    </label>
+                     </div>
+                 </td>
+                  <td>
+                     <div class="checkbox"><label>
+                 <input type="checkbox"  value="1" name="check_box" {% if oracle_server.tbs == '1' %} checked {% endif %} disabled>
+                    </label>
+                     </div>
+                 </td>
+                 <td>
+                     <div class="checkbox"><label>
+                 <input type="checkbox"  value="1" name="check_box" {% if oracle_server.adg == '1' %} checked {% endif %} disabled>
+                    </label>
+                     </div>
+                 </td>
+                 <td>
+                     <div class="checkbox"><label>
+                 <input type="checkbox"  value="1" name="check_box" {% if oracle_server.temp_tbs == '1' %} checked {% endif %} disabled>
+                    </label>
+                     </div>
+                 </td>
+                 <td>
+                     <div class="checkbox"><label>
+                 <input type="checkbox"  value="1" name="check_box" {% if oracle_server.undo_tbs == '1' %} checked {% endif %} disabled>
+                    </label>
+                     </div>
+                 </td>
+                 <td>
+                     <div class="checkbox"><label>
+                 <input type="checkbox"  value="1" name="check_box" {% if oracle_server.conn == '1' %} checked {% endif %} disabled>
+                    </label>
+                     </div>
+                 </td>
+                 <td>
+                     <div class="checkbox"><label>
+                 <input type="checkbox"  value="1" name="check_box" {% if oracle_server.err_info == '1' %} checked {% endif %} disabled>
+                    </label>
+                     </div>
+                 </td>
+                 <td>
+                     <div class="checkbox"><label>
+                 <input type="checkbox"  value="1" name="check_box" {% if oracle_server.invalid_index == '1' %} checked {% endif %} disabled>
+                    </label>
+                     </div>
+                 </td>
+                 <td>
+                     <div class="checkbox"><label>
+                 <input type="checkbox"  value="1" name="check_box" {% if oracle_server.oracle_lock == '1' %} checked {% endif %} disabled>
+                    </label>
+                     </div>
+                 </td>
+                 <td>
+                     <div class="checkbox"><label>
+                 <input type="checkbox"  value="1" name="check_box" {% if oracle_server.oracle_pwd == '1' %} checked {% endif %} disabled>
+                    </label>
+                     </div>
+                 </td>
+                     <td>
+                     <div class="checkbox"><label>
+                 <input type="checkbox"  value="1" name="check_box" {% if oracle_server.oracle_event == '1' %} checked {% endif %} disabled>
+                    </label>
+                     </div>
+                 </td>
+                 <td>
+                     <div class="checkbox"><label>
+                 <input type="checkbox"  value="1" name="check_box" {% if oracle_server.pga == '1' %} checked {% endif %} disabled>
+                    </label>
+                     </div>
+                 </td>
+                 <td>
+                     <div class="checkbox"><label>
+                 <input type="checkbox"  value="1" name="check_box" {% if oracle_server.archive == '1' %} checked {% endif %} disabled>
+                    </label>
+                     </div>
+                 </td>
                  <td>
                 <a href="#">
             <button type="button" class="btn btn-default btn-sm" onclick="return pop_oracle(this.value)" value="{{ oracle_server.id }}"><i class="fa fa-edit"></i></button></a>
@@ -490,13 +573,13 @@ desired effect
             <div class="box-footer clearfix">
            <span class="step-links">
         {% if oracle_servers.has_previous %}
-            <a href="?oracle_servers={{ oracle_servers.previous_page_number }}">上一页</a>
+            <a href="?page_oracle={{ oracle_servers.previous_page_number }}">上一页</a>
         {% endif %}
         <span class="current">
             当前页{{ oracle_servers.number }} 共计{{ oracle_servers.paginator.num_pages }}
         </span>
         {% if oracle_servers.has_next %}
-            <a href="?oracle_servers={{ oracle_servers.next_page_number }}">下一页</a>
+            <a href="?page_oracle={{ oracle_servers.next_page_number }}">下一页</a>
         {% endif %}
            </span>
             <div class="pull-right">
@@ -538,17 +621,37 @@ desired effect
                 </thead>
                 {% for mysql_server in mysql_servers %}
                  <tr>
-                 <td>{{ forloop.counter }} </td>
-                 <td>{{ mysql_server.tags}} </td>
-                 <td>{{ mysql_server.host}} </td>
-                 <td>{{ mysql_server.port}} </td>
-                 <td>{{ mysql_server.user}} </td>
+                 <td>{{ forloop.counter }}</td>
+                 <td>{{ mysql_server.tags}}</td>
+                 <td>{{ mysql_server.host}}</td>
+                 <td>{{ mysql_server.port}}</td>
+                 <td>{{ mysql_server.user}}</td>
                  <td>{{ mysql_server.user_os}} </td>
-                     <td>{{ mysql_server.connect_cn}} </td>
-                     <td>{{ mysql_server.repl_cn}} </td>
-                     <td>{{ mysql_server.conn_cn}} </td>
-                     <td>{{ mysql_server.err_info_cn}} </td>
                  <td>
+                     <div class="checkbox"><label>
+                 <input type="checkbox"  value="1" name="check_box" {% if mysql_server.connect == '1' %} checked {% endif %} disabled>
+                    </label>
+                     </div>
+                 </td>
+                 <td>
+                     <div class="checkbox"><label>
+                 <input type="checkbox"  value="1" name="check_box" {% if mysql_server.repl == '1' %} checked {% endif %} disabled>
+                    </label>
+                     </div>
+                 </td>
+                 <td>
+                     <div class="checkbox"><label>
+                 <input type="checkbox"  value="1" name="check_box" {% if mysql_server.conn == '1' %} checked {% endif %} disabled>
+                    </label>
+                     </div>
+                 </td>
+                 <td>
+                     <div class="checkbox"><label>
+                 <input type="checkbox"  value="1" name="check_box" {% if mysql_server.err_info == '1' %} checked {% endif %} disabled>
+                    </label>
+                     </div>
+                 </td>
+             <td>
               <div class="box-tools pull-right">
                 <a href="#">
             <button type="button" class="btn btn-default btn-sm" onclick="return pop_mysql(this.value)" value="{{ mysql_server.id }}"><i class="fa fa-edit"></i></button></a>

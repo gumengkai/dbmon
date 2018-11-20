@@ -101,7 +101,7 @@ def now():
     return str(time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()))
 
 def isno(p):
-    if p == unicode('是','utf-8'):
+    if p == unicode('启用','utf-8'):
         return 1
     else:
         return 0

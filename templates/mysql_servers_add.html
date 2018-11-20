@@ -10,11 +10,24 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <title>DB monitor | Starter</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <link rel="stylesheet" href="/static/bower_components/bootstrap/dist/css/bootstrap.min.css">
+
+ <link rel="stylesheet" href="/static/bower_components/bootstrap/dist/css/bootstrap.min.css">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="/static/bower_components/font-awesome/css/font-awesome.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="/static/bower_components/Ionicons/css/ionicons.min.css">
+     <!-- daterange picker -->
+  <link rel="stylesheet" href="/static/bower_components/bootstrap-daterangepicker/daterangepicker.css">
+  <!-- bootstrap datepicker -->
+  <link rel="stylesheet" href="/static/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+  <!-- iCheck for checkboxes and radio inputs -->
+  <link rel="stylesheet" href="/static/plugins/iCheck/all.css">
+  <!-- Bootstrap Color Picker -->
+  <link rel="stylesheet" href="/static/bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css">
+  <!-- Bootstrap time Picker -->
+  <link rel="stylesheet" href="/static/plugins/timepicker/bootstrap-timepicker.min.css">
+  <!-- Select2 -->
+  <link rel="stylesheet" href="/static/bower_components/select2/dist/css/select2.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="/static/dist/css/AdminLTE.min.css">
   <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
@@ -32,6 +45,38 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Google Font -->
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+<style>
+    .color-palette {
+      height: 35px;
+      line-height: 35px;
+      text-align: center;
+    }
+
+    .color-palette-set {
+      margin-bottom: 15px;
+    }
+
+    .color-palette span {
+      display: none;
+      font-size: 12px;
+    }
+
+    .color-palette:hover span {
+      display: block;
+    }
+
+    .color-palette-box h4 {
+      position: absolute;
+      top: 100%;
+      left: 25px;
+      margin-top: -40px;
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 12px;
+      display: block;
+      z-index: 7;
+    }
+  </style>
 </head>
 <!--
 BODY TAG OPTIONS:
@@ -118,25 +163,45 @@ desired effect
                   <div class="form-group">
                   <label for="inputEmail3" class="col-sm-2 control-label">通断告警</label>
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" name="connect" placeholder="是/否">
+                      <select class="form-control select2" style="width: 100%;" name="connect">
+                        <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                      <option selected="selected">启用</option>
+                          <option>启用</option>
+                          <option>禁用</option>
+                      </select>    
                   </div>
                 </div>
                   <div class="form-group">
                   <label for="inputEmail3" class="col-sm-2 control-label">复制延迟告警</label>
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" name="repl" placeholder="是/否">
+                      <select class="form-control select2" style="width: 100%;" name="repl">
+                        <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                      <option selected="selected">启用</option>
+                          <option>启用</option>
+                          <option>禁用</option>
+                      </select>    
                   </div>
                 </div>
                   <div class="form-group">
                   <label for="inputEmail3" class="col-sm-2 control-label">连接数使用率告警</label>
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" name="conn" placeholder="是/否">
+                      <select class="form-control select2" style="width: 100%;" name="conn">
+                        <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                      <option selected="selected">启用</option>
+                          <option>启用</option>
+                          <option>禁用</option>
+                      </select>    
                   </div>
                 </div>
                   <div class="form-group">
                   <label for="inputEmail3" class="col-sm-2 control-label">后台日志告警</label>
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" name="err_info" placeholder="是/否">
+                      <select class="form-control select2" style="width: 100%;" name="err_info">
+                        <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                      <option selected="selected">启用</option>
+                          <option>启用</option>
+                          <option>禁用</option>
+                      </select>    
                   </div>
                 </div>
                      <!-- /.box-body -->
@@ -173,6 +238,9 @@ desired effect
 <!-- AdminLTE App -->
 <script src="/static/dist/js/adminlte.min.js"></script>
 
+<!-- Select2 -->
+<script src="/static/bower_components/select2/dist/js/select2.full.min.js"></script>
+
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
      user experience. -->
@@ -187,6 +255,40 @@ desired effect
             parent.$("#handle_status").val('2');
             parent.layer.close(index);
         }
+</script>
+
+<script>
+  $(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2()
+
+    //iCheck for checkbox and radio inputs
+    $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+      checkboxClass: 'icheckbox_minimal-blue',
+      radioClass   : 'iradio_minimal-blue'
+    })
+    //Red color scheme for iCheck
+    $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
+      checkboxClass: 'icheckbox_minimal-red',
+      radioClass   : 'iradio_minimal-red'
+    })
+    //Flat red color scheme for iCheck
+    $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+      checkboxClass: 'icheckbox_flat-green',
+      radioClass   : 'iradio_flat-green'
+    })
+
+    //Colorpicker
+    $('.my-colorpicker1').colorpicker()
+    //color picker with addon
+    $('.my-colorpicker2').colorpicker()
+
+    //Timepicker
+    $('.timepicker').timepicker({
+      showInputs: false
+    })
+  })
+
 </script>
 </body>
 </html>

@@ -374,6 +374,8 @@ class TabOracleServers(models.Model):
     oracle_lock_cn = models.CharField(max_length=255)
     oracle_pwd = models.CharField(max_length=255)
     oracle_pwd_cn = models.CharField(max_length=255)
+    oracle_event = models.CharField(max_length=255)
+    oracle_event_cn = models.CharField(max_length=255)
     pga = models.CharField(max_length=255)
     pga_cn = models.CharField(max_length=255)
     archive = models.CharField(max_length=255)
