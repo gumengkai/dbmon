@@ -7,10 +7,10 @@ import tools as tools
 import my_log as my_log
 
 conf = ConfigParser.ConfigParser()
-conf.read('config/db_monitor.conf')
 
 # 间隔固定时间再次发送邮件告警
 def is_send_email(alarm_name,tags,url,email_header,alarm_content):
+    conf.read('config/db_monitor.conf')
     receiver = conf.get("email", "receiver").split(',')
     is_send = conf.get("email","is_send")
     next_time_to_send_email = float(conf.get("policy", "next_send_email_time"))
