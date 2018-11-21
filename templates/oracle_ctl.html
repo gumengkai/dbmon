@@ -81,6 +81,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
       z-index: 7;
     }
   </style>
+<style>
+.table tbody tr td {
+text-align: center;
+vertical-align: middle;
+}
+th{
+        text-align:center;/** 设置水平方向居中 */
+        vertical-align:middle/** 设置垂直方向居中 */
+}
+</style>
 <!--
 BODY TAG OPTIONS:
 =================
@@ -437,6 +447,7 @@ desired effect
                         <a href="/oracle_ctl?tags={{ oracle_ctl.tags }}&host={{ oracle_ctl.host }}&oper_type=restart">
                   <button type="submit" class="btn btn-default btn-sm" name="restart"><i class="fa fa-refresh text-blue" title="restart"></i></button></a>
                 </div>
+
                 </td>
                  </tr>
                  {% endfor %}

@@ -7,7 +7,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta http-equiv="refresh" content="60">
   <title>DB monitor | Starter</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -33,6 +32,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Google Font -->
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+<style>
+.table tbody tr td {
+text-align: center;
+vertical-align: middle;
+}
+th{
+        text-align:center;/** 设置水平方向居中 */
+        vertical-align:middle/** 设置垂直方向居中 */
+}
+</style>
+
 </head>
 <!--
 BODY TAG OPTIONS:
@@ -370,6 +381,7 @@ desired effect
                   <th>cpu使用率</th>
                   <th>内存使用率</th>
                     <th>主机状态</th>
+                    <th>Webssh</th>
                 </tr>
                 </thead>
                 {% for osinfo in osinfos %}
@@ -385,6 +397,10 @@ desired effect
                  <td><span class="badge bg-{{ osinfo.cpu_rate_level }}">{{ osinfo.cpu_used }}%</span></td>
                  <td><span class="badge bg-{{ osinfo.mem_rate_level }}">{{ osinfo.mem_used }}%</span></td>
                  <td><span class="badge bg-{{ osinfo.rate_level }}">{{ osinfo.mon_status }}</span></td>
+                 <td>
+                   <a href="#">
+                      <button type="button" class="btn bg-block btn-default bg-aqua" onclick="return pop('{{ osinfo.host }}')" >Webssh</button></a>
+                 </td>
                  </tr>
                  {% endfor %}
               </table>
@@ -489,8 +505,40 @@ desired effect
 <!-- AdminLTE App -->
 <script src="/static/dist/js/adminlte.min.js"></script>
 
+<script src="/static/layer/layer.js"></script>
+
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
      user experience. -->
+<script>
+function pop(n){
+    layer.open({
+    type: 2,
+    title: '建立webssh连接',
+    closeBtn: 1,
+    area: ['700px', '550px'],
+    shadeClose: true, //点击遮罩关闭
+    content: ['http://4e38iojldn.51http.tech?host='+n,],
+    end:function(){
+            var handle_status = $("#handle_status").val();
+            if ( handle_status == '1' ) {
+                layer.msg('连接成功！',{
+                    icon: 1,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                },function(){
+                    history.go(0);
+                });
+            } else if ( handle_status == '2' ) {
+                layer.msg('连接失败！',{
+                    icon: 2,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                },function(){
+                    history.go(0);
+                });
+            }
+        }
+  });
+}
+</script>
 </body>
 </html>
