@@ -24,3 +24,7 @@ Oracle top sql功能为存储过程实现，需要先在被监控库执行脚本
 示例访问地址：
 http://www.dbmon.cn/login/
 用户名密码：admin/111111
+
+webssh用户名密码：
+192.168.48.10 oracle/oracle
+192.168.48.50 mysql/mysqld
