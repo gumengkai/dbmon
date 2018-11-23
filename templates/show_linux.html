@@ -399,7 +399,7 @@ desired effect
                  <td><span class="badge bg-{{ osinfo.rate_level }}">{{ osinfo.mon_status }}</span></td>
                  <td>
                    <a href="#">
-                      <button type="button" class="btn bg-block btn-default bg-aqua" onclick="return pop('{{ osinfo.host }}')" >Webssh</button></a>
+                      <button type="button" class="btn bg-block btn-default bg-aqua" onclick="return pop('{{ osinfo.tags }}','{{ osinfo.host }}')" >Webssh</button></a>
                  </td>
                  </tr>
                  {% endfor %}
@@ -511,34 +511,26 @@ desired effect
      Both of these plugins are recommended to enhance the
      user experience. -->
 <script>
-function pop(n){
+
+function pop(m,n){
     layer.open({
-    type: 2,
-    title: '建立webssh连接',
-    closeBtn: 1,
-    area: ['700px', '550px'],
-    shadeClose: true, //点击遮罩关闭
+    type: 2 //此处以iframe举例
+    ,title: 'webssh_'+m
+    ,area: ['700px', '550px']
+    ,shade: 0
+    ,maxmin: true,
     content: ['http://4e38iojldn.51http.tech?host='+n,],
-    end:function(){
-            var handle_status = $("#handle_status").val();
-            if ( handle_status == '1' ) {
-                layer.msg('连接成功！',{
-                    icon: 1,
-                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
-                },function(){
-                    history.go(0);
-                });
-            } else if ( handle_status == '2' ) {
-                layer.msg('连接失败！',{
-                    icon: 2,
-                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
-                },function(){
-                    history.go(0);
-                });
-            }
-        }
-  });
+    btn: ['关闭所有'] //只是为了演示
+    ,btn2: function(){
+      layer.closeAll();
+    }
+    ,zIndex: layer.zIndex //重点1
+    ,success: function(layero){
+      layer.setTop(layero); //重点2
+    },
+   });
 }
+
 </script>
 </body>
 </html>
