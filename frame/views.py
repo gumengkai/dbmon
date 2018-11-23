@@ -96,41 +96,10 @@ def mon_servers(request):
     messageinfo_list = models_frame.TabAlarmInfo.objects.all()
     # linux监控设备
     linux_servers_list = models_linux.TabLinuxServers.objects.all()
-    paginator_linux = Paginator(linux_servers_list, 5)
-    page_linux = request.GET.get('page_linux')
-    try:
-        linuxs_servers = paginator_linux.page(page_linux)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        linuxs_servers = paginator_linux.page(1)
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        linuxs_servers = paginator_linux.page(paginator_linux.num_pages)
     # Oracle监控设备
     oracle_servers_list = models_oracle.TabOracleServers.objects.all()
-    paginator_oracle = Paginator(oracle_servers_list, 5)
-    page_oracle = request.GET.get('page_oracle')
-    try:
-        oracle_servers = paginator_oracle.page(page_oracle)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        oracle_servers = paginator_oracle.page(1)
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        oracle_servers = paginator_oracle.page(paginator_oracle.num_pages)
-
     # Mysql监控设备
     mysql_servers_list = models_mysql.TabMysqlServers.objects.all()
-    paginator_mysql = Paginator(mysql_servers_list, 5)
-    page_mysql = request.GET.get('paginator_mysql')
-    try:
-        mysql_servers = paginator_mysql.page(page_mysql)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        mysql_servers = paginator_mysql.page(1)
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        mysql_servers = paginator_mysql.page(paginator_mysql.num_pages)
 
     if request.method == 'POST':
         logout(request)
@@ -141,27 +110,21 @@ def mon_servers(request):
         msg_last = models_frame.TabAlarmInfo.objects.latest('id')
         msg_last_content = msg_last.alarm_content
         tim_last = (datetime.datetime.now() - msg_last.alarm_time).seconds / 60
-        return render_to_response('mon_servers.html',
-                                  {'linuxs_servers': linuxs_servers,'oracle_servers': oracle_servers,'mysql_servers': mysql_servers, 'messageinfo_list': messageinfo_list, 'msg_num': msg_num,
-                                   'msg_last_content': msg_last_content, 'tim_last': tim_last})
     else:
-        return render_to_response('mon_servers.html', {'linuxs_servers': linuxs_servers,'oracle_servers': oracle_servers,'mysql_servers': mysql_servers})
+        msg_num = 0
+        msg_last_content = ''
+        tim_last = ''
+    return render_to_response('mon_servers.html',
+                              {'linux_servers_list': linux_servers_list, 'oracle_servers_list': oracle_servers_list,
+                               'mysql_servers_list': mysql_servers_list, 'messageinfo_list': messageinfo_list, 'msg_num': msg_num,
+                               'msg_last_content': msg_last_content, 'tim_last': tim_last})
+
 
 @login_required(login_url='/login')
 def alarm_setting(request):
     messageinfo_list = models_frame.TabAlarmInfo.objects.all()
     # 告警策略
     alarm_list = models_frame.TabAlarmConf.objects.all().order_by('db_type')
-    paginator_alarm = Paginator(alarm_list, 5)
-    page_alarm = request.GET.get('page_alarm')
-    try:
-        alarm_settings = paginator_alarm.page(page_alarm)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        alarm_settings = paginator_alarm.page(1)
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        alarm_settings = paginator_alarm.page(paginator_alarm.num_pages)
 
     if request.method == 'POST':
         logout(request)
@@ -173,7 +136,7 @@ def alarm_setting(request):
         msg_last_content = msg_last.alarm_content
         tim_last = (datetime.datetime.now() - msg_last.alarm_time).seconds / 60
         return render_to_response('alarm_setting.html',
-                                  {'alarm_settings': alarm_settings, 'messageinfo_list': messageinfo_list, 'msg_num': msg_num,
+                                  {'alarm_list': alarm_list, 'messageinfo_list': messageinfo_list, 'msg_num': msg_num,
                                    'msg_last_content': msg_last_content, 'tim_last': tim_last})
     else:
         return render_to_response('alarm_setting.html', {'alarm_settings': alarm_settings})
@@ -2721,3 +2684,162 @@ def oracle_perf(request):
     return render(request,'oracle_perf.html', {'tagsdefault': tagsdefault,'tagsinfo': tagsinfo,'msg_num':msg_num,
                                                 'msg_last_content': msg_last_content, 'tim_last': tim_last,
                                                'dbgrow_list':dbgrow_list})
+
+@login_required(login_url='/login')
+def oracle_logminer(request):
+    messageinfo_list = models_frame.TabAlarmInfo.objects.all()
+    tagsinfo = models_oracle.TabOracleServers.objects.all()
+
+    tagsdefault = request.GET.get('tagsdefault')
+    if not tagsdefault:
+        tagsdefault = models_oracle.TabOracleServers.objects.order_by('tags')[0].tags
+    typedefault = request.GET.get('typedefault')
+    if not typedefault:
+        typedefault = '生成AWR报告'
+    if typedefault == unicode('生成AWR报告', 'utf-8'):
+        report_type = 'awr'
+    elif typedefault == unicode('生成ASH报告', 'utf-8'):
+        report_type = 'ash'
+    else:
+        report_type = 'addm'
+
+    db_range_default = request.GET.get('db_range_default')
+
+    if not db_range_default:
+        db_range_default = '1小时'.decode("utf-8")
+
+    db_begin_time = tools.range(db_range_default)
+    end_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    dbgrow = models_oracle.OracleDbHis.objects.filter(tags=tagsdefault, dbtime__isnull=False).filter(
+        chk_time__gt=db_begin_time, chk_time__lt=end_time).order_by('-chk_time')
+    dbgrow_list = list(dbgrow)
+    dbgrow_list.reverse()
+
+    # 获取快照
+    snap_range = tools.snap_range(db_range_default)
+    sql = "select host,port,service_name,user,password,user_os,password_os from tab_oracle_servers where tags= '%s' " % tagsdefault
+    oracle = tools.mysql_query(sql)
+    host = oracle[0][0]
+    port = oracle[0][1]
+    service_name = oracle[0][2]
+    user = oracle[0][3]
+    password = oracle[0][4]
+    password = base64.decodestring(password)
+    url = host + ':' + port + '/' + service_name
+    sql = """
+        select a.GROUP# group_no,b.THREAD# thread_no,a.TYPE,b.SEQUENCE# sequence_no,b.BYTES/1024/1024 SIZE_M,b.ARCHIVED,b.STATUS,a.MEMBER from v$logfile a,v$log b where a.GROUP#=b.GROUP#(+)
+        """
+    oracle_redo_files = tools.oracle_django_query(user,password,url,sql)
+
+    # 报告列表
+    oracle_reports = models_oracle.OracleReport.objects.filter(tags=tagsdefault).order_by('id')
+
+    begin_time = (datetime.datetime.now() + datetime.timedelta(hours=-1)).strftime("%Y%m%d %H:%M:%S")
+    end_time = datetime.datetime.now().strftime("%Y%m%d %H:%M:%S")
+
+    if request.method == 'POST':
+        if request.POST.has_key('select_tags') :
+            tagsdefault = request.POST.get('select_tags', None).encode("utf-8")
+            return HttpResponseRedirect('/oracle_rpt?tagsdefault=%s&typedefault=%s&db_range_default=%s' %(tagsdefault,typedefault,db_range_default))
+        elif request.POST.has_key('select_type'):
+            typedefault = request.POST.get('select_type', None).encode("utf-8")
+            if typedefault == '生成ASH报告':
+                return HttpResponseRedirect('/oracle_rpt_ash?tagsdefault=%s&typedefault=%s&db_range_default=%s' % (
+                tagsdefault, typedefault, db_range_default))
+            else:
+                return HttpResponseRedirect('/oracle_rpt?tagsdefault=%s&typedefault=%s&db_range_default=%s' % (
+                tagsdefault, typedefault, db_range_default))
+        elif request.POST.has_key('commit'):
+            begin_snap = request.POST.get('begin_snap', None)
+            end_snap = request.POST.get('end_snap', None)
+            task.get_report.delay(tagsdefault,url,user,password,report_type,begin_snap,end_snap)
+            messages.add_message(request, messages.SUCCESS, '正在生成')
+
+        elif request.POST.has_key('commit_event'):
+            begin_time = request.POST.get('begin_time', None)
+            end_time = request.POST.get('end_time', None)
+            begin_time = datetime.datetime.strptime(begin_time, '%Y-%m-%dT%H:%M').strftime("%Y%m%d %H:%M:%S")
+            end_time = datetime.datetime.strptime(end_time, '%Y-%m-%dT%H:%M').strftime("%Y%m%d %H:%M:%S")
+        else:
+            logout(request)
+            return HttpResponseRedirect('/login/')
+
+
+    sql = ''' SELECT *
+               FROM (SELECT a.program,
+               a.sql_id,
+               a.session_state,
+               a.event,
+               count(*) cnt,
+               lpad(round(ratio_to_report(count(*)) over() * 100) || '%%',
+                    10,
+                    ' ') percent,
+               MIN(a.sample_time) min_tim,
+               MAX(a.sample_time) max_tim
+          FROM dba_hist_active_sess_history a
+         WHERE a.sample_time BETWEEN
+               to_date('%s','YYYYMMDD HH24:MI:SS') AND
+               to_date('%s','YYYYMMDD HH24:MI:SS')
+         GROUP BY a.program, a.sql_id, a.session_state, a.event
+         ORDER BY percent DESC)
+     WHERE ROWNUM <= 30 ''' %(begin_time,end_time)
+    oracle_events = tools.oracle_django_query(user,password,url,sql)
+
+    if messageinfo_list:
+        msg_num = len(messageinfo_list)
+        msg_last = models_frame.TabAlarmInfo.objects.latest('id')
+        msg_last_content = msg_last.alarm_content
+        tim_last = (datetime.datetime.now() - msg_last.alarm_time).seconds / 60
+    else:
+        msg_num = 0
+        msg_last_content = ''
+        tim_last = ''
+    return render(request,'oracle_logminer.html', {'tagsdefault': tagsdefault,'typedefault':typedefault,'tagsinfo': tagsinfo,'msg_num':msg_num,
+                                                      'msg_last_content': msg_last_content, 'tim_last': tim_last,'dbgrow_list':dbgrow_list,
+                                                  'oracle_redo_files':oracle_redo_files,'oracle_reports':oracle_reports,
+                                                  'oracle_events':oracle_events})
+
+@login_required(login_url='/login')
+def oracle_logs_add(request):
+    tags = request.GET.get('tags')
+
+    sql = "select host,port,service_name,user,password,user_os,password_os from tab_oracle_servers where tags= '%s' " % tags
+    oracle = tools.mysql_query(sql)
+    host = oracle[0][0]
+    port = oracle[0][1]
+    service_name = oracle[0][2]
+    user = oracle[0][3]
+    password = oracle[0][4]
+    password = base64.decodestring(password)
+    url = host + ':' + port + '/' + service_name
+    sql = """
+        select a.GROUP# group_no,b.THREAD# thread_no,a.TYPE,b.SEQUENCE# sequence_no,b.BYTES/1024/1024 SIZE_M,b.ARCHIVED,b.STATUS,a.MEMBER from v$logfile a,v$log b where a.GROUP#=b.GROUP#(+)
+        """
+    oracle_redo_files = tools.oracle_django_query(user,password,url,sql)
+    status = 0
+    if request.method == "POST":
+        if request.POST.has_key('commit'):
+            tags = request.POST.get('tags', None)
+            host_name = request.POST.get('host_name', None)
+            host = request.POST.get('host', None)
+            user = request.POST.get('user', None)
+            password = base64.encodestring(request.POST.get('password', None))
+            connect_cn = request.POST.get('connect', None)
+            connect = tools.isno(connect_cn)
+            cpu_cn = request.POST.get('cpu', None)
+            cpu = tools.isno(cpu_cn)
+            mem_cn = request.POST.get('mem', None)
+            mem = tools.isno(mem_cn)
+            disk_cn = request.POST.get('disk', None)
+            disk = tools.isno(disk_cn)
+            models_linux.TabLinuxServers.objects.create(tags=tags,host_name=host_name, host=host, user=user, password=password,
+                                                  connect_cn=connect_cn, connect=connect,
+                                                  cpu_cn=cpu_cn, cpu=cpu, mem_cn=mem_cn, mem=mem, disk_cn=disk_cn,
+                                                  disk=disk)
+            status = 1
+        elif request.POST.has_key('logout'):
+            logout(request)
+            return HttpResponseRedirect('/login/')
+
+    return render_to_response('oracle_logs_add.html', {'oracle_redo_files':oracle_redo_files,'status':status})

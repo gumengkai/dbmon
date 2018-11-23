@@ -22,6 +22,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
         apply the skin class to the body tag so the changes take effect. -->
   <link rel="stylesheet" href="/static/dist/css/skins/skin-blue.min.css">
 
+          <!-- DataTables -->
+  <link rel="stylesheet" href="/static/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+
 <!--
 BODY TAG OPTIONS:
 =================
@@ -344,7 +347,7 @@ desired effect
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <table id="example2" class="table table-bordered table-hover">
+              <table id="example1" class="table table-bordered table-hover">
                 <thead>
                 <tr>
                   <th>ID</th>
@@ -357,7 +360,7 @@ desired effect
                    <th>编辑</th>
                 </tr>
                 </thead>
-                {% for alarm_setting in alarm_settings %}
+                {% for alarm_setting in alarm_list %}
                  <tr>
                  <td>{{ forloop.counter }} </td>
                  <td>{{ alarm_setting.db_type}} </td>
@@ -376,20 +379,6 @@ desired effect
                  {% endfor %}
               </table>
             </div>
-            <div class="box-footer clearfix">
-           <span class="step-links">
-        {% if alarm_settings.has_previous %}
-            <a href="?page_alarm={{ alarm_settings.previous_page_number }}">上一页</a>
-        {% endif %}
-        <span class="current">
-            当前页{{ alarm_settings.number }} 共计{{ alarm_settings.paginator.num_pages }}
-        </span>
-        {% if alarm_settings.has_next %}
-            <a href="?page_alarm={{ alarm_settings.next_page_number }}">下一页</a>
-        {% endif %}
-           </span>
-            <!-- /.box-body -->
-          </div>
           <!-- /.box -->
         </div>
         <!-- /.col -->
@@ -429,6 +418,11 @@ desired effect
 
 <script src="/static/layer/layer.js"></script>
 
+<!-- DataTables -->
+<script src="/static/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="/static/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+
+
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
      user experience. -->
@@ -461,6 +455,36 @@ function pop(n){
         }
   });
 }
+</script>
+
+<script>
+
+ $('#example1').DataTable({
+		autoWidth:true,////不开启自动宽度，用bootstrap的自适应去调整
+		"lengthMenu": [10, 20, 50],//表格行数选择框内数目 显示2条,4条,20条,50条
+		"displayLength": 10,//默认的显示行数 (也就是每页显示几条数据)
+	    "language": {//自定义语言提示
+	    	"processing": "处理中...",
+	        "lengthMenu": "显示 _MENU_ 项结果",
+	        "zeroRecords": "没有找到相应的结果",
+	        "info": "第 _START_ 至 _END_ 行，共 _TOTAL_ 行",
+	        "infoEmpty": "第 0 至 0 项结果，共 0 项",
+	        "infoFiltered": "(由 _MAX_ 项结果过滤)",
+	        "infoPostFix": "",
+	        "url": "",
+	        "thousands": "'",
+	        "emptyTable": "表中数据为空",
+	        "loadingRecords": "载入中...",
+	        "infoThousands": ",",
+	        "paginate": {
+	            "first": "首页",
+	            "previous": "上页",
+	            "next": "下页",
+	            "last": "末页"
+	        }
+	    }
+
+	});
 </script>
 </body>
 </html>

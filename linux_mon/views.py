@@ -19,21 +19,11 @@ import linux_mon.models as models_linux
 @login_required(login_url='/login')
 def show_linux(request):
     osinfo_list = models_linux.OsInfo.objects.all()
-    paginator_os = Paginator(osinfo_list, 5)
     diskinfo_list = models_linux.OsFilesystem.objects.order_by("-pct_used")
     paginator_disk = Paginator(diskinfo_list, 5)
-    page_os = request.GET.get('page_os')
+    page_disk = request.GET.get('page_disk')
     try:
-        osinfos = paginator_os.page(page_os)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        osinfos = paginator_os.page(1)
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        osinfos = paginator_os.page(paginator_os.num_pages)
-    page_undo = request.GET.get('page_disk')
-    try:
-        diskinfos = paginator_disk.page(page_undo)
+        diskinfos = paginator_disk.page(page_disk)
     except PageNotAnInteger:
         # If page is not an integer, deliver first page.
         diskinfos = paginator_disk.page(1)
@@ -51,11 +41,15 @@ def show_linux(request):
         msg_last = models_frame.TabAlarmInfo.objects.latest('id')
         msg_last_content = msg_last.alarm_content
         tim_last = (datetime.datetime.now() - msg_last.alarm_time).seconds / 60
-        return render_to_response('show_linux.html', {'osinfos': osinfos,'diskinfos':diskinfos, 'messageinfo_list': messageinfo_list,
-                                                   'msg_num': msg_num,
-                                                   'msg_last_content': msg_last_content, 'tim_last': tim_last})
     else:
-        return render_to_response('show_linux.html', {'osinfos': osinfos, 'diskinfos': diskinfos})
+        msg_num = 0
+        msg_last_content = ''
+        tim_last = ''
+    return render_to_response('show_linux.html', {'diskinfos': diskinfos, 'messageinfo_list': messageinfo_list,
+                                                  'msg_num': msg_num,'osinfo_list':osinfo_list,
+                                                  'msg_last_content': msg_last_content, 'tim_last': tim_last})
+
+
 
 @login_required(login_url='/login')
 def first(request):

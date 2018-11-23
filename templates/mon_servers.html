@@ -22,6 +22,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
         apply the skin class to the body tag so the changes take effect. -->
   <link rel="stylesheet" href="/static/dist/css/skins/skin-blue.min.css">
 
+          <!-- DataTables -->
+  <link rel="stylesheet" href="/static/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -349,21 +352,19 @@ desired effect
 
     <!-- Main content -->
     <section class="content container-fluid">
+       <div class="box-body">
+              <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+              <li class="active"><a href="#linux" data-toggle="tab" aria-expanded="false">linux主机</a></li>
+              <li class=""><a href="#oracle" data-toggle="tab" aria-expanded="false">Oracle数据库</a></li>
+              <li class=""><a href="#mysql" data-toggle="tab" aria-expanded="true">MySQL数据库</a></li>
+                </ul>
 
-      <!--------------------------
-        | Your Page Content Here |
-        -------------------------->
-      <!-- Main content -->
-    <section class="content">
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="box">
-            <div class="box-header">
-              <h3 class="box-title">主机监控列表</h3>
-            </div>
-            <!-- /.box-header -->
+   <div class="tab-content">
+      <div class="active tab-pane" id="linux">
+        <div class="box box-solid">
             <div class="box-body" style="overflow: auto">
-              <table id="example2" class="table table-bordered table-hover">
+              <table id="linux_servers" class="table table-bordered table-hover">
                 <thead>
                 <tr>
                   <th>ID</th>
@@ -379,7 +380,7 @@ desired effect
                     <th>删除</th>
                 </tr>
                 </thead>
-                {% for linux_server in linuxs_servers %}
+                {% for linux_server in linux_servers_list %}
                  <tr>
                  <td>{{ forloop.counter }} </td>
                  <td>{{ linux_server.tags}} </td>
@@ -414,37 +415,14 @@ desired effect
                  {% endfor %}
               </table>
             </div>
-            <div class="box-footer clearfix">
-           <span class="step-links">
-        {% if linuxs_servers.has_previous %}
-            <a href="?page_linux={{ linuxs_servers.previous_page_number }}">上一页</a>
-        {% endif %}
-        <span class="current">
-            当前页{{ linuxs_servers.number }} 共计{{ linuxs_servers.paginator.num_pages }}
-        </span>
-        {% if linuxs_servers.has_next %}
-            <a href="?page_linux={{ linuxs_servers.next_page_number }}">下一页</a>
-        {% endif %}
-           </span>
-            <div class="pull-right">
-                 <a href="#">
-            <button type="button" class="btn btn-primary btn-block btn-flat" onclick="return pop_linux_add()">新增</button>
-                 </a>
-              </div>
-         </div>
             <!-- /.box-body -->
           </div>
           <!-- /.box -->
-        </div>
-        <!-- /.col -->
-       <div class="col-xs-12">
-          <div class="box">
-            <div class="box-header">
-              <h3 class="box-title">oracle数据库监控列表</h3>
-            </div>
-            <!-- /.box-header -->
+   </div>
+     <div class="tab-pane" id="oracle">
+          <div class="box box-solid">
             <div class="box-body" style="overflow: auto">
-              <table id="example2" class="table table-bordered table-hover">
+              <table id="oracle_servers" class="table table-bordered table-hover">
                 <thead>
                 <tr>
                   <th>ID</th>
@@ -471,7 +449,7 @@ desired effect
                     <th>删除</th>
                 </tr>
                 </thead>
-                {% for oracle_server in oracle_servers %}
+                {% for oracle_server in oracle_servers_list %}
                  <tr>
                  <td>{{ forloop.counter }} </td>
                      <td>{{ oracle_server.tags}} </td>
@@ -570,39 +548,14 @@ desired effect
                  {% endfor %}
               </table>
             </div>
-            <div class="box-footer clearfix">
-           <span class="step-links">
-        {% if oracle_servers.has_previous %}
-            <a href="?page_oracle={{ oracle_servers.previous_page_number }}">上一页</a>
-        {% endif %}
-        <span class="current">
-            当前页{{ oracle_servers.number }} 共计{{ oracle_servers.paginator.num_pages }}
-        </span>
-        {% if oracle_servers.has_next %}
-            <a href="?page_oracle={{ oracle_servers.next_page_number }}">下一页</a>
-        {% endif %}
-           </span>
-            <div class="pull-right">
-                 <a href="#">
-            <button type="button" class="btn btn-primary btn-block btn-flat" onclick="return pop_oracle_add()">新增</button>
-                 </a>
-            </div>
-         </div>
             <!-- /.box-body -->
           </div>
           <!-- /.box -->
-        </div>
-        <!-- /.col -->
+       </div>
 
-        <!-- /.col -->
-       <div class="col-xs-12">
-          <div class="box">
-            <div class="box-header">
-              <h3 class="box-title">mysql数据库监控列表</h3>
-            </div>
-            <!-- /.box-header -->
+   <div class="tab-pane" id="mysql">
             <div class="box-body" style="overflow: auto">
-              <table id="example2" class="table table-bordered table-hover">
+              <table id="mysql_servers" class="table table-bordered table-hover">
                 <thead>
                 <tr>
                   <th>ID</th>
@@ -619,7 +572,7 @@ desired effect
                     <th>删除</th>
                 </tr>
                 </thead>
-                {% for mysql_server in mysql_servers %}
+                {% for mysql_server in mysql_servers_list %}
                  <tr>
                  <td>{{ forloop.counter }}</td>
                  <td>{{ mysql_server.tags}}</td>
@@ -667,33 +620,15 @@ desired effect
                  {% endfor %}
               </table>
             </div>
-            <div class="box-footer clearfix">
-           <span class="step-links">
-        {% if mysql_servers.has_previous %}
-            <a href="?mysql_servers={{ mysql_servers.previous_page_number }}">上一页</a>
-        {% endif %}
-        <span class="current">
-            当前页{{ mysql_servers.number }} 共计{{ mysql_servers.paginator.num_pages }}
-        </span>
-        {% if mysql_servers.has_next %}
-            <a href="?mysql_servers={{ mysql_servers.next_page_number }}">下一页</a>
-        {% endif %}
-           </span>
-            <div class="pull-right">
-                 <a href="#">
-            <button type="button" class="btn btn-primary btn-block btn-flat" onclick="return pop_mysql_add()">新增</button>
-                 </a>
-            </div>
-         </div>
             <!-- /.box-body -->
           </div>
           <!-- /.box -->
-        </div>
-        <!-- /.col -->
 
+         </div>
+       </div>
       </div>
-      <!-- /.row -->
-    </section>
+     </div>
+
     </section>
     <!-- /.content -->
       <input id="handle_status" value="" hidden="hidden">
@@ -726,6 +661,10 @@ desired effect
 <script src="/static/dist/js/adminlte.min.js"></script>
 
 <script src="/static/layer/layer.js"></script>
+
+<!-- DataTables -->
+<script src="/static/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="/static/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
@@ -917,5 +856,99 @@ return false;
 }
 }
 </script>
+
+<!-- Optionally, you can add Slimscroll and FastClick plugins.
+     Both of these plugins are recommended to enhance the
+     user experience. -->
+<script>
+
+ $('#linux_servers').DataTable({
+		 autoWidth:false,////不开启自动宽度，用bootstrap的自适应去调整
+         'lengthChange': true,
+          'paging'      : true,
+          'info'        : true,
+		  "lengthMenu": [10, 20, 50],//表格行数选择框内数目 显示2条,4条,20条,50条
+		  "displayLength": 10,//默认的显示行数 (也就是每页显示几条数据)
+	      "language": {//自定义语言提示
+	    	"processing": "处理中...",
+	        "lengthMenu": "显示 _MENU_ 项结果",
+	        "zeroRecords": "没有找到相应的结果",
+	        "info": "第 _START_ 至 _END_ 行，共 _TOTAL_ 行",
+	        "infoEmpty": "第 0 至 0 项结果，共 0 项",
+	        "infoFiltered": "(由 _MAX_ 项结果过滤)",
+	        "infoPostFix": "",
+	        "url": "",
+	        "thousands": "'",
+	        "emptyTable": "表中数据为空",
+	        "loadingRecords": "载入中...",
+	        "infoThousands": ",",
+	        "paginate": {
+	            "first": "首页",
+	            "previous": "上页",
+	            "next": "下页",
+	            "last": "末页"
+	        }
+	    }
+
+	})
+   $('#oracle_servers').DataTable({
+		autoWidth:false,////不开启自动宽度，用bootstrap的自适应去调整
+       'lengthChange': true,
+        'info'        : true,
+		"lengthMenu": [10, 20, 50],//表格行数选择框内数目 显示2条,4条,20条,50条
+		"displayLength": 10,//默认的显示行数 (也就是每页显示几条数据)
+	    "language": {//自定义语言提示
+	    	"processing": "处理中...",
+	        "lengthMenu": "显示 _MENU_ 项结果",
+	        "zeroRecords": "没有找到相应的结果",
+	        "info": "第 _START_ 至 _END_ 行，共 _TOTAL_ 行",
+	        "infoEmpty": "第 0 至 0 项结果，共 0 项",
+	        "infoFiltered": "(由 _MAX_ 项结果过滤)",
+	        "infoPostFix": "",
+	        "url": "",
+	        "thousands": "'",
+	        "emptyTable": "表中数据为空",
+	        "loadingRecords": "载入中...",
+	        "infoThousands": ",",
+	        "paginate": {
+	            "first": "首页",
+	            "previous": "上页",
+	            "next": "下页",
+	            "last": "末页"
+	        }
+	    }
+
+	})
+    $('#mysql_servers').DataTable({
+		autoWidth:false,////不开启自动宽度，用bootstrap的自适应去调整
+        'lengthChange': true,
+        'info'        : true,
+		"lengthMenu": [10, 20, 50],//表格行数选择框内数目 显示2条,4条,20条,50条
+		"displayLength": 10,//默认的显示行数 (也就是每页显示几条数据)
+	    "language": {//自定义语言提示
+	    	"processing": "处理中...",
+	        "lengthMenu": "显示 _MENU_ 项结果",
+	        "zeroRecords": "没有找到相应的结果",
+	        "info": "第 _START_ 至 _END_ 行，共 _TOTAL_ 行",
+	        "infoEmpty": "第 0 至 0 项结果，共 0 项",
+	        "infoFiltered": "(由 _MAX_ 项结果过滤)",
+	        "infoPostFix": "",
+	        "url": "",
+	        "thousands": "'",
+	        "emptyTable": "表中数据为空",
+	        "loadingRecords": "载入中...",
+	        "infoThousands": ",",
+	        "paginate": {
+	            "first": "首页",
+	            "previous": "上页",
+	            "next": "下页",
+	            "last": "末页"
+	        }
+	    }
+
+
+	});
+</script>
+
 </body>
 </html>

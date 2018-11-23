@@ -83,6 +83,8 @@ urlpatterns = patterns('',
     (r'^oracle_para', frame.oracle_para),
     (r'^kill_session$', frame.kill_session),
     (r'^oracle_switchover', frame.oracle_switchover),
+    (r'^oracle_logminer', frame.oracle_logminer),
+    (r'^oracle_logs_add', frame.oracle_logs_add),
     (r'^oracle_top_sql/', frame.oracle_top_sql),
     (r'^oracle_sql$', frame.oracle_sql),
     (r'^oracle_backup/', frame.oracle_backup),
@@ -96,6 +98,7 @@ urlpatterns = patterns('',
     (r'^oracle_profile/', oracle_mon.oracle_profile),
     (r'^oracle_grant/', oracle_mon.oracle_grant),
     (r'^my_task/', frame.my_task),
+
 )
 
 handler404 = frame.page_not_found
