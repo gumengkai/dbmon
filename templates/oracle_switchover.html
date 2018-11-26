@@ -436,7 +436,7 @@ desired effect
                  <td>{{ oracle_switchover.adg_apply_lag }} </td>
                  <td>  <div class="btn-group" data-toggle="btn-toggle">
                         <a href="/oracle_switchover?primary_tags={{ oracle_switchover.primary_tags }}&primary_curr_role={{ oracle_switchover.primary_curr_role }}&standby_tags={{ oracle_switchover.standby_tags }}&standby_curr_role={{ oracle_switchover.standby_curr_role }}">
-                  <button type="submit" class="btn btn-default btn-sm" name="restart"><i class="fa fa-exchange text-red" title="go switchover"></i></button></a>
+                  <button type="submit" class="btn btn-default btn-sm" name="restart" onclick="javascript:return control('switchover');"><i class="fa fa-exchange text-red" title="go switchover"></i></button></a>
                 </div>
                 </td>
                  </tr>
@@ -519,6 +519,17 @@ desired effect
 	}, 1000);
 	{% endfor %}{% endif %}
 
+</script>
+
+<script>
+function control(n) {
+var msg = "确定要"+n+"？\n\n请确认！";
+if (confirm(msg)==true){
+return true;
+}else{
+return false;
+}
+}
 </script>
 </body>
 </html>

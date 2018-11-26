@@ -438,12 +438,12 @@ desired effect
                   <td>
                     <div class="btn-group" data-toggle="btn-toggle">
                         <a href="/oracle_ctl?tags={{ oracle_ctl.tags }}&host={{ oracle_ctl.host }}&oper_type={{ oracle_ctl.oper_type }}">
-                  <button class="btn btn-default btn-sm"><i class="fa fa-power-off text-{{ oracle_ctl.run_color }}" title="{{ oracle_ctl.oper_type }}"></i>
+                  <button class="btn btn-default btn-sm" onclick="javascript:return control('{{ oracle_ctl.oper_type }}');"><i class="fa fa-power-off text-{{ oracle_ctl.run_color }}" title="{{ oracle_ctl.oper_type }}"></i>
                   </button>
                         <span style="color:red;">{{ msg }}</span>
-                        </a>
+                    </a>
                         <a href="/oracle_ctl?tags={{ oracle_ctl.tags }}&host={{ oracle_ctl.host }}&oper_type=restart">
-                  <button type="submit" class="btn btn-default btn-sm" name="restart"><i class="fa fa-refresh text-blue" title="restart"></i></button></a>
+                  <button type="submit" class="btn btn-default btn-sm" name="restart" onclick="javascript:return control('restart');"><i class="fa fa-refresh text-blue" title="restart"></i></button></a>
                 </div>
 
                 </td>
@@ -520,6 +520,17 @@ desired effect
 	}, 1000);
 	{% endfor %}{% endif %}
 
+</script>
+
+<script>
+function control(n) {
+var msg = "确定要"+n+"？\n\n请确认！";
+if (confirm(msg)==true){
+return true;
+}else{
+return false;
+}
+}
 </script>
 </body>
 </html>
