@@ -7,37 +7,21 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="refresh" content="60">
   <title>DB monitor | Starter</title>
   <!-- Tell the browser to be responsive to screen width -->
- <link rel="stylesheet" href="/static/bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <link rel="stylesheet" href="/static/bower_components/bootstrap/dist/css/bootstrap.min.css">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="/static/bower_components/font-awesome/css/font-awesome.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="/static/bower_components/Ionicons/css/ionicons.min.css">
-     <!-- daterange picker -->
-  <link rel="stylesheet" href="/static/bower_components/bootstrap-daterangepicker/daterangepicker.css">
-  <!-- bootstrap datepicker -->
-  <link rel="stylesheet" href="/static/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
-  <!-- iCheck for checkboxes and radio inputs -->
-  <link rel="stylesheet" href="/static/plugins/iCheck/all.css">
-  <!-- Bootstrap Color Picker -->
-  <link rel="stylesheet" href="/static/bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css">
-  <!-- Bootstrap time Picker -->
-  <link rel="stylesheet" href="/static/plugins/timepicker/bootstrap-timepicker.min.css">
-  <!-- Select2 -->
-  <link rel="stylesheet" href="/static/bower_components/select2/dist/css/select2.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="/static/dist/css/AdminLTE.min.css">
   <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
         page. However, you can choose any other skin. Make sure you
         apply the skin class to the body tag so the changes take effect. -->
   <link rel="stylesheet" href="/static/dist/css/skins/skin-blue.min.css">
-
-      <link rel="stylesheet" href="/static/dist/css/skins/skin-blue.min.css">
-
-     <link href="/static/css/font-awesome.min.css" rel="stylesheet">
-
- <link rel="stylesheet" type="text/css" href="/staticcss/demo.css">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -50,37 +34,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
- <style>
-    .color-palette {
-      height: 35px;
-      line-height: 35px;
-      text-align: center;
-    }
-
-    .color-palette-set {
-      margin-bottom: 15px;
-    }
-
-    .color-palette span {
-      display: none;
-      font-size: 12px;
-    }
-
-    .color-palette:hover span {
-      display: block;
-    }
-
-    .color-palette-box h4 {
-      position: absolute;
-      top: 100%;
-      left: 25px;
-      margin-top: -40px;
-      color: rgba(255, 255, 255, 0.8);
-      font-size: 12px;
-      display: block;
-      z-index: 7;
-    }
-  </style>
 <!--
 BODY TAG OPTIONS:
 =================
@@ -155,7 +108,7 @@ desired effect
                 </ul>
                 <!-- /.menu -->
               </li>
-              <li class="footer"><a href=/show_alarm>查看所有消息</a></li>
+              <li class="footer"><a href=/begin>查看所有消息</a></li>
             </ul>
           </li>
           <!-- /.messages-menu -->
@@ -239,7 +192,7 @@ desired effect
                   <small>2018.03</small>
                 </p>
               </li>
-              <!-- Menu Footer-->
+                <!-- Menu Footer-->
                 <form action="" method="post">
               <li class="user-footer">
                 <div class="pull-left">
@@ -250,6 +203,8 @@ desired effect
                 </div>
               </li>
                 </form>
+            </ul>
+        </ul>
       </div>
     </nav>
   </header>
@@ -283,7 +238,7 @@ desired effect
       </form>
       <!-- /.search form -->
 
-      <!-- Sidebar Menu -->
+         <!-- Sidebar Menu -->
      <ul class="sidebar-menu tree" data-widget="tree">
         <li class="header">主导航</li>
         <li class="treeview">
@@ -306,7 +261,7 @@ desired effect
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
-            <ul class="treeview-menu">
+           <ul class="treeview-menu">
               <li><a href="/oracle_monitor"><i class="fa fa-circle-o"></i>实时监控</a></li>
             <li><a href="/show_oracle"><i class="fa fa-circle-o"></i>概览</a></li>
             <li><a href="/show_oracle_resource"><i class="fa fa-circle-o"></i>资源监控</a></li>
@@ -384,20 +339,9 @@ desired effect
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-
-    <!-- Main content -->
-    <section class="content container-fluid">
-
-      <!--------------------------
-        | Your Page Content Here |
-        -------------------------->
-
     <section class="content-header">
-    </section>
-
-
-    <section class="content">
-             <!-- SELECT2 EXAMPLE -->
+      <div class="col-xs-12">
+                      <!-- SELECT2 EXAMPLE -->
       <div class="box box-primary">
         <!-- /.box-header -->
         <div class="box-body">
@@ -455,15 +399,21 @@ desired effect
       </div>
 
             <!-- /.box-body -->
-
-      <!-- /.row -->
+        </div>
     </section>
 
+    <!-- Main content -->
+    <section class="content container-fluid">
+
+      <!--------------------------
+        | Your Page Content Here |
+        -------------------------->
 
     </section>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
+
   <!-- Main Footer -->
   <footer class="main-footer">
     <!-- To the right -->
@@ -473,7 +423,6 @@ desired effect
     <!-- Default to the left -->
     <strong>Copyright &copy; 2018 <a href="#">eko</a>.</strong> All rights reserved.
   </footer>
-  <!-- /.control-sidebar -->
   <!-- Add the sidebar's background. This div must be placed
   immediately after the control sidebar -->
   <div class="control-sidebar-bg"></div>
@@ -488,25 +437,9 @@ desired effect
 <script src="/static/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- AdminLTE App -->
 <script src="/static/dist/js/adminlte.min.js"></script>
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="/static/dist/js/pages/dashboard.js"></script>
-<!-- ChartJS -->
-<script src="/static/bower_components/chart.js/Chart.js"></script>
+
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
      user experience. -->
-<script src="/static/js/hullabaloo.js"></script>
-
-<script type="text/javascript">
-	$.hulla = new hullabaloo();
-
-	{% if messages %}
-    {% for message in messages %}
-	setTimeout(function() {
-	  $.hulla.send("{{ message }}", "{{ message.tags }}");
-	}, 1000);
-	{% endfor %}{% endif %}
-
-</script>
 </body>
 </html>
