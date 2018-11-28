@@ -119,16 +119,17 @@ desired effect
     <section class="content">
       <div class="row">
         <div class="box box-solid">
-            <div class="box-header">
-              <h3 class="box-title">在线日志</h3>
-            </div>
             <!-- form start -->
             <form class="form-horizontal" action="" method="POST">
+                <div class="box-header">
+              <h3 class="box-title">在线日志</h3>
+              </div>
                   <div class="box-body">
                   <!-- Conversations are loaded here -->
              <div class="direct-chat-messages" style="height: 300px">
                  <table class="table table-striped">
                <tbody><tr>
+                    <th>选择</th>
                     <th>组</th>
                     <th>线程</th>
                     <th>类型</th>
@@ -140,6 +141,12 @@ desired effect
                 </tr>
                 {% for oracle_redo_file in oracle_redo_files %}
                 <tr>
+                <td>
+                 <div class="checkbox"><label>
+                 <input type="checkbox"  value="{{ oracle_redo_file.MEMBER }}" name="check_box_list">
+                    </label>
+                    </div>
+                 </td>
                 <td>{{ oracle_redo_file.GROUP_NO }}</td>
                 <td>{{ oracle_redo_file.THREAD_NO }}</td>
                 <td>{{ oracle_redo_file.TYPE }}</td>
@@ -151,10 +158,45 @@ desired effect
                 </tr>
                 {% endfor %}
               </tbody></table>
-                  </div>
+                </div>
+                  <!--/.direct-chat-messages-->
+                </div>
+               <div class="box-header">
+                 <h3 class="box-title">归档日志</h3>
+              </div>
+                <div class="box-body">
+                  <!-- Conversations are loaded here -->
+             <div class="direct-chat-messages" style="height: 300px">
+                 <table class="table table-striped">
+               <tbody><tr>
+                    <th>选择</th>
+                    <th>序列号</th>
+                    <th>开始时间</th>
+                    <th>结束时间</th>
+                    <th>文件名</th>
+                </tr>
+                {% for oracle_archived_file in oracle_archived_files %}
+                <tr>
+                <td>
+                 <div class="checkbox"><label>
+                 <input type="checkbox"  value="{{ oracle_archived_file.NAME }}" name="check_box_list">
+                    </label>
+                    </div>
+                 </td>
+                <td>{{ oracle_archived_file.SEQUENCE_NO }}</td>
+                <td>{{ oracle_archived_file.FIRST_TIME }}</td>
+                <td>{{ oracle_archived_file.NEXT_TIME }}</td>
+                <td>{{ oracle_archived_file.NAME }}</td>
+                </tr>
+                {% endfor %}
+              </tbody></table>
+                </div>
                   <!--/.direct-chat-messages-->
                 </div>
               <!-- /.box-footer -->
+                <div class="box-footer">
+                <button type="submit" class="btn btn-info pull-right" name="commit">提交</button>
+              </div>
             </form>
           </div>
           <!-- /.box -->

@@ -2737,33 +2737,57 @@ def oracle_logs_add(request):
     password = oracle[0][4]
     password = base64.decodestring(password)
     url = host + ':' + port + '/' + service_name
+    # 查询在线日志
     sql = """
         select a.GROUP# group_no,b.THREAD# thread_no,a.TYPE,b.SEQUENCE# sequence_no,b.BYTES/1024/1024 SIZE_M,b.ARCHIVED,b.STATUS,a.MEMBER from v$logfile a,v$log b where a.GROUP#=b.GROUP#(+)
         """
     oracle_redo_files = tools.oracle_django_query(user,password,url,sql)
+    # 查询归档日志
+    sql = """
+     select sequence# sequence_no,first_time, next_time,name from v$archived_log where archived='YES' and deleted='NO' and STANDBY_DEST='NO'
+    """
+    oracle_archived_files = tools.oracle_django_query(user,password,url,sql)
     status = 0
+    check_box_list = ''
+
     if request.method == "POST":
+        # 添加日志或归档日志
         if request.POST.has_key('commit'):
-            tags = request.POST.get('tags', None)
-            host_name = request.POST.get('host_name', None)
-            host = request.POST.get('host', None)
-            user = request.POST.get('user', None)
-            password = base64.encodestring(request.POST.get('password', None))
-            connect_cn = request.POST.get('connect', None)
-            connect = tools.isno(connect_cn)
-            cpu_cn = request.POST.get('cpu', None)
-            cpu = tools.isno(cpu_cn)
-            mem_cn = request.POST.get('mem', None)
-            mem = tools.isno(mem_cn)
-            disk_cn = request.POST.get('disk', None)
-            disk = tools.isno(disk_cn)
-            models_linux.TabLinuxServers.objects.create(tags=tags,host_name=host_name, host=host, user=user, password=password,
-                                                  connect_cn=connect_cn, connect=connect,
-                                                  cpu_cn=cpu_cn, cpu=cpu, mem_cn=mem_cn, mem=mem, disk_cn=disk_cn,
-                                                  disk=disk)
+            check_box_list = request.POST.getlist('check_box_list')
+            print type(check_box_list)
             status = 1
         elif request.POST.has_key('logout'):
             logout(request)
             return HttpResponseRedirect('/login/')
 
-    return render_to_response('oracle_logs_add.html', {'oracle_redo_files':oracle_redo_files,'status':status})
+
+    # 开始日志挖掘
+    if check_box_list:
+        conn = cx_Oracle.connect(user, password, url)
+        cursor = conn.cursor()
+        # 将选中的日志加到分析范围
+        for log in check_box_list:
+            sql = """
+             begin
+             dbms_logmnr.add_logfile(:logfile,dbms_logmnr.new);
+             end;
+             """
+            cursor.execute(sql, {'logfile': log})
+        # 启动logminer
+        dict = '/u01/app/logminer/dictionary.ora'
+        sql = """
+         begin
+         dbms_logmnr.start_logmnr(0,0,null,null,:dict,0);
+         end;
+         """
+        cursor.execute(sql, {'dict': dict})
+        # 存储结果
+        sql = "insert into logmnr_contents select * from v$logmnr_contents where rownum<10"
+        print sql
+        cursor.execute(sql)
+        conn.commit()
+        # 关闭游标
+        cursor.close()
+        conn.close()
+
+    return render_to_response('oracle_logs_add.html', {'oracle_redo_files':oracle_redo_files,'oracle_archived_files':oracle_archived_files,'status':status})
