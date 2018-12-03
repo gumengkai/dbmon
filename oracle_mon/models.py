@@ -456,3 +456,12 @@ class OracleReport(models.Model):
     class Meta:
         managed = False
         db_table = 'oracle_report'
+
+
+class OracleLogmnr(models.Model):
+    id = models.IntegerField(primary_key=True)
+    logfile = models.CharField(max_length=255)
+
+    class Meta:
+        managed = False
+        db_table = 'oracle_logmnr'

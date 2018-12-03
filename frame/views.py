@@ -2712,6 +2712,58 @@ def oracle_logminer(request):
         logout(request)
         return HttpResponseRedirect('/login/')
 
+    # 查询日志列表
+    log_list = models_oracle.OracleLogmnr.objects.values()
+
+    # 开始日志挖掘
+    if log_list:
+        conn = cx_Oracle.connect(user, password, url)
+        cursor = conn.cursor()
+        # 将选中的日志加到分析范围
+        for i in log_list:
+            logfile = i['logfile']
+            sql = """
+             begin
+             dbms_logmnr.add_logfile(:logfile,dbms_logmnr.new);
+             end;
+             """
+            cursor.execute(sql, {'logfile': logfile})
+        # 启动logminer
+        dict = '/u01/app/logminer/dictionary.ora'
+        sql = """
+         begin
+         dbms_logmnr.start_logmnr(0,0,null,null,:dict,0);
+         end;
+         """
+        cursor.execute(sql, {'dict': dict})
+        # 存储结果
+        sql = "insert into logmnr_contents select * from v$logmnr_contents where rownum<10"
+        print sql
+        cursor.execute(sql)
+        conn.commit()
+        # 关闭游标
+        cursor.close()
+        conn.close()
+
+    # 查询解析结果
+    sql = """
+      select timestamp,
+         operation,
+         rollback,
+         seg_owner,
+         seg_name,
+         table_name,
+         seg_type_name,
+         table_space,
+         username,
+         os_username,
+         machine_name,
+         session#,
+         sql_undo,
+         sql_redo
+    from logmnr_contents"""
+    logmnr_contents = tools.oracle_django_query(user, password, url, sql)
+
     if messageinfo_list:
         msg_num = len(messageinfo_list)
         msg_last = models_frame.TabAlarmInfo.objects.latest('id')
@@ -2721,13 +2773,12 @@ def oracle_logminer(request):
         msg_num = 0
         msg_last_content = ''
         tim_last = ''
-    return render(request,'oracle_logminer.html', {'tagsdefault': tagsdefault,'tagsinfo':tagsinfo,'msg_num':msg_num,'msg_last_content':msg_last_content,'tim_last':tim_last,'oracle_redo_files':oracle_redo_files })
+    return render(request,'oracle_logminer.html', {'tagsdefault': tagsdefault,'tagsinfo':tagsinfo,'msg_num':msg_num,'msg_last_content':msg_last_content,'tim_last':tim_last,'oracle_redo_files':oracle_redo_files,'log_list':log_list,'logmnr_contents':logmnr_contents })
 
 
 @login_required(login_url='/login')
 def oracle_logs_add(request):
     tags = request.GET.get('tags')
-
     sql = "select host,port,service_name,user,password,user_os,password_os from tab_oracle_servers where tags= '%s' " % tags
     oracle = tools.mysql_query(sql)
     host = oracle[0][0]
@@ -2754,40 +2805,15 @@ def oracle_logs_add(request):
         # 添加日志或归档日志
         if request.POST.has_key('commit'):
             check_box_list = request.POST.getlist('check_box_list')
-            print type(check_box_list)
             status = 1
+            sql = "delete from oracle_logmnr"
+            tools.mysql_exec(sql,'')
+            for log in check_box_list:
+                sql = "insert into oracle_logmnr(logfile) values('%s')" %log
+                tools.mysql_exec(sql,'')
         elif request.POST.has_key('logout'):
             logout(request)
             return HttpResponseRedirect('/login/')
 
-
-    # 开始日志挖掘
-    if check_box_list:
-        conn = cx_Oracle.connect(user, password, url)
-        cursor = conn.cursor()
-        # 将选中的日志加到分析范围
-        for log in check_box_list:
-            sql = """
-             begin
-             dbms_logmnr.add_logfile(:logfile,dbms_logmnr.new);
-             end;
-             """
-            cursor.execute(sql, {'logfile': log})
-        # 启动logminer
-        dict = '/u01/app/logminer/dictionary.ora'
-        sql = """
-         begin
-         dbms_logmnr.start_logmnr(0,0,null,null,:dict,0);
-         end;
-         """
-        cursor.execute(sql, {'dict': dict})
-        # 存储结果
-        sql = "insert into logmnr_contents select * from v$logmnr_contents where rownum<10"
-        print sql
-        cursor.execute(sql)
-        conn.commit()
-        # 关闭游标
-        cursor.close()
-        conn.close()
 
     return render_to_response('oracle_logs_add.html', {'oracle_redo_files':oracle_redo_files,'oracle_archived_files':oracle_archived_files,'status':status})

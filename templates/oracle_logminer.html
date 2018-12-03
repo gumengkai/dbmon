@@ -407,58 +407,107 @@ desired effect
               </div>
               <!-- /.form-group -->
             </div>
-
-            <!-- /.col -->
+                      <!-- SELECT2 EXAMPLE -->
             </form>
           </div>
-             <div class="col-md-6">
-              <div class="box-tools">
-              <table class="table table-bordered text-center">
-             <tbody>
-                <a href="/oracle_rpt?tagsdefault={{ tagsdefault }}&typedefault={{ typedefault }}&db_range_default=1小时"><button type="button" class="btn bg-olive margin">1小时</button></a>
-                <a href="/oracle_rpt?tagsdefault={{ tagsdefault }}&typedefault={{ typedefault }}&db_range_default=1天"><button type="button" class="btn bg-olive margin">1天</button></a>
-                <a href="/oracle_rpt?tagsdefault={{ tagsdefault }}&typedefault={{ typedefault }}&db_range_default=7天"><button type="button" class="btn bg-olive margin">7天</button></a>
-                <a href="/oracle_rpt?tagsdefault={{ tagsdefault }}&typedefault={{ typedefault }}&db_range_default=30天"><button type="button" class="btn bg-olive margin">30天</button></a>
-              </tbody></table>
-              <!-- /.form-group -->
-            </div>
-            <!-- /.col -->
-          <!-- /.row -->
-       </div>
         </div>
               <!-- /.row -->
-     <div class="row">
-       <form action="" method="post" id="mytype">
-        <div class="col-xs-2">
-      <div class="form-group">
-          <a href="#">
-            <button type="button" class="btn btn-primary btn-block btn-flat" onclick="return pop_add('{{ tagsdefault }}')">选择日志文件</button>
-          </a>
-              </div>
+      <div class="row">
+          <!-- SELECT2 EXAMPLE -->
+          <div class="col-xs-6">
+      <div class="box box-solid">
+        <!-- /.box-header -->
+        <div class="box-body">
+        <!-- /.box-body -->
+         <div class="box-header">
+              <h3 class="box-title">解析日志文件列表</h3>
+             <div class="box-tools pull-right">
+            <button type="button" class="btn btn-default" data-toggle="tooltip" title="" data-original-title="Add" onclick="return pop_add('{{ tagsdefault }}')">
+              <i class="fa fa-upload"></i></button>
+          </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <table id="example2" class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>日志文件</th>
+                </tr>
+                </thead>
+                {% for log in log_list %}
+                 <tr>
+                 <td>{{ log.id}} </td>
+                 <td>{{ log.logfile }} </td>
+                 </tr>
+                 {% endfor %}
+              </table>
+            </div>
+      </div>
+      </div>
         </div>
-       </form>
-        <form class="" action="" method="POST">
-        <div class="col-xs-4">
+                <div class="col-xs-3">
        <div class="input-group">
-                <span class="input-group-addon">开始快照ID</span>
+                <span class="input-group-addon">用户过滤</span>
                 <input type="text" class="form-control" name="begin_snap" placeholder="必填">
               </div>
-        </div>
-        <div class="col-xs-4">
-             <div class="input-group">
-                <span class="input-group-addon">结束快照ID</span>
-                <input type="text" class="form-control" name="end_snap" placeholder="必填">
+           </div>
+            <div class="col-xs-3">
+       <div class="input-group">
+                <span class="input-group-addon">对象过滤</span>
+                <input type="text" class="form-control" name="begin_snap" placeholder="选填">
               </div>
-        </div>
-         <div class="col-xs-2">
-      <div class="form-group">
-          <button type="submit" class="btn bg-block btn-default bg-teal" name="commit">生成报告</button>
+           </div>
+          <div class="col-xs-3">
+          <button type="submmit" class="btn btn-info btn-flat" name="go_collect">开始解析!</button>
          </div>
-        </div>
-       </form>
+              </div>
+              </div>
+      <div class="box box-default">
+        <!-- /.box-header -->
+        <div class="box-body">
+        <!-- /.box-body -->
+         <div class="box-header">
+              <h3 class="box-title">解析结果</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <table id="example2" class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th>时间</th>
+                    <th>操作类型</th>
+                    <th>是否回滚</th>
+                    <th>段用户</th>
+                    <th>段名称</th>
+                    <th>表名</th>
+                    <th>段类型</th>
+                    <th>用户</th>
+                    <th>操作系统用户</th>
+                    <th>操作系统主机名</th>
+                    <th>SQL_UNDO</th>
+                    <th>SQL_REDO</th>
+                </tr>
+                </thead>
+                {% for logmnr_content in logmnr_contents %}
+                 <tr>
+                 <td>{{ logmnr_content.TIMESTAMP}} </td>
+                 <td>{{ logmnr_content.OPERATION }} </td>
+                 <td>{{ logmnr_content.ROLLBACK }} </td>
+                 <td>{{ logmnr_content.SEG_OWNER }} </td>
+                 <td>{{ logmnr_content.SEG_NAME }} </td>
+                 <td>{{ logmnr_content.TABLE_NAME }} </td>
+                 <td>{{ logmnr_content.SEG_TYPE_NAME }} </td>
+                 <td>{{ logmnr_content.USER }} </td>
+                 <td>{{ logmnr_content.OS_USERNAME }} </td>
+                 <td>{{ logmnr_content.MACHINE_NAME }} </td>
+                 </tr>
+                 {% endfor %}
+              </table>
+            </div>
       </div>
-
-        </div>
+      </div>
+       </div>
       </div>
     </section>
     <!-- /.content -->
