@@ -2703,51 +2703,30 @@ def oracle_logminer(request):
     password = oracle[0][4]
     password = base64.decodestring(password)
     url = host + ':' + port + '/' + service_name
-    sql = """
-         select a.GROUP# group_no,b.THREAD# thread_no,a.TYPE,b.SEQUENCE# sequence_no,b.BYTES/1024/1024 SIZE_M,b.ARCHIVED,b.STATUS,a.MEMBER from v$logfile a,v$log b where a.GROUP#=b.GROUP#(+)
-         """
-    oracle_redo_files = tools.oracle_django_query(user, password, url, sql)
 
-    if request.method == 'POST':
-        logout(request)
-        return HttpResponseRedirect('/login/')
-
-    # 查询日志列表
     log_list = models_oracle.OracleLogmnr.objects.values()
 
-    # 开始日志挖掘
-    if log_list:
-        conn = cx_Oracle.connect(user, password, url)
-        cursor = conn.cursor()
-        # 将选中的日志加到分析范围
-        for i in log_list:
-            logfile = i['logfile']
-            sql = """
-             begin
-             dbms_logmnr.add_logfile(:logfile,dbms_logmnr.new);
-             end;
-             """
-            cursor.execute(sql, {'logfile': logfile})
-        # 启动logminer
-        dict = '/u01/app/logminer/dictionary.ora'
-        sql = """
-         begin
-         dbms_logmnr.start_logmnr(0,0,null,null,:dict,0);
-         end;
-         """
-        cursor.execute(sql, {'dict': dict})
-        # 存储结果
-        sql = "insert into logmnr_contents select * from v$logmnr_contents where rownum<10"
-        print sql
-        cursor.execute(sql)
-        conn.commit()
-        # 关闭游标
-        cursor.close()
-        conn.close()
+    if request.method == 'POST':
+        if request.POST.has_key('select_tags'):
+            tagsdefault = request.POST.get('select_tags', None).encode("utf-8")
+            return HttpResponseRedirect('/oracle_logminer?tagsdefault=%s' % (
+            tagsdefault))
+        elif request.POST.has_key('commit'):
+            schema = request.POST.get('schema', None)
+            object = request.POST.get('object', None)
+            operation = request.POST.get('operation', None)
+            task.oracle_logmnr.delay(tagsdefault,url,user,password,schema,object,operation,log_list)
+            messages.add_message(request, messages.SUCCESS, '正在解析')
+
+        else:
+            logout(request)
+            return HttpResponseRedirect('/login/')
 
     # 查询解析结果
     sql = """
-      select timestamp,
+      select
+         id id, 
+         timestamp,
          operation,
          rollback,
          seg_owner,
@@ -2759,8 +2738,10 @@ def oracle_logminer(request):
          os_username,
          machine_name,
          session#,
-         sql_undo,
-         sql_redo
+         substr(sql_undo,1,20) sql_undo,
+         sql_undo sql_undo_text,
+         substr(sql_redo,1,20) sql_redo,
+         sql_redo sql_redo_text
     from logmnr_contents"""
     logmnr_contents = tools.oracle_django_query(user, password, url, sql)
 
@@ -2773,7 +2754,8 @@ def oracle_logminer(request):
         msg_num = 0
         msg_last_content = ''
         tim_last = ''
-    return render(request,'oracle_logminer.html', {'tagsdefault': tagsdefault,'tagsinfo':tagsinfo,'msg_num':msg_num,'msg_last_content':msg_last_content,'tim_last':tim_last,'oracle_redo_files':oracle_redo_files,'log_list':log_list,'logmnr_contents':logmnr_contents })
+    return render(request,'oracle_logminer.html', {'tagsdefault': tagsdefault,'tagsinfo':tagsinfo,'msg_num':msg_num,'msg_last_content':msg_last_content,'tim_last':tim_last,'log_list':log_list,'logmnr_contents':logmnr_contents })
+
 
 
 @login_required(login_url='/login')
@@ -2817,3 +2799,25 @@ def oracle_logs_add(request):
 
 
     return render_to_response('oracle_logs_add.html', {'oracle_redo_files':oracle_redo_files,'oracle_archived_files':oracle_archived_files,'status':status})
+
+@login_required(login_url='/login')
+def show_sqltext(request):
+    tags = request.GET.get('tags')
+    id = request.GET.get('id')
+
+    sql = "select host,port,service_name,user,password,user_os,password_os from tab_oracle_servers where tags= '%s' " % tags
+    oracle = tools.mysql_query(sql)
+    host = oracle[0][0]
+    port = oracle[0][1]
+    service_name = oracle[0][2]
+    user = oracle[0][3]
+    password = oracle[0][4]
+    password = base64.decodestring(password)
+    url = host + ':' + port + '/' + service_name
+
+    sql = "select sql_undo,sql_redo from logmnr_contents where id =%s " %int(id)
+
+    sqltext = tools.oracle_django_query(user, password, url, sql)
+
+
+    return render_to_response('show_sqltext.html',{'sqltext':sqltext})

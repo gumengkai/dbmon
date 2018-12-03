@@ -98,6 +98,20 @@ def get_report(tags,url,user,password,report_type,begin_snap,end_snap):
     tools.end_task(task_id,result,state)
 
 
+# oracle日志挖掘
+@shared_task
+def oracle_logmnr(tags,url,user,password,schema,object,operation,log_list):
+    oper_type = 'oracle日志挖掘'
+    server_type = 'Oracle'
+    task_id = uuid.uuid1()
+    task_name = '%s:oracle_logmnr' %tags
+    args = 'tags：%s url：%s user：%s password：%s schema：%s bject：%s operation：%s' %(tags,url,user,password,schema,object,operation)
+    tools.begin_task(task_id,oper_type,server_type,tags,task_name,args)
+    oracle.oracle_logmnr(url,user,password,schema,object,operation,log_list)
+    result = ''
+    state = 'SUCCESS'
+    tools.end_task(task_id,result,state)
+
 # mysql安装
 @shared_task
 def mysql_install(host,user,password):

@@ -76,7 +76,7 @@ def mysql_django_query(sql):
     conn.close
 
 def oracle_django_query(user,password,oracle_url,sql):
-    conn=cx_Oracle.connect(user,password,oracle_url)
+    conn=cx_Oracle.connect(user,password,oracle_url,encoding = "UTF-8")
     cursor = conn.cursor()
     count = cursor.execute(sql)
     if count == 0:
