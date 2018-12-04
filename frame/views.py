@@ -2772,12 +2772,12 @@ def oracle_logs_add(request):
     url = host + ':' + port + '/' + service_name
     # 查询在线日志
     sql = """
-        select a.GROUP# group_no,b.THREAD# thread_no,a.TYPE,b.SEQUENCE# sequence_no,b.BYTES/1024/1024 SIZE_M,b.ARCHIVED,b.STATUS,a.MEMBER from v$logfile a,v$log b where a.GROUP#=b.GROUP#(+)
+        select a.GROUP# group_no,b.THREAD# thread_no,a.TYPE,b.SEQUENCE# sequence_no,first_time,next_time,b.BYTES/1024/1024 SIZE_M,b.ARCHIVED,b.STATUS,a.MEMBER from v$logfile a,v$log b where a.GROUP#=b.GROUP#(+)
         """
     oracle_redo_files = tools.oracle_django_query(user,password,url,sql)
     # 查询归档日志
     sql = """
-     select sequence# sequence_no,first_time, next_time,name from v$archived_log where archived='YES' and deleted='NO' and STANDBY_DEST='NO'
+     select sequence# sequence_no,first_time, next_time, round(blocks*block_size/1024/1024,2) mb,name from v$archived_log where archived='YES' and deleted='NO' and STANDBY_DEST='NO'
     """
     oracle_archived_files = tools.oracle_django_query(user,password,url,sql)
     status = 0

@@ -134,6 +134,8 @@ desired effect
                     <th>线程</th>
                     <th>类型</th>
                     <th>序列号</th>
+                    <th>开始时间</th>
+                    <th>结束时间</th>
                     <th>大小(MB)</th>
                     <th>是否归档</th>
                     <th>状态</th>
@@ -151,6 +153,8 @@ desired effect
                 <td>{{ oracle_redo_file.THREAD_NO }}</td>
                 <td>{{ oracle_redo_file.TYPE }}</td>
                 <td>{{ oracle_redo_file.SEQUENCE_NO }}</td>
+                <td>{{ oracle_redo_file.FIRST_TIME }}</td>
+                <td>{{ oracle_redo_file.NEXT_TIME }}</td>
                 <td>{{ oracle_redo_file.SIZE_M }}</td>
                 <td>{{ oracle_redo_file.ARCHIVED }}</td>
                 <td>{{ oracle_redo_file.STATUS }}</td>
@@ -171,6 +175,7 @@ desired effect
                <tbody><tr>
                     <th>选择</th>
                     <th>序列号</th>
+                    <th>大小(mb)</th>
                     <th>开始时间</th>
                     <th>结束时间</th>
                     <th>文件名</th>
@@ -184,6 +189,7 @@ desired effect
                     </div>
                  </td>
                 <td>{{ oracle_archived_file.SEQUENCE_NO }}</td>
+                <td>{{ oracle_archived_file.MB }}</td>
                 <td>{{ oracle_archived_file.FIRST_TIME }}</td>
                 <td>{{ oracle_archived_file.NEXT_TIME }}</td>
                 <td>{{ oracle_archived_file.NAME }}</td>
