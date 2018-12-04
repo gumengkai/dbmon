@@ -2821,3 +2821,79 @@ def show_sqltext(request):
 
 
     return render_to_response('show_sqltext.html',{'sqltext':sqltext})
+
+
+@login_required(login_url='/login')
+def oracle_audit(request):
+    messageinfo_list = models_frame.TabAlarmInfo.objects.all()
+    tagsinfo = models_oracle.TabOracleServers.objects.all()
+
+    tagsdefault = request.GET.get('tagsdefault')
+    owner = request.GET.get('owner','')
+    object = request.GET.get('object','')
+    print owner
+    print object
+
+    db_range_default = request.GET.get('db_range_default')
+
+    if not db_range_default:
+        db_range_default = '1小时'.decode("utf-8")
+
+    begin_time = tools.range(db_range_default)
+    end_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    if not tagsdefault:
+        tagsdefault = models_oracle.TabOracleServers.objects.order_by('tags')[0].tags
+
+    sql = "select host,port,service_name,user,password,user_os,password_os from tab_oracle_servers where tags= '%s' " % tagsdefault
+    oracle = tools.mysql_query(sql)
+    host = oracle[0][0]
+    port = oracle[0][1]
+    service_name = oracle[0][2]
+    user = oracle[0][3]
+    password = oracle[0][4]
+    password = base64.decodestring(password)
+    url = host + ':' + port + '/' + service_name
+
+    if request.method == 'POST':
+        if request.POST.has_key('select_tags'):
+            tagsdefault = request.POST.get('select_tags', None).encode("utf-8")
+            return HttpResponseRedirect('/oracle_audit?tagsdefault=%s&db_range_default=%s&owner=%s&object=%s' % (tagsdefault,db_range_default,owner,object))
+
+        elif request.POST.has_key('commit'):
+            owner = request.POST.get('owner','')
+            object = request.POST.get('object','')
+            return HttpResponseRedirect('/oracle_audit?tagsdefault=%s&db_range_default=%s&owner=%s&object=%s' % (tagsdefault,db_range_default,owner,object))
+        else:
+            logout(request)
+            return HttpResponseRedirect('/login/')
+
+    # 查询解析结果
+    sql = """
+      select os_username,
+       username,
+       userhost,
+       terminal,
+       timestamp,
+       owner,
+       obj_name,
+       action_name,
+       priv_used,
+       sql_bind,
+       sql_text
+  from dba_audit_trail where  action_name not in ('LOGON','LOGOFF') 
+  and owner like nvl(upper('%s'),owner) and obj_name like nvl(upper('%s'),obj_name) 
+  and timestamp > to_date('%s','yyyy-mm-dd hh24:mi:ss') and timestamp < to_date('%s','yyyy-mm-dd hh24:mi:ss')  """ %(owner,object,begin_time,end_time)
+    print sql
+    audit_contents = tools.oracle_django_query(user, password, url, sql)
+
+    if messageinfo_list:
+        msg_num = len(messageinfo_list)
+        msg_last = models_frame.TabAlarmInfo.objects.latest('id')
+        msg_last_content = msg_last.alarm_content
+        tim_last = (datetime.datetime.now() - msg_last.alarm_time).seconds / 60
+    else:
+        msg_num = 0
+        msg_last_content = ''
+        tim_last = ''
+    return render(request,'oracle_audit.html', {'tagsdefault': tagsdefault,'tagsinfo':tagsinfo,'msg_num':msg_num,'msg_last_content':msg_last_content,'tim_last':tim_last,'audit_contents':audit_contents,'owner':owner,'object':object })
