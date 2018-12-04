@@ -2742,7 +2742,7 @@ def oracle_logminer(request):
          sql_undo sql_undo_text,
          substr(sql_redo,1,20) sql_redo,
          sql_redo sql_redo_text
-    from logmnr_contents"""
+    from logmnr_contents order by timestamp desc"""
     logmnr_contents = tools.oracle_django_query(user, password, url, sql)
 
     if messageinfo_list:
@@ -2882,7 +2882,8 @@ def oracle_audit(request):
        sql_text
   from dba_audit_trail where  action_name not in ('LOGON','LOGOFF') 
   and owner like nvl(upper('%s'),owner) and obj_name like nvl(upper('%s'),obj_name) 
-  and timestamp > to_date('%s','yyyy-mm-dd hh24:mi:ss') and timestamp < to_date('%s','yyyy-mm-dd hh24:mi:ss')  """ %(owner,object,begin_time,end_time)
+  and timestamp > to_date('%s','yyyy-mm-dd hh24:mi:ss') and timestamp < to_date('%s','yyyy-mm-dd hh24:mi:ss')  
+  order  by timestamp desc""" %(owner,object,begin_time,end_time)
 
     audit_contents = tools.oracle_django_query(user, password, url, sql)
 

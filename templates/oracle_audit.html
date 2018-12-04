@@ -425,10 +425,10 @@ desired effect
               <div class="box-tools">
               <table class="table table-bordered text-center">
              <tbody>
-                <a href="/oracle_audit?tagsdefault={{ tagsdefault }}&db_range_default=1小时"><button type="button" class="btn bg-olive margin">1小时</button></a>
-                <a href="/oracle_audit?tagsdefault={{ tagsdefault }}&db_range_default=1天"><button type="button" class="btn bg-olive margin">1天</button></a>
-                <a href="/oracle_audit?tagsdefault={{ tagsdefault }}&db_range_default=7天"><button type="button" class="btn bg-olive margin">7天</button></a>
-                <a href="/oracle_audit?tagsdefault={{ tagsdefault }}&db_range_default=30天"><button type="button" class="btn bg-olive margin">30天</button></a>
+                <a href="/oracle_audit?tagsdefault={{ tagsdefault }}&db_range_default=1小时&owner={{ owner }}&object={{ object }}"><button type="button" class="btn bg-olive margin">1小时</button></a>
+                <a href="/oracle_audit?tagsdefault={{ tagsdefault }}&db_range_default=1天&owner={{ owner }}&object={{ object }}"><button type="button" class="btn bg-olive margin">1天</button></a>
+                <a href="/oracle_audit?tagsdefault={{ tagsdefault }}&db_range_default=7天&owner={{ owner }}&object={{ object }}"><button type="button" class="btn bg-olive margin">7天</button></a>
+                <a href="/oracle_audit?tagsdefault={{ tagsdefault }}&db_range_default=30天&owner={{ owner }}&object={{ object }}"><button type="button" class="btn bg-olive margin">30天</button></a>
               </tbody></table>
               <!-- /.form-group -->
             </div>
@@ -444,13 +444,13 @@ desired effect
         <div class="col-xs-3">
        <div class="input-group">
                 <span class="input-group-addon">用户过滤</span>
-                <input type="text" class="form-control" name="owner" placeholder="必填" required="required">
+                <input type="text" class="form-control" id="owner" name="owner" placeholder="必填">
               </div>
         </div>
         <div class="col-xs-3">
              <div class="input-group">
                 <span class="input-group-addon">对象过滤</span>
-                <input type="text" class="form-control" name="object" placeholder="选填">
+                <input type="text" class="form-control" id="object" name="object" placeholder="选填">
               </div>
         </div>
          <div class="col-xs-1">
@@ -567,6 +567,8 @@ desired effect
 <script src="/static/js/hullabaloo.js"></script>
 
 <script src="/static/layer/layer.js"></script>
+
+<script src="/static/js/getUrl.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 	$.hulla = new hullabaloo();
@@ -724,6 +726,16 @@ function pop_content(m,n){
 	    }
 
 	});
+</script>
+
+<script>
+	window.onload = function(){
+	    var owner = $.getUrlParam('owner');
+		$("#owner").val(owner);
+		var object = $.getUrlParam('object');
+		$("#object").val(object);
+
+	}
 </script>
 
 
