@@ -2781,7 +2781,6 @@ def oracle_logs_add(request):
     """
     oracle_archived_files = tools.oracle_django_query(user,password,url,sql)
     status = 0
-    check_box_list = ''
 
     if request.method == "POST":
         # 添加日志或归档日志
@@ -2884,7 +2883,7 @@ def oracle_audit(request):
   from dba_audit_trail where  action_name not in ('LOGON','LOGOFF') 
   and owner like nvl(upper('%s'),owner) and obj_name like nvl(upper('%s'),obj_name) 
   and timestamp > to_date('%s','yyyy-mm-dd hh24:mi:ss') and timestamp < to_date('%s','yyyy-mm-dd hh24:mi:ss')  """ %(owner,object,begin_time,end_time)
-    print sql
+
     audit_contents = tools.oracle_django_query(user, password, url, sql)
 
     if messageinfo_list:
