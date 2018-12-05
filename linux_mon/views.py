@@ -18,7 +18,7 @@ import linux_mon.models as models_linux
 
 @login_required(login_url='/login')
 def show_linux(request):
-    osinfo_list = models_linux.OsInfo.objects.all()
+    osinfo_list = models_linux.OsInfo.objects.order_by("rate_level")
     diskinfo_list = models_linux.OsFilesystem.objects.order_by("-pct_used")
     paginator_disk = Paginator(diskinfo_list, 5)
     page_disk = request.GET.get('page_disk')

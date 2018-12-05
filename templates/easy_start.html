@@ -44,38 +44,25 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Google Font -->
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+<style>
+    .table tr th {
+    font-size: 12px;
+    text-align: center;
+    vertical-align: middle;
+    }
+    .table tr td {
+    font-size: 12px;
+    text-align: center;
+    vertical-align: middle;
+    }
+    [aria-controls="example1"] {
+        font-size: 12px;
+    }
+</style>
+
 </head>
- <style>
-    .color-palette {
-      height: 35px;
-      line-height: 35px;
-      text-align: center;
-    }
 
-    .color-palette-set {
-      margin-bottom: 15px;
-    }
-
-    .color-palette span {
-      display: none;
-      font-size: 12px;
-    }
-
-    .color-palette:hover span {
-      display: block;
-    }
-
-    .color-palette-box h4 {
-      position: absolute;
-      top: 100%;
-      left: 25px;
-      margin-top: -40px;
-      color: rgba(255, 255, 255, 0.8);
-      font-size: 12px;
-      display: block;
-      z-index: 7;
-    }
-  </style>
 <!--
 BODY TAG OPTIONS:
 =================
@@ -352,7 +339,7 @@ desired effect
           </a>
           <ul class="treeview-menu">
               <li><a href="/linux_monitor"><i class="fa fa-circle-o"></i>工具包</a></li>
-            <li><a href="/show_linux"><i class="fa fa-circle-o"></i>任务编排</a></li>
+            <li><a href="/my_scheduler"><i class="fa fa-circle-o"></i>任务编排</a></li>
           </ul>
         </li>
           <li class="treeview">

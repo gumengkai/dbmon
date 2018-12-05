@@ -37,14 +37,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="/static/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
 
 <style>
-.table tbody tr td {
-text-align: center;
-vertical-align: middle;
-}
-th{
-        text-align:center;/** 设置水平方向居中 */
-        vertical-align:middle/** 设置垂直方向居中 */
-}
+    .table tr th {
+    font-size: 12px;
+    text-align: center;
+    vertical-align: middle;
+    }
+    .table tr td {
+    font-size: 12px;
+    text-align: center;
+    vertical-align: middle;
+    }
+    [aria-controls="example1"] {
+        font-size: 12px;
+    }
 </style>
 
 </head>
@@ -325,7 +330,7 @@ desired effect
           </a>
           <ul class="treeview-menu">
               <li><a href="/my_tools"><i class="fa fa-circle-o"></i>工具包</a></li>
-            <li><a href="/show_linux"><i class="fa fa-circle-o"></i>任务编排</a></li>
+            <li><a href="/my_scheduler"><i class="fa fa-circle-o"></i>任务编排</a></li>
           </ul>
         </li>
           <li class="treeview">

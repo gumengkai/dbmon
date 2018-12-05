@@ -43,6 +43,21 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Google Font -->
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+<style>
+    .table tr th {
+    font-size: 12px;
+    text-align: center;
+    vertical-align: middle;
+    }
+    .table tr td {
+    font-size: 12px;
+    text-align: center;
+    vertical-align: middle;
+    }
+    [aria-controls="example1"] {
+        font-size: 12px;
+    }
+</style>
 </head>
  <style>
     .color-palette {
@@ -353,7 +368,7 @@ desired effect
           </a>
           <ul class="treeview-menu">
               <li><a href="/my_tools"><i class="fa fa-circle-o"></i>工具包</a></li>
-            <li><a href="/show_linux"><i class="fa fa-circle-o"></i>任务编排</a></li>
+            <li><a href="/my_scheduler"><i class="fa fa-circle-o"></i>任务编排</a></li>
           </ul>
         </li>
           <li class="treeview">
@@ -403,8 +418,8 @@ desired effect
               <h3 class="box-title">实例活动会话信息</h3>
             </div>
             <!-- /.box-header -->
-            <div class="box-body">
-              <table id="example2" class="table table-bordered table-hover">
+            <div class="box-body" style="overflow: auto">
+              <table id="example1" class="table table-bordered table-hover">
                 <thead>
                 <tr>
                   <th>ID</th>

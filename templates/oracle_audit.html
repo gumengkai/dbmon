@@ -53,6 +53,22 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Google Font -->
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+<style>
+    .table tr th {
+    font-size: 12px;
+    text-align: center;
+    vertical-align: middle;
+    }
+    .table tr td {
+    font-size: 12px;
+    text-align: center;
+    vertical-align: middle;
+    }
+    [aria-controls="example1"] {
+        font-size: 12px;
+    }
+</style>
 </head>
 
  <style>
@@ -369,7 +385,7 @@ desired effect
           </a>
           <ul class="treeview-menu">
               <li><a href="/my_tools"><i class="fa fa-circle-o"></i>工具包</a></li>
-            <li><a href="/show_linux"><i class="fa fa-circle-o"></i>任务编排</a></li>
+            <li><a href="/my_scheduler"><i class="fa fa-circle-o"></i>任务编排</a></li>
           </ul>
         </li>
           <li class="treeview">
@@ -704,6 +720,7 @@ function pop_content(m,n){
 		autoWidth:true,////不开启自动宽度，用bootstrap的自适应去调整
 		"lengthMenu": [10, 20, 50],//表格行数选择框内数目 显示2条,4条,20条,50条
 		"displayLength": 10,//默认的显示行数 (也就是每页显示几条数据)
+         "order": [[ 0, "desc" ]],
 	    "language": {//自定义语言提示
 	    	"processing": "处理中...",
 	        "lengthMenu": "显示 _MENU_ 项结果",

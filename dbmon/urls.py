@@ -100,7 +100,7 @@ urlpatterns = patterns('',
     (r'^oracle_profile/', oracle_mon.oracle_profile),
     (r'^oracle_grant/', oracle_mon.oracle_grant),
     (r'^my_task/', frame.my_task),
-
+    (r'^my_scheduler/', frame.my_scheduler),
 )
 
 handler404 = frame.page_not_found

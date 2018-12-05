@@ -170,7 +170,7 @@ def oracle_monitor(request):
 @login_required(login_url='/login')
 def show_oracle(request):
     messageinfo_list = models_frame.TabAlarmInfo.objects.all()
-    dbinfo_list = models_oracle.OracleDb.objects.all()
+    dbinfo_list = models_oracle.OracleDb.objects.order_by("rate_level")
     paginator = Paginator(dbinfo_list, 10)
     page = request.GET.get('page')
     try:

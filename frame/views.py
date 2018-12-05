@@ -2742,7 +2742,7 @@ def oracle_logminer(request):
          sql_undo sql_undo_text,
          substr(sql_redo,1,20) sql_redo,
          sql_redo sql_redo_text
-    from logmnr_contents order by timestamp desc"""
+    from logmnr_contents order by timestamp desc """
     logmnr_contents = tools.oracle_django_query(user, password, url, sql)
 
     if messageinfo_list:
@@ -2883,7 +2883,7 @@ def oracle_audit(request):
   from dba_audit_trail where  action_name not in ('LOGON','LOGOFF') 
   and owner like nvl(upper('%s'),owner) and obj_name like nvl(upper('%s'),obj_name) 
   and timestamp > to_date('%s','yyyy-mm-dd hh24:mi:ss') and timestamp < to_date('%s','yyyy-mm-dd hh24:mi:ss')  
-  order  by timestamp desc""" %(owner,object,begin_time,end_time)
+  order by scn desc""" %(owner,object,begin_time,end_time)
 
     audit_contents = tools.oracle_django_query(user, password, url, sql)
 
@@ -2897,3 +2897,32 @@ def oracle_audit(request):
         msg_last_content = ''
         tim_last = ''
     return render(request,'oracle_audit.html', {'tagsdefault': tagsdefault,'tagsinfo':tagsinfo,'msg_num':msg_num,'msg_last_content':msg_last_content,'tim_last':tim_last,'audit_contents':audit_contents,'owner':owner,'object':object })
+
+
+@login_required(login_url='/login')
+def my_scheduler(request):
+    messageinfo_list = models_frame.TabAlarmInfo.objects.all()
+    # linux监控设备
+    linux_servers_list = models_linux.TabLinuxServers.objects.all()
+    # Oracle监控设备
+    oracle_servers_list = models_oracle.TabOracleServers.objects.all()
+    # Mysql监控设备
+    mysql_servers_list = models_mysql.TabMysqlServers.objects.all()
+
+    if request.method == 'POST':
+        logout(request)
+        return HttpResponseRedirect('/login/')
+
+    if messageinfo_list:
+        msg_num = len(messageinfo_list)
+        msg_last = models_frame.TabAlarmInfo.objects.latest('id')
+        msg_last_content = msg_last.alarm_content
+        tim_last = (datetime.datetime.now() - msg_last.alarm_time).seconds / 60
+    else:
+        msg_num = 0
+        msg_last_content = ''
+        tim_last = ''
+    return render_to_response('my_scheduler.html',
+                              {'linux_servers_list': linux_servers_list, 'oracle_servers_list': oracle_servers_list,
+                               'mysql_servers_list': mysql_servers_list, 'messageinfo_list': messageinfo_list, 'msg_num': msg_num,
+                               'msg_last_content': msg_last_content, 'tim_last': tim_last})
