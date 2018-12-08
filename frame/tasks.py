@@ -6,6 +6,8 @@
 from __future__ import absolute_import,unicode_literals
 from celery import shared_task
 import frame.oracle_do as oracle
+import frame.oracle_backup as oracle_bak
+
 import frame.mysql_do as mysql
 import uuid
 import frame.tools as tools
@@ -84,7 +86,7 @@ def oracle_switchover(primary_tags,p_host,p_user,p_password,standby_tags,s_host,
 
 # 获取oracle性能报告
 @shared_task
-def get_report(tags,url,user,password,report_type,begin_snap,end_snap):
+def get_report(tags,host,user,password,user_os,password_os,service_name,url,report_type,begin_snap,end_snap):
     oper_type = 'Oracle性能报告'
     server_type = 'Oracle'
     task_id = uuid.uuid1()
@@ -96,6 +98,22 @@ def get_report(tags,url,user,password,report_type,begin_snap,end_snap):
     result = ''
     state = 'SUCCESS'
     tools.end_task(task_id,result,state)
+
+# oracle全量备份
+@shared_task
+def oracle_fullbackup(tags,host,user,password,user_os,password_os,service_name,url,bakdir,backup_retain_day,arch_keep_days):
+    oper_type = 'Oracle全量备份'
+    server_type = 'Oracle'
+    task_id = uuid.uuid1()
+    task_name = '%s:oracle_fullbak' %tags
+    args = 'tags：' + tags + '，'  + 'host：' + host  + 'user：' + user_os\
+         + '，' +  'password：' + password_os + '，' + 'bakdir：' + bakdir + '，' + 'sid：' + service_name +'，' + 'backup_retain_day：' + backup_retain_day + 'arch_keep_days：' + arch_keep_days
+    tools.begin_task(task_id,oper_type,server_type,tags,task_name,args)
+    oracle_bak.oracle_fullbackup(host,user_os,password_os,bakdir,service_name,backup_retain_day,arch_keep_days)
+    result = ''
+    state = 'SUCCESS'
+    tools.end_task(task_id,result,state)
+
 
 
 # oracle日志挖掘

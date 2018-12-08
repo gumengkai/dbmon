@@ -81,12 +81,12 @@ def linux_monitor(request):
     tagsdefault = request.GET.get('tagsdefault')
     if not tagsdefault:
         tagsdefault = models_linux.TabLinuxServers.objects.order_by('tags')[0].tags
-    load_range_defualt = request.GET.get('load_range_default')
-    if not load_range_defualt:
-        load_range_defualt = '1小时'.decode("utf-8")
-    cpu_range_defualt =   request.GET.get('cpu_range_default')
-    if not cpu_range_defualt:
-        cpu_range_defualt = '1小时'.decode("utf-8")
+    load_range_default = request.GET.get('load_range_default')
+    if not load_range_default:
+        load_range_default = '1小时'.decode("utf-8")
+    cpu_range_default =   request.GET.get('cpu_range_default')
+    if not cpu_range_default:
+        cpu_range_default = '1小时'.decode("utf-8")
     mem_range_default = request.GET.get('mem_range_default')
     if not mem_range_default:
         mem_range_default = '1小时'.decode("utf-8")
@@ -99,9 +99,9 @@ def linux_monitor(request):
     hostinfo = models_linux.TabLinuxServers.objects.all().order_by('tags')
 
 
-
+    load_begin_time = tools.range(load_range_default)
     net_begin_time = tools.range(net_range_default)
-    cpu_begin_time = tools.range(cpu_range_defualt)
+    cpu_begin_time = tools.range(cpu_range_default)
     mem_begin_time = tools.range(mem_range_default)
     tcp_begin_time = tools.range(tcp_range_default)
     end_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -112,7 +112,7 @@ def linux_monitor(request):
     netgrow_list.reverse()
 
     loadgrow = models_linux.OsInfoHis.objects.filter(tags=tagsdefault, load1__isnull=False).filter(
-        chk_time__gt=cpu_begin_time, chk_time__lt=end_time).order_by('-chk_time')
+        chk_time__gt=load_begin_time, chk_time__lt=end_time).order_by('-chk_time')
     loadgrow_list = list(loadgrow)
     loadgrow_list.reverse()
 
@@ -163,14 +163,14 @@ def linux_monitor(request):
             elif request.POST.has_key('select_net'):
                 net_range_default = request.POST.get('select_net',None)
             elif request.POST.has_key('select_load'):
-                load_range_defualt = request.POST.get('select_load',None)
+                load_range_default = request.POST.get('select_load',None)
             elif request.POST.has_key('select_cpu'):
-                cpu_range_defualt = request.POST.get('select_cpu',None)
+                cpu_range_default = request.POST.get('select_cpu',None)
             elif request.POST.has_key('select_mem'):
                 mem_range_default = request.POST.get('select_mem', None)
             elif request.POST.has_key('select_tcp'):
                 tcp_range_default = request.POST.get('select_tcp', None)
-            return HttpResponseRedirect('/linux_monitor?tagsdefault=%s&net_range_default=%s&load_range_default=%s&cpu_range_default=%s&mem_range_default=%s&tcp_range_default=%s' %(tagsdefault,net_range_default,load_range_defualt,cpu_range_defualt,mem_range_default,tcp_range_default))
+            return HttpResponseRedirect('/linux_monitor?tagsdefault=%s&net_range_default=%s&load_range_default=%s&cpu_range_default=%s&mem_range_default=%s&tcp_range_default=%s' %(tagsdefault,net_range_default,load_range_default,cpu_range_default,mem_range_default,tcp_range_default))
         else:
             logout(request)
             return HttpResponseRedirect('/login/')
@@ -188,7 +188,7 @@ def linux_monitor(request):
                               {'netgrow_list': netgrow_list, 'loadgrow_list': loadgrow_list,'cpugrow_list': cpugrow_list,
                                'memgrow_list': memgrow_list,'tcpgrow_list': tcpgrow_list,
                                'tagsdefault': tagsdefault, 'hostinfo': hostinfo, 'osinfo': osinfo,
-                               'net_range_default': net_range_default,'load_range_default':load_range_defualt, 'cpu_range_default': cpu_range_defualt,
+                               'net_range_default': net_range_default,'load_range_default':load_range_default, 'cpu_range_default': cpu_range_default,
                                'mem_range_default': mem_range_default,'tcp_range_default': tcp_range_default, 'messageinfo_list': messageinfo_list,
                                'msg_num': msg_num, 'msg_last_content': msg_last_content, 'tim_last': tim_last,
                                'diskinfos': diskinfos,'check_status':check_status,'os_status':os_status})

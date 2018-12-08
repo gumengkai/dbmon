@@ -17,6 +17,18 @@ password_mysql = 'mysqld'
 port_mysql = 3306
 dbname = 'db_monitor'
 
+
+# 上传文件
+def sftp_upload_file(host,user,password,server_path, local_path):
+    try:
+        t = paramiko.Transport((host, 22))
+        t.connect(username=user, password=password)
+        sftp = paramiko.SFTPClient.from_transport(t)
+        sftp.put(local_path, server_path)
+        t.close()
+    except Exception, e:
+        print e
+
 # 操作监控数据存放目标库(mysql)
 def mysql_exec(sql,val):
     try:
@@ -197,8 +209,8 @@ def exec_command(host,user,password,command):
 def task_model(task_model):
     if task_model == unicode('Oracle诊断报告', 'utf-8'):
         task = 'frame.tasks.get_report'
-    elif task_model == unicode('Oracle备份', 'utf-8'):
-        task = ''
+    elif task_model == unicode('Oracle全量备份', 'utf-8'):
+        task = 'frame.tasks.oracle_fullbackup'
 
     return task
 

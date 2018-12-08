@@ -2968,6 +2968,10 @@ def scheduler_add(request):
             user = oracle[0][3]
             password = oracle[0][4]
             password = base64.decodestring(password)
+            user_os = oracle[0][5]
+            password_os = oracle[0][6]
+            password_os = base64.decodestring(password_os)
+
             url = host + ':' + port + '/' + service_name
 
 
@@ -2979,9 +2983,15 @@ def scheduler_add(request):
             kwargs_d = {}
             # 通用参数
             kwargs_d['tags'] = tags
+            kwargs_d['host'] = host
             kwargs_d['user'] = user
             kwargs_d['password'] = password
+            kwargs_d['user_os'] = user_os
+            kwargs_d['password_os'] = password_os
+            kwargs_d['service_name'] = service_name
             kwargs_d['url'] = url
+
+
             # 自定义参数
             if para_name:
                 for i in xrange(len(para_name)):
@@ -3046,8 +3056,12 @@ def scheduler_edit(request):
 
     # 删除tags,user,password,url
     twargs_d.pop('tags')
+    twargs_d.pop('host')
     twargs_d.pop('user')
     twargs_d.pop('password')
+    twargs_d.pop('user_os')
+    twargs_d.pop('password_os')
+    twargs_d.pop('service_name')
     twargs_d.pop('url')
 
 
@@ -3079,6 +3093,9 @@ def scheduler_edit(request):
             user = oracle[0][3]
             password = oracle[0][4]
             password = base64.decodestring(password)
+            user_os = oracle[0][5]
+            password_os = oracle[0][6]
+            password_os = base64.decodestring(password_os)
             url = host + ':' + port + '/' + service_name
 
             des_d = {}
@@ -3089,9 +3106,14 @@ def scheduler_edit(request):
             kwargs_d = {}
             # 通用参数
             kwargs_d['tags'] = tags
+            kwargs_d['host'] = host
             kwargs_d['user'] = user
             kwargs_d['password'] = password
+            kwargs_d['user_os'] = user_os
+            kwargs_d['password_os'] = password_os
+            kwargs_d['service_name'] = service_name
             kwargs_d['url'] = url
+
             # 自定义参数
             if para_name:
                 for i in xrange(len(para_name)):
@@ -3137,17 +3159,21 @@ def scheduler_para(request):
 
 
     # 查询变量信息，description
-    sql = "select kwargs,description from djcelery_periodictask where id = %s" %rid
+    sql = "select kwargs from djcelery_periodictask where id = %s" %rid
     res = tools.mysql_query(sql)
 
     twargs_j = str(res[0][0])
     twargs_d = json.loads(twargs_j,encoding='utf-8')
-    tags = twargs_d['tags']
 
-    # 删除tags,user,password,url
+
+    # 删除tags,host,user,password,user_os,password_os,url
     twargs_d.pop('tags')
+    twargs_d.pop('host')
     twargs_d.pop('user')
     twargs_d.pop('password')
+    twargs_d.pop('user_os')
+    twargs_d.pop('password_os')
+    twargs_d.pop('service_name')
     twargs_d.pop('url')
 
 

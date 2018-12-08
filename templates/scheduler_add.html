@@ -157,7 +157,7 @@ desired effect
                         <span class="glyphicon glyphicon-search form-control-feedback"></span>
                       <option selected="selected">----</option>
                           <option>Oracle诊断报告</option>
-                          <option>Oracle备份</option>
+                          <option>Oracle全量备份</option>
                       </select>
                   </div>
                 </div>
@@ -185,7 +185,7 @@ desired effect
                       </select>
                       </div>
                       <span class="input-group-btn">
-                        <button type="button" class="btn btn-default" data-toggle="tooltip" title="" data-original-title="Add" onclick="return pop_add('{{ tagsdefault }}')">
+                        <button type="button" class="btn btn-default" data-toggle="tooltip" title="" data-original-title="Add" onclick="return pop_crontab_add('{{ tagsdefault }}')">
                       <i class="fa fa-plus"></i></button>
                       </span>
                   </div>
@@ -338,7 +338,35 @@ default:alert("error");
 }
 };
 
-
+function pop_crontab_add(){
+    layer.open({
+    type: 2,
+    title: '添加crontab',
+    time: false,
+    closeBtn: 1,
+    area: ['500px', '350px'],
+    shadeClose: true, //点击遮罩关闭
+    content: ['/crontab_add',],
+    end:function(){
+            var handle_status = $("#handle_status").val();
+            if ( handle_status == '1' ) {
+                layer.msg('添加成功！',{
+                    icon: 1,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                },function(){
+                    history.go(0);
+                });
+            } else if ( handle_status == '2' ) {
+                layer.msg('添加失败！',{
+                    icon: 2,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                },function(){
+                    history.go(0);
+                });
+            }
+        }
+  });
+}
 </script>
 
 {#回传参数至父层#}
