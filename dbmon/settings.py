@@ -124,4 +124,7 @@ STATICFILES_DIRS = (
 )
 # celery setting
 BROKER_URL = 'amqp://guest:guest@localhost//'
+CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
+CELERY_ENABLE_UTC = False
+CELERY_TIMEZONE = 'Asia/Shanghai'
 

@@ -194,6 +194,15 @@ def exec_command(host,user,password,command):
         print e
 
 
+def task_model(task_model):
+    if task_model == unicode('Oracle诊断报告', 'utf-8'):
+        task = 'frame.tasks.get_report'
+    elif task_model == unicode('Oracle备份', 'utf-8'):
+        task = ''
+
+    return task
+
+
 if __name__ == '__main__':
     tags = 'orcl'
     host = '192.168.48.10'

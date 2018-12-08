@@ -2,6 +2,7 @@
 # encoding:utf-8
 
 import os
+import json
 from django.shortcuts import render
 
 from django.shortcuts import render,render_to_response,RequestContext
@@ -139,7 +140,7 @@ def alarm_setting(request):
                                   {'alarm_list': alarm_list, 'messageinfo_list': messageinfo_list, 'msg_num': msg_num,
                                    'msg_last_content': msg_last_content, 'tim_last': tim_last})
     else:
-        return render_to_response('alarm_setting.html', {'alarm_settings': alarm_settings})
+        return render_to_response('alarm_setting.html', {'alarm_list': alarm_list})
 
 
 @login_required(login_url='/login')
@@ -2830,8 +2831,6 @@ def oracle_audit(request):
     tagsdefault = request.GET.get('tagsdefault')
     owner = request.GET.get('owner','')
     object = request.GET.get('object','')
-    print owner
-    print object
 
     db_range_default = request.GET.get('db_range_default')
 
@@ -2902,12 +2901,21 @@ def oracle_audit(request):
 @login_required(login_url='/login')
 def my_scheduler(request):
     messageinfo_list = models_frame.TabAlarmInfo.objects.all()
-    # linux监控设备
-    linux_servers_list = models_linux.TabLinuxServers.objects.all()
-    # Oracle监控设备
-    oracle_servers_list = models_oracle.TabOracleServers.objects.all()
-    # Mysql监控设备
-    mysql_servers_list = models_mysql.TabMysqlServers.objects.all()
+
+    # 查询定时任务
+    sql = "select a.id,a.name,a.task,a.kwargs,a.expires,JSON_UNQUOTE(JSON_EXTRACT(a.kwargs,'$.tags')) tags,JSON_UNQUOTE(JSON_EXTRACT(a.description,'$.type')) type,JSON_UNQUOTE(JSON_EXTRACT(a.description,'$.task_model')) task_model," \
+          "a.enabled,(case a.enabled when 1 then 'on' else 'off' end) is_on," \
+          "(case a.enabled when 1 then 'green' else 'red' end) is_on1,a.last_run_at,a.total_run_count,a.date_changed," \
+          "a.description,concat(b.minute,' ',b.hour,' ',b.day_of_week,' ',b.day_of_month,' ',b.day_of_month) crontab,a.interval_id from djcelery_periodictask a left join djcelery_crontabschedule b on " \
+          "a.crontab_id=b.id where a.name <> 'celery.backend_cleanup' order by id"
+
+    my_schedulers = tools.mysql_django_query(sql)
+
+    # 查询crontab
+    sql = "select id,concat(b.minute,' ',b.hour,' ',b.day_of_week,' ',b.day_of_month,' ',b.day_of_month) crontab from djcelery_crontabschedule b "
+
+    my_crontabs = tools.mysql_django_query(sql)
+
 
     if request.method == 'POST':
         logout(request)
@@ -2923,6 +2931,289 @@ def my_scheduler(request):
         msg_last_content = ''
         tim_last = ''
     return render_to_response('my_scheduler.html',
-                              {'linux_servers_list': linux_servers_list, 'oracle_servers_list': oracle_servers_list,
-                               'mysql_servers_list': mysql_servers_list, 'messageinfo_list': messageinfo_list, 'msg_num': msg_num,
-                               'msg_last_content': msg_last_content, 'tim_last': tim_last})
+                              {'messageinfo_list': messageinfo_list, 'msg_num': msg_num,
+                               'msg_last_content': msg_last_content, 'tim_last': tim_last,
+                               'my_schedulers':my_schedulers,'my_crontabs':my_crontabs})
+
+@login_required(login_url='/login')
+def scheduler_add(request):
+    linuxtagsinfo = models_linux.TabLinuxServers.objects.all().order_by('tags')
+    oracletagsinfo = models_oracle.TabOracleServers.objects.all().order_by('tags')
+    mysqltagsinfo = models_mysql.TabMysqlServers.objects.all().order_by('tags')
+
+    status = 0
+    sql = "select id,concat(b.minute,' ',b.hour,' ',b.day_of_week,' ',b.day_of_month,' ',b.day_of_month) crontab from djcelery_crontabschedule b"
+    my_crontabs = tools.mysql_django_query(sql)
+
+
+    if request.method == "POST":
+        if request.POST.has_key('commit'):
+            task_name = request.POST.get('task_name', None)
+            type = request.POST.get('type', None)
+            tags = request.POST.get('tags', None)
+            task_model = request.POST.get('task_model', None)
+            task = tools.task_model(task_model)
+            is_on = request.POST.get('is_on', None)
+            is_on = tools.isno(is_on)
+            crontab = request.POST.get('crontab', None)
+            para_name = request.POST.getlist('para_name', None)
+            para_value = request.POST.getlist('para_value', None)
+
+            # 获取用户名密码等信息
+            sql = "select host,port,service_name,user,password,user_os,password_os from tab_oracle_servers where tags= '%s' " % tags
+            oracle = tools.mysql_query(sql)
+            host = oracle[0][0]
+            port = oracle[0][1]
+            service_name = oracle[0][2]
+            user = oracle[0][3]
+            password = oracle[0][4]
+            password = base64.decodestring(password)
+            url = host + ':' + port + '/' + service_name
+
+
+            des_d = {}
+            des_d['type'] = type
+            des_d['task_model'] = task_model
+            des = json.dumps(des_d,ensure_ascii=False)
+
+            kwargs_d = {}
+            # 通用参数
+            kwargs_d['tags'] = tags
+            kwargs_d['user'] = user
+            kwargs_d['password'] = password
+            kwargs_d['url'] = url
+            # 自定义参数
+            if para_name:
+                for i in xrange(len(para_name)):
+                    para = para_name[i]
+                    value = para_value[i]
+                    if para:
+                        kwargs_d[para] = value
+
+            kwargs = json.dumps(kwargs_d)
+
+            now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+            sql = "insert into djcelery_periodictask(name,task,args,kwargs,expires,enabled,crontab_id,description,total_run_count,date_changed) values(%s,%s,'[]',%s,null,%s,%s,%s,0,now())"
+            value = (task_name, task, kwargs, is_on, crontab, des)
+            tools.mysql_exec(sql,value)
+            status = 1
+
+
+        elif request.POST.has_key('logout'):
+            logout(request)
+            return HttpResponseRedirect('/login/')
+
+    return render_to_response('scheduler_add.html', {'status':status,'my_crontabs':my_crontabs,'linuxtagsinfo':linuxtagsinfo,'oracletagsinfo':oracletagsinfo,
+                                                     'mysqltagsinfo':mysqltagsinfo})
+
+@login_required(login_url='/login')
+def scheduler_del(request):
+    rid = request.GET.get('id')
+    sql = "delete from djcelery_periodictask where id = %s " %rid
+    tools.mysql_exec(sql,'')
+    return HttpResponseRedirect('/my_scheduler/')
+
+@login_required(login_url='/login')
+def scheduler_edit(request):
+    rid = request.GET.get('id')
+    linuxtagsinfo = models_linux.TabLinuxServers.objects.all().order_by('tags')
+    oracletagsinfo = models_oracle.TabOracleServers.objects.all().order_by('tags')
+    mysqltagsinfo = models_mysql.TabMysqlServers.objects.all().order_by('tags')
+
+    status = 0
+
+    # 查询定时任务
+    sql = "select a.id,a.name,a.task,a.kwargs,a.expires," \
+          "a.enabled,(case a.enabled when 1 then '启用' else '禁用' end) is_on," \
+          "(case a.enabled when 1 then 'green' else 'red' end) is_on1,a.last_run_at,a.total_run_count,a.date_changed," \
+          "a.description,a.crontab_id,concat(b.minute,' ',b.hour,' ',b.day_of_week,' ',b.day_of_month,' ',b.day_of_month) crontab,a.interval_id from djcelery_periodictask a left join djcelery_crontabschedule b on " \
+          "a.crontab_id=b.id where a.id=%s " %rid
+
+    my_scheduler = tools.mysql_django_query(sql)
+
+    # 查询crontab
+    sql = "select id,concat(b.minute,' ',b.hour,' ',b.day_of_week,' ',b.day_of_month,' ',b.day_of_month) crontab from djcelery_crontabschedule b"
+    my_crontabs = tools.mysql_django_query(sql)
+
+    # 查询变量信息，description
+    sql = "select kwargs,description from djcelery_periodictask where id = %s" %rid
+    res = tools.mysql_query(sql)
+
+    twargs_j = str(res[0][0])
+    twargs_d = json.loads(twargs_j,encoding='utf-8')
+    tags = twargs_d['tags']
+
+    # 删除tags,user,password,url
+    twargs_d.pop('tags')
+    twargs_d.pop('user')
+    twargs_d.pop('password')
+    twargs_d.pop('url')
+
+
+    description_j = str(res[0][1])
+    description_d = json.loads(description_j,encoding='utf-8')
+    type = description_d['type']
+    task_model = description_d['task_model']
+
+
+    if request.method == "POST":
+        if request.POST.has_key('commit'):
+            task_name = request.POST.get('task_name', None)
+            type = request.POST.get('type', None)
+            tags = request.POST.get('tags', None)
+            task_model = request.POST.get('task_model', None)
+            task = tools.task_model(task_model)
+            is_on = request.POST.get('is_on', None)
+            is_on = tools.isno(is_on)
+            crontab = request.POST.get('crontab', None)
+            para_name = request.POST.getlist('para_name', None)
+            para_value = request.POST.getlist('para_value', None)
+
+            # 获取用户名密码等信息
+            sql = "select host,port,service_name,user,password,user_os,password_os from tab_oracle_servers where tags= '%s' " % tags
+            oracle = tools.mysql_query(sql)
+            host = oracle[0][0]
+            port = oracle[0][1]
+            service_name = oracle[0][2]
+            user = oracle[0][3]
+            password = oracle[0][4]
+            password = base64.decodestring(password)
+            url = host + ':' + port + '/' + service_name
+
+            des_d = {}
+            des_d['type'] = type
+            des_d['task_model'] = task_model
+            des = json.dumps(des_d, ensure_ascii=False)
+
+            kwargs_d = {}
+            # 通用参数
+            kwargs_d['tags'] = tags
+            kwargs_d['user'] = user
+            kwargs_d['password'] = password
+            kwargs_d['url'] = url
+            # 自定义参数
+            if para_name:
+                for i in xrange(len(para_name)):
+                    para = para_name[i]
+                    value = para_value[i]
+                    if para:
+                        kwargs_d[para] = value
+
+            kwargs = json.dumps(kwargs_d)
+
+            now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+            sql = "delete from djcelery_periodictask where id = %s " %rid
+
+            tools.mysql_exec(sql,'')
+
+            sql = "insert into djcelery_periodictask(name,task,args,kwargs,expires,enabled,crontab_id,description,total_run_count,date_changed) values(%s,%s,'[]',%s,null,%s,%s,%s,0,now())"
+            value = (task_name, task, kwargs, is_on, crontab, des)
+            tools.mysql_exec(sql, value)
+            status = 1
+
+        elif request.POST.has_key('logout'):
+            logout(request)
+            return HttpResponseRedirect('/login/')
+
+    return render_to_response('scheduler_edit.html', {'status':status,'my_scheduler':my_scheduler,'linuxtagsinfo':linuxtagsinfo,'oracletagsinfo':oracletagsinfo,
+                                                     'mysqltagsinfo':mysqltagsinfo,'type':type,'task_model':task_model,'tags':tags,'my_crontabs':my_crontabs,
+                                                      'twargs_d':twargs_d})
+
+
+@login_required(login_url='/login')
+def scheduler_para(request):
+    rid = request.GET.get('id')
+
+    # 查询定时任务
+    sql = "select a.id,a.name,a.task,a.kwargs,a.expires," \
+          "a.enabled,(case a.enabled when 1 then '启用' else '禁用' end) is_on," \
+          "(case a.enabled when 1 then 'green' else 'red' end) is_on1,a.last_run_at,a.total_run_count,a.date_changed," \
+          "a.description,a.crontab_id,concat(b.minute,' ',b.hour,' ',b.day_of_week,' ',b.day_of_month,' ',b.day_of_month) crontab,a.interval_id from djcelery_periodictask a left join djcelery_crontabschedule b on " \
+          "a.crontab_id=b.id where a.id=%s " %rid
+
+    my_scheduler = tools.mysql_django_query(sql)
+
+
+    # 查询变量信息，description
+    sql = "select kwargs,description from djcelery_periodictask where id = %s" %rid
+    res = tools.mysql_query(sql)
+
+    twargs_j = str(res[0][0])
+    twargs_d = json.loads(twargs_j,encoding='utf-8')
+    tags = twargs_d['tags']
+
+    # 删除tags,user,password,url
+    twargs_d.pop('tags')
+    twargs_d.pop('user')
+    twargs_d.pop('password')
+    twargs_d.pop('url')
+
+
+    return render_to_response('scheduler_para.html', {'twargs_d':twargs_d})
+
+
+@login_required(login_url='/login')
+def crontab_del(request):
+    rid = request.GET.get('id')
+    sql = "delete from djcelery_crontabschedule where id = %s " %rid
+    tools.mysql_exec(sql,'')
+    return HttpResponseRedirect('/my_scheduler/')
+
+
+@login_required(login_url='/login')
+def crontab_add(request):
+
+    status = 0
+
+    if request.method == "POST":
+        if request.POST.has_key('commit'):
+            minute = request.POST.get('minute', None)
+            hour = request.POST.get('hour', None)
+            dw = request.POST.get('dw', None)
+            dm = request.POST.get('dm', None)
+            my = request.POST.get('my', None)
+
+            sql = "insert into djcelery_crontabschedule(minute,hour,day_of_week,day_of_month,month_of_year) values(%s,%s,%s,%s,%s)"
+            value = (minute, hour, dw, dm, my)
+            tools.mysql_exec(sql,value)
+            status = 1
+
+
+        elif request.POST.has_key('logout'):
+            logout(request)
+            return HttpResponseRedirect('/login/')
+
+    return render_to_response('crontab_add.html', {'status':status})
+
+@login_required(login_url='/login')
+def crontab_edit(request):
+    rid = request.GET.get('id')
+
+    status = 0
+
+    # 查询crontab
+    sql = "select id,minute,hour,day_of_week dw,day_of_month dm,month_of_year my from djcelery_crontabschedule b where id=%s" %rid
+    my_crontabs = tools.mysql_django_query(sql)
+
+
+    if request.method == "POST":
+        if request.POST.has_key('commit'):
+            minute = request.POST.get('minute', None)
+            hour = request.POST.get('hour', None)
+            dw = request.POST.get('dw', None)
+            dm = request.POST.get('dm', None)
+            my = request.POST.get('my', None)
+
+            sql = "update djcelery_crontabschedule set minute='%s',hour='%s',day_of_week='%s',day_of_month='%s',month_of_year='%s' where id=%s " %(minute,hour,dw,dm,my,rid)
+
+            tools.mysql_exec(sql, '')
+            status = 1
+
+        elif request.POST.has_key('logout'):
+            logout(request)
+            return HttpResponseRedirect('/login/')
+
+    return render_to_response('crontab_edit.html', {'status':status,'my_crontabs':my_crontabs})
+
