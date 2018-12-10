@@ -2199,22 +2199,22 @@ def oracle_sql(request):
 
 @login_required(login_url='/login')
 def oracle_backup(request):
-    backup_set = request.GET.get('backup_set')
-    backup_piece = request.GET.get('backup_piece')
+    tagsinfo = models_oracle.TabOracleServers.objects.all().order_by('tags')
+
+    tagsdefault = request.GET.get('tagsdefault')
+    if not tagsdefault:
+        tagsdefault = models_oracle.TabOracleServers.objects.order_by('tags')[0].tags
 
     messageinfo_list = models_frame.TabAlarmInfo.objects.all()
     now = tools.now()
 
     # 收集oracle备份数据
     oracle_backupinfo.do_collect()
-    if backup_set:
-        oracle_backups = models_oracle.OracleBackupInfo.objects.filter(tags=backup_set)
-    else:
-        oracle_backups = models_oracle.OracleBackupInfo.objects.all().order_by('id')
-    if backup_piece:
-        oracle_backup_pieces = models_oracle.OracleBackupPiece.objects.filter(tags=backup_piece)
-    else:
-        oracle_backup_pieces = models_oracle.OracleBackupPiece.objects.all().order_by('id')
+
+    oracle_backups = models_oracle.OracleBackupInfo.objects.filter(tags=tagsdefault)
+
+    oracle_backup_pieces = models_oracle.OracleBackupPiece.objects.filter(tags=tagsdefault)
+
 
     # 加载Oracle备份任务
     oracle_bak_job = '''select t1.job_no,t1.job_name,t1.tags,t1.bak_conf_no,t1.bak_conf_name,t2.bak_type,
@@ -2223,12 +2223,9 @@ def oracle_backup(request):
     oracle_bak_jobs = tools.mysql_django_query( oracle_bak_job)
 
     if request.method == 'POST':
-        if request.POST.has_key('backup_set'):
-            backup_set = request.POST.get('backup_set').encode("utf-8")
-            return HttpResponseRedirect('/oracle_backup?backup_set=%s' % (backup_set))
-        elif request.POST.has_key('backup_piece'):
-            backup_piece = request.POST.get('backup_piece').encode("utf-8")
-            return HttpResponseRedirect('/oracle_backup?backup_piece=%s' % ( backup_piece))
+        if request.POST.has_key('select_tags') :
+            tagsdefault = request.POST.get('select_tags', None).encode("utf-8")
+            return HttpResponseRedirect('/oracle_backup?tagsdefault=%s' %(tagsdefault))
         else:
             logout(request)
             return HttpResponseRedirect('/login/')
@@ -2243,7 +2240,8 @@ def oracle_backup(request):
         msg_last_content = ''
         tim_last = ''
     return render_to_response('oracle_backup.html', {'messageinfo_list': messageinfo_list,'msg_num':msg_num,'msg_last_content':msg_last_content,'tim_last':tim_last,
-                                                   'now': now,'oracle_backups':oracle_backups,'oracle_backup_pieces':oracle_backup_pieces,'oracle_bak_jobs':oracle_bak_jobs})
+                                                   'now': now,'oracle_backups':oracle_backups,'oracle_backup_pieces':oracle_backup_pieces,'oracle_bak_jobs':oracle_bak_jobs,
+                                                     'tagsinfo':tagsinfo,'tagsdefault':tagsdefault})
 
 @login_required(login_url='/login')
 def oracle_rpt(request):
