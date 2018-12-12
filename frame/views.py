@@ -823,6 +823,11 @@ def sys_setting(request):
 @login_required(login_url='/login')
 def my_check(request):
     messageinfo_list = models_frame.TabAlarmInfo.objects.all()
+
+    linuxtagsinfo = models_linux.TabLinuxServers.objects.all().order_by('tags')
+    oracletagsinfo = models_oracle.TabOracleServers.objects.all().order_by('tags')
+    mysqltagsinfo = models_mysql.TabMysqlServers.objects.all().order_by('tags')
+
     select_type = request.GET.get('select_type')
     if not select_type:
         select_type = 'Oracle数据库'.decode("utf-8")
@@ -874,18 +879,18 @@ def my_check(request):
         msg_last = models_frame.TabAlarmInfo.objects.latest('id')
         msg_last_content = msg_last.alarm_content
         tim_last = (datetime.datetime.now() - msg_last.alarm_time).seconds / 60
-        return render_to_response('my_check.html', { 'messageinfo_list': messageinfo_list,'msg_num':msg_num,'now':now,
-                                                   'msg_last_content': msg_last_content, 'tim_last': tim_last,
-                                                     'select_type':select_type,'date_range':date_range,'select_tags':select_tags,'select_form':select_form,'file_tag':file_tag,'check_err':check_err,'begin_time':begin_time,'end_time':end_time})
     else:
         msg_num = 0
         msg_last_content = ''
         tim_last = ''
-        return render_to_response('my_check.html',
-                                  {'messageinfo_list': messageinfo_list,'now': now,
-                                   'msg_last_content': msg_last_content, 'tim_last': tim_last,
-                                   'select_type': select_type, 'date_range': date_range, 'select_tags': select_tags,
-                                   'select_form': select_form,'file_tag':file_tag,'check_err':check_err,'begin_time':begin_time,'end_time':end_time})
+
+    return render_to_response('my_check.html', {'messageinfo_list': messageinfo_list, 'msg_num': msg_num, 'now': now,
+                                                'msg_last_content': msg_last_content, 'tim_last': tim_last,
+                                                'select_type': select_type, 'date_range': date_range,
+                                                'select_tags': select_tags, 'select_form': select_form,
+                                                'file_tag': file_tag, 'check_err': check_err, 'begin_time': begin_time,
+                                                'end_time': end_time,'linuxtagsinfo':linuxtagsinfo,'oracletagsinfo':oracletagsinfo,
+                                                'mysqltagsinfo':mysqltagsinfo})
 
 
 def page_not_found(request):
@@ -1252,6 +1257,7 @@ def oracle_ctl(request):
     oper_type = request.GET.get('oper_type')
     host = request.GET.get('host')
     tags = request.GET.get('tags')
+    message_info = request.GET.get('message_info')
 
     if oper_type:
         sql = '''select user,password from tab_linux_servers where host='%s' ''' % host
@@ -1262,12 +1268,15 @@ def oracle_ctl(request):
         if oper_type == 'startup':
             task.oracle_startup.delay(tags,host, user, password)
             messages.add_message(request,messages.INFO,'正在启动' )
+
         elif oper_type == 'shutdown':
             task.oracle_shutdown.delay(tags,host, user, password)
             messages.add_message(request,messages.INFO,'正在关闭')
         else:
             task.oracle_restart.delay(tags, host, user, password)
+            message_info = '正在重启'
             messages.add_message(request,messages.INFO,'正在重启')
+
 
     # 数据库操作面板
     oracle_ctl_sql = '''select t1.tags,

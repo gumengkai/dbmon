@@ -227,3 +227,36 @@ def show_mysql_rate(request):
                                                    'msg_last_content': msg_last_content, 'tim_last': tim_last})
     else:
         return render_to_response('show_mysql_rate.html', { 'mysql_rate_list': mysql_rate_list})
+
+
+@login_required(login_url='/login')
+def show_mysql_res(request):
+
+    messageinfo_list = models_frame.TabAlarmInfo.objects.all()
+    tagsinfo = models_mysql.TabMysqlServers.objects.all()
+
+    tagsdefault = request.GET.get('tagsdefault')
+    if not tagsdefault:
+        tagsdefault = models_mysql.TabMysqlServers.objects.order_by('tags')[0].tags
+
+    dbinfo_list = models_mysql.MysqlDb.objects.all()
+
+    if request.method == 'POST':
+        if request.POST.has_key('select_tags') :
+            tagsdefault = request.POST.get('select_tags', None).encode("utf-8")
+            return HttpResponseRedirect('/show_oracle_resource?tagsdefault=%s&redo_range_default=%s' %(tagsdefault,redo_range_default))
+        else:
+            logout(request)
+            return HttpResponseRedirect('/login/')
+
+    if messageinfo_list:
+        msg_num = len(messageinfo_list)
+        msg_last = models_frame.TabAlarmInfo.objects.latest('id')
+        msg_last_content = msg_last.alarm_content
+        tim_last = (datetime.datetime.now() - msg_last.alarm_time).seconds / 60
+    else:
+        msg_num = 0
+        msg_last_content = ''
+        tim_last = ''
+    return render_to_response('show_mysql_res.html', {'tagsdefault': tagsdefault,'tagsinfo': tagsinfo,'msg_num':msg_num,
+                                                      'msg_last_content': msg_last_content, 'tim_last': tim_last, 'dbinfo_list':dbinfo_list})

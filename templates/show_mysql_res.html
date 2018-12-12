@@ -7,9 +7,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="refresh" content="60">
   <title>DB monitor | Starter</title>
   <!-- Tell the browser to be responsive to screen width -->
- <link rel="stylesheet" href="/static/bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <link rel="stylesheet" href="/static/bower_components/bootstrap/dist/css/bootstrap.min.css">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="/static/bower_components/font-awesome/css/font-awesome.min.css">
   <!-- Ionicons -->
@@ -38,11 +40,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!--[if lt IE 9]>
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+     <!-- 引入 echarts.js -->
+   <script src="/static/js/echarts.js"></script>
   <![endif]-->
 
   <!-- Google Font -->
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
 
 <style>
     .table tr th {
@@ -59,8 +64,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
         font-size: 12px;
     }
 </style>
-
 </head>
+
  <style>
     .color-palette {
       height: 35px;
@@ -91,6 +96,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       display: block;
       z-index: 7;
     }
+     li{list-style: none;}/*这里设置*/
   </style>
 <!--
 BODY TAG OPTIONS:
@@ -294,7 +300,7 @@ desired effect
       </form>
       <!-- /.search form -->
 
-      <!-- Sidebar Menu -->
+         <!-- Sidebar Menu -->
      <ul class="sidebar-menu tree" data-widget="tree">
         <li class="header">主导航</li>
         <li class="treeview">
@@ -350,7 +356,7 @@ desired effect
             <li><a href="/show_linux"><i class="fa fa-circle-o"></i>概览</a></li>
           </ul>
         </li>
-         <li>
+            <li>
           <a href="/my_check">
             <i class="fa fa-th"></i> <span>巡检</span>
               <span class="pull-right-container">
@@ -394,113 +400,172 @@ desired effect
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
 
     <!-- Main content -->
     <section class="content container-fluid">
-
-      <!--------------------------
-        | Your Page Content Here |
-        -------------------------->
-              <!-- SELECT2 EXAMPLE -->
-      <div class="box box-primary">
-        <div class="box-header with-border">
-          <h3 class="box-title">自定义巡检</h3>
-
-        </div>
+           <div class="box box-success">
         <!-- /.box-header -->
         <div class="box-body">
-          <div class="row">
-              <form class="" action="" method="POST">
+       <div class="row">
             <div class="col-md-6">
+            <form action="" method="post" id="myform">
+                <div class="box-tools pull-left">
               <div class="form-group">
-                <label>类型</label>
-                <select class="form-control select2" style="width: 100%;" name="select_type" id="select_type" onchange="select_tag()">
-                  <option selected="selected">{{ select_type }}</option>
-                    <option>Oracle数据库</option>
-                  <option>MySQL数据库</option>
-                  <option>Linux主机</option>
+                <label>选择Mysql数据库：</label>
+                <select onchange="submitForm();" class="form-control select2" style="width: 100%;" name="select_tags">
+                <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                  <option selected="selected">{{ tagsdefault }}</option>
+                  {% for tags in tagsinfo %}
+                  <option>{{ tags.tags }}</option>
+                   {% endfor %}
                 </select>
               </div>
               <!-- /.form-group -->
-                <div class="form-group">
-                <label>巡检周期</label>
-                <select class="form-control select2" style="width: 100%;" name="date_range">
-                  <option selected="selected">{{ date_range }}</option>
-                    <option>1天</option>
-                  <option>7天</option>
-                  <option>30天</option>
-                </select>
-              </div>
-                <button type="submmit" class="btn btn-info btn-flat" name="go_check">开始巡检Go!</button>
-              <!-- /.form-group -->
-
             </div>
 
             <!-- /.col -->
-            <div class="col-md-6">
-              <div class="form-group">
-                <label>选择巡检设备</label>
-                <select id="select_tags" class="form-control select2"  multiple="multiple"
-                         name="select_tags">
-                  {% for oracletags in oracletagsinfo %}
-                      <option>{{ oracletags.tags }}</option>
-                  {% endfor %}
-                </select>
-              </div>
-              <!-- /.form-group -->
-              <div class="form-group">
-                <label>生成巡检结果格式</label>
-                <select class="form-control select2" style="width: 100%;" name="select_form">
-                  <option selected="selected">{{ select_form }}</option>
-                    <option>excel</option>
-                  <option>txt</option>
-                </select>
-              </div>
-              <!-- /.form-group -->
-                <li><a href="/download?file_tag={{ file_tag }}&select_form={{ select_form }}"  download="" >下载巡检结果</a></li>
-
-            </div>
-            <!-- /.col -->
-              </form>
+            </form>
           </div>
-          <!-- /.row -->
         </div>
-        <!-- /.box-body -->
-
-
-        <div class="box-footer">
-
-      <table class="table table-hover">
-                <tbody><tr>
-                  <th>巡检类型</th>
-                  <th>设备标签</th>
-                  <th>异常分类</th>
-                  <th>异常信息</th>
-                </tr>
-                {% for err in check_err %}
-                <tr>
-                  <td>{{ err.check_type }} </td>
-                  <td>{{ err.server_tag}} </td>
-                  <td>{{ err.check_err_type}} </td>
-                  <td>{{ err.check_err}} </td>
-                 </tr>
-                {% endfor %}
-              </tbody></table>
-        <div class="box-footer clearfix">
-           <span class="pull-right text-muted">{{ begin_time }} -- {{ end_time }}</span>
-           </span>
-         </div>
-        </div>
-
+        <!-- /.col -->
       </div>
-      <!-- /.box -->
+      <!-- /.row -->
+              <div class="box-body">
+                  <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+              <li class="active"><a href="#res" data-toggle="tab" aria-expanded="false">资源</a></li>
+              <li class=""><a href="#key" data-toggle="tab" aria-expanded="false">键缓存</a></li>
+              <li class=""><a href="#innodb" data-toggle="tab" aria-expanded="true">innodb</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="active tab-pane" id="res">
+          <div class="box box-solid">
+            <!-- /.box-header -->
+            <div class="box-body" style="overflow: auto">
+              <table id="example2" class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                  <th style="width: 10px">ID</th>
+                  <th>标签</th>
+                    <th>IP</th>
+                  <th>最大连接数</th>
+                  <th>连接线程数</th>
+                    <th>最大连接错误数</th>
+                    <th>最大打开文件数</th>
+                    <th>已打开文件数</th>
+                    <th>表缓存数</th>
+                    <th>已打开表</th>
+                </tr>
+                </thead>
+                {% for dbinfo in dbinfo_list %}
+                 <tr>
+                 <td>{{ forloop.counter }} </td>
+                 <td>{{ dbinfo.tags}} </td>
+                 <td>{{ dbinfo.host }}</td>
+                 <td>{{ dbinfo.max_connections}} </td>
+                 <td>{{ dbinfo.threads_connected}} </td>
+                 <td>{{ dbinfo.max_connect_errors}} </td>
+                 <td>{{ dbinfo.open_files_limit}} </td>
+                 <td>{{ dbinfo.open_files}} </td>
+                 <td>{{ dbinfo.table_open_cache}} </td>
+                 <td>{{ dbinfo.open_tables}} </td>
+                 </tr>
+                 {% endfor %}
+              </table>
+            </div>
+            <!-- /.box-body -->
+          </div>
+                </div>
 
-     </section>
+       <div class="tab-pane" id="key">
+          <div class="box box-solid">
+            <!-- /.box-header -->
+            <div class="box-body" style="overflow: auto">
+              <table id="example2" class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                  <th style="width: 10px">ID</th>
+                  <th>标签</th>
+                  <th>IP</th>
+                  <th>key_buffer_size</th>
+                  <th>sort_buffer_size</th>
+                  <th>join_buffer_size</th>
+                  <th>key_blocks_unused</th>
+                  <th>key_blocks_used</th>
+                  <th>key_blocks_not_flushed</th>
+                  <th>key_blocks_used_rate</th>
+                  <th>key_buffer_read_rate</th>
+                  <th>key_buffer_write_rate</th>
+                </tr>
+                </thead>
+                {% for dbinfo in dbinfo_list %}
+                 <tr>
+                 <td>{{ forloop.counter }} </td>
+                 <td>{{ dbinfo.tags }} </td>
+                 <td>{{ dbinfo.host }} </td>
+                 <td>{{ dbinfo.key_buffer_size }}mb</td>
+                 <td>{{ dbinfo.sort_buffer_size }}kb </td>
+                 <td>{{ dbinfo.join_buffer_size }}kb </td>
+                 <td>{{ dbinfo.key_blocks_unused}} </td>
+                  <td>{{ dbinfo.key_blocks_used }} </td>
+                 <td>{{ dbinfo.key_blocks_not_flushed }} </td>
+                 <td>{{ dbinfo.key_blocks_used_rate }}% </td>
+                 <td>{{ dbinfo.key_buffer_read_rate }}% </td>
+                 <td>{{ dbinfo.key_buffer_write_rate }}% </td>
+                 </tr>
+                 {% endfor %}
+              </table>
+            </div>
+          </div>
+              </div>
 
-
-
-
+              <div class="tab-pane" id="user">
+           <div class="box box-solid">
+            <div class="box-header">
+              <h3 class="box-title">用户&权限</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body" style="overflow: auto">
+              <table id="example2" class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                  <th>用户名</th>
+                    <th>创建时间</th>
+                  <th>账号状态</th>
+                    <th>锁定时间</th>
+                    <th>到期时间</th>
+                    <th>默认表空间</th>
+                    <th>临时表空间</th>
+                    <th>配置</th>
+                    <th>权限</th>
+                </tr>
+                </thead>
+                {% for oracle_user in oracle_users %}
+                 <tr>
+                 <td>{{ oracle_user.USERNAME }} </td>
+                 <td>{{ oracle_user.CREATED }} </td>
+                 <td><span class="badge bg-{{ oracle_user.ACCOUNT_COLOR }}">{{ oracle_user.ACCOUNT_STATUS }}</span></td>
+                 <td>{{ oracle_user.LOCK_DATE }} </td>
+                 <td><span class="badge bg-{{ oracle_user.EXPIRY_COLOR }}">{{ oracle_user.EXPIRY_DATE }}</span></td>
+                 <td>{{ oracle_user.DEFAULT_TABLESPACE }} </td>
+                 <td>{{ oracle_user.TEMPORARY_TABLESPACE }} </td>
+                 <td> <a href="#" ><li onclick="return pop_profile('{{ tagsdefault }}','{{ oracle_user.PROFILE }}')">{{ oracle_user.PROFILE }}</li></a></td>
+                 <td> <a href="#" ><li onclick="return pop_grant('{{ tagsdefault }}','{{ oracle_user.USERNAME }}')">{{ oracle_user.USERNAME }}</li></a></td>
+                 </tr>
+                 {% endfor %}
+              </table>
+            </div>
+          </div>
+              </div>
+              <!-- /.tab-pane -->
+            </div>
+            <!-- /.tab-content -->
+          </div>
+          <!-- /.nav-tabs-custom -->
+        </div>
+        </div>
+    </section>
+    <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
   <!-- Main Footer -->
@@ -510,7 +575,7 @@ desired effect
       Anything you want
     </div>
     <!-- Default to the left -->
-    <strong>Copyright &copy; 2018 <a href="#">eko</a>.</strong> All rights reserved.
+    <strong>Copyright &copy; 2018 <a href="#">barcelona</a>.</strong> All rights reserved.
   </footer>
   <!-- /.control-sidebar -->
   <!-- Add the sidebar's background. This div must be placed
@@ -525,6 +590,9 @@ desired effect
 <script src="/static/bower_components/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src="/static/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- AdminLTE App -->
+<script src="/static/dist/js/adminlte.min.js"></script>
+
 <!-- Select2 -->
 <script src="/static/bower_components/select2/dist/js/select2.full.min.js"></script>
 <!-- InputMask -->
@@ -546,11 +614,13 @@ desired effect
 <script src="/static/plugins/iCheck/icheck.min.js"></script>
 <!-- FastClick -->
 <script src="/static/bower_components/fastclick/lib/fastclick.js"></script>
-<!-- AdminLTE App -->
-<script src="/static/dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="/static/dist/js/demo.js"></script>
-<!-- Page script -->
+<!-- Optionally, you can add Slimscroll and FastClick plugins.
+     Both of these plugins are recommended to enhance the
+     user experience. -->
+<script src="/static/layer/layer.js"></script>
+
 <script>
   $(function () {
     //Initialize Select2 Elements
@@ -618,22 +688,88 @@ desired effect
     })
   })
 
-   function select_tag(){
-   var select=document.getElementById("select_type");
-   var c=select.value;
-   var tags=document.getElementById("select_tags");
-          switch(c)
-   {
-   case "Linux主机": tags.innerHTML="{% for linuxtags in linuxtagsinfo %}  <option>{{ linuxtags.tags }}</option>  {% endfor %}";
-   break;
-   case "Oracle数据库":tags.innerHTML="{% for oracletags in oracletagsinfo %}  <option>{{ oracletags.tags }}</option>  {% endfor %}";
-   break;
-   case "MySQL数据库":tags.innerHTML="{% for mysqltags in mysqltagsinfo %}  <option>{{ mysqltags.tags }}</option>  {% endfor %}";
-   break;
-   default:alert("error");
-   }
-   };
-</script>
+  //表单提交
+function submitForm(){
+    var form = document.getElementById("myform");
+    form.submit();
+}
 
+  //表单提交
+function submittype(){
+    var form = document.getElementById("mytype");
+    form.submit();
+}
+   // ####################  【在线日志趋势】图形  ####################
+var dom = document.getElementById("redo-grow-chart");
+var myChart = echarts.init(dom);
+var app = {};
+option = null;
+app.title = '坐标轴刻度与标签对齐';
+
+option = {
+    color: ['#40918d'],
+    tooltip : {
+        trigger: 'axis',
+        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        }
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    xAxis : [
+        {
+            type : 'category',
+            data : [{% for i in oracle_redo_cnts %}'{{ i.STAT_DATE }}',{% endfor %}],
+            axisTick: {
+                alignWithLabel: true
+            }
+        }
+    ],
+    yAxis : [
+        {
+            type : 'value'
+        }
+    ],
+    series : [
+        {
+            name:'日志切换数量',
+            type:'bar',
+            barWidth: '60%',
+            data:[{% for i in oracle_redo_cnts %}{{ i.LOG_COUNT }},{% endfor %}]
+        }
+    ]
+};
+;
+if (option && typeof option === "object") {
+    myChart.setOption(option, true);
+}
+</script>
+<script>
+function pop_profile(m,n){
+    layer.open({
+    type: 2,
+    title: '用户配置信息',
+    closeBtn: 1,
+    area: ['700px', '550px'],
+    shadeClose: true, //点击遮罩关闭
+    content: ['/oracle_profile?tags='+ m + '&profile_name=' + n]
+  });
+}
+
+function pop_grant(m,n){
+    layer.open({
+    type: 2,
+    title: '用户权限信息',
+    closeBtn: 1,
+    area: ['700px', '550px'],
+    shadeClose: true, //点击遮罩关闭
+    content: ['/oracle_grant?tags='+ m + '&username=' + n]
+  });
+}
+</script>
 </body>
 </html>

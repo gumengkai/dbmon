@@ -380,8 +380,11 @@ desired effect
                   <th>IP地址</th>
                   <th>端口</th>
                   <th>版本</th>
-                    <th>运行时间(天)</th>
+                    <th>运行时间</th>
                     <th>连接使用率</th>
+                    <th>连接线程数</th>
+                    <th>活动线程数</th>
+                    <th>等待线程数</th>
                     <th>QPS</th>
                     <th>TPS</th>
                     <th>接收流量(bytes)</th>
@@ -396,68 +399,16 @@ desired effect
                  <td>{{ dbinfo.host}} </td>
                  <td>{{ dbinfo.port}} </td>
                  <td>{{ dbinfo.version}} </td>
-                 <td>{{ dbinfo.uptime}} </td>
-                     <td><span class="badge bg-{{ dbinfo.conn_rate_level }}">{{ dbinfo.conn_rate }}%</span></td>
+                 <td>{{ dbinfo.uptime}}天 </td>
+                   <td><span class="badge bg-{{ dbinfo.conn_rate_level }}">{{ dbinfo.conn_rate }}%</span></td>
+                   <td>{{ dbinfo.threads_connected}} </td>
+                   <td>{{ dbinfo.threads_running}} </td>
+                   <td>{{ dbinfo.threads_waited}} </td>
                      <td>{{ dbinfo.qps}} </td>
                      <td>{{ dbinfo.tps}} </td>
                      <td>{{ dbinfo.bytes_received}} </td>
                      <td>{{ dbinfo.bytes_send}} </td>
                  <td><span class="badge bg-{{ dbinfo.rate_level }}">{{ dbinfo.mon_status }}</span></td>
-                 </tr>
-                 {% endfor %}
-              </table>
-            </div>
-            <div class="box-footer clearfix">
-           <span class="step-links">
-        {% if dbinfos.has_previous %}
-            <a href="?page={{ dbinfos.previous_page_number }}">上一页</a>
-        {% endif %}
-
-        <span class="current">
-            当前页{{ dbinfos.number }} 共计{{ dbinfos.paginator.num_pages }}
-        </span>
-
-        {% if dbinfos.has_next %}
-            <a href="?page={{ dbinfos.next_page_number }}">下一页</a>
-        {% endif %}
-           </span>
-         </div>
-            <!-- /.box-body -->
-          </div>
-          <!-- /.box -->
-
-        </div>
-        <!-- /.col -->
-      </div>
-      <!-- /.row -->
-
-     <div class="row">
-        <div class="col-xs-6">
-          <div class="box box-solid">
-            <div class="box-header">
-              <h3 class="box-title">连接、线程信息</h3>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-              <table id="example2" class="table table-bordered table-hover" style="overflow: auto">
-                <thead>
-                <tr>
-                  <th>ID</th>
-                    <th>标签</th>
-                  <th>最大连接数</th>
-                  <th>连接线程</th>
-                  <th>活动线程</th>
-                    <th>等待线程</th>
-                </tr>
-                </thead>
-                {% for thread in mysql_threads %}
-                 <tr>
-                 <td>{{ forloop.counter }} </td>
-                     <td>{{ thread.tags}} </td>
-                 <td>{{ thread.max_connections}} </td>
-                 <td>{{ thread.threads_connected}} </td>
-                 <td>{{ thread.threads_running}} </td>
-                 <td>{{ thread.threads_waited}} </td>
                  </tr>
                  {% endfor %}
               </table>

@@ -424,48 +424,22 @@ desired effect
           </div>
           <!-- /.row -->
         </div>
-        <!-- /.box-body -->
-      </div>
-      </div>
-
-           <div class="row">
+            <div class="row">
         <div class="col-md-4">
           <!-- AREA CHART -->
-          <div class="box box-primary">
-            <div class="box-header with-border">
-              <h3 class="box-title">连接数使用率</h3>
-
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
-            </div>
             <div class="box-body chart-responsive">
               <div class="chart" id="conn-chart" style="height: 300px; "></div>
             </div>
             <!-- /.box-body -->
-          </div>
           <!-- /.box -->
 
         </div>
       </div>
-
-        <div class="row">
-        <div class="col-xs-12">
+        <!-- /.box-body -->
+            <div class="col-xs-12">
           <!-- interactive chart -->
-          <div class="box box-primary">
+          <div class="box box-solid">
             <div class="box-header with-border">
-              <i class="fa fa-bar-chart-o"></i>
-
-              <h3 class="box-title">连接数趋势</h3>
-                 <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
-
-            </div>
             <div class="box-body">
                 <div class="row">
                   <div class="col-md-9">
@@ -500,7 +474,8 @@ desired effect
         </div>
         <!-- /.col -->
       </div>
-      <!-- /.row -->
+      </div>
+
 
       <!-- /.row -->
         <div class="row">
@@ -765,16 +740,49 @@ function submitForm_tps(){
                       saveAsImage: {}
                    }
                 },
-        series: [
+         series: [
            {
             name: 'CONN',
             type: 'gauge',
             detail: {formatter:'{value}%'},
-            data: [{value: 50, name: '连接数使用率'}]
+            data: [{value: 50, name: '连接数使用率'}],
+            axisLine: {            // 坐标轴线
+            lineStyle: {       // 属性lineStyle控制线条样式
+                width: 10,
+                color: [[0.5, '#79d4bc'], [0.8, '#4d6f85'], [1, '#ce1358']]
+            },
+            axisTick: {            // 坐标轴小标记
+            length: 13,        // 属性length控制线长
+            lineStyle: {       // 属性lineStyle控制线条样式
+                color: 'auto'
+            }
+            },
+            splitLine: {           // 分隔线
+            length: 18,        // 属性length控制线长
+            lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
+                color: 'auto'
+            }
+            },
+            axisLabel: {
+            color: '#666',
+            },
+            detail: {
+            formatter:'{value}%',
+            fontSize: 12,
+            offsetCenter: [0, '85%']
+            },
+            title: {
+            fontSize: 12,
+            color: '#999',
+            offsetCenter: [0, '55%']
+            },
+            pointer: {
+            width: 6            // 指针大小
+            }
+        },
            }
         ]
         };
-
        setInterval(function () {
           option_conn_used.series[0].data[0].value = ({{ mysqlinfo.conn_rate }}).toFixed(2) - 0;
           myChart_conn_used.setOption(option_conn_used, true);
