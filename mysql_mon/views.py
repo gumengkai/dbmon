@@ -37,17 +37,12 @@ def mysql_monitor(request):
     if not conn_range_default:
         conn_range_default = '1小时'.decode("utf-8")
 
-    qps_range_default = request.GET.get('qps_range_default')
-    if not qps_range_default:
-        qps_range_default = '1小时'.decode("utf-8")
-
-    tps_range_default = request.GET.get('tps_range_default')
-    if not tps_range_default:
-        tps_range_default = '1小时'.decode("utf-8")
+    ps_range_default = request.GET.get('ps_range_default')
+    if not ps_range_default:
+        ps_range_default = '1小时'.decode("utf-8")
 
     conn_begin_time = tools.range(conn_range_default)
-    qps_begin_time = tools.range(qps_range_default)
-    tps_begin_time = tools.range(tps_range_default)
+    ps_begin_time = tools.range(ps_range_default)
 
     end_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
@@ -91,12 +86,12 @@ def mysql_monitor(request):
     conngrow_list = list(conngrow)
     conngrow_list.reverse()
     qpsgrow = models_mysql.MysqlDbHis.objects.filter(tags=tagsdefault, qps__isnull=False).filter(
-        chk_time__gt=qps_begin_time, chk_time__lt=end_time).order_by('-chk_time')
+        chk_time__gt=ps_begin_time, chk_time__lt=end_time).order_by('-chk_time')
     qpsgrow_list = list(qpsgrow)
     qpsgrow_list.reverse()
 
     tpsgrow = models_mysql.MysqlDbHis.objects.filter(tags=tagsdefault, tps__isnull=False).filter(
-        chk_time__gt=tps_begin_time, chk_time__lt=end_time).order_by('-chk_time')
+        chk_time__gt=ps_begin_time, chk_time__lt=end_time).order_by('-chk_time')
     tpsgrow_list = list(tpsgrow)
     tpsgrow_list.reverse()
 
@@ -112,8 +107,8 @@ def mysql_monitor(request):
             elif request.POST.has_key('select_tps'):
                 tps_range_default = request.POST.get('select_tps', None)
             return HttpResponseRedirect(
-                '/mysql_monitor?tagsdefault=%s&conn_range_default=%s&qps_range_default=%s&tps_range_default=%s' % (
-                tagsdefault, conn_range_default, qps_range_default, tps_range_default))
+                '/mysql_monitor?tagsdefault=%s&conn_range_default=%s&ps_range_default=%s' % (
+                tagsdefault, conn_range_default, ps_range_default))
 
         else:
             logout(request)
@@ -132,7 +127,7 @@ def mysql_monitor(request):
                                                      'msg_last_content': msg_last_content, 'tim_last': tim_last,
                                                      'conngrow_list': conngrow_list, 'qpsgrow_list': qpsgrow_list,
                                                      'tagsdefault': tagsdefault, 'conn_range_default': conn_range_default,
-                                                     'qps_range_default': qps_range_default,'tps_range_default': tps_range_default,
+                                                     'ps_range_default': ps_range_default,
                                                      'tagsinfo': tagsinfo, 'mysqlinfo': mysqlinfo, 'qpsgrow_list': qpsgrow_list,
                                                      'tpsgrow_list': tpsgrow_list,'check_status':check_status,'mysql_status':mysql_status})
 
