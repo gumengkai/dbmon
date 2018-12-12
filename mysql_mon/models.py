@@ -34,6 +34,19 @@ class MysqlDb(models.Model):
     key_blocks_used_rate = models.FloatField()
     key_buffer_read_rate = models.FloatField()
     key_buffer_write_rate = models.FloatField()
+    innodb_buffer_pool_size = models.FloatField()
+    innodb_buffer_pool_pages_total = models.FloatField()
+    innodb_buffer_pool_pages_data = models.FloatField()
+    innodb_buffer_pool_pages_dirty = models.FloatField()
+    innodb_buffer_pool_pages_flushed = models.FloatField()
+    innodb_buffer_pool_pages_free = models.FloatField()
+    innodb_io_capacity = models.FloatField()
+    innodb_read_io_threads = models.FloatField()
+    innodb_write_io_threads = models.FloatField()
+    innodb_rows_deleted_persecond = models.FloatField()
+    innodb_rows_inserted_persecond = models.FloatField()
+    innodb_rows_read_persecond = models.FloatField()
+    innodb_rows_updated_persecond = models.FloatField()
     mon_status = models.CharField(max_length=255)
     rate_level = models.CharField(max_length=255)
     chk_time = models.DateTimeField(blank=True, null=True)
@@ -75,6 +88,19 @@ class MysqlDbHis(models.Model):
     key_blocks_used_rate = models.FloatField()
     key_buffer_read_rate = models.FloatField()
     key_buffer_write_rate = models.FloatField()
+    innodb_buffer_pool_size = models.FloatField()
+    innodb_buffer_pool_pages_total = models.FloatField()
+    innodb_buffer_pool_pages_data = models.FloatField()
+    innodb_buffer_pool_pages_dirty = models.FloatField()
+    innodb_buffer_pool_pages_flushed = models.FloatField()
+    innodb_buffer_pool_pages_free = models.FloatField()
+    innodb_io_capacity = models.FloatField()
+    innodb_read_io_threads = models.FloatField()
+    innodb_write_io_threads = models.FloatField()
+    innodb_rows_deleted_persecond = models.FloatField()
+    innodb_rows_inserted_persecond = models.FloatField()
+    innodb_rows_read_persecond = models.FloatField()
+    innodb_rows_updated_persecond = models.FloatField()
     mon_status = models.CharField(max_length=255)
     rate_level = models.CharField(max_length=255)
     chk_time = models.DateTimeField()
@@ -199,3 +225,28 @@ class TabMysqlServers(models.Model):
     class Meta:
         managed = False
         db_table = 'tab_mysql_servers'
+
+
+class MysqlBigTable(models.Model):
+    host = models.CharField(max_length=255)
+    tags = models.CharField(max_length=255)
+    db = models.CharField(max_length=255)
+    table_name = models.CharField(max_length=255)
+    total = models.FloatField()
+    chk_time = models.DateTimeField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'mysql_big_table'
+
+class MysqlBigTableHis(models.Model):
+    host = models.CharField(max_length=255)
+    tags = models.CharField(max_length=255)
+    db = models.CharField(max_length=255)
+    table_name = models.CharField(max_length=255)
+    total = models.FloatField()
+    chk_time = models.DateTimeField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'mysql_big_table_his'

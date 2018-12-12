@@ -97,15 +97,13 @@ def mysql_monitor(request):
 
     if request.method == 'POST':
         if request.POST.has_key('select_tags') or request.POST.has_key('select_conn') or request.POST.has_key(
-                'select_qps') or request.POST.has_key('select_tps'):
+                'select_ps'):
             if request.POST.has_key('select_tags'):
                 tagsdefault = request.POST.get('select_tags', None).encode("utf-8")
             elif request.POST.has_key('select_conn'):
                 conn_range_default = request.POST.get('select_conn', None)
-            elif request.POST.has_key('select_qps'):
-                qps_range_default = request.POST.get('select_qps', None)
-            elif request.POST.has_key('select_tps'):
-                tps_range_default = request.POST.get('select_tps', None)
+            elif request.POST.has_key('select_ps'):
+                ps_range_default = request.POST.get('select_ps', None)
             return HttpResponseRedirect(
                 '/mysql_monitor?tagsdefault=%s&conn_range_default=%s&ps_range_default=%s' % (
                 tagsdefault, conn_range_default, ps_range_default))
@@ -125,7 +123,7 @@ def mysql_monitor(request):
         tim_last = ''
     return render_to_response('mysql_monitor.html', {'messageinfo_list': messageinfo_list, 'msg_num': msg_num,
                                                      'msg_last_content': msg_last_content, 'tim_last': tim_last,
-                                                     'conngrow_list': conngrow_list, 'qpsgrow_list': qpsgrow_list,
+                                                     'conngrow_list': conngrow_list,
                                                      'tagsdefault': tagsdefault, 'conn_range_default': conn_range_default,
                                                      'ps_range_default': ps_range_default,
                                                      'tagsinfo': tagsinfo, 'mysqlinfo': mysqlinfo, 'qpsgrow_list': qpsgrow_list,
@@ -234,12 +232,13 @@ def show_mysql_res(request):
     if not tagsdefault:
         tagsdefault = models_mysql.TabMysqlServers.objects.order_by('tags')[0].tags
 
-    dbinfo_list = models_mysql.MysqlDb.objects.all()
+    dbinfo_list = models_mysql.MysqlDb.objects.filter(tags=tagsdefault).all()
+    big_table_list = models_mysql.MysqlBigTable.objects.filter(tags=tagsdefault).all()
 
     if request.method == 'POST':
         if request.POST.has_key('select_tags') :
             tagsdefault = request.POST.get('select_tags', None).encode("utf-8")
-            return HttpResponseRedirect('/show_oracle_resource?tagsdefault=%s&redo_range_default=%s' %(tagsdefault,redo_range_default))
+            return HttpResponseRedirect('/show_mysql_res?tagsdefault=%s' %(tagsdefault))
         else:
             logout(request)
             return HttpResponseRedirect('/login/')
@@ -254,4 +253,45 @@ def show_mysql_res(request):
         msg_last_content = ''
         tim_last = ''
     return render_to_response('show_mysql_res.html', {'tagsdefault': tagsdefault,'tagsinfo': tagsinfo,'msg_num':msg_num,
-                                                      'msg_last_content': msg_last_content, 'tim_last': tim_last, 'dbinfo_list':dbinfo_list})
+                                                      'msg_last_content': msg_last_content, 'tim_last': tim_last, 'dbinfo_list':dbinfo_list,
+                                                      'big_table_list':big_table_list})
+
+
+
+@login_required(login_url='/login')
+def mysql_big_table(request):
+    messageinfo_list = models_frame.TabAlarmInfo.objects.all()
+
+    tags = request.GET.get('tags')
+    db = request.GET.get('db')
+    table_name = request.GET.get('table_name')
+
+    table_range_default = request.GET.get('table_range_default')
+
+    if not table_range_default:
+        table_range_default = '1小时'.decode("utf-8")
+
+    table_begin_time = tools.range(table_range_default)
+
+    end_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    tablegrow = models_mysql.MysqlBigTableHis.objects.filter(tags=tags,db=db,table_name=table_name).filter(
+        chk_time__gt=table_begin_time, chk_time__lt=end_time).order_by('-chk_time')
+    tablegrow_list = list(tablegrow)
+    tablegrow_list.reverse()
+
+    if request.method == 'POST':
+        logout(request)
+        return HttpResponseRedirect('/login/')
+
+    if messageinfo_list:
+        msg_num = len(messageinfo_list)
+        msg_last = models_frame.TabAlarmInfo.objects.latest('id')
+        msg_last_content = msg_last.alarm_content
+        tim_last = (datetime.datetime.now() - msg_last.alarm_time).seconds / 60
+    else:
+        msg_num = 0
+        msg_last_content = ''
+        tim_last = ''
+    return render_to_response('mysql_big_table.html', {'tags': tags,'table_name':table_name,'msg_num':msg_num,'db':db,
+                                                      'msg_last_content': msg_last_content, 'tim_last': tim_last,'tablegrow_list':tablegrow_list,})

@@ -42,3 +42,10 @@ def get_mysql_waits(conn):
         print e
     finally:
         curs.close()
+
+# big_table
+def get_mysql_big_table(conn):
+    cur = conn.cursor()
+    sql = "SELECT table_schema as 'DB',table_name as 'TABLE',CONCAT(ROUND(( data_length + index_length ) / ( 1024 * 1024 ), 2), '') 'TOTAL' , table_comment as COMMENT FROM information_schema.TABLES ORDER BY data_length + index_length DESC ;"
+    cur.execute(sql)
+    return cur.fetchall()

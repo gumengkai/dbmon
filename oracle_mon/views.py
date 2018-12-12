@@ -211,7 +211,6 @@ def show_oracle_resource(request):
     if not redo_range_default:
         redo_range_default  = 7
 
-
     tbsinfo_list = models_oracle.OracleTbs.objects.filter(tags=tagsdefault).order_by('-pct_used')
     # 分页
     paginator_tbs = Paginator(tbsinfo_list, 5)

@@ -436,14 +436,24 @@ desired effect
               <li class="active"><a href="#res" data-toggle="tab" aria-expanded="false">资源</a></li>
               <li class=""><a href="#key" data-toggle="tab" aria-expanded="false">键缓存</a></li>
               <li class=""><a href="#innodb" data-toggle="tab" aria-expanded="true">innodb</a></li>
+              <li class=""><a href="#big_table" data-toggle="tab" aria-expanded="true">big table</a></li>
             </ul>
             <div class="tab-content">
                 <div class="active tab-pane" id="res">
           <div class="box box-solid">
             <!-- /.box-header -->
+              <div class="box-header">
+              <h3 class="box-title">连接资源</h3>
+            </div>
             <div class="box-body" style="overflow: auto">
               <table id="example2" class="table table-bordered table-hover">
                 <thead>
+                <tr>
+                  <th colspan="3"></th>
+                  <th colspan="3">连接资源</th>
+                  <th colspan="2">文件资源</th>
+                  <th colspan="2">表资源</th>
+                </tr>
                 <tr>
                   <th style="width: 10px">ID</th>
                   <th>标签</th>
@@ -455,6 +465,7 @@ desired effect
                     <th>已打开文件数</th>
                     <th>表缓存数</th>
                     <th>已打开表</th>
+
                 </tr>
                 </thead>
                 {% for dbinfo in dbinfo_list %}
@@ -484,18 +495,24 @@ desired effect
               <table id="example2" class="table table-bordered table-hover">
                 <thead>
                 <tr>
+                  <th colspan="3"></th>
+                  <th colspan="3">_buffer_size</th>
+                  <th colspan="3">key_blocks_</th>
+                  <th colspan="3">rate</th>
+                </tr>
+                <tr>
                   <th style="width: 10px">ID</th>
                   <th>标签</th>
                   <th>IP</th>
-                  <th>key_buffer_size</th>
-                  <th>sort_buffer_size</th>
-                  <th>join_buffer_size</th>
-                  <th>key_blocks_unused</th>
+                  <th>key</th>
+                  <th>sort</th>
+                  <th>join</th>
+                  <th>unused</th>
+                  <th>used</th>
+                  <th>not_flushed</th>
                   <th>key_blocks_used</th>
-                  <th>key_blocks_not_flushed</th>
-                  <th>key_blocks_used_rate</th>
-                  <th>key_buffer_read_rate</th>
-                  <th>key_buffer_write_rate</th>
+                  <th>key_buffer_read</th>
+                  <th>key_buffer_write</th>
                 </tr>
                 </thead>
                 {% for dbinfo in dbinfo_list %}
@@ -507,7 +524,7 @@ desired effect
                  <td>{{ dbinfo.sort_buffer_size }}kb </td>
                  <td>{{ dbinfo.join_buffer_size }}kb </td>
                  <td>{{ dbinfo.key_blocks_unused}} </td>
-                  <td>{{ dbinfo.key_blocks_used }} </td>
+                 <td>{{ dbinfo.key_blocks_used }} </td>
                  <td>{{ dbinfo.key_blocks_not_flushed }} </td>
                  <td>{{ dbinfo.key_blocks_used_rate }}% </td>
                  <td>{{ dbinfo.key_buffer_read_rate }}% </td>
@@ -517,47 +534,101 @@ desired effect
               </table>
             </div>
           </div>
-              </div>
+         </div>
 
-              <div class="tab-pane" id="user">
+          <div class="tab-pane" id="innodb">
            <div class="box box-solid">
-            <div class="box-header">
-              <h3 class="box-title">用户&权限</h3>
-            </div>
             <!-- /.box-header -->
             <div class="box-body" style="overflow: auto">
               <table id="example2" class="table table-bordered table-hover">
                 <thead>
                 <tr>
-                  <th>用户名</th>
-                    <th>创建时间</th>
-                  <th>账号状态</th>
-                    <th>锁定时间</th>
-                    <th>到期时间</th>
-                    <th>默认表空间</th>
-                    <th>临时表空间</th>
-                    <th>配置</th>
-                    <th>权限</th>
+                  <th colspan="3"></th>
+                  <th colspan="1">innodb_buffer_pool</th>
+                  <th colspan="5">Pages</th>
+                  <th colspan="3">IO</th>
+                  <th colspan="4">Innodb_rows</th>
+                </tr>
+                <tr>
+                  <th style="width: 10px">ID</th>
+                  <th>标签</th>
+                  <th>IP</th>
+                  <th>size</th>
+                  <th>total</th>
+                  <th>data</th>
+                  <th>dirty</th>
+                  <th>flushed</th>
+                  <th>free</th>
+                  <th>capacity</th>
+                  <th>read_thread</th>
+                  <th>write_thread</th>
+                  <th>read</th>
+                  <th>insert</th>
+                  <th>update</th>
+                  <th>delete</th>
                 </tr>
                 </thead>
-                {% for oracle_user in oracle_users %}
+                {% for dbinfo in dbinfo_list %}
                  <tr>
-                 <td>{{ oracle_user.USERNAME }} </td>
-                 <td>{{ oracle_user.CREATED }} </td>
-                 <td><span class="badge bg-{{ oracle_user.ACCOUNT_COLOR }}">{{ oracle_user.ACCOUNT_STATUS }}</span></td>
-                 <td>{{ oracle_user.LOCK_DATE }} </td>
-                 <td><span class="badge bg-{{ oracle_user.EXPIRY_COLOR }}">{{ oracle_user.EXPIRY_DATE }}</span></td>
-                 <td>{{ oracle_user.DEFAULT_TABLESPACE }} </td>
-                 <td>{{ oracle_user.TEMPORARY_TABLESPACE }} </td>
-                 <td> <a href="#" ><li onclick="return pop_profile('{{ tagsdefault }}','{{ oracle_user.PROFILE }}')">{{ oracle_user.PROFILE }}</li></a></td>
-                 <td> <a href="#" ><li onclick="return pop_grant('{{ tagsdefault }}','{{ oracle_user.USERNAME }}')">{{ oracle_user.USERNAME }}</li></a></td>
+                  <td>{{ forloop.counter }} </td>
+                  <td>{{ dbinfo.tags }}</td>
+                  <td>{{ dbinfo.host }}</td>
+                  <td>{{ dbinfo.innodb_buffer_pool_size }}</td>
+                  <td>{{ dbinfo.innodb_buffer_pool_pages_total }}</td>
+                  <td>{{ dbinfo.innodb_buffer_pool_pages_data }}</td>
+                  <td>{{ dbinfo.innodb_buffer_pool_pages_dirty }}</td>
+                  <td>{{ dbinfo.innodb_buffer_pool_pages_flushed }}</td>
+                  <td>{{ dbinfo.innodb_buffer_pool_pages_free }}</td>
+                  <td>{{ dbinfo.innodb_io_capacity }}</td>
+                  <td>{{ dbinfo.innodb_read_io_threads }}</td>
+                  <td>{{ dbinfo.innodb_write_io_threads }}</td>
+                  <td>{{ dbinfo.innodb_rows_read_persecond }}</td>
+                  <td>{{ dbinfo.innodb_rows_inserted_persecond }}</td>
+                  <td>{{ dbinfo.innodb_rows_updated_persecond }}</td>
+                  <td>{{ dbinfo.innodb_rows_deleted_persecond }}</td>
                  </tr>
                  {% endfor %}
               </table>
-            </div>
+             </div>
           </div>
               </div>
               <!-- /.tab-pane -->
+
+              <div class="tab-pane" id="big_table">
+           <div class="box box-solid">
+            <!-- /.box-header -->
+            <div class="box-body" style="overflow: auto">
+              <table id="example2" class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                  <th style="width: 10px">ID</th>
+                  <th>标签</th>
+                  <th>IP</th>
+                  <th>数据库名</th>
+                  <th>表名</th>
+                  <th>大小</th>
+                  <th>表注释</th>
+                  <th>增长趋势</th>
+                </tr>
+                </thead>
+                {% for big_table in big_table_list %}
+                 <tr>
+                  <td>{{ forloop.counter }} </td>
+                  <td>{{ big_table.tags }}</td>
+                  <td>{{ big_table.host }}</td>
+                  <td>{{ big_table.db }}</td>
+                  <td>{{ big_table.table_name }}</td>
+                  <td>{{ big_table.total }}mb</td>
+                  <td>{{ big_table.table_comment }}</td>
+                  <td> <li><a href="/mysql_big_table?tags={{ big_table.tags }}&db={{ big_table.db }}&table_name={{ big_table.table_name }}" >详情</a></li> </td>
+                 </tr>
+                 {% endfor %}
+              </table>
+             </div>
+          </div>
+              </div>
+              <!-- /.tab-pane -->
+
             </div>
             <!-- /.tab-content -->
           </div>

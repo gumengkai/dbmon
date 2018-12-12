@@ -109,6 +109,7 @@ urlpatterns = patterns('',
     (r'^crontab_edit/', frame.crontab_edit),
     (r'^scheduler_para/', frame.scheduler_para),
     (r'^show_mysql_res/', mysql_mon.show_mysql_res),
-    )
+    (r'^mysql_big_table/', mysql_mon.mysql_big_table),
+                       )
 
 handler404 = frame.page_not_found
