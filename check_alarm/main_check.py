@@ -652,8 +652,9 @@ def check_mysql(tags, host,port,user,password):
     my_log.logger.info('等待2秒待Linux主机信息采集完毕')
     password = base64.decodestring(password)
 
-    conn = MySQLdb.connect(host=host, user=user, passwd=password, port=int(port), connect_timeout=5, charset='utf8')
     try:
+        conn = MySQLdb.connect(host=host, user=user, passwd=password, port=int(port), connect_timeout=5, charset='utf8')
+
         my_log.logger.info('%s：开始获取mysql数据库监控信息' % tags)
 
         db_rate_level = 'green'
@@ -714,7 +715,7 @@ def check_mysql(tags, host,port,user,password):
 
         # innodb
         # innodb_buffer_pool
-        innodb_buffer_pool_size = check_msql.get_mysql_para(conn, 'innodb_buffer_pool_size')
+        innodb_buffer_pool_size = int(check_msql.get_mysql_para(conn, 'innodb_buffer_pool_size'))/1024/1024
         innodb_buffer_pool_pages_total = mysql_stat['Innodb_buffer_pool_pages_total']
         innodb_buffer_pool_pages_data = mysql_stat['Innodb_buffer_pool_pages_data']
         innodb_buffer_pool_pages_dirty = mysql_stat['Innodb_buffer_pool_pages_dirty']
