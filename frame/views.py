@@ -1665,7 +1665,7 @@ def oracle_undo(request):
     # undo使用情况
     sql_undo = '''select tablespace_name, status, sum(bytes) / 1024 / 1024 MB
               from dba_undo_extents
-             where tablespace_name like 'UNDOTBS%'
+             where tablespace_name like 'UNDO%'
              group by tablespace_name, status
              order by 1'''
     oracle_undos = tools.oracle_django_query(user, password, url, sql_undo)
