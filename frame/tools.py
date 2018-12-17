@@ -211,7 +211,8 @@ def task_model(task_model):
         task = 'frame.tasks.get_report'
     elif task_model == unicode('Oracle全量备份', 'utf-8'):
         task = 'frame.tasks.oracle_fullbackup'
-
+    elif task_model == unicode('Mysql全量备份', 'utf-8'):
+        task = 'frame.tasks.mysql_fullbackup'
     return task
 
 

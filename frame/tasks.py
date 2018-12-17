@@ -9,6 +9,8 @@ import frame.oracle_do as oracle
 import frame.oracle_backup as oracle_bak
 
 import frame.mysql_do as mysql
+import frame.mysql_backup as mysql_bak
+
 import uuid
 import frame.tools as tools
 
@@ -144,3 +146,17 @@ def mysql_install(host,user,password):
     state = 'SUCCESS'
     tools.end_task(task_id, result, state)
 
+# mysql全量备份
+@shared_task
+def mysql_fullbackup(tags,host,user,password,user_os,password_os,mysql_path,bakdir):
+    oper_type = 'Mysql全量备份'
+    server_type = 'Mysql'
+    task_id = uuid.uuid1()
+    task_name = '%s:mysql_fullbak' %tags
+    args = 'tags：' + tags + '，'  + 'host：' + host  + 'user：' + user_os\
+         + '，' +  'password：' + password_os + '，' + 'mysql_path：' + mysql_path + '，' + 'bakdir：' + bakdir
+    tools.begin_task(task_id,oper_type,server_type,tags,task_name,args)
+    mysql_bak.mysql_fullbackup(host,user,password,user_os,password_os,mysql_path,bakdir)
+    result = ''
+    state = 'SUCCESS'
+    tools.end_task(task_id,result,state)

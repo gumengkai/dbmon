@@ -2965,39 +2965,63 @@ def scheduler_add(request):
             crontab = request.POST.get('crontab', None)
             para_name = request.POST.getlist('para_name', None)
             para_value = request.POST.getlist('para_value', None)
-
-            # 获取用户名密码等信息
-            sql = "select host,port,service_name,user,password,user_os,password_os from tab_oracle_servers where tags= '%s' " % tags
-            oracle = tools.mysql_query(sql)
-            host = oracle[0][0]
-            port = oracle[0][1]
-            service_name = oracle[0][2]
-            user = oracle[0][3]
-            password = oracle[0][4]
-            password = base64.decodestring(password)
-            user_os = oracle[0][5]
-            password_os = oracle[0][6]
-            password_os = base64.decodestring(password_os)
-
-            url = host + ':' + port + '/' + service_name
-
-
+            # 描述信息
             des_d = {}
             des_d['type'] = type
             des_d['task_model'] = task_model
-            des = json.dumps(des_d,ensure_ascii=False)
+            des = json.dumps(des_d, ensure_ascii=False)
 
             kwargs_d = {}
+            user = ''
+            password = ''
+            service_name = ''
+            url = ''
+
+            if type == unicode('Oracle数据库', 'utf-8'):
+                # 获取oracle用户名密码等信息
+                sql = "select host,port,service_name,user,password,user_os,password_os from tab_oracle_servers where tags= '%s' " % tags
+                oracle = tools.mysql_query(sql)
+                host = oracle[0][0]
+                port = oracle[0][1]
+                service_name = oracle[0][2]
+                user = oracle[0][3]
+                password = oracle[0][4]
+                password = base64.decodestring(password)
+                user_os = oracle[0][5]
+                password_os = oracle[0][6]
+                password_os = base64.decodestring(password_os)
+                url = host + ':' + port + '/' + service_name
+            elif type == unicode('MySql数据库', 'utf-8'):
+                sql = "select host,user,password,user_os,password_os from tab_mysql_servers where tags= '%s' " % tags
+                mysql = tools.mysql_query(sql)
+                host = mysql[0][0]
+                user = mysql[0][1]
+                password = mysql[0][2]
+                password = base64.decodestring(password)
+                user_os = mysql[0][3]
+                password_os = mysql[0][4]
+                password_os = base64.decodestring(password_os)
+            else:
+                sql = "select host,user,password from tab_linux_servers where tags= '%s' " % tags
+                linux = tools.mysql_query(sql)
+                host = linux[0][0]
+                user_os = linux[0][1]
+                password_os = linux[0][2]
+                password_os = base64.decodestring(password_os)
+
             # 通用参数
             kwargs_d['tags'] = tags
             kwargs_d['host'] = host
-            kwargs_d['user'] = user
-            kwargs_d['password'] = password
+            if user:
+                kwargs_d['user'] = user
+            if password:
+                kwargs_d['password'] = password
             kwargs_d['user_os'] = user_os
             kwargs_d['password_os'] = password_os
-            kwargs_d['service_name'] = service_name
-            kwargs_d['url'] = url
-
+            if service_name:
+                kwargs_d['service_name'] = service_name
+            if url:
+                kwargs_d['url'] = url
 
             # 自定义参数
             if para_name:
@@ -3006,10 +3030,9 @@ def scheduler_add(request):
                     value = para_value[i]
                     if para:
                         kwargs_d[para] = value
-
+            # 将参数转化为json格式
+            print kwargs_d
             kwargs = json.dumps(kwargs_d)
-
-            now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
             sql = "insert into djcelery_periodictask(name,task,args,kwargs,expires,enabled,crontab_id,description,total_run_count,date_changed) values(%s,%s,'[]',%s,null,%s,%s,%s,0,now())"
             value = (task_name, task, kwargs, is_on, crontab, des)
@@ -3061,16 +3084,20 @@ def scheduler_edit(request):
     twargs_d = json.loads(twargs_j,encoding='utf-8')
     tags = twargs_d['tags']
 
-    # 删除tags,user,password,url
-    twargs_d.pop('tags')
+    # 删除tags,user,password,url等通用参数
+    if 'tags' in twargs_d:
+        twargs_d.pop('tags')
     twargs_d.pop('host')
-    twargs_d.pop('user')
-    twargs_d.pop('password')
+    if 'user' in twargs_d:
+        twargs_d.pop('user')
+    if 'password' in twargs_d:
+        twargs_d.pop('password')
     twargs_d.pop('user_os')
     twargs_d.pop('password_os')
-    twargs_d.pop('service_name')
-    twargs_d.pop('url')
-
+    if 'service_name' in twargs_d:
+        twargs_d.pop('service_name')
+    if 'url' in twargs_d:
+        twargs_d.pop('url')
 
     description_j = str(res[0][1])
     description_d = json.loads(description_j,encoding='utf-8')
@@ -3091,35 +3118,63 @@ def scheduler_edit(request):
             para_name = request.POST.getlist('para_name', None)
             para_value = request.POST.getlist('para_value', None)
 
-            # 获取用户名密码等信息
-            sql = "select host,port,service_name,user,password,user_os,password_os from tab_oracle_servers where tags= '%s' " % tags
-            oracle = tools.mysql_query(sql)
-            host = oracle[0][0]
-            port = oracle[0][1]
-            service_name = oracle[0][2]
-            user = oracle[0][3]
-            password = oracle[0][4]
-            password = base64.decodestring(password)
-            user_os = oracle[0][5]
-            password_os = oracle[0][6]
-            password_os = base64.decodestring(password_os)
-            url = host + ':' + port + '/' + service_name
-
             des_d = {}
             des_d['type'] = type
             des_d['task_model'] = task_model
             des = json.dumps(des_d, ensure_ascii=False)
 
             kwargs_d = {}
+            user = ''
+            password = ''
+            service_name = ''
+            url = ''
+
+            if type == unicode('Oracle数据库', 'utf-8'):
+                # 获取oracle用户名密码等信息
+                sql = "select host,port,service_name,user,password,user_os,password_os from tab_oracle_servers where tags= '%s' " % tags
+                oracle = tools.mysql_query(sql)
+                host = oracle[0][0]
+                port = oracle[0][1]
+                service_name = oracle[0][2]
+                user = oracle[0][3]
+                password = oracle[0][4]
+                password = base64.decodestring(password)
+                user_os = oracle[0][5]
+                password_os = oracle[0][6]
+                password_os = base64.decodestring(password_os)
+                url = host + ':' + port + '/' + service_name
+            elif type == unicode('MySQL数据库', 'utf-8'):
+                sql = "select host,user,password,user_os,password_os from tab_mysql_servers where tags= '%s' " % tags
+                mysql = tools.mysql_query(sql)
+                host = mysql[0][0]
+                user = mysql[0][1]
+                password = mysql[0][2]
+                password = base64.decodestring(password)
+                user_os = mysql[0][3]
+                password_os = mysql[0][4]
+                password_os = base64.decodestring(password_os)
+            else:
+                sql = "select host,user,password from tab_linux_servers where tags= '%s' " % tags
+                linux = tools.mysql_query(sql)
+                host = linux[0][0]
+                user_os = linux[0][1]
+                password_os = linux[0][2]
+                password_os = base64.decodestring(password_os)
+
             # 通用参数
             kwargs_d['tags'] = tags
             kwargs_d['host'] = host
-            kwargs_d['user'] = user
-            kwargs_d['password'] = password
+
+            if user:
+                kwargs_d['user'] = user
+            if password:
+                kwargs_d['password'] = password
             kwargs_d['user_os'] = user_os
             kwargs_d['password_os'] = password_os
-            kwargs_d['service_name'] = service_name
-            kwargs_d['url'] = url
+            if service_name:
+                kwargs_d['service_name'] = service_name
+            if url:
+                kwargs_d['url'] = url
 
             # 自定义参数
             if para_name:
@@ -3129,9 +3184,8 @@ def scheduler_edit(request):
                     if para:
                         kwargs_d[para] = value
 
-            kwargs = json.dumps(kwargs_d)
 
-            now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            kwargs = json.dumps(kwargs_d)
 
             sql = "delete from djcelery_periodictask where id = %s " %rid
 
@@ -3155,16 +3209,6 @@ def scheduler_edit(request):
 def scheduler_para(request):
     rid = request.GET.get('id')
 
-    # 查询定时任务
-    sql = "select a.id,a.name,a.task,a.kwargs,a.expires," \
-          "a.enabled,(case a.enabled when 1 then '启用' else '禁用' end) is_on," \
-          "(case a.enabled when 1 then 'green' else 'red' end) is_on1,a.last_run_at,a.total_run_count,a.date_changed," \
-          "a.description,a.crontab_id,concat(b.minute,' ',b.hour,' ',b.day_of_week,' ',b.day_of_month,' ',b.day_of_month) crontab,a.interval_id from djcelery_periodictask a left join djcelery_crontabschedule b on " \
-          "a.crontab_id=b.id where a.id=%s " %rid
-
-    my_scheduler = tools.mysql_django_query(sql)
-
-
     # 查询变量信息，description
     sql = "select kwargs from djcelery_periodictask where id = %s" %rid
     res = tools.mysql_query(sql)
@@ -3173,15 +3217,20 @@ def scheduler_para(request):
     twargs_d = json.loads(twargs_j,encoding='utf-8')
 
 
-    # 删除tags,host,user,password,user_os,password_os,url
-    twargs_d.pop('tags')
+    # 删除tags,user,password,url等通用参数
+    if 'tags' in twargs_d:
+        twargs_d.pop('tags')
     twargs_d.pop('host')
-    twargs_d.pop('user')
-    twargs_d.pop('password')
+    if 'user' in twargs_d:
+        twargs_d.pop('user')
+    if 'password' in twargs_d:
+        twargs_d.pop('password')
     twargs_d.pop('user_os')
     twargs_d.pop('password_os')
-    twargs_d.pop('service_name')
-    twargs_d.pop('url')
+    if 'service_name' in twargs_d:
+        twargs_d.pop('service_name')
+    if 'url' in twargs_d:
+        twargs_d.pop('url')
 
 
     return render_to_response('scheduler_para.html', {'twargs_d':twargs_d})
