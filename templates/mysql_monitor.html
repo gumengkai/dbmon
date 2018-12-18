@@ -434,6 +434,25 @@ desired effect
           <!-- /.box -->
 
         </div>
+            <div class="col-md-4">
+          <!-- AREA CHART -->
+            <div class="box-body chart-responsive">
+              <div class="chart" id="table-chart" style="height: 300px; "></div>
+            </div>
+            <!-- /.box-body -->
+          <!-- /.box -->
+
+        </div>
+                <div class="col-md-4">
+          <!-- AREA CHART -->
+            <div class="box-body chart-responsive">
+              <div class="chart" id="file-chart" style="height: 300px; "></div>
+            </div>
+            <!-- /.box-body -->
+          <!-- /.box -->
+
+        </div>
+
       </div>
         <!-- /.box-body -->
             <div class="col-xs-12">
@@ -503,6 +522,42 @@ desired effect
           <!-- /.row -->
         </div>
               <div class="conn" id="ps-grow-chart" style="height: 300px;"></div>
+            </div>
+            <!-- /.box-body-->
+          </div>
+          <!-- /.box -->
+
+        </div>
+        <!-- /.col -->
+        <div class="col-xs-12">
+          <!-- interactive chart -->
+          <div class="box box-solid">
+            <div class="box-body">
+                <div class="row">
+                  <div class="col-md-9">
+                      </div>
+            <div class="col-md-3">
+            <form action="" method="post" id="thread_range">
+                <div class="box-tools">
+              <div class="form-group" >
+                <select onchange="submitForm_thread();" class="form-control select2" style="width: 100%;" name="select_thread">
+                <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                  <option selected="selected">{{ thread_range_default }}</option>
+                  <option>0.5小时</option>
+                    <option>1小时</option>
+                  <option>1天 </option>
+                  <option>7天 </option>
+                  <option>30天 </option>
+                </select>
+              </div>
+              <!-- /.form-group -->
+            </div>
+            <!-- /.col -->
+            </form>
+          </div>
+          <!-- /.row -->
+        </div>
+              <div class="conn" id="thread-grow-chart" style="height: 300px;"></div>
             </div>
             <!-- /.box-body-->
           </div>
@@ -656,6 +711,12 @@ function submitForm_ps(){
     form_ps.submit();
 }
 
+  //表单提交
+function submitForm_thread(){
+    var form_thread = document.getElementById("thread_range");
+    form_thread.submit();
+}
+
      // ####################  【连接数使用率】图形  ####################
         // 基于准备好的dom，初始化echarts实例
         var myChart_conn_used = echarts.init(document.getElementById('conn-chart'));
@@ -721,6 +782,110 @@ function submitForm_ps(){
         // 使用刚指定的配置项和数据显示图表。
         myChart_conn_used.setOption(option_conn_used);
 
+
+   // ####################  【表缓存使用情况】图形  ####################
+        // 基于准备好的dom，初始化echarts实例
+        var myChart_table_used = echarts.init(document.getElementById('table-chart'));
+        // 指定图表的配置项和数据
+         data = [{
+                 value: {{ mysqlinfo.open_tables }},
+                 name: '已打开表数'
+             }, {
+                 value: {{ mysqlinfo.table_open_cache }} - {{ mysqlinfo.open_tables }},
+                 name: '可用表缓存',
+             }]
+
+        var option_table_used = {
+         title :{
+             text: '表缓存使用情况',
+             x:'center'
+         },
+         toolbox: {
+                   feature: {
+                      saveAsImage: {}
+                   }
+                },
+           series: [{
+               name: '表缓存使用',
+               type: 'pie',
+               hoverAnimation: false,
+               radius : [0, '70%'],
+               avoidLabelOverlap: false,
+               label: {
+                   normal: {
+                       position: 'inner',
+                       formatter: "{c}\n{b}",
+                       fontSize: 12,
+                   }
+               },
+               labelLine: {
+                   normal: {
+                       show: false
+                   }
+               },
+               color: ['#D07070', '#84d4c5'],
+               data: data
+           }]
+        };
+       setInterval(function () {
+          myChart_table_used.setOption(option_table_used, true);
+        },2000);
+
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart_table_used.setOption(option_table_used);
+
+  // ####################  【文件缓存使用情况】图形  ####################
+        // 基于准备好的dom，初始化echarts实例
+        var myChart_file_used = echarts.init(document.getElementById('file-chart'));
+        // 指定图表的配置项和数据
+         data = [{
+                 value: {{ mysqlinfo.open_files }},
+                 name: '已打开文件数'
+             }, {
+                 value: {{ mysqlinfo.open_files_limit }} - {{ mysqlinfo.open_files }},
+                 name: '可用文件句柄',
+             }]
+
+        var option_file_used = {
+         title :{
+             text: '打开文件数情况',
+             x:'center'
+         },
+         toolbox: {
+                   feature: {
+                      saveAsImage: {}
+                   }
+                },
+           series: [{
+               name: '打开文件数',
+               type: 'pie',
+               hoverAnimation: false,
+               radius : [0, '70%'],
+               avoidLabelOverlap: false,
+               label: {
+                   normal: {
+                       position: 'inner',
+                       formatter: "{c}\n{b}",
+                       fontSize: 12,
+                   }
+               },
+               labelLine: {
+                   normal: {
+                       show: false
+                   }
+               },
+               color: ['#D07070', '#84d4c5'],
+               data: data
+           }]
+        };
+       setInterval(function () {
+          myChart_file_used.setOption(option_file_used, true);
+        },2000);
+
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart_file_used.setOption(option_file_used);
 
     // ####################  【连接数使用率趋势】图形  ####################
  var myChart_conn_grow = echarts.init(document.getElementById('conn-grow-chart'));
@@ -878,6 +1043,119 @@ function submitForm_ps(){
  setInterval(function () {
      myChart_ps_grow.hideLoading();  //显示完成后不显示loading
      myChart_ps_grow.setOption(option_ps_grow, true);
+ },500);
+
+  // ####################  【thread趋势】图形  ####################
+ var myChart_thread_grow = echarts.init(document.getElementById('thread-grow-chart'));
+ option_thread_grow = {
+     title: {
+         text: 'Thread趋势',
+         subtext: ''
+     },
+     tooltip: {
+         trigger: 'axis',
+         axisPointer: {
+             type: 'cross'
+         }
+     },
+         legend: {
+        data:['running','connected','cached']
+    },
+     toolbox: {
+         show: true,
+         feature: {
+             saveAsImage: {}
+         }
+     },
+     xAxis:  {
+         type: 'category',
+         boundaryGap: false,
+         zlevel: 1,
+         data: [{% for i in threadgrow_list %}'{{ i.chk_time | date:"m-d H:i:s" }}',{% endfor %}]
+     },
+     yAxis: {
+         type: 'value',
+         axisLabel: {
+             formatter: '{value}'
+         },
+         axisPointer: {
+             snap: true
+         },
+         scale: true
+     },
+     series: [
+         {
+             name:'connected',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#a57fd4"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#a57fd4"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#a57fd4",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in threadgrow_list %}{{ i.threads_connected }},{% endfor %}]
+         },
+        {
+             name:'running',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#d44e5a"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#d44e5a"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#d44e5a",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in threadgrow_list %}{{ i.threads_running }},{% endfor %}]
+         },
+                    {
+             name:'cached',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#22d4bf"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#22d4bf"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#22d4bf",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in threadgrow_list %}{{ i.threads_cached }},{% endfor %}]
+         }
+     ]
+ };
+ myChart_thread_grow.showLoading();  //显示loading
+ setInterval(function () {
+     myChart_thread_grow.hideLoading();  //显示完成后不显示loading
+     myChart_thread_grow.setOption(option_thread_grow, true);
  },500);
 
 </script>

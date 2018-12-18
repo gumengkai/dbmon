@@ -41,8 +41,13 @@ def mysql_monitor(request):
     if not ps_range_default:
         ps_range_default = '1小时'.decode("utf-8")
 
+    thread_range_default = request.GET.get('thread_range_default')
+    if not thread_range_default:
+        thread_range_default = '1小时'.decode("utf-8")
+
     conn_begin_time = tools.range(conn_range_default)
     ps_begin_time = tools.range(ps_range_default)
+    thread_begin_time = tools.range(thread_range_default)
 
     end_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
@@ -95,18 +100,26 @@ def mysql_monitor(request):
     tpsgrow_list = list(tpsgrow)
     tpsgrow_list.reverse()
 
+    threadgrow = models_mysql.MysqlDbHis.objects.filter(tags=tagsdefault, threads_cached__isnull=False).filter(
+        chk_time__gt=thread_begin_time, chk_time__lt=end_time).order_by('-chk_time')
+    threadgrow_list = list(threadgrow)
+    threadgrow_list.reverse()
+
+
     if request.method == 'POST':
         if request.POST.has_key('select_tags') or request.POST.has_key('select_conn') or request.POST.has_key(
-                'select_ps'):
+                'select_ps') or request.POST.has_key('select_thread'):
             if request.POST.has_key('select_tags'):
                 tagsdefault = request.POST.get('select_tags', None).encode("utf-8")
             elif request.POST.has_key('select_conn'):
                 conn_range_default = request.POST.get('select_conn', None)
             elif request.POST.has_key('select_ps'):
                 ps_range_default = request.POST.get('select_ps', None)
+            elif request.POST.has_key('select_thread'):
+                thread_range_default = request.POST.get('select_thread', None)
             return HttpResponseRedirect(
-                '/mysql_monitor?tagsdefault=%s&conn_range_default=%s&ps_range_default=%s' % (
-                tagsdefault, conn_range_default, ps_range_default))
+                '/mysql_monitor?tagsdefault=%s&conn_range_default=%s&ps_range_default=%s&thread_range_default=%s' % (
+                tagsdefault, conn_range_default, ps_range_default,thread_range_default))
 
         else:
             logout(request)
@@ -125,8 +138,8 @@ def mysql_monitor(request):
                                                      'msg_last_content': msg_last_content, 'tim_last': tim_last,
                                                      'conngrow_list': conngrow_list,
                                                      'tagsdefault': tagsdefault, 'conn_range_default': conn_range_default,
-                                                     'ps_range_default': ps_range_default,
-                                                     'tagsinfo': tagsinfo, 'mysqlinfo': mysqlinfo, 'qpsgrow_list': qpsgrow_list,
+                                                     'ps_range_default': ps_range_default,'thread_range_default': thread_range_default,
+                                                     'tagsinfo': tagsinfo, 'mysqlinfo': mysqlinfo, 'qpsgrow_list': qpsgrow_list,'threadgrow_list': threadgrow_list,
                                                      'tpsgrow_list': tpsgrow_list,'check_status':check_status,'mysql_status':mysql_status})
 
 
