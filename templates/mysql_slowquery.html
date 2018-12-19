@@ -459,6 +459,8 @@ desired effect
                     <th>SQL文本</th>
                     <th>耗时</th>
                     <th>锁等待耗时</th>
+                    <th>rows_examined</th>
+                    <th>rows_sent</th>
                 </tr>
                 </thead>
                 {% for slow_query in slow_query_list %}
@@ -469,6 +471,8 @@ desired effect
                  <td> <li><a href="#"  onclick="pop_content('{{ slow_query.id }}')" >{{ slow_query.sql_text }}</a></li> </td>
                  <td>{{ slow_query.query_time }} </td>
                  <td>{{ slow_query.lock_time }} </td>
+                 <td>{{ slow_query.rows_examined }} </td>
+                 <td>{{ slow_query.rows_sent }} </td>
                  </tr>
                  {% endfor %}
               </table>

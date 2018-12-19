@@ -3345,7 +3345,7 @@ def mysql_slowquery(request):
     # 查询解析结果
     sql = """
       select id,
-         host,port,start_time,client_host,db_name,substr(sql_text,1,30) sql_text,sql_text sql_text_full,query_time,lock_time
+         host,port,start_time,client_host,db_name,substr(sql_text,1,30) sql_text,sql_text sql_text_full,query_time,lock_time,rows_examined,rows_sent
     from mysql_slowquery where tags='%s' order by start_time desc """ %tagsdefault
     slow_query_list = tools.mysql_django_query(sql)
 
