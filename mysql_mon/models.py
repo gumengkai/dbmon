@@ -250,3 +250,24 @@ class MysqlBigTableHis(models.Model):
     class Meta:
         managed = False
         db_table = 'mysql_big_table_his'
+
+class MysqlSlowquery(models.Model):
+    host = models.CharField(max_length=255)
+    port = models.CharField(max_length=255)
+    tags = models.CharField(max_length=255)
+    slow_log_file = models.CharField(max_length=255)
+    start_time  = models.CharField(max_length=255)
+    client_host = models.CharField(max_length=255)
+    db_name = models.CharField(max_length=255)
+    sql_text = models.TextField()
+    slow_log_file = models.CharField(max_length=255)
+    query_time = models.FloatField()
+    lock_time = models.FloatField()
+    rows_examined = models.IntegerField(blank=True, null=True)
+    rows_sent = models.IntegerField(blank=True, null=True)
+    thread_id = models.CharField(max_length=255)
+    chk_time = models.DateTimeField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'mysql_slowquery'

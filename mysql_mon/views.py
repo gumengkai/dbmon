@@ -45,9 +45,14 @@ def mysql_monitor(request):
     if not thread_range_default:
         thread_range_default = '1小时'.decode("utf-8")
 
+    net_range_default = request.GET.get('net_range_default')
+    if not net_range_default:
+        net_range_default = '1小时'.decode("utf-8")
+
     conn_begin_time = tools.range(conn_range_default)
     ps_begin_time = tools.range(ps_range_default)
     thread_begin_time = tools.range(thread_range_default)
+    net_begin_time = tools.range(net_range_default)
 
     end_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
@@ -79,13 +84,6 @@ def mysql_monitor(request):
         check_status = 'danger'
         mysql_status = '离线'
 
-
-    try:
-        conninfo = models_mysql.MysqlDb.objects.get(tags=tagsdefault)
-    except models_mysql.MysqlDb.DoesNotExist:
-        conninfo = \
-            models_mysql.MysqlDbHis.objects.filter(tags=tagsdefault, conn_rate__isnull=False).order_by('-chk_time')[0]
-
     conngrow = models_mysql.MysqlDbHis.objects.filter(tags=tagsdefault, conn_rate__isnull=False).filter(
         chk_time__gt=conn_begin_time, chk_time__lt=end_time).order_by('-chk_time')
     conngrow_list = list(conngrow)
@@ -105,10 +103,16 @@ def mysql_monitor(request):
     threadgrow_list = list(threadgrow)
     threadgrow_list.reverse()
 
+    netgrow = models_mysql.MysqlDbHis.objects.filter(tags=tagsdefault, bytes_received__isnull=False).filter(
+        chk_time__gt=net_begin_time, chk_time__lt=end_time).order_by('-chk_time')
+    netgrow_list = list(netgrow)
+    print net_begin_time
+    netgrow_list.reverse()
+
 
     if request.method == 'POST':
         if request.POST.has_key('select_tags') or request.POST.has_key('select_conn') or request.POST.has_key(
-                'select_ps') or request.POST.has_key('select_thread'):
+                'select_ps') or request.POST.has_key('select_thread') or request.POST.has_key('select_net'):
             if request.POST.has_key('select_tags'):
                 tagsdefault = request.POST.get('select_tags', None).encode("utf-8")
             elif request.POST.has_key('select_conn'):
@@ -117,9 +121,11 @@ def mysql_monitor(request):
                 ps_range_default = request.POST.get('select_ps', None)
             elif request.POST.has_key('select_thread'):
                 thread_range_default = request.POST.get('select_thread', None)
+            elif request.POST.has_key('select_net'):
+                net_range_default = request.POST.get('select_net', None)
             return HttpResponseRedirect(
-                '/mysql_monitor?tagsdefault=%s&conn_range_default=%s&ps_range_default=%s&thread_range_default=%s' % (
-                tagsdefault, conn_range_default, ps_range_default,thread_range_default))
+                '/mysql_monitor?tagsdefault=%s&conn_range_default=%s&ps_range_default=%s&thread_range_default=%s&net_range_default=%s' % (
+                tagsdefault, conn_range_default, ps_range_default,thread_range_default,net_range_default))
 
         else:
             logout(request)
@@ -138,8 +144,8 @@ def mysql_monitor(request):
                                                      'msg_last_content': msg_last_content, 'tim_last': tim_last,
                                                      'conngrow_list': conngrow_list,
                                                      'tagsdefault': tagsdefault, 'conn_range_default': conn_range_default,
-                                                     'ps_range_default': ps_range_default,'thread_range_default': thread_range_default,
-                                                     'tagsinfo': tagsinfo, 'mysqlinfo': mysqlinfo, 'qpsgrow_list': qpsgrow_list,'threadgrow_list': threadgrow_list,
+                                                     'ps_range_default': ps_range_default,'thread_range_default': thread_range_default,'net_range_default': net_range_default,
+                                                     'tagsinfo': tagsinfo, 'mysqlinfo': mysqlinfo, 'qpsgrow_list': qpsgrow_list,'threadgrow_list': threadgrow_list,'netgrow_list': netgrow_list,
                                                      'tpsgrow_list': tpsgrow_list,'check_status':check_status,'mysql_status':mysql_status})
 
 

@@ -322,7 +322,7 @@ desired effect
           <ul class="treeview-menu">
               <li><a href="/mysql_monitor"><i class="fa fa-circle-o"></i>实时监控</a></li>
             <li><a href="/show_mysql"><i class="fa fa-circle-o"></i>概览</a></li>               <li><a href="/show_mysql_res"><i class="fa fa-circle-o"></i>资源监控</a></li>
-              <li><a href="/show_mysql_repl"><i class="fa fa-circle-o"></i>复制监控</a></li>
+              <li><a href="/show_mysql_repl"><i class="fa fa-circle-o"></i>复制监控</a></li>               <li><a href="/mysql_slowquery"><i class="fa fa-circle-o"></i>慢查询解析</a></li>
           </ul>
         </li>
             <li class="treeview">
@@ -565,6 +565,42 @@ desired effect
 
         </div>
         <!-- /.col -->
+            <div class="col-xs-12">
+          <!-- interactive chart -->
+          <div class="box box-solid">
+            <div class="box-body">
+                <div class="row">
+                  <div class="col-md-9">
+                      </div>
+            <div class="col-md-3">
+            <form action="" method="post" id="net_range">
+                <div class="box-tools">
+              <div class="form-group" >
+                <select onchange="submitForm_net();" class="form-control select2" style="width: 100%;" name="select_net">
+                <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                  <option selected="selected">{{ net_range_default }}</option>
+                  <option>0.5小时</option>
+                    <option>1小时</option>
+                  <option>1天 </option>
+                  <option>7天 </option>
+                  <option>30天 </option>
+                </select>
+              </div>
+              <!-- /.form-group -->
+            </div>
+            <!-- /.col -->
+            </form>
+          </div>
+          <!-- /.row -->
+        </div>
+              <div class="conn" id="net-grow-chart" style="height: 300px;"></div>
+            </div>
+            <!-- /.box-body-->
+          </div>
+          <!-- /.box -->
+
+        </div>
+        <!-- /.col -->
       </div>
 
 
@@ -715,6 +751,12 @@ function submitForm_ps(){
 function submitForm_thread(){
     var form_thread = document.getElementById("thread_range");
     form_thread.submit();
+}
+
+  //表单提交
+function submitForm_net(){
+    var form_net = document.getElementById("net_range");
+    form_net.submit();
 }
 
      // ####################  【连接数使用率】图形  ####################
@@ -1049,7 +1091,7 @@ function submitForm_thread(){
  var myChart_thread_grow = echarts.init(document.getElementById('thread-grow-chart'));
  option_thread_grow = {
      title: {
-         text: 'Thread趋势',
+         text: 'Threads',
          subtext: ''
      },
      tooltip: {
@@ -1157,6 +1199,99 @@ function submitForm_thread(){
      myChart_thread_grow.hideLoading();  //显示完成后不显示loading
      myChart_thread_grow.setOption(option_thread_grow, true);
  },500);
+
+
+   // ####################  【网络流量趋势】图形  ####################
+ var myChart_net_grow = echarts.init(document.getElementById('net-grow-chart'));
+ option_net_grow = {
+     title: {
+         text: '网络流量',
+         subtext: ''
+     },
+     tooltip: {
+         trigger: 'axis',
+         axisPointer: {
+             type: 'cross'
+         }
+     },
+         legend: {
+        data:['Bytes received','Bytes sent']
+    },
+     toolbox: {
+         show: true,
+         feature: {
+             saveAsImage: {}
+         }
+     },
+     xAxis:  {
+         type: 'category',
+         boundaryGap: false,
+         zlevel: 1,
+         data: [{% for i in netgrow_list %}'{{ i.chk_time | date:"m-d H:i:s" }}',{% endfor %}]
+     },
+     yAxis: {
+         type: 'value',
+         axisLabel: {
+             formatter: '{value}'
+         },
+         axisPointer: {
+             snap: true
+         },
+         scale: true
+     },
+     series: [
+        {
+             name:'Bytes received',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#d44e5a"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#d44e5a"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#d44e5a",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in netgrow_list %}{{ i.bytes_received }},{% endfor %}]
+         },
+                    {
+             name:'Bytes sent',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#22d4bf"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#22d4bf"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#22d4bf",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in netgrow_list %}{{ i.bytes_send }},{% endfor %}]
+         }
+     ]
+ };
+ myChart_net_grow.showLoading();  //显示loading
+ setInterval(function () {
+     myChart_net_grow.hideLoading();  //显示完成后不显示loading
+     myChart_net_grow.setOption(option_net_grow, true);
+ },500);
+
 
 </script>
 </body>
