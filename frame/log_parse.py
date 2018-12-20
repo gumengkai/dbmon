@@ -302,7 +302,7 @@ def mysql_slow_query(tags,host,port,user,password,slow_log_file):
     ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     ssh_client.connect(host, 22, user, password)
     #获取慢查询日志文件
-    command = 'tail -500 %s' % slow_log_file
+    command = 'cat %s' % slow_log_file
     std_in, std_out, std_err = ssh_client.exec_command(command)
     fd = std_out
 

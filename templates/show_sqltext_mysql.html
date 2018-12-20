@@ -33,17 +33,12 @@
   <div id="" class="layui-layer-content">
          <div class="box box-solid">
             <!-- /.box-header -->
-            <div class="box-body no-padding">
-              <div class="mailbox-read-info">
-                <h4>sql文本</h4>
-              </div>
               <div class="mailbox-read-message">
                 {% for sql_text in sqltext %}
                     {{ sql_text.sql_text }}
                   {% endfor %}
               </div>
               <!-- /.mailbox-read-message -->
-            </div>
           </div>
   </div>
 

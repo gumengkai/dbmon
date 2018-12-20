@@ -3044,7 +3044,6 @@ def scheduler_add(request):
                     if para:
                         kwargs_d[para] = value
             # 将参数转化为json格式
-            print kwargs_d
             kwargs = json.dumps(kwargs_d)
 
             sql = "insert into djcelery_periodictask(name,task,args,kwargs,expires,enabled,crontab_id,description,total_run_count,date_changed) values(%s,%s,'[]',%s,null,%s,%s,%s,0,now())"

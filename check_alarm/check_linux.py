@@ -4,6 +4,8 @@
 import paramiko
 import re
 import os
+from collections import defaultdict
+
 
 stat_file_config = {
     'cpu': '/proc/stat',
@@ -36,14 +38,16 @@ def format_stat(label, stat_vals):
             label_n, idx = label[i], i
 
         ret[label_n] = round(stat_vals[i], 2)
+
     return ret
 
 
 class LinuxStat(object):
-    def __init__(self,host,user,password):
+    def __init__(self,host,user,password,ssh_client):
         self.host = host
         self.user = user
         self.password = password
+        self.ssh_client = ssh_client
         self.curr_stat = {}
         self.stat = {}
         self.last_time = time.time()
@@ -54,6 +58,8 @@ class LinuxStat(object):
             'sys': tuple(0 for _ in xrange(6)),
             'vm': tuple(0 for _ in xrange(6))
         }
+
+
 
     def get_linux(self):
         # 初始化网卡流量数据
@@ -66,6 +72,128 @@ class LinuxStat(object):
         stat2 = self.get_linux_stat()
         return stat2
 
+    def get_host_info(self):
+        # get_hostname mysql50
+        command = 'hostname'
+        std_in, std_out, std_err = self.ssh_client.exec_command(command)
+        hostname = std_out.readlines()[0]
+        # get ostype,version,frame Linux 2.6.32-431.el6.x86_64
+        command = 'uname -a'
+        std_in, std_out, std_err = self.ssh_client.exec_command(command)
+        res =  std_out.readlines()[0]
+        ostype = res.split(' ')[0]
+        kernel = res.split(' ')[2]
+        frame = res.split(' ')[11]
+        # linux version
+        command = 'cat /etc/issue'
+        std_in, std_out, std_err = self.ssh_client.exec_command(command)
+        res =  std_out.readlines()[0]
+        linux_version = res
+
+        return {
+            'hostname': hostname,
+            'ostype': ostype,
+            'kernel': kernel,
+            'frame': frame,
+            'linux_version':linux_version
+        }
+
+    def get_cpu_info(self):
+        cpu_set = set()
+        counter = defaultdict(int)
+        counter_cpu_mode = defaultdict(int)
+        counter_cache_size = defaultdict(int)
+        counter_cpu_speed = defaultdict(int)
+        cpu_cores = 0
+
+        command = 'cat /proc/cpuinfo'
+        std_in, std_out, std_err = self.ssh_client.exec_command(command)
+        res = std_out.readlines()
+
+        for line in res:
+            if line.startswith('physical id'):
+                cpu_set.add(line)
+            elif line.startswith('cache size'):
+                cache_size = line.split(':')[1].strip()
+                counter_cache_size[cache_size] += 1
+            elif line.startswith('processor'):
+                counter['virtual'] += 1
+            elif line.startswith('model name'):
+                model_name = line.split(':')[1].strip()
+                counter_cpu_mode[model_name] += 1
+            elif line.startswith('cpu MHz'):
+                cpu_hz = line.split(':')[1].strip()
+                counter_cpu_speed[cpu_hz] += 1
+            elif line.startswith('cpu cores'):
+                cpu_cores = int(line.split(':')[1].strip())
+
+
+        num_processor = len(cpu_set)
+        virtual = counter['virtual']
+        if num_processor == 0:
+            num_processor = virtual
+
+        cpu_cores = cpu_cores * num_processor
+
+        speeds = []
+        for speed, num in counter_cpu_speed.items():
+            speeds.append('%dx%s' % (num, speed))
+
+        cpu_speed = ", ".join(speeds)
+
+        models = []
+        for model, num in counter_cpu_mode.items():
+            models.append('%dx%s' % (num, model))
+
+        cpu_mode = ", ".join(models)
+
+        caches = []
+        for cache, num in counter_cache_size.items():
+            caches.append('%dx%s' % (num, cache))
+
+        cpu_cache = ", ".join(caches)
+
+        processor = "pyhsical = %d, cores = %d, virtual cpu = %d" % (num_processor, cpu_cores, virtual)
+
+        # return (processor, cpu_speed, cpu_mode, cpu_cache, virtual)
+        return {
+            'processor': processor,
+            'cpu_speed': cpu_speed,
+            'cpu_mode': cpu_mode,
+            'cpu_cache': cpu_cache,
+            'virtual':virtual
+        }
+
+    def get_memtotal(self):
+        command = 'cat /proc/meminfo'
+        std_in, std_out, std_err = self.ssh_client.exec_command(command)
+        res =  std_out.readlines()
+        Memtotal = 0
+        for line in res:
+            if line.startswith('MemTotal'):
+                Memtotal = line.split()[1]
+        # 单位为KB
+        return {
+            'Memtotal': Memtotal
+        }
+
+    def get_host_ip(self):
+        ip_list = []
+        command = 'ifconfig'
+        std_in, std_out, std_err = self.ssh_client.exec_command(command)
+        res =  std_out.readlines()
+        for line in res:
+            if line.strip().startswith('inet'):
+                ip_addr =  line.strip().split(' ')[1]
+                ip =ip_addr.split(':')[1]
+                if ip <> '127.0.0.1' and ip:
+                    ip_list.append(ip)
+        ipinfo =  ','.join(ip_list)
+        return {
+            'ipinfo':ipinfo
+        }
+
+
     def get_linux_stat(self):
         curr_time = time.time()
         if self.loop_cnt == 0:
@@ -73,8 +201,16 @@ class LinuxStat(object):
         else:
             elapsed = curr_time - self.last_time
 
+
         #get all status
         linux_stat = {}
+
+        # get hostconf
+        linux_stat['hostinfo'] = self.get_host_info()
+        linux_stat['cpuinfo'] = self.get_cpu_info()
+        linux_stat['Memtotal'] = self.get_memtotal()
+        linux_stat['ipinfo'] = self.get_host_ip()
+
         linux_stat['load'] = self.get_load()
         linux_stat['cpu'] = self.get_cpu_stat()
         linux_stat['iostat'] = self.get_io_stat(elapsed)
@@ -82,6 +218,7 @@ class LinuxStat(object):
         linux_stat['vmstat'] = self.get_vm_stat(elapsed)
         linux_stat['tcpstat'] = self.get_tcp_conn_stat()
         linux_stat['net'] = self.get_net_stat(elapsed)
+        linux_stat['hostinfo'] = self.get_host_info()
 
         # update timestamp
         self.last_time = curr_time
@@ -110,6 +247,7 @@ class LinuxStat(object):
 
         label = ('user', 'sys', 'idle', 'iowait')
         return format_stat(label, self.stat[stat_name])
+
 
     def get_vm_stat(self, elapsed):
         stat_name = 'vm'
@@ -210,11 +348,8 @@ class LinuxStat(object):
             return uptime
 
     def get_net_nics(self):
-        ssh_client = paramiko.SSHClient()
-        ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        ssh_client.connect(self.host, 22, self.user, self.password)
         command = 'cat /proc/net/dev'
-        std_in, std_out, std_err = ssh_client.exec_command(command)
+        std_in, std_out, std_err = self.ssh_client.exec_command(command)
         fd = std_out
         nic_filter = re.compile("^(lo|face|docker\d+)$")
         ret = []
@@ -230,11 +365,8 @@ class LinuxStat(object):
 
     def get_mounted_dev(self):
         mounted_dev = set()
-        ssh_client = paramiko.SSHClient()
-        ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        ssh_client.connect(self.host, 22, self.user, self.password)
         command = 'cat /etc/mtab'
-        std_in, std_out, std_err = ssh_client.exec_command(command)
+        std_in, std_out, std_err = self.ssh_client.exec_command(command)
         f = std_out
         for i in f.readlines():
             # /dev/xvda1 / ext4 rw,errors=remount-ro 0 0
@@ -258,11 +390,8 @@ class LinuxStat(object):
         disk_filter = re.compile('^(loop|ram|sr|asm)\d+$')
         ret = []
         mounted_dev = self.get_mounted_dev()
-        ssh_client = paramiko.SSHClient()
-        ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        ssh_client.connect(self.host, 22, self.user, self.password)
         command = 'ls -l /sys/block/*'
-        std_in, std_out, std_err = ssh_client.exec_command(command)
+        std_in, std_out, std_err = self.ssh_client.exec_command(command)
         fd = std_out
         for l in std_out.readlines():
             dev_name = l.split('/')[-1]
@@ -368,11 +497,8 @@ class LinuxStat(object):
     def get_stat(self, stat_name, replace=None):
         stat_file = stat_file_config[stat_name]
 
-        ssh_client = paramiko.SSHClient()
-        ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        ssh_client.connect(self.host, 22, self.user, self.password)
         command = 'cat ' + stat_file
-        std_in, std_out, std_err = ssh_client.exec_command(command)
+        std_in, std_out, std_err = self.ssh_client.exec_command(command)
         fd = std_out
 
         for l in fd.readlines():
@@ -383,7 +509,13 @@ class LinuxStat(object):
 
 
 if __name__ == '__main__':
-    linuxstat = LinuxStat('114.115.244.52', 'root', 'Mysql_123')
+
+    # 初始化ssh连接
+    ssh_client = paramiko.SSHClient()
+    ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    ssh_client.connect('192.168.48.50', 22, 'root', 'mysqld')
+
+    linuxstat = LinuxStat('192.168.48.50', 'root', 'mysqld',ssh_client)
     while True:
         stat = linuxstat.get_linux()
         print stat

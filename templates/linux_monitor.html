@@ -390,7 +390,6 @@ desired effect
 
     </section>
 
-
     <!-- Main content -->
     <section class="content container-fluid">
          <!-- SELECT2 EXAMPLE -->
@@ -423,6 +422,47 @@ desired effect
             </form>
           </div>
           <!-- /.row -->
+          <div class="col-md-6">
+           	<div class="panel panel-default pull-right" >
+               <a data-toggle="collapse" href="#linuxconf" target="_blank" class="btn btn-default">配置信息</a>
+			</h2>
+          </div>
+        </div>
+        <div class="row">
+            <div id="linuxconf" class="panel-collapse collapse">
+			 <div class="col-sm-12 invoice-col">
+            <div class="box-body" style="overflow: auto">
+              <table id="example1" class="table table-bordered table-hover" style="table-layout: auto">
+                 <tr>
+                 <td>名 称: {{ osinfo.hostname }} </td>
+                 <td>IP地址: {{ osinfo.ipinfo }} </td>
+                 </tr>
+                 <tr>
+                 <td>OS类型: {{ osinfo.ostype }} </td>
+                 <td>OS发型版本: {{ osinfo.linux_version }} </td>
+                 </tr>
+                  <tr>
+                 <td>内核版本: {{ osinfo.kernel }} </td>
+                 <td>架构: {{ osinfo.frame }} </td>
+                 </tr>
+                  <tr>
+                 <td>CPU核数: {{ osinfo.processor }} </td>
+                 <td>CPU型号: {{ osinfo.cpu_mode }} </td>
+                 </tr>
+                  <tr>
+                 <td>CPU频率: {{ osinfo.cpu_speed }} MHZ</td>
+                 <td>CPU Cache大小: {{ osinfo.cpu_cache }} </td>
+                 </tr>
+                  <tr>
+                 <td>内存大小: {{ osinfo.Memtotal }}GB</td>
+                 </tr>
+              </table>
+            </div>
+
+
+        </div>
+		</div>
+
         </div>
         <!-- /.box-body -->
 
