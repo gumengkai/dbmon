@@ -444,6 +444,50 @@ desired effect
             <!-- /.col -->
           </div>
           <!-- /.row -->          <!-- /.row -->
+           <!-- /.row -->
+          <div class="col-md-4">
+           	<div class="panel panel-default pull-right" >
+               <a data-toggle="collapse" href="#linuxconf" target="_blank" class="btn btn-default">配置信息</a>
+			</h2>
+          </div>
+        </div>
+        <div class="row">
+            <div id="linuxconf" class="panel-collapse collapse">
+			 <div class="col-sm-12 invoice-col">
+            <div class="box-body" style="overflow: auto">
+              <table id="example1" class="table table-bordered table-hover" style="table-layout: auto">
+                 <tr>
+                 <td>DBID: {{ oracleinfo.dbid }} </td>
+                 <td>DB名: {{ oracleinfo.dbname }} </td>
+                 </tr>
+                 <tr>
+                 <td>实例名: {{ oracleinfo.instance_name }} </td>
+                 <td>实例编号: {{ oracleinfo.inst_id }} </td>
+                 </tr>
+                  <tr>
+                 <td>oracle版本: {{ oracleinfo.version}} </td>
+                 <td>是否为RAC: {{ is_rac }} </td>
+                 </tr>
+                  <tr>
+                 <td>归档模式: {{ oracleinfo.log_mode }} </td>
+                 <td>连接数: {{ oracleinfo.max_process }} </td>
+                 </tr>
+                  <tr>
+                 <td>SGA: {{ oracleinfo.sga_size }} MB</td>
+                 <td>PGA: {{ oracleinfo.pga_size }} MB</td>
+                 </tr>
+                  <tr>
+                 <td>闪回: {{ flashback_on}}</td>
+                 <td>审计: {{ oracleinfo.audit_trail }}</td>
+                 </tr>
+              </table>
+            </div>
+
+        </div>
+		</div>
+
+        </div>
+        <!-- /.box-body -->
 
           <!-- /.row -->
         </div>

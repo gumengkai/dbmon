@@ -138,8 +138,6 @@ def ora_qry(url,username,password,sql):
     g = lambda k: "%-8s" % k
     title = map(g,title)
     result = cur.fetchall()
-    for i in title:
-        print i,
     return result
 
 def range(range_value):

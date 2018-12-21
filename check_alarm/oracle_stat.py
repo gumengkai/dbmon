@@ -102,6 +102,9 @@ class Oraclestat(object):
         for stat_name in self.os_stats:
             self.old_stat[stat_name] = 0
 
+    # def get_oracleinfo(self):
+
+
     def get_uptime(self):
         cur = self.conn.cursor()
         sql = "select startup_time, version, parallel from v$instance "

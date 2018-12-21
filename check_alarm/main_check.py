@@ -341,14 +341,14 @@ def check_oracle(tags,host,port,service_name,user,password,user_os,password_os):
             else:
                 apply_rate_level = 'green'
 
-            insert_db_sql = "insert into oracle_db(tags,host,port,service_name,dbname,db_unique_name,database_role,uptime,audit_trail," \
+            insert_db_sql = "insert into oracle_db(tags,host,port,service_name,dbid,dbname,version,db_unique_name,database_role,uptime,audit_trail," \
                         "open_mode,log_mode,archive_used,archive_rate_level,inst_id,instance_name,host_name,max_process,current_process,percent_process,conn_rate_level,adg_" \
                         "transport_lag,adg_apply_lag,adg_transport_value,adg_transport_rate_level,adg_apply_value,adg_apply_rate_level,mon_status,err_info,sga_size,pga_size,mem_pct,qps,tps," \
                         "exec_count,user_commits,gets,logr,phyr,phyw,blockchange,redo,parse,hardparse,netin,netout,io,total_sess,act_sess,act_trans,blocked_sess,dbtime,dbcpu,log_para_wait,log_sync_wait,log_sync_cnt," \
                          "scat_wait,scat_read_cnt,seq_wait,seq_read_cnt,row_lock_cnt,rate_level)" \
-                        " values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+                        " values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
             value = (
-                tags, host, port, service_name, dbnameinfo[0][0], dbnameinfo[0][1], dbnameinfo[0][2],up_days,audit_trail[0][0],dbnameinfo[0][3],
+                tags, host, port, service_name,dbnameinfo[0][5],dbnameinfo[0][0], instance_info[0][4],dbnameinfo[0][1], dbnameinfo[0][2],up_days,audit_trail[0][0],dbnameinfo[0][3],
                 dbnameinfo[0][4], archive_used[0][0], archive_rate_level,
                 instance_info[0][0],
                 instance_info[0][1],
@@ -363,10 +363,10 @@ def check_oracle(tags,host,port,service_name,user,password,user_os,password_os):
 
         # not adg
         else:
-            insert_db_sql = "insert into oracle_db(tags,host,port,service_name,dbname,db_unique_name,database_role,uptime,audit_trail,open_mode,log_mode,archive_used,archive_rate_level,inst_id,instance_name,host_name,max_process,current_process,percent_process,conn_rate_level,mon_status,err_info,sga_size,pga_size,mem_pct,qps,tps,exec_count,user_commits,gets,logr,phyr,phyw,blockchange,redo,parse,hardparse,netin,netout,io,total_sess,act_sess,act_trans,blocked_sess,dbtime,dbcpu,log_para_wait,log_sync_wait,log_sync_cnt," \
-                         "scat_wait,scat_read_cnt,seq_wait,seq_read_cnt,row_lock_cnt,rate_level) values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+            insert_db_sql = "insert into oracle_db(tags,host,port,service_name,dbid,dbname,version,db_unique_name,database_role,uptime,audit_trail,open_mode,log_mode,archive_used,archive_rate_level,inst_id,instance_name,host_name,max_process,current_process,percent_process,conn_rate_level,mon_status,err_info,sga_size,pga_size,mem_pct,qps,tps,exec_count,user_commits,gets,logr,phyr,phyw,blockchange,redo,parse,hardparse,netin,netout,io,total_sess,act_sess,act_trans,blocked_sess,dbtime,dbcpu,log_para_wait,log_sync_wait,log_sync_cnt," \
+                         "scat_wait,scat_read_cnt,seq_wait,seq_read_cnt,row_lock_cnt,rate_level) values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
             value = (
-                tags, host, port, service_name, dbnameinfo[0][0], dbnameinfo[0][1], dbnameinfo[0][2],up_days,audit_trail[0][0], dbnameinfo[0][3],
+                tags, host, port, service_name, dbnameinfo[0][5],dbnameinfo[0][0],instance_info[0][4], dbnameinfo[0][1], dbnameinfo[0][2],up_days,audit_trail[0][0], dbnameinfo[0][3],
                 dbnameinfo[0][4], archive_used[0][0], archive_rate_level,
                 instance_info[0][0],
                 instance_info[0][1],

@@ -12,14 +12,14 @@ import re
 # 获取dbinfo,name,database_role,open_mode
 def get_dbname_info(conn):
     cur = conn.cursor()
-    dbname_sql = '''select name,db_unique_name,database_role,open_mode,log_mode from v$database'''
+    dbname_sql = '''select name,db_unique_name,database_role,open_mode,log_mode,dbid from v$database'''
     cur.execute(dbname_sql)
     return cur.fetchall()
 
 # 获取实例信息
 def get_instance_info(conn):
     cur = conn.cursor()
-    inst_sql = '''select instance_number,instance_name,host_name,startup_time from v$instance'''
+    inst_sql = '''select instance_number,instance_name,host_name,startup_time,version from v$instance'''
     cur.execute(inst_sql)
     return cur.fetchall()
 

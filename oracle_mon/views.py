@@ -19,7 +19,7 @@ import ConfigParser
 import base64
 import frame.models as models_frame
 import oracle_mon.models as models_oracle
-
+import frame.oracle_do as ora_do
 # Create your views here.
 
 
@@ -130,6 +130,22 @@ def oracle_monitor(request):
         chk_time__gt=ps_begin_time, chk_time__lt=end_time).order_by('-chk_time')
     psgrow_list = list(psgrow)
     psgrow_list.reverse()
+    # 连接信息
+    sql = "select host,port,service_name,user,password,user_os,password_os from tab_oracle_servers where tags= '%s' " % tagsdefault
+    oracle = tools.mysql_query(sql)
+    host = oracle[0][0]
+    port = oracle[0][1]
+    service_name = oracle[0][2]
+    user = oracle[0][3]
+    password = oracle[0][4]
+    password = base64.decodestring(password)
+    url = host + ':' + port + '/' + service_name
+    # 基础信息
+    is_rac = ora_do.get_oracle_para(url,user,password,'cluster_database')
+    sql = "select flashback_on from v$database"
+    dbinfo = tools.oracle_query(url,user,password,sql)
+    flashback_on =  dbinfo[0][0]
+
 
     if request.method == 'POST':
         if request.POST.has_key('select_tags') or request.POST.has_key('select_conn') or request.POST.has_key('select_undo') or request.POST.has_key('select_tmp') or request.POST.has_key('select_ps'):
@@ -161,7 +177,7 @@ def oracle_monitor(request):
     return render_to_response('oracle_monitor.html',
                               {'conngrow_list': conngrow_list, 'undogrow_list': undogrow_list, 'tmpinfo': tmpinfo,
                                'tmpgrow_list': tmpgrow_list,'psgrow_list': psgrow_list, 'tagsdefault': tagsdefault, 'tagsinfo': tagsinfo,
-                               'oracleinfo': oracleinfo, 'undoinfo': undoinfo, 'eventinfo': eventinfo,
+                               'oracleinfo': oracleinfo, 'undoinfo': undoinfo, 'eventinfo': eventinfo,'is_rac':is_rac,'flashback_on':flashback_on,
                                'lockinfo': lockinfo, 'messageinfo_list': messageinfo_list,
                                'msg_num': msg_num, 'conn_range_default': conn_range_default,
                                'undo_range_default': undo_range_default, 'tmp_range_default': tmp_range_default,'ps_range_default': ps_range_default,
@@ -373,7 +389,6 @@ def show_oracle_resource(request):
 def oracle_profile(request):
     messageinfo_list = models_frame.TabAlarmInfo.objects.all()
     tags = request.GET.get('tags')
-    print tags
     profile_name = request.GET.get('profile_name')
     sql = "select host,port,service_name,user,password,user_os,password_os from tab_oracle_servers where tags= '%s' " %tags
     oracle = tools.mysql_query(sql)
@@ -414,7 +429,6 @@ def oracle_profile(request):
 def oracle_grant(request):
     messageinfo_list = models_frame.TabAlarmInfo.objects.all()
     tags = request.GET.get('tags')
-    print tags
     username = request.GET.get('username')
     sql = "select host,port,service_name,user,password,user_os,password_os from tab_oracle_servers where tags= '%s' " %tags
     oracle = tools.mysql_query(sql)
