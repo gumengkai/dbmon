@@ -34,16 +34,16 @@ webssh用户名密码：
 
 ### 3. 安装rabbitmq
 用于celery任务管理
-[root@aliyun dbmon]# yum install erlang
-[root@aliyun dbmon]# yum install rabbitmq-server
-[root@aliyun dbmon]# service rabbitmq-server start
-Starting rabbitmq-server: SUCCESS
-rabbitmq-server.
+[root@aliyun dbmon]# yum install erlang  
+[root@aliyun dbmon]# yum install rabbitmq-server  
+[root@aliyun dbmon]# service rabbitmq-server start  
+Starting rabbitmq-server: SUCCESS  
+rabbitmq-server.  
 
 ### 4. 克隆项目，解压缩
 ##### 数据库脚本
-(必须执行)：setup/mysql/db_monitor.sql & setup/mysql/initdata.sql
-(监控Oracle时在被监控库、监控用户下执行)：setup/oracle/procedure.sql & setup/oracle/table.sql
+(必须执行)：setup/mysql/db_monitor.sql & setup/mysql/initdata.sql  
+(监控Oracle时在被监控库、监控用户下执行)：setup/oracle/procedure.sql & setup/oracle/table.sql  
 
 ##### 安装依赖包
 pip install -r requirements.txt
@@ -51,23 +51,23 @@ pip install -r requirements.txt
 ##### 修改配置文件
 
 -- 总体配置文件，主要修改mysql数据库配置
-config/db_monitor.conf
-[target_mysql]
-host = 172.17.243.119
-port = 3306
-user = root
-password = Mysql@123
-dbname = db_monitor
+config/db_monitor.conf  
+[target_mysql]  
+host = 172.17.243.119  
+port = 3306  
+user = root  
+password = Mysql@123  
+dbname = db_monitor  
 
 --Django配置文件settings.py，修改MySQL配置
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-		'NAME': 'db_monitor',
-		'USER': 'root',
-		'PASSWORD': 'mysqld',
-        'HOST':'192.168.48.50',
-		'PORT': '3306',
+DATABASES = {  
+    'default': {  
+        'ENGINE': 'django.db.backends.mysql',  
+		'NAME': 'db_monitor',  
+		'USER': 'root',  
+		'PASSWORD': 'mysqld',  
+        'HOST':'192.168.48.50',  
+		'PORT': '3306',  
     }
 }
 
@@ -77,39 +77,39 @@ BROKER_URL = 'amqp://guest:guest@localhost//'
 
 ##### 同步数据库，建用户
 暂时没有做用户/角色体系，可以先通过django自带的admin页面来管理
-[root@aliyun dbmon]# python manage.py migrate
-[root@aliyun dbmon]# python manage.py createsuperuser
+[root@aliyun dbmon]# python manage.py migrate  
+[root@aliyun dbmon]# python manage.py createsuperuser  
 
 ### 启动
 --数据采集
-[root@aliyun check_alarm]# python main_check.py
+[root@aliyun check_alarm]# python main_check.py  
 --django
-[root@aliyun dbmon]# python manage.py runserver
+[root@aliyun dbmon]# python manage.py runserver  
 --webssh
 [root@aliyun webssh]# python main.py
 --celery
-[root@aliyun dbmon]# celery -A dbmon worker -l info
-[root@aliyun dbmon]# celery -A dbmon beat -l info
+[root@aliyun dbmon]# celery -A dbmon worker -l info  
+[root@aliyun dbmon]# celery -A dbmon beat -l info  
 ### 注意事项
 webssh页面中的url需要根据所启动webssh服务的信息手工修改下：
 templates/show_linux.html:
-function pop(m,n){
-    layer.open({
-    type: 2 //此处以iframe举例
-    ,title: 'webssh_'+m
-    ,area: ['700px', '550px']
-    ,shade: 0
-    ,maxmin: true,
-    content: ['http://4e38iojldn.51http.tech?host='+n,],
-    btn: ['关闭所有'] //只是为了演示
-    ,btn2: function(){
-      layer.closeAll();
-    }
-    ,zIndex: layer.zIndex //重点1
-    ,success: function(layero){
-      layer.setTop(layero); //重点2
-    },
-   });
+function pop(m,n){  
+    layer.open({  
+    type: 2 //此处以iframe举例  
+    ,title: 'webssh_'+m  
+    ,area: ['700px', '550px']  
+    ,shade: 0  
+    ,maxmin: true,  
+    content: ['http://4e38iojldn.51http.tech?host='+n,],  
+    btn: ['关闭所有'] //只是为了演示  
+    ,btn2: function(){  
+      layer.closeAll();  
+    }  
+    ,zIndex: layer.zIndex //重点1  
+    ,success: function(layero){  
+      layer.setTop(layero); //重点2  
+    },  
+   });  
 }
 
 
