@@ -80,7 +80,7 @@ BROKER_URL = 'amqp://guest:guest@localhost//'
 [root@aliyun dbmon]# python manage.py migrate  
 [root@aliyun dbmon]# python manage.py createsuperuser  
 
-### 启动
+### 5. 启动
 --数据采集
 [root@aliyun check_alarm]# python main_check.py  
 --django
@@ -90,7 +90,7 @@ BROKER_URL = 'amqp://guest:guest@localhost//'
 --celery
 [root@aliyun dbmon]# celery -A dbmon worker -l info  
 [root@aliyun dbmon]# celery -A dbmon beat -l info  
-### 注意事项
+### 6. 注意事项
 webssh页面中的url需要根据所启动webssh服务的信息手工修改下：  
 templates/show_linux.html:
 function pop(m,n){  
