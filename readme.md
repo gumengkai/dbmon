@@ -33,7 +33,7 @@ webssh用户名密码：
 由于用到mysql5.7的json相关函数，所以MySQL版本必须不低于5.7，字符集最好默认设置为utf-8
 
 ### 3. 安装rabbitmq
-用于celery任务管理
+用于celery任务管理  
 [root@aliyun dbmon]# yum install erlang  
 [root@aliyun dbmon]# yum install rabbitmq-server  
 [root@aliyun dbmon]# service rabbitmq-server start  
@@ -50,7 +50,7 @@ pip install -r requirements.txt
 
 ##### 修改配置文件
 
--- 总体配置文件，主要修改mysql数据库配置
+-- 总体配置文件，主要修改mysql数据库配置  
 config/db_monitor.conf  
 [target_mysql]  
 host = 172.17.243.119  
@@ -59,7 +59,7 @@ user = root
 password = Mysql@123  
 dbname = db_monitor  
 
---Django配置文件settings.py，修改MySQL配置
+--Django配置文件settings.py，修改MySQL配置  
 DATABASES = {  
     'default': {  
         'ENGINE': 'django.db.backends.mysql',  
@@ -71,12 +71,12 @@ DATABASES = {
     }
 }
 
--- celery配置文件 settings.py
+-- celery配置文件 settings.py  
 BROKER_URL = 'amqp://guest:guest@localhost//'
 这个如果rabbitmq是默认安装的话，就不需要修改了
 
 ##### 同步数据库，建用户
-暂时没有做用户/角色体系，可以先通过django自带的admin页面来管理
+暂时没有做用户/角色体系，可以先通过django自带的admin页面来管理  
 [root@aliyun dbmon]# python manage.py migrate  
 [root@aliyun dbmon]# python manage.py createsuperuser  
 
@@ -91,7 +91,7 @@ BROKER_URL = 'amqp://guest:guest@localhost//'
 [root@aliyun dbmon]# celery -A dbmon worker -l info  
 [root@aliyun dbmon]# celery -A dbmon beat -l info  
 ### 注意事项
-webssh页面中的url需要根据所启动webssh服务的信息手工修改下：
+webssh页面中的url需要根据所启动webssh服务的信息手工修改下：  
 templates/show_linux.html:
 function pop(m,n){  
     layer.open({  
@@ -112,5 +112,6 @@ function pop(m,n){
    });  
 }
 
+另外，上传了一份我自己在阿里云父服务器上部署的记录：install.log，不一定完整，可以参考一下
 
 
