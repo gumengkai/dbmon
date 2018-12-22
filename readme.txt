@@ -1,5 +1,5 @@
-# db_monitor
-一. 总体介绍
+# 总体介绍
+
 python+Django数据库监控平台
 
 开发技术：python，django(web框架)，AdminLTE(前端模板)
@@ -24,26 +24,33 @@ webssh用户名密码：
 
 建了个qq群：916746047 有一些好的需求、想法可以提给我，会考虑加进去，或者安装部署、使用过程中碰到的问题，都可以反馈给我
 
-部署：
-1. 安装python2.7(略)
+# 部署：
+
+### 1. 安装python2.7(略)
 注意安装pip
-2. 安装mysql5.7(略)
+
+### 2. 安装mysql5.7(略)
 由于用到mysql5.7的json相关函数，所以MySQL版本必须不低于5.7，字符集最好默认设置为utf-8
-3. 安装rabbitmq
+
+### 3. 安装rabbitmq
 用于celery任务管理
 [root@aliyun dbmon]# yum install erlang
 [root@aliyun dbmon]# yum install rabbitmq-server
 [root@aliyun dbmon]# service rabbitmq-server start
 Starting rabbitmq-server: SUCCESS
 rabbitmq-server.
-4. 克隆项目，解压缩
---数据库脚本
+
+### 4. 克隆项目，解压缩
+##### 数据库脚本
 (必须执行)：setup/mysql/db_monitor.sql & setup/mysql/initdata.sql
 (监控Oracle时在被监控库、监控用户下执行)：setup/oracle/procedure.sql & setup/oracle/table.sql
---安装依赖包
+
+##### 安装依赖包
 pip install -r requirements.txt
---修改配置文件
-# 总体配置文件，主要修改mysql数据库配置
+
+##### 修改配置文件
+
+-- 总体配置文件，主要修改mysql数据库配置
 config/db_monitor.conf
 [target_mysql]
 host = 172.17.243.119
@@ -51,7 +58,8 @@ port = 3306
 user = root
 password = Mysql@123
 dbname = db_monitor
-# Django配置文件settings.py，修改MySQL配置
+
+--Django配置文件settings.py，修改MySQL配置
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -62,14 +70,17 @@ DATABASES = {
 		'PORT': '3306',
     }
 }
-# celery配置文件 settings.py
+
+-- celery配置文件 settings.py
 BROKER_URL = 'amqp://guest:guest@localhost//'
 这个如果rabbitmq是默认安装的话，就不需要修改了
---同步数据库，建用户
+
+##### 同步数据库，建用户
 暂时没有做用户/角色体系，可以先通过django自带的admin页面来管理
 [root@aliyun dbmon]# python manage.py migrate
 [root@aliyun dbmon]# python manage.py createsuperuser
-5. 启动
+
+### 启动
 --数据采集
 [root@aliyun check_alarm]# python main_check.py
 --django
@@ -79,7 +90,7 @@ BROKER_URL = 'amqp://guest:guest@localhost//'
 --celery
 [root@aliyun dbmon]# celery -A dbmon worker -l info
 [root@aliyun dbmon]# celery -A dbmon beat -l info
-6. 注意事项
+### 注意事项
 webssh页面中的url需要根据所启动webssh服务的信息手工修改下：
 templates/show_linux.html:
 function pop(m,n){
