@@ -66,6 +66,10 @@ class LinuxStat(object):
         net_nics = self.get_net_nics()
         for nic in net_nics:
             self.old_stat['net_' + nic] = (0,0)
+        # 初始化磁盘IO数据
+        self.block_devices = self.get_block_devices()
+        for disk in self.block_devices:
+            self.old_stat['io_' + disk] = tuple(0 for _ in xrange(11))
         # 第一次状态采集
         stat1 = self.get_linux_stat()
         # 第二次状态采集
@@ -200,7 +204,6 @@ class LinuxStat(object):
             elapsed = self.get_uptime()
         else:
             elapsed = curr_time - self.last_time
-
 
         #get all status
         linux_stat = {}
@@ -423,7 +426,6 @@ class LinuxStat(object):
         return ret
 
     def get_io_stat(self, elapsed):
-        self.block_devices = self.get_block_devices()
         stat_name = 'io'
         self.curr_stat['io'] = tuple(0 for _ in xrange(11))
         ret = []

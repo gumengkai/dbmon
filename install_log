@@ -1,0 +1,233 @@
+系统版本：centos6.8
+一. 安装python2.7
+1. 下载编译安装
+[root@aliyun ~]# wget https://www.python.org/ftp/python/2.7.13/Python-2.7.13.tgz
+[root@aliyun ~]# tar zxf Python-2.7.13.tgz
+[root@aliyun ~]# cd Python-2.7.13
+[root@aliyun Python-2.7.13]# ./configure
+
+2. 更改系统默认的python版本
+--将旧版python重命名
+[root@aliyun ~]# mv /usr/bin/python /usr/bin/python.old
+--删除系统默认的 python-config 软链接
+[root@aliyun ~]# rm -f /usr/bin/python-config
+--创建新版本的 Python 软链接。
+[root@aliyun ~]# ln -s /usr/local/bin/python /usr/bin/python
+[root@aliyun ~]# ln -s /usr/local/bin/python-config /usr/bin/python-config
+[root@aliyun ~]# ln -s /usr/local/include/python2.7/ /usr/include/python2.7
+--完成
+[root@aliyun ~]# python
+Python 2.7.13 (default, Dec 21 2018, 17:19:36)
+[GCC 4.4.7 20120313 (Red Hat 4.4.7-18)] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+--安装pip
+[root@aliyun ~]# wget https://bootstrap.pypa.io/get-pip.py
+[root@aliyun ~]# python get-pip.py
+二. 安装mysql5.7
+--建用户和组
+[root@aliyun ~]# groupadd mysql
+[root@aliyun ~]# useradd -g mysql -d /home/mysql mysql
+--创建目录(根据个人喜好)，解压缩
+[root@aliyun ~]# mkdir -p /u01/my3306
+[root@aliyun ~]# mv mysql-5.7.17-linux-glibc2.5-x86_64.tar.gz /u01
+[root@aliyun u01]# tar zxvf mysql-5.7.17-linux-glibc2.5-x86_64.tar.gz
+[root@aliyun u01]# mv mysql-5.7.17-linux-glibc2.5-x86_64/* /u01/my3306
+[root@aliyun u01]# cd my3306/
+[root@aliyun my3306]# mkdir data
+[root@aliyun my3306]# mkdir log
+[root@aliyun my3306]# mkdir run
+[root@aliyun my3306]# mkdir tmp
+[root@aliyun my3306]# cd log
+[root@aliyun log]# mkdir binlog
+[root@aliyun log]# mkdir iblog
+--参数文件
+[root@aliyun my3306]# cat my.cnf
+[client]
+port=3306
+socket=/u01/my3306/mysql.sock
+
+[mysql]
+pid_file=/u01/my3306/run/mysqld.pid
+
+[mysqld]
+autocommit=1
+general_log=off
+explicit_defaults_for_timestamp=true
+
+# system
+basedir=/u01/my3306
+datadir=/u01/my3306/data
+max_allowed_packet=1g
+max_connections=3000
+max_user_connections=2800
+open_files_limit=65535
+pid_file=/u01/my3306/run/mysqld.pid
+port=3306
+server_id=503306
+skip_name_resolve=ON
+socket=/u01/my3306/run/mysql.sock
+tmpdir=/u01/my3306/tmp
+wait_timeout = 108000
+
+
+#logging
+log_error=/u01/my3306/log/error.log
+slow_query_log_file=/u01/my3306/log/slow.log
+log_queries_not_using_indexes=0
+slow_query_log=1
+log_slave_updates=ON
+log_slow_admin_statements=1
+long_query_time=1
+
+#relay
+relay_log=/u01/my3306/log/relaylog
+relay_log_index=/u01/my3306/log/relay.index
+relay_log_info_file=/u01/my3306/log/relay-log.info
+
+--授权
+[root@aliyun my3306]# chown -R mysql:mysql /u01/my3306
+[root@aliyun my3306]# chmod -R 750 /u01/my3306
+--初始化(记住密码)
+[root@aliyun bin]# ./mysqld --initialize --basedir=/u01/my3306 --datadir=/u01/my3306/data --user=mysql
+2018-12-22T02:53:42.660875Z 0 [Warning] TIMESTAMP with implicit DEFAULT value is deprecated. Please use --explicit_defaults_for_timestamp server option (see documentation for more details).
+2018-12-22T02:53:43.767717Z 0 [Warning] InnoDB: New log files created, LSN=45790
+2018-12-22T02:53:43.855707Z 0 [Warning] InnoDB: Creating foreign key constraint system tables.
+2018-12-22T02:53:43.932332Z 0 [Warning] No existing UUID has been found, so we assume that this is the first time that this server has been started. Generating a new UUID: cb855816-0594-11e9-819d-00163e1076ff.
+2018-12-22T02:53:43.934293Z 0 [Warning] Gtid table is not ready to be used. Table 'mysql.gtid_executed' cannot be opened.
+2018-12-22T02:53:43.937983Z 1 [Note] A temporary password is generated for root@localhost: a2Sa8k&&kW+,
+--创建软链接
+[root@aliyun bin]# mkdir -p /usr/local/mysql/bin
+[root@aliyun bin]# ln -s /u01/my3306/bin/mysqld /usr/local/mysql/bin/mysqld
+--启动
+[mysql@aliyun bin]$ ./mysqld_safe --defaults-file=/u01/my3306/my.cnf --user=mysql &
+[1] 4108
+[mysql@aliyun bin]$ 2018-12-22T02:55:13.860904Z mysqld_safe Logging to '/u01/my3306/log/error.log'.
+2018-12-22T02:55:13.862826Z mysqld_safe Logging to '/u01/my3306/log/error.log'.
+2018-12-22T02:55:13.886061Z mysqld_safe Starting mysqld daemon with databases from /u01/my3306/data
+--修改密码
+mysql> alter user 'root'@'localhost' identified by 'Mysql@123';
+Query OK, 0 rows affected (0.00 sec)
+mysql> flush privileges;
+Query OK, 0 rows affected (0.00 sec)
+--修改权限
+mysql> update mysql.user set host='%' where user='root';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> flush privileges;
+Query OK, 0 rows affected (0.00 sec)
+
+
+[mysql@aliyun ~]$ mysql -uroot -p -S /u01/my3306/run/mysql.sock -Ddb_monitor < initdata.sql
+三 . 安装rabbit-mq
+[root@aliyun dbmon]# yum install erlang
+[root@aliyun dbmon]# yum install rabbitmq-server
+[root@aliyun dbmon]# service rabbitmq-server start
+Starting rabbitmq-server: SUCCESS
+rabbitmq-server.
+四. 克隆项目，安装依赖包
+[root@aliyun ~]# git clone https://github.com/gumengkai/dbmon
+1. 执行数据库脚本
+--执行db_monitor脚本
+mysql> create database db_monitor default character set utf8;
+执行setup中MySQL脚本
+2. 修改数据库配置
+[root@aliyun config]# cat db_monitor.conf
+[target_mysql]
+host = 172.17.243.119
+port = 3306
+user = root
+password = Mysql@123
+dbname = db_monitor
+
+[log]
+check_logfile = logs/check.log
+alarm_logfile = logs/Alarm.log
+
+[policy]
+check_sleep_time = 100
+alarm_sleep_time = 500
+next_send_email_time = 30
+
+[email]
+sender = 15903655236@163.com
+smtpserver = smtp.163.com
+username = 15903655236@163.com
+password = *******
+receiver = 1782365880@qq.com,gumengkai@hotmail.com
+msg_from = DB_MONITOR<15903655236@163.com>
+password_email = *******
+is_send = 0
+3. 修改django setting配置
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+                'NAME': 'db_monitor',
+                'USER': 'root',
+                'PASSWORD': 'Mysql@123',
+        'HOST':'172.17.243.119',
+                'PORT': '3306',
+    }
+}
+4. 同步数据库
+[root@aliyun dbmon]# python manage.py migrate
+/root/dbmon/dbmon/urls.py:115: RemovedInDjango110Warning: django.conf.urls.patterns() is deprecated and will be removed in Django 1.10. Update your urlpatterns to be a list of django.conf.urls.url() instances instead.
+  (r'^show_linux_res/', linux_mon.show_linux_res),
+
+Operations to perform:
+  Apply all migrations: linux_mon, mysql_mon, sessions, admin, frame, djcelery, auth, contenttypes, oracle_mon
+Running migrations:
+  Rendering model states... DONE
+  Applying contenttypes.0001_initial... OK
+  Applying auth.0001_initial... OK
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying contenttypes.0002_remove_content_type_name... OK
+  Applying auth.0002_alter_permission_name_max_length... OK
+  Applying auth.0003_alter_user_email_max_length... OK
+  Applying auth.0004_alter_user_username_opts... OK
+  Applying auth.0005_alter_user_last_login_null... OK
+  Applying auth.0006_require_contenttypes_0002... OK
+  Applying auth.0007_alter_validators_add_error_messages... OK
+  Applying djcelery.0001_initial... OK
+  Applying frame.0001_initial... OK
+  Applying frame.0002_checkinfo_easystartconf_logcollectconf_manylogs_mytask_sqllist... OK
+  Applying linux_mon.0001_initial... OK
+  Applying mysql_mon.0001_initial... OK
+  Applying mysql_mon.0002_mysqlbigtable_mysqlbigtablehis_mysqlslowquery... OK
+  Applying oracle_mon.0001_initial... OK
+  Applying oracle_mon.0002_oraclebackupinfo_oraclebackuppiece_oracleinvalidindex_oraclelogmnr_oraclereport_oracleswitchover... OK
+  Applying sessions.0001_initial... OK
+
+五. 启动
+--数据采集
+[root@aliyun check_alarm]# python main_check.py
+--django
+[root@aliyun dbmon]# python manage.py runserver
+--webssh
+[root@aliyun webssh]# python main.py
+--celery
+[root@aliyun dbmon]# celery -A dbmon worker -l info
+[root@aliyun dbmon]# celery -A dbmon beat -l info
+
+六. webssh修改
+修改templates/show_linux中的url
+function pop(m,n){
+    layer.open({
+    type: 2 //此处以iframe举例
+    ,title: 'webssh_'+m
+    ,area: ['700px', '550px']
+    ,shade: 0
+    ,maxmin: true,
+    content: ['http://4e38iojldn.51http.tech?host='+n,],
+    btn: ['关闭所有'] //只是为了演示
+    ,btn2: function(){
+      layer.closeAll();
+    }
+    ,zIndex: layer.zIndex //重点1
+    ,success: function(layero){
+      layer.setTop(layero); //重点2
+    },
+   });
+}
+

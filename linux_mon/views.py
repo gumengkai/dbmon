@@ -194,5 +194,45 @@ def linux_monitor(request):
                                'diskinfos': diskinfos,'check_status':check_status,'os_status':os_status})
 
 
+@login_required(login_url='/login')
+def show_linux_res(request):
+    messageinfo_list = models_frame.TabAlarmInfo.objects.all()
+    tagsinfo = models_linux.TabLinuxServers.objects.all()
+
+    tagsdefault = request.GET.get('tagsdefault')
+    if not tagsdefault:
+        tagsdefault = models_linux.TabLinuxServers.objects.order_by('tags')[0].tags
+
+    typedefault = request.GET.get('typedefault')
+
+    redo_range_default = request.GET.get('redo_range_default')
+    if not redo_range_default:
+        redo_range_default  = 7
+
+    diskinfo_list = models_linux.OsFilesystem.objects.filter(tags=tagsdefault).order_by('-pct_used')
+
+    if request.method == 'POST':
+        if request.POST.has_key('select_tags') :
+            tagsdefault = request.POST.get('select_tags', None).encode("utf-8")
+            return HttpResponseRedirect('/show_linux_res?tagsdefault=%s' %(tagsdefault))
+        else:
+            logout(request)
+            return HttpResponseRedirect('/login/')
+
+    if messageinfo_list:
+        msg_num = len(messageinfo_list)
+        msg_last = models_frame.TabAlarmInfo.objects.latest('id')
+        msg_last_content = msg_last.alarm_content
+        tim_last = (datetime.datetime.now() - msg_last.alarm_time).seconds / 60
+    else:
+        msg_num = 0
+        msg_last_content = ''
+        tim_last = ''
+    return render_to_response('show_linux_res.html', {'tagsdefault': tagsdefault,'typedefault':typedefault,'tagsinfo': tagsinfo,'msg_num':msg_num,
+                                                      'msg_last_content': msg_last_content, 'tim_last': tim_last,
+                                                       'diskinfo_list': diskinfo_list})
+
+
+
 def page_not_found(request):
     return render(request, '404.html')

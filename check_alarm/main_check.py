@@ -24,6 +24,7 @@ reload(sys)
 sys.setdefaultencoding('utf-8')
 # 配置文件
 import ConfigParser
+import os
 
 
 def check_linux(tags,host,host_name,user,password):
@@ -80,6 +81,38 @@ def check_linux(tags,host,host_name,user,password):
             tools.mysql_exec(insert_net_sql, value)
             recv_kbps = recv_kbps + nic_recv
             send_kbps = send_kbps + nic_send
+        # 磁盘IO
+        all_iops = 0
+        all_read_mb = 0
+        all_write_mb = 0
+        io_stat = stat['iostat']
+        my_log.logger.info('%s：初始化linux_io_stat表' % tags)
+        insert_sql = "insert into linux_io_stat_his select * from linux_io_stat where tags = '%s'" % tags
+        tools.mysql_exec(insert_sql, '')
+        delete_sql = "delete from linux_io_stat where tags = '%s'" % tags
+        tools.mysql_exec(delete_sql, '')
+        for each in io_stat:
+            disk = each['disk']
+            ioutil = each['ioutil']
+            reads = each['reads']
+            writes = each['writes']
+            qtime = each['qtime']
+            stime = each['stime']
+            read_mb = each['read_mb']
+            write_mb = each['write_mb']
+            read_rt = each['read_rt']
+            write_rt = each['write_rt']
+            iops = each['iops']
+
+            insert_io_sql = 'insert into linux_io_stat(tags,host,disk,ioutil,read_s,write_s,qtime,stime,read_mb,write_mb,read_rt,write_rt,iops) values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)'
+            value = (tags,host, disk, ioutil, reads,writes,qtime,stime,read_mb,write_mb,read_rt,write_rt,iops)
+            my_log.logger.info('%s：获取磁盘IO(磁盘名：%s 读取量：%s 写入量：%s)' % (tags, disk, read_mb, write_mb))
+            tools.mysql_exec(insert_io_sql, value)
+
+            all_iops = all_iops + iops
+            all_read_mb = all_read_mb + read_mb
+            all_write_mb = all_write_mb + write_mb
+
         # load
         load_stat = stat['load']
         load1 = load_stat['load1']
@@ -123,9 +156,9 @@ def check_linux(tags,host,host_name,user,password):
         tools.mysql_exec(delete_sql, '')
 
         insert_os_used_sql = 'insert into os_info(tags,host,host_name,updays,recv_kbps,send_kbps,load1,load5,load15,cpu_sys,cpu_iowait,cpu_user,cpu_used,cpu_rate_level,mem_used,mem_rate_level,tcp_close,tcp_timewait,tcp_connected,tcp_syn,tcp_listen,' \
-                             'hostname,ostype,kernel,frame,linux_version,cpu_mode,cpu_cache,processor,virtual_cnt,cpu_speed,Memtotal,ipinfo,mon_status,rate_level) value(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)'
+                             'iops,read_mb,write_mb,hostname,ostype,kernel,frame,linux_version,cpu_mode,cpu_cache,processor,virtual_cnt,cpu_speed,Memtotal,ipinfo,mon_status,rate_level) value(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)'
         value = (tags,host, host_name, up_days,recv_kbps,send_kbps,load1,load5,load15,cpu_sys,cpu_iowait,cpu_user,cpu_used,cpu_rate_level, mem_used,mem_rate_level,tcp_close,tcp_timewait,tcp_connected,tcp_syn,tcp_listen,
-                 hostname,ostype,kernel,frame,linux_version,cpu_mode,cpu_cache,processor,virtual,cpu_speed,memtotal,ip,'connected',os_rate_level)
+                 all_iops,all_read_mb,all_write_mb,hostname,ostype,kernel,frame,linux_version,cpu_mode,cpu_cache,processor,virtual,cpu_speed,memtotal,ip,'connected',os_rate_level)
 
         my_log.logger.info('%s：获取系统监控数据(CPU：%s MEM：%s)' % (tags, cpu_used, mem_used))
         # print insert_cpu_used_sql
@@ -145,10 +178,10 @@ def check_linux(tags,host,host_name,user,password):
         for i in xrange(len(file_sys)):
             disk_rate = float(file_sys[i]['used'].replace('%', ''))
             disk_rate_level = tools.get_rate_level(float(file_sys[i]['used'].replace('%', '')))
-            insert_file_sys_sql = "insert into os_filesystem(tags,host,host_name,filesystem_name,size,avail,pct_used,disk_rate_level) values(%s,%s,%s,%s,%s,%s,%s,%s)"
+            insert_file_sys_sql = "insert into os_filesystem(tags,host,host_name,name,size,avail,pct_used,filesystem,disk_rate_level) values(%s,%s,%s,%s,%s,%s,%s,%s,%s)"
             value = (
                 tags,host, host_name, file_sys[i]['name'], file_sys[i]['size'], file_sys[i]['avail'],
-                file_sys[i]['used'].replace('%', ''),disk_rate_level)
+                file_sys[i]['used'].replace('%', ''),file_sys[i]['filesystem'],disk_rate_level)
             my_log.logger.info('%s：获取文件系统使用率(路径名：%s 使用率：%s)' % (tags, file_sys[i]['name'], file_sys[i]['used']))
             tools.mysql_exec(insert_file_sys_sql, value)
 
@@ -735,7 +768,8 @@ def check_mysql(tags, host,port,user,password):
 
         # QPS,TPS
         mysql_qps = int(mysql_stat_next['Questions']) - int(mysql_stat['Questions'])
-        mysql_tps = int(mysql_stat_next['Com_commit']) - int(mysql_stat['Com_commit'])
+        mysql_tps = int(mysql_stat_next['Com_commit'])+int(mysql_stat_next['Com_rollback']) - (int(mysql_stat['Com_commit']) + int(mysql_stat['Com_rollback']))
+
 
         # 流量
         mysql_bytes_received = (int(mysql_stat_next['Bytes_received']) - int(mysql_stat['Bytes_received'])) / 1024
@@ -1007,7 +1041,8 @@ def check_mysql(tags, host,port,user,password):
 if __name__ =='__main__':
     while True:
         conf = ConfigParser.ConfigParser()
-        conf.read('config/db_monitor.conf')
+        conf_path = os.path.dirname(os.getcwd())
+        conf.read('%s/config/db_monitor.conf' %conf_path)
         check_sleep_time = float(conf.get("policy", "check_sleep_time"))
         # 清空linux无效监控数据
         my_log.logger.info('清除osinfo表无效监控数据')

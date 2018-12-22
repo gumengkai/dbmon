@@ -355,57 +355,7 @@ desired effect
             </div>
             <!-- /.box-body -->
           </div>
-          <!-- /.box -->
-         <div class="box box-solid">
-            <div class="box-header">
-              <h3 class="box-title">磁盘使用率</h3>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body no-padding" style="overflow: auto">
-              <table class="table table-striped">
-                <tbody><tr>
-                  <th style="width: 10px">#</th>
-                  <th>标签</th>
-                    <th>IP</th>
-                  <th>主机名</th>
-                    <th>磁盘名</th>
-                    <th>剩余空间</th>
-                  <th>使用率</th>
-                    <th>百分比</th>
-                </tr>
-                {% for diskinfo in diskinfos %}
-                <tr>
-                  <td>{{ forloop.counter }}</td>
-                    <td>{{ diskinfo.tags }}</td>
-                  <td>{{ diskinfo.host }}</td>
-                    <td>{{ diskinfo.host_name }}</td>
-                    <td>{{ diskinfo.filesystem_name }}</td>
-                    <td>{{ diskinfo.avail }}</td>
-                  <td>
-                    <div class="progress progress-xs">
-                      <div class="progress-bar progress-bar-{{ diskinfo.disk_rate_level }}" style="width: {{ diskinfo.pct_used }}%"></div>
-                    </div>
-                  </td>
-                  <td><span class="badge bg-{{ diskinfo.disk_rate_level }}">{{ diskinfo.pct_used }}%</span></td>
-                </tr>
-                {% endfor %}
-              </tbody></table>
-            </div>
-          <div class="box-footer clearfix">
-           <span class="step-links">
-        {% if diskinfos.has_previous %}
-            <a href="?page_disk={{ diskinfos.previous_page_number }}">上一页</a>
-        {% endif %}
-        <span class="current">
-            当前页{{ diskinfos.number }} 共计{{ diskinfos.paginator.num_pages }}
-        </span>
-        {% if diskinfos.has_next %}
-            <a href="?page_disk={{ diskinfos.next_page_number }}">下一页</a>
-        {% endif %}
-           </span>
-         </div>
-            <!-- /.box-body -->
-          </div>
+
         </div>
         <!-- /.col -->
       </div>

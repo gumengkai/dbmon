@@ -1,10 +1,12 @@
 #! /usr/bin/python
 # encoding:utf-8
+import os
 
 # 配置文件
 import ConfigParser
 conf = ConfigParser.ConfigParser()
-conf.read('config/db_monitor.conf')
+conf_path = os.path.dirname(os.getcwd())
+conf.read('%s/config/db_monitor.conf' %conf_path)
 # 日志
 import logging
 logger = logging.getLogger()

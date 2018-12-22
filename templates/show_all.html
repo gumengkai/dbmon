@@ -277,6 +277,7 @@ desired effect
           <ul class="treeview-menu">
               <li><a href="/linux_monitor"><i class="fa fa-circle-o"></i>实时监控</a></li>
             <li><a href="/show_linux"><i class="fa fa-circle-o"></i>概览</a></li>
+            <li><a href="/show_linux_res"><i class="fa fa-circle-o"></i>资源监控</a></li>
           </ul>
         </li>
          <li>
@@ -491,7 +492,7 @@ desired effect
                 <tr>
                     <td>{{ osinfo.tags }}</td>
                     <td>{{ osinfo.host }}</td>
-                    <td>{{ osinfo.filesystem_name }}</td>
+                    <td>{{ osinfo.name }}</td>
                   <td><span class="badge bg-{{ osinfo.disk_rate_level }}">{{ osinfo.pct_used }}%</span></td>
                 </tr>
                 {% endfor %}

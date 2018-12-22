@@ -9,8 +9,8 @@ import hashlib
 import base64
 
 conf = ConfigParser.ConfigParser()
-conf.read('config/db_monitor.conf')
-
+conf_path = os.path.dirname(os.getcwd())
+conf.read('%s/config/db_monitor.conf' %conf_path)
 host_mysql =conf.get("target_mysql","host")
 user_mysql = conf.get("target_mysql","user")
 password_mysql = conf.get("target_mysql","password")
@@ -126,5 +126,6 @@ def md5(str,what):
 if __name__ == '__main__':
     print base64.encodestring('oracle')
     print base64.decodestring('b3JhY2xl')
+    print os.path.dirname(os.getcwd())
 
 

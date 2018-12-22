@@ -730,7 +730,7 @@ def recorder_add(request):
 def sys_setting(request):
     # 读配置文件
     conf = ConfigParser.ConfigParser()
-    conf_path = os.getcwd() + '/check_alarm/config/db_monitor.conf'
+    conf_path = os.getcwd() + '/config/db_monitor.conf'
     messageinfo_list = models_frame.TabAlarmInfo.objects.all()
     now = tools.now()
     conf.read(conf_path)
@@ -3004,7 +3004,7 @@ def scheduler_add(request):
                 password_os = oracle[0][6]
                 password_os = base64.decodestring(password_os)
                 url = host + ':' + port + '/' + service_name
-            elif type == unicode('MySql数据库', 'utf-8'):
+            elif type == unicode('MySQL数据库', 'utf-8'):
                 sql = "select host,user,password,user_os,password_os from tab_mysql_servers where tags= '%s' " % tags
                 mysql = tools.mysql_query(sql)
                 host = mysql[0][0]

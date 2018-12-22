@@ -9,14 +9,15 @@ import os
 import paramiko
 import uuid
 
+conf = ConfigParser.ConfigParser()
+conf_path = os.path.dirname(os.getcwd())
+conf.read('config/db_monitor.conf')
 
-
-host_mysql ='192.168.48.50'
-user_mysql = 'root'
-password_mysql = 'mysqld'
-port_mysql = 3306
-dbname = 'db_monitor'
-
+host_mysql =conf.get("target_mysql","host")
+user_mysql = conf.get("target_mysql","user")
+password_mysql = conf.get("target_mysql","password")
+port_mysql = conf.get("target_mysql","port")
+dbname = conf.get("target_mysql","dbname")
 
 # 上传文件
 def sftp_upload_file(host,user,password,server_path, local_path):
@@ -215,17 +216,13 @@ def task_model(task_model):
 
 
 if __name__ == '__main__':
-    tags = 'orcl'
-    host = '192.168.48.10'
-    user = 'dbmon'
-    password = 'oracle'
-    oper_type = '关闭oracle数据库'
-    server_type = 'Oracle'
-    task_id = uuid.uuid1()
-    task_name = '%s:oracle_shutdow' %tags
-    args = 'host：' + host + '，' + 'user：' + user + '，' + 'password：' + password
-    begin_task(task_id,oper_type,server_type,tags,task_name,args)
-    # oracle.oracle_shutdown(host,user,password)
-    result = None
-    state = 'SUCCESS'
-    end_task(task_id, result, state)
+    conf = ConfigParser.ConfigParser()
+    conf_path = os.path.dirname(os.getcwd())
+    conf.read('%s/config/db_monitor.conf' % conf_path)
+
+    host_mysql = conf.get("target_mysql", "host")
+    user_mysql = conf.get("target_mysql", "user")
+    password_mysql = conf.get("target_mysql", "password")
+    port_mysql = conf.get("target_mysql", "port")
+    dbname = conf.get("target_mysql", "dbname")
+    print host_mysql

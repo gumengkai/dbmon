@@ -112,6 +112,7 @@ urlpatterns = patterns('',
     (r'^mysql_big_table/', mysql_mon.mysql_big_table),
     (r'^mysql_slowquery/', frame.mysql_slowquery),
     (r'^show_sqltext_mysql/', frame.show_sqltext_mysql),
+    (r'^show_linux_res/', linux_mon.show_linux_res),
                        )
 
 handler404 = frame.page_not_found

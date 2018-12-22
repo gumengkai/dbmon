@@ -47,6 +47,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Google Font -->
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+
 <style>
     .table tr th {
     font-size: 12px;
@@ -338,42 +340,220 @@ desired effect
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        {{ table_name }}增长趋势
-      </h1>
-
-    </section>
-
 
     <!-- Main content -->
     <section class="content container-fluid">
-         <!-- SELECT2 EXAMPLE -->
-      <div class="box box-primary">
+           <div class="box box-success">
         <!-- /.box-header -->
         <div class="box-body">
-          <div class="row">
-             <div class="col-md-6">
+       <div class="row">
+            <div class="col-md-6">
+            <form action="" method="post" id="myform">
+                <div class="box-tools pull-left">
+              <div class="form-group">
+                <label>选择Linux主机：</label>
+                <select onchange="submitForm();" class="form-control select2" style="width: 100%;" name="select_tags">
+                <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                  <option selected="selected">{{ tagsdefault }}</option>
+                  {% for tags in tagsinfo %}
+                  <option>{{ tags.tags }}</option>
+                   {% endfor %}
+                </select>
+              </div>
+              <!-- /.form-group -->
+            </div>
+
+            <!-- /.col -->
+            </form>
+          </div>
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+              <div class="box-body">
+                  <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+              <li class="active"><a href="#storage" data-toggle="tab" aria-expanded="false">磁盘</a></li>
+              <li class=""><a href="#table" data-toggle="tab" aria-expanded="false">网络</a></li>
+              <li class=""><a href="#user" data-toggle="tab" aria-expanded="true"></a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="active tab-pane" id="storage">
+                    <!-- /.box -->
+         <div class="box box-solid">
+            <div class="box-header">
+              <h3 class="box-title">磁盘使用率</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body no-padding" style="overflow: auto">
+              <table class="table table-striped">
+                <tbody><tr>
+                  <th style="width: 10px">#</th>
+                  <th>标签</th>
+                    <th>IP</th>
+                  <th>主机名</th>
+                    <th>目录</th>
+                    <th>剩余空间</th>
+                  <th>使用率</th>
+                    <th>百分比</th>
+                   <th>设备</th>
+                </tr>
+                {% for diskinfo in diskinfo_list %}
+                <tr>
+                  <td>{{ forloop.counter }}</td>
+                    <td>{{ diskinfo.tags }}</td>
+                  <td>{{ diskinfo.host }}</td>
+                    <td>{{ diskinfo.host_name }}</td>
+                    <td>{{ diskinfo.name }}</td>
+                    <td>{{ diskinfo.avail }}</td>
+                  <td>
+                    <div class="progress progress-xs">
+                      <div class="progress-bar progress-bar-{{ diskinfo.disk_rate_level }}" style="width: {{ diskinfo.pct_used }}%"></div>
+                    </div>
+                  </td>
+                  <td><span class="badge bg-{{ diskinfo.disk_rate_level }}">{{ diskinfo.pct_used }}%</span></td>
+                 <td>{{ diskinfo.filesystem }}</td>
+
+                </tr>
+                {% endfor %}
+              </tbody></table>
+            </div>
+            <!-- /.box-body -->
+          </div>
+        <div class="row">
+            <div class="col-md-6">
+         <div class="box box-default">
+           <div class="box-header">
+              <h3 class="box-title">undo表空间使用率</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body no-padding" style="overflow: auto">
+              <table class="table table-bordered table-hover">
+                <tbody><tr>
+                  <th style="width: 10px">#</th>
+                  <th>标签</th>
+                  <th>undo表空间名</th>
+                    <th>Undo表空间大小(MB)</th>
+                    <th>已使用空间(MB)</th>
+                  <th>使用率</th>
+                </tr>
+                {% for undotbsinfo in undotbsinfos %}
+                <tr>
+                  <td>{{ forloop.counter }}</td>
+                  <td>{{ undotbsinfo.tags }}</td>
+                    <td>{{ undotbsinfo.undo_tbs_name }}</td>
+                    <td>{{ undotbsinfo.total_mb }}</td>
+                    <td>{{ undotbsinfo.used_mb }}</td>
+                  <td><span class="badge bg-{{ undotbsinfo.rate_level }}">{{ undotbsinfo.pct_used }}%</span></td>
+                </tr>
+                {% endfor %}
+              </tbody></table>
+            </div>
+         </div>
+          <!-- /.box -->
+           <div class="box box-default">
+            <div class="box-header">
+              <h3 class="box-title">临时表空间使用率</h3>
+            </div>
+           <!-- /.box-header -->
+            <div class="box-body no-padding" style="overflow: auto">
+              <table class="table table-striped">
+                <tbody><tr>
+                  <th style="width: 10px">#</th>
+                  <th>标签</th>
+                  <th>TMP表空间名</th>
+                    <th>TMP表空间大小(MB)</th>
+                    <th>已使用空间(MB)</th>
+                  <th>使用率</th>
+                </tr>
+                {% for tmptbsinfo in tmptbsinfos %}
+                <tr>
+                  <td>{{ forloop.counter }}</td>
+                  <td>{{ tmptbsinfo.tags }}</td>
+                    <td>{{ tmptbsinfo.tmp_tbs_name }}</td>
+                    <td>{{ tmptbsinfo.total_mb }}</td>
+                    <td>{{ tmptbsinfo.used_mb }}</td>
+                  <td><span class="badge bg-{{ tmptbsinfo.rate_level }}">{{ tmptbsinfo.pct_used }}%</span></td>
+                </tr>
+                {% endfor %}
+              </tbody></table>
+            </div>
+          </div>
+             <!-- /.box -->
+           <div class="box box-default">
+            <div class="box-header">
+              <h3 class="box-title">控制文件</h3>
+            </div>
+           <!-- /.box-header -->
+            <div class="box-body no-padding" style="overflow: auto">
+              <table class="table table-striped">
+                <tbody><tr>
+                  <th style="width: 10px">#</th>
+                  <th>控制文件名</th>
+                  <th>大小(MB)</th>
+                </tr>
+                {% for oracle_controlfile in oracle_controlfiles %}
+                <tr>
+                  <td>{{ forloop.counter }}</td>
+                  <td>{{ oracle_controlfile.NAME }}</td>
+                    <td>{{ oracle_controlfile.SIZE_M }}</td>
+                </tr>
+                {% endfor %}
+              </tbody></table>
+            </div>
+          </div>
+             <!-- /.box -->
+           <div class="box box-default">
+            <div class="box-header">
+              <h3 class="box-title">在线日志</h3>
+            </div>
+           <!-- /.box-header -->
+            <div class="box-body no-padding" style="overflow: auto">
+              <table class="table table-striped">
+                <tbody><tr>
+                  <th>组</th>
+                  <th>线程</th>
+                    <th>类型</th>
+                    <th>序列号</th>
+                    <th>大小(MB)</th>
+                    <th>是否归档</th>
+                    <th>状态</th>
+                    <th>文件名</th>
+                </tr>
+                {% for oracle_redo_file in oracle_redo_files %}
+                <tr>
+                <td>{{ oracle_redo_file.GROUP_NO }}</td>
+                <td>{{ oracle_redo_file.THREAD_NO }}</td>
+                <td>{{ oracle_redo_file.TYPE }}</td>
+                <td>{{ oracle_redo_file.SEQUENCE_NO }}</td>
+                <td>{{ oracle_redo_file.SIZE_M }}</td>
+                <td>{{ oracle_redo_file.ARCHIVED }}</td>
+                <td>{{ oracle_redo_file.STATUS }}</td>
+                <td>{{ oracle_redo_file.MEMBER }}</td>
+                </tr>
+                {% endfor %}
+              </tbody></table>
+            </div>
+          </div>
+            </div>
+        <div class="col-md-6">
+          <!-- /.row -->
+            <!-- interactive chart -->
+          <div class="box box-solid">
               <div class="box-tools">
               <table class="table table-bordered text-center">
              <tbody>
-                <a href="/mysql_big_table?tags={{ tags }}&db={{ db }}&table_name={{ table_name }}&table_range_default=1小时"><button type="button" class="btn bg-olive margin">1小时</button></a>
-                <a href="/mysql_big_table?tags={{ tags }}&db={{ db }}&table_name={{ table_name }}&table_range_default=1天"><button type="button" class="btn bg-olive margin">1天</button></a>
-                <a href="/mysql_big_table?tags={{ tags }}&db={{ db }}&table_name={{ table_name }}&table_range_default=7天"><button type="button" class="btn bg-olive margin">7天</button></a>
-                <a href="/mysql_big_table?tags={{ tags }}&db={{ db }}&table_name={{ table_name }}&table_range_default=30天"><button type="button" class="btn bg-olive margin">30天</button></a>
+                 <a href="/show_oracle_resource?tagsdefault={{ tagsdefault }}&redo_range_default=1"><button type="button" class="btn bg-olive margin">今天</button></a>
+                <a href="/show_oracle_resource?tagsdefault={{ tagsdefault }}&redo_range_default=7"><button type="button" class="btn bg-olive margin">7天</button></a>
+                 <a href="/show_oracle_resource?tagsdefault={{ tagsdefault }}&redo_range_default=15"><button type="button" class="btn bg-olive margin">15天</button></a>
+                <a href="/show_oracle_resource?tagsdefault={{ tagsdefault }}&redo_range_default=30"><button type="button" class="btn bg-olive margin">30天</button></a>
               </tbody></table>
               <!-- /.form-group -->
             </div>
             <!-- /.col -->
-          <!-- /.row -->
-       </div>
-        </div>
-                  <!-- interactive chart -->
-          <div class="box box-solid">
             <div class="box-header with-border">
               <i class="fa fa-bar-chart-o"></i>
-              <h3 class="box-title">{{ table_name }}使用空间(MB)</h3>
+              <h3 class="box-title">日志切换数量统计</h3>
                  <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                 </button>
@@ -382,19 +562,147 @@ desired effect
             </div>
 
             <div class="box-body">
+                <div class="row">
                   <div class="col-md-9">
                       </div>
             <div class="col-md-3">
           </div>
-              <div class="conn" id="table-grow-chart" style="height: 300px;"></div>
+          <!-- /.row -->
+        </div>
+              <div class="conn" id="redo-grow-chart" style="height: 300px;"></div>
             </div>
             <!-- /.box-body-->
           </div>
           <!-- /.box -->
-        <!-- /.col -->
-          </div>
-          </div>
+            </div>
+        </div>
+                </div>
 
+       <div class="tab-pane" id="table">
+          <div class="box box-solid">
+            <div class="box-header">
+              <h3 class="box-title">表变化记录</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body" style="overflow: auto">
+              <table id="example2" class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                  <th>用户名</th>
+                    <th>表名</th>
+                  <th>新增数</th>
+                    <th>更新数</th>
+                    <th>删除数</th>
+                    <th>DML数</th>
+                    <th>trunc</th>
+                    <th>上次分析时间</th>
+                    <th>采样日期</th>
+                </tr>
+                </thead>
+                {% for oracle_table_change in oracle_table_changes %}
+                 <tr>
+                 <td>{{ oracle_table_change.TABLE_OWNER }} </td>
+                 <td>{{ oracle_table_change.TABLE_NAME }} </td>
+                 <td>{{ oracle_table_change.INSS }}</td>
+                 <td>{{ oracle_table_change.UPDS }} </td>
+                 <td>{{ oracle_table_change.DELS }} </td>
+                 <td>{{ oracle_table_change.DMLS}} </td>
+                  <td>{{ oracle_table_change.TRUNCATED }} </td>
+                 <td>{{ oracle_table_change.GET_DATE }} </td>
+                 <td>{{ oracle_table_change.LAST_ANALYZED }} </td>
+
+                 </tr>
+                 {% endfor %}
+              </table>
+            </div>
+          </div>
+       <div class="box box-solid">
+            <div class="box-header">
+              <h3 class="box-title">序列变化</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body" style="overflow: auto">
+              <table id="example2" class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                  <th>用户名</th>
+                    <th>序列名</th>
+                  <th>最小序列号</th>
+                    <th>最大序列号</th>
+                    <th>序列自增量</th>
+                    <th>是否循环</th>
+                     <th>是否按顺序</th>
+                    <th>缓存值</th>
+                    <th>最后序列号</th>
+                    <th>可用量</th>
+                    <th>采样日期</th>
+                </tr>
+                </thead>
+                {% for oracle_sequence in oracle_sequences %}
+                 <tr>
+                 <td>{{ oracle_sequence.SEQUENCE_OWNER }} </td>
+                 <td>{{ oracle_sequence.SEQUENCE_NAME }} </td>
+                 <td>{{ oracle_sequence.MIN_VALUE }}</td>
+                 <td>{{ oracle_sequence.MAX_VALUE }} </td>
+                 <td>{{ oracle_sequence.INCREMENT_BY }} </td>
+                 <td>{{ oracle_sequence.CYCLE_FLAG }} </td>
+                  <td>{{ oracle_sequence.ORDER_FLAG }} </td>
+                 <td>{{ oracle_sequence.CACHE_SIZE }} </td>
+                 <td>{{ oracle_sequence.LAST_NUMBER }} </td>
+                  <td><span class="badge bg-{{ oracle_sequence.SEQ_COLOR }}">{{ oracle_sequence.PCT_USED }}%</span></td>
+                 <td>{{ oracle_sequence.LAST_ANALYZED }} </td>
+                 </tr>
+                 {% endfor %}
+              </table>
+            </div>
+          </div>
+              </div>
+
+              <div class="tab-pane" id="user">
+           <div class="box box-solid">
+            <div class="box-header">
+              <h3 class="box-title">用户&权限</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body" style="overflow: auto">
+              <table id="example2" class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                  <th>用户名</th>
+                    <th>创建时间</th>
+                  <th>账号状态</th>
+                    <th>锁定时间</th>
+                    <th>到期时间</th>
+                    <th>默认表空间</th>
+                    <th>临时表空间</th>
+                    <th>配置</th>
+                    <th>权限</th>
+                </tr>
+                </thead>
+                {% for oracle_user in oracle_users %}
+                 <tr>
+                 <td>{{ oracle_user.USERNAME }} </td>
+                 <td>{{ oracle_user.CREATED }} </td>
+                 <td><span class="badge bg-{{ oracle_user.ACCOUNT_COLOR }}">{{ oracle_user.ACCOUNT_STATUS }}</span></td>
+                 <td>{{ oracle_user.LOCK_DATE }} </td>
+                 <td><span class="badge bg-{{ oracle_user.EXPIRY_COLOR }}">{{ oracle_user.EXPIRY_DATE }}</span></td>
+                 <td>{{ oracle_user.DEFAULT_TABLESPACE }} </td>
+                 <td>{{ oracle_user.TEMPORARY_TABLESPACE }} </td>
+                 <td> <a href="#" ><li onclick="return pop_profile('{{ tagsdefault }}','{{ oracle_user.PROFILE }}')">{{ oracle_user.PROFILE }}</li></a></td>
+                 <td> <a href="#" ><li onclick="return pop_grant('{{ tagsdefault }}','{{ oracle_user.USERNAME }}')">{{ oracle_user.USERNAME }}</li></a></td>
+                 </tr>
+                 {% endfor %}
+              </table>
+            </div>
+          </div>
+              </div>
+              <!-- /.tab-pane -->
+            </div>
+            <!-- /.tab-content -->
+          </div>
+          <!-- /.nav-tabs-custom -->
+        </div>
+        </div>
     </section>
     <!-- /.content -->
   </div>
@@ -450,6 +758,8 @@ desired effect
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
      user experience. -->
+<script src="/static/layer/layer.js"></script>
+
 <script>
   $(function () {
     //Initialize Select2 Elements
@@ -517,55 +827,88 @@ desired effect
     })
   })
 
-  // ####################  【表空间使用(GB)趋势】图形  ####################
- var myChart_table_grow = echarts.init(document.getElementById('table-grow-chart'));
- option_table_grow = {
-     tooltip: {
-         trigger: 'axis',
-         axisPointer: {
-             type: 'cross'
-         }
-     },
-         legend: {
-        data:['used gb']
-    },
-     toolbox: {
-         show: true,
-         feature: {
-             saveAsImage: {}
-         }
-     },
-     xAxis:  {
-         type: 'category',
-         boundaryGap: false,
-         zlevel: 1,
-         data: [{% for i in tablegrow_list %}'{{ i.chk_time | date:"m-d H:i:s" }}',{% endfor %}]
-     },
-     yAxis: {
-         type: 'value',
-         axisLabel: {
-             formatter: '{value}'
-         },
-         axisPointer: {
-             snap: true
-         },
-         scale:true,
+  //表单提交
+function submitForm(){
+    var form = document.getElementById("myform");
+    form.submit();
+}
 
-     },
-     series: [
-               {
-             name:'used mb',
-             type:'line',
-             smooth: true,
-             data: [{% for i in tablegrow_list %}{{ i.total }},{% endfor %}]
-         }
-     ]
- };
- myChart_table_grow.showLoading();  //显示loading
- setInterval(function () {
-     myChart_table_grow.hideLoading();  //显示完成后不显示loading
-     myChart_table_grow.setOption(option_table_grow, true);
- },500);
+  //表单提交
+function submittype(){
+    var form = document.getElementById("mytype");
+    form.submit();
+}
+   // ####################  【在线日志趋势】图形  ####################
+var dom = document.getElementById("redo-grow-chart");
+var myChart = echarts.init(dom);
+var app = {};
+option = null;
+app.title = '坐标轴刻度与标签对齐';
+
+option = {
+    color: ['#40918d'],
+    tooltip : {
+        trigger: 'axis',
+        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        }
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    xAxis : [
+        {
+            type : 'category',
+            data : [{% for i in oracle_redo_cnts %}'{{ i.STAT_DATE }}',{% endfor %}],
+            axisTick: {
+                alignWithLabel: true
+            }
+        }
+    ],
+    yAxis : [
+        {
+            type : 'value'
+        }
+    ],
+    series : [
+        {
+            name:'日志切换数量',
+            type:'bar',
+            barWidth: '60%',
+            data:[{% for i in oracle_redo_cnts %}{{ i.LOG_COUNT }},{% endfor %}]
+        }
+    ]
+};
+;
+if (option && typeof option === "object") {
+    myChart.setOption(option, true);
+}
+</script>
+<script>
+function pop_profile(m,n){
+    layer.open({
+    type: 2,
+    title: '用户配置信息',
+    closeBtn: 1,
+    area: ['700px', '550px'],
+    shadeClose: true, //点击遮罩关闭
+    content: ['/oracle_profile?tags='+ m + '&profile_name=' + n]
+  });
+}
+
+function pop_grant(m,n){
+    layer.open({
+    type: 2,
+    title: '用户权限信息',
+    closeBtn: 1,
+    area: ['700px', '550px'],
+    shadeClose: true, //点击遮罩关闭
+    content: ['/oracle_grant?tags='+ m + '&username=' + n]
+  });
+}
 </script>
 </body>
 </html>

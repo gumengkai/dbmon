@@ -2,7 +2,9 @@ from __future__ import absolute_import
 
 import os
 
-from celery import Celery
+from celery import Celery,platforms
+
+platforms.C_FORCE_ROOT = True
 
 # set the default Django settings module for the 'celery' program.
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'dbmon.settings')

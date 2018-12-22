@@ -5,12 +5,14 @@ import ConfigParser
 import send_email as mail
 import tools as tools
 import my_log as my_log
+import os
 
 conf = ConfigParser.ConfigParser()
 
 # 间隔固定时间再次发送邮件告警
 def is_send_email(alarm_name,tags,url,email_header,alarm_content):
-    conf.read('config/db_monitor.conf')
+    conf_path = os.path.dirname(os.getcwd())
+    conf.read('%s/config/db_monitor.conf' %conf_path)
     receiver = conf.get("email", "receiver").split(',')
     is_send = conf.get("email","is_send")
     next_time_to_send_email = float(conf.get("policy", "next_send_email_time"))
@@ -127,7 +129,7 @@ def alarm():
     pct_alarm = float(disk_conf[0][1].encode("utf-8"))
     size_alarm = float(disk_conf[0][2].encode("utf-8"))
     disk_stat = tools.mysql_query(
-        "select tags,host,host_name,filesystem_name,size,avail,pct_used from os_filesystem")
+        "select tags,host,host_name,name,size,avail,pct_used from os_filesystem")
     if disk_stat == 0:
         my_log.logger.warning('未采集到数据：%s' % alarm_name)
     else:
@@ -185,8 +187,8 @@ def alarm():
     num_max = float(event_conf[0][1].encode("utf-8"))
     alarm_name = 'Oracle数据库综合性能告警'
     event_sql = ''' select tags, host, port, service_name, cnt_all from (select tags, host, port, service_name, sum(event_cnt) cnt_all
-                                from oracle_db_event_his where tags = '%s' and timestampdiff(minute, chk_time, current_timestamp()) < %s
-                                group by tags, host, port, service_name) t where cnt_all > %d ''' %(tags,100,num_max)
+                                from oracle_db_event_his where timestampdiff(minute, chk_time, current_timestamp()) < %s
+                                group by tags, host, port, service_name) t where cnt_all > %d ''' %(100,num_max)
     event_stat = tools.mysql_query(event_sql)
     if event_stat == 0:
         my_log.logger.warning('未采集到数据：%s' % alarm_name)

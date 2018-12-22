@@ -116,6 +116,7 @@ def os_get_disk(host,user,password):
             d['size'] = str_disk.split()[1]
             d['avail'] = str_disk.split()[3]
             d['used'] = str_disk.split()[4]
+            d['filesystem'] = str_disk.split()[0]
             l_disk.append(d)
     return l_disk
 
