@@ -81,13 +81,13 @@ BROKER_URL = 'amqp://guest:guest@localhost//'
 [root@aliyun dbmon]# python manage.py createsuperuser  
 
 ### 5. 启动
---数据采集
+--数据采集  
 [root@aliyun check_alarm]# python main_check.py  
---django
-[root@aliyun dbmon]# python manage.py runserver  
---webssh
-[root@aliyun webssh]# python main.py
---celery
+--django  
+[root@aliyun dbmon]# python manage.py runserver   
+--webssh  
+[root@aliyun webssh]# python main.py  
+--celery  
 [root@aliyun dbmon]# celery -A dbmon worker -l info  
 [root@aliyun dbmon]# celery -A dbmon beat -l info  
 ### 6. 注意事项
