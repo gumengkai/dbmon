@@ -15,6 +15,8 @@ import json
 from frame import tools
 import  frame.models as models_frame
 import linux_mon.models as models_linux
+import re
+import os
 
 @login_required(login_url='/login')
 def show_linux(request):
@@ -198,23 +200,41 @@ def linux_monitor(request):
 def show_linux_res(request):
     messageinfo_list = models_frame.TabAlarmInfo.objects.all()
     tagsinfo = models_linux.TabLinuxServers.objects.all()
-
+    # 默认主机标签
     tagsdefault = request.GET.get('tagsdefault')
     if not tagsdefault:
         tagsdefault = models_linux.TabLinuxServers.objects.order_by('tags')[0].tags
 
-    typedefault = request.GET.get('typedefault')
+     # 时间区间
+    linux_range_default = request.GET.get('linux_range_default')
+    if not linux_range_default:
+        linux_range_default  = '1小时'
 
-    redo_range_default = request.GET.get('redo_range_default')
-    if not redo_range_default:
-        redo_range_default  = 7
+    # 磁盘选择
+    diskinfo = models_linux.LinuxIoStat.objects.filter(tags=tagsdefault,disk__isnull=False)
 
+    select_disk = request.GET.get('select_disk')
+    if select_disk:
+        select_disk = re.sub('\d+$', '', os.path.basename(select_disk))
+
+    if not select_disk:
+        select_disk = models_linux.LinuxIoStat.objects.filter(tags=tagsdefault,disk__isnull=False)[0].disk
+
+    # 磁盘使用信息
     diskinfo_list = models_linux.OsFilesystem.objects.filter(tags=tagsdefault).order_by('-pct_used')
+
+    linux_begin_time = tools.range(linux_range_default)
+    end_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    disk_grow = models_linux.LinuxIoStatHis.objects.filter(tags=tagsdefault, disk='sda').filter(
+        chk_time__gt=linux_begin_time, chk_time__lt=end_time).order_by('-chk_time')
+    disk_grow_list = list(disk_grow)
+    disk_grow_list.reverse()
 
     if request.method == 'POST':
         if request.POST.has_key('select_tags') :
             tagsdefault = request.POST.get('select_tags', None).encode("utf-8")
-            return HttpResponseRedirect('/show_linux_res?tagsdefault=%s' %(tagsdefault))
+            return HttpResponseRedirect('/show_linux_res?tagsdefault=%s&select_disk=%s' %(tagsdefault,select_disk))
         else:
             logout(request)
             return HttpResponseRedirect('/login/')
@@ -228,9 +248,9 @@ def show_linux_res(request):
         msg_num = 0
         msg_last_content = ''
         tim_last = ''
-    return render_to_response('show_linux_res.html', {'tagsdefault': tagsdefault,'typedefault':typedefault,'tagsinfo': tagsinfo,'msg_num':msg_num,
-                                                      'msg_last_content': msg_last_content, 'tim_last': tim_last,
-                                                       'diskinfo_list': diskinfo_list})
+    return render_to_response('show_linux_res.html', {'tagsdefault': tagsdefault,'tagsinfo': tagsinfo,'msg_num':msg_num,
+                                                      'msg_last_content': msg_last_content, 'tim_last': tim_last,'diskinfo':diskinfo,'select_disk':select_disk,
+                                                       'diskinfo_list': diskinfo_list,'disk_grow_list':disk_grow_list})
 
 
 

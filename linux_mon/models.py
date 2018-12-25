@@ -170,3 +170,58 @@ class LinuxRateHis(models.Model):
     class Meta:
         managed = False
         db_table = 'linux_rate_his'
+
+class LinuxIoStat(models.Model):
+    tags = models.CharField(max_length=255)
+    host = models.CharField(max_length=255)
+    disk = models.CharField(max_length=255)
+    rd_s = models.FloatField(blank=True, null=True)
+    rd_avgkb = models.FloatField(blank=True, null=True)
+    rd_m_s = models.FloatField(blank=True, null=True)
+    rd_mrg_s = models.FloatField(blank=True, null=True)
+    rd_cnc = models.FloatField(blank=True, null=True)
+    rd_rt = models.FloatField(blank=True, null=True)
+    wr_s = models.FloatField(blank=True, null=True)
+    wr_avgkb = models.FloatField(blank=True, null=True)
+    wr_m_s = models.FloatField(blank=True, null=True)
+    wr_mrg_s = models.FloatField(blank=True, null=True)
+    wr_cnc = models.FloatField(blank=True, null=True)
+    wr_rt = models.FloatField(blank=True, null=True)
+    busy = models.FloatField(blank=True, null=True)
+    in_prg = models.FloatField(blank=True, null=True)
+    io_s = models.FloatField(blank=True, null=True)
+    qtime = models.FloatField(blank=True, null=True)
+    stime = models.FloatField(blank=True, null=True)
+    chk_time = models.DateTimeField()
+
+    class Meta:
+        managed = False
+        db_table = 'linux_io_stat'
+
+
+class LinuxIoStatHis(models.Model):
+    tags = models.CharField(max_length=255)
+    host = models.CharField(max_length=255)
+    disk = models.CharField(max_length=255)
+    rd_s = models.FloatField(blank=True, null=True)
+    rd_avgkb = models.FloatField(blank=True, null=True)
+    rd_m_s = models.FloatField(blank=True, null=True)
+    rd_mrg_s = models.FloatField(blank=True, null=True)
+    rd_cnc = models.FloatField(blank=True, null=True)
+    rd_rt = models.FloatField(blank=True, null=True)
+    wr_s = models.FloatField(blank=True, null=True)
+    wr_avgkb = models.FloatField(blank=True, null=True)
+    wr_m_s = models.FloatField(blank=True, null=True)
+    wr_mrg_s = models.FloatField(blank=True, null=True)
+    wr_cnc = models.FloatField(blank=True, null=True)
+    wr_rt = models.FloatField(blank=True, null=True)
+    busy = models.FloatField(blank=True, null=True)
+    in_prg = models.FloatField(blank=True, null=True)
+    io_s = models.FloatField(blank=True, null=True)
+    qtime = models.FloatField(blank=True, null=True)
+    stime = models.FloatField(blank=True, null=True)
+    chk_time = models.DateTimeField()
+
+    class Meta:
+        managed = False
+        db_table = 'linux_io_stat_his'

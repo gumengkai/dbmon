@@ -93,25 +93,34 @@ def check_linux(tags,host,host_name,user,password):
         tools.mysql_exec(delete_sql, '')
         for each in io_stat:
             disk = each['disk']
-            ioutil = each['ioutil']
-            reads = each['reads']
-            writes = each['writes']
+            rd_s = each['rd_s']
+            rd_avgkb = each['rd_avgkb']
+            rd_m_s = each['rd_m_s']
+            rd_mrg_s = each['rd_mrg_s']
+            rd_cnc = each['rd_cnc']
+            rd_rt = each['rd_rt']
+            wr_s = each['wr_s']
+            wr_avgkb = each['wr_avgkb']
+            wr_m_s = each['wr_m_s']
+            wr_mrg_s = each['wr_mrg_s']
+            wr_cnc = each['wr_cnc']
+            wr_rt = each['wr_rt']
+            busy = each['busy']
+            in_prg = each['in_prg']
+            io_s = each['io_s']
             qtime = each['qtime']
             stime = each['stime']
-            read_mb = each['read_mb']
-            write_mb = each['write_mb']
-            read_rt = each['read_rt']
-            write_rt = each['write_rt']
-            iops = each['iops']
 
-            insert_io_sql = 'insert into linux_io_stat(tags,host,disk,ioutil,read_s,write_s,qtime,stime,read_mb,write_mb,read_rt,write_rt,iops) values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)'
-            value = (tags,host, disk, ioutil, reads,writes,qtime,stime,read_mb,write_mb,read_rt,write_rt,iops)
-            my_log.logger.info('%s：获取磁盘IO(磁盘名：%s 读取量：%s 写入量：%s)' % (tags, disk, read_mb, write_mb))
+
+            insert_io_sql = 'insert into linux_io_stat(tags,host,disk,rd_s,rd_avgkb,rd_m_s,rd_mrg_s,rd_cnc,rd_rt,wr_s,wr_avgkb,wr_m_s,wr_mrg_s,' \
+                            'wr_cnc,wr_rt,busy,in_prg,io_s,qtime,stime) values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)'
+            value = (tags,host, disk, rd_s, rd_avgkb,rd_m_s,rd_mrg_s,rd_cnc,rd_rt,wr_s,wr_avgkb,wr_m_s,wr_mrg_s,wr_cnc,wr_rt,busy,in_prg,io_s,qtime,stime)
+            my_log.logger.info('%s：获取磁盘IO(磁盘名：%s 读取量：%s 写入量：%s)' % (tags, disk, rd_m_s, wr_m_s))
             tools.mysql_exec(insert_io_sql, value)
 
-            all_iops = all_iops + iops
-            all_read_mb = all_read_mb + read_mb
-            all_write_mb = all_write_mb + write_mb
+            all_iops = all_iops + io_s
+            all_read_mb = all_read_mb + rd_m_s
+            all_write_mb = all_write_mb + wr_m_s
 
         # load
         load_stat = stat['load']

@@ -429,20 +429,26 @@ class LinuxStat(object):
         stat_name = 'io'
         self.curr_stat['io'] = tuple(0 for _ in xrange(11))
         ret = []
+
+        num_disk = 0
+
         for l in self.get_stat(stat_name):
             if l[2] in self.block_devices and len(l) >= 14:
-                #total io stat
-                self.curr_stat['io'] = tuple(self.curr_stat['io'][i] + long(l[i+3]) for i in xrange(11))
+                # total io stat
+                self.curr_stat['io'] = tuple(self.curr_stat['io'][i] + long(l[i + 3]) for i in xrange(11))
+                num_disk += 1
 
-                #per disk io stat
-                self.curr_stat['io_' + l[2]] = tuple(long(l[i+3]) for i in xrange(11))
+                # per disk io stat
+                self.curr_stat['io_' + l[2]] = tuple(long(l[i + 3]) for i in xrange(11))
 
-        #https://www.percona.com/doc/percona-toolkit/2.1/pt-diskstats.html
+            # https://www.percona.com/doc/percona-toolkit/2.1/pt-diskstats.html
         for disk in ['io'] + ['io_' + d for d in self.block_devices]:
             if disk not in self.curr_stat or disk not in self.old_stat:
                 continue
+
             rd, rd_mrg, rd_sec, rd_tim, wr, wr_mrg, wr_sec, wr_tim, in_prg, t1, t2 = tuple(
-                1.0*(self.curr_stat[disk][i] - self.old_stat[disk][i]) for i in range(11))
+                1.0 * (self.curr_stat[disk][i] - self.old_stat[disk][i])
+                for i in range(11))
             in_prg = self.curr_stat[disk][8]
 
             rd_rt, wr_rt, busy, io_s, qtime, ttime, stime = tuple(0 for i in xrange(7))
@@ -452,7 +458,7 @@ class LinuxStat(object):
             if wr + wr_mrg > 0:
                 wr_rt = wr_tim / (wr + wr_mrg)
             busy = 100 * t1 / 1000 / elapsed
-            io_s = (rd + wr ) / elapsed
+            io_s = (rd + wr) / elapsed
             if rd + rd_mrg + wr + wr_mrg > 0:
                 stime = t1 / (rd + rd_mrg + wr + wr_mrg)
             if rd + rd_mrg + wr + wr_mrg + in_prg > 0:
@@ -460,7 +466,8 @@ class LinuxStat(object):
 
             qtime = ttime - stime
 
-            rd_s, rd_avgkb, rd_m_s, rd_cnc, rd_mrg_s, wr_s, wr_avgkb, wr_m_s, wr_cnc, wr_mrg_s = tuple(0 for i in xrange(10))
+            rd_s, rd_avgkb, rd_m_s, rd_cnc, rd_mrg_s, wr_s, wr_avgkb, wr_m_s, wr_cnc, wr_mrg_s = tuple(
+                0 for i in xrange(10))
 
             rd_s = rd / elapsed
             if rd > 0:
@@ -478,23 +485,24 @@ class LinuxStat(object):
 
             # io_read, io_write, io_queue, io_await, io_svctm, io_util, io_read_mb, io_write_mb,
             if disk == 'io':
-                #total disk io stat
-                self.stat[disk] = (rd_s, wr_s, in_prg, ttime, stime, busy, rd_m_s, wr_m_s)
+                # total disk io stat
+                self.stat[disk] = (rd_s, wr_s, in_prg, ttime, stime, busy / num_disk, rd_m_s, wr_m_s)
             else:
-                #per disk io stat
-                # self.stat[disk] = (rd_s, rd_avgkb, rd_m_s, rd_mrg_s, rd_cnc, rd_rt,
-                #               wr_s, wr_avgkb, wr_m_s, wr_mrg_s, wr_cnc, wr_rt,
-                #               busy, in_prg, io_s, qtime, stime)
-                label = ('reads', 'read_mb', 'read_rt', 'writes', 'write_mb', 'write_rt', 'ioutil', 'iops', 'qtime', 'stime')
-                self.stat[disk] = (rd_s, rd_m_s, rd_rt,
-                                   wr_s, wr_m_s, wr_rt,
-                                   busy, io_s, qtime, stime)
+                label = ('rd_s', 'rd_avgkb', 'rd_m_s', 'rd_mrg_s', 'rd_cnc', 'rd_rt',
+                         'wr_s','wr_avgkb','wr_m_s','wr_mrg_s','wr_cnc','wr_rt',
+                         'busy', 'in_prg','io_s','qtime', 'stime')
+
+                # per disk io stat
+                self.stat[disk] = (rd_s, rd_avgkb, rd_m_s, rd_mrg_s, rd_cnc, rd_rt,
+                              wr_s, wr_avgkb, wr_m_s, wr_mrg_s, wr_cnc, wr_rt,
+                              busy, in_prg, io_s, qtime, stime)
 
                 diskstat = format_stat(label, self.stat[disk])
                 diskstat['disk'] = disk[3:]
                 ret.append(diskstat)
             self.old_stat[disk] = self.curr_stat[disk]
         return ret
+
 
     def get_stat(self, stat_name, replace=None):
         stat_file = stat_file_config[stat_name]

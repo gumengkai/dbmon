@@ -268,7 +268,8 @@ desired effect
             <li><a href="/show_oracle"><i class="fa fa-circle-o"></i>概览</a></li>
             <li><a href="/show_oracle_resource"><i class="fa fa-circle-o"></i>资源监控</a></li>
             <li><a href="/oracle_top_sql"><i class="fa fa-circle-o"></i>TOP SQL</a></li>
-              <li><a href="/oracle_rpt"><i class="fa fa-circle-o"></i>诊断报告</a></li> <li><a href="/oracle_perf"><i class="fa fa-circle-o"></i>性能图示</a></li>
+              <li><a href="/oracle_rpt"><i class="fa fa-circle-o"></i>诊断报告</a></li>
+              <li><a href="/oracle_perf"><i class="fa fa-circle-o"></i>性能图示</a></li>
           </ul>
         </li>
           <li class="treeview">
@@ -280,8 +281,10 @@ desired effect
           </a>
           <ul class="treeview-menu">
               <li><a href="/mysql_monitor"><i class="fa fa-circle-o"></i>实时监控</a></li>
-            <li><a href="/show_mysql"><i class="fa fa-circle-o"></i>概览</a></li>               <li><a href="/show_mysql_res"><i class="fa fa-circle-o"></i>资源监控</a></li>
-              <li><a href="/show_mysql_repl"><i class="fa fa-circle-o"></i>复制监控</a></li>               <li><a href="/mysql_slowquery"><i class="fa fa-circle-o"></i>慢查询解析</a></li>
+              <li><a href="/show_mysql"><i class="fa fa-circle-o"></i>概览</a></li>
+              <li><a href="/show_mysql_res"><i class="fa fa-circle-o"></i>资源监控</a></li>
+              <li><a href="/show_mysql_repl"><i class="fa fa-circle-o"></i>复制监控</a></li>
+              <li><a href="/mysql_slowquery"><i class="fa fa-circle-o"></i>慢查询解析</a></li>
           </ul>
         </li>
             <li class="treeview">
@@ -293,7 +296,7 @@ desired effect
           </a>
           <ul class="treeview-menu">
               <li><a href="/linux_monitor"><i class="fa fa-circle-o"></i>实时监控</a></li>
-            <li><a href="/show_linux"><i class="fa fa-circle-o"></i>概览</a></li>
+            <li><a href="/show_linux"><i class="fa fa-circle-o"></i>概览</a></li>             <li><a href="/show_linux_res"><i class="fa fa-circle-o"></i>资源监控</a></li>
           </ul>
         </li>
             <li>
@@ -366,7 +369,19 @@ desired effect
             <!-- /.col -->
             </form>
           </div>
+         <div class="col-md-6">
+           <div class="box-tools">
+              <table class="table table-bordered text-center">
+             <tbody>
+                <a href="/show_linux_res?tagsdefault={{ tagsdefault }}&linux_range_default=1小时&select_disk={{ select_disk }}"><button type="button" class="btn bg-olive margin">1小时</button></a>
+                 <a href="/show_linux_res?tagsdefault={{ tagsdefault }}&linux_range_default=1天&select_disk={{ select_disk }}"><button type="button" class="btn bg-olive margin">1天</button></a>
+                <a href="/show_linux_res?tagsdefault={{ tagsdefault }}&linux_range_default=7天&select_disk={{ select_disk }}"><button type="button" class="btn bg-olive margin">7天</button></a>
+                <a href="/show_linux_res?tagsdefault={{ tagsdefault }}&linux_range_default=30天&select_disk={{ select_disk }}"><button type="button" class="btn bg-olive margin">30天</button></a>
+              </tbody></table>
+              <!-- /.form-group -->
+            </div>
         </div>
+       </div>
         <!-- /.col -->
       </div>
       <!-- /.row -->
@@ -397,6 +412,7 @@ desired effect
                   <th>使用率</th>
                     <th>百分比</th>
                    <th>设备</th>
+                   <th>操作</th>
                 </tr>
                 {% for diskinfo in diskinfo_list %}
                 <tr>
@@ -413,7 +429,7 @@ desired effect
                   </td>
                   <td><span class="badge bg-{{ diskinfo.disk_rate_level }}">{{ diskinfo.pct_used }}%</span></td>
                  <td>{{ diskinfo.filesystem }}</td>
-
+                <td> <li><a href="/show_linux_res?tagsdefault={{ tagsdefault }}&select_disk={{ diskinfo.filesystem }}" >查看趋势图</a></li> </td>
                 </tr>
                 {% endfor %}
               </tbody></table>
@@ -421,139 +437,14 @@ desired effect
             <!-- /.box-body -->
           </div>
         <div class="row">
-            <div class="col-md-6">
-         <div class="box box-default">
-           <div class="box-header">
-              <h3 class="box-title">undo表空间使用率</h3>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body no-padding" style="overflow: auto">
-              <table class="table table-bordered table-hover">
-                <tbody><tr>
-                  <th style="width: 10px">#</th>
-                  <th>标签</th>
-                  <th>undo表空间名</th>
-                    <th>Undo表空间大小(MB)</th>
-                    <th>已使用空间(MB)</th>
-                  <th>使用率</th>
-                </tr>
-                {% for undotbsinfo in undotbsinfos %}
-                <tr>
-                  <td>{{ forloop.counter }}</td>
-                  <td>{{ undotbsinfo.tags }}</td>
-                    <td>{{ undotbsinfo.undo_tbs_name }}</td>
-                    <td>{{ undotbsinfo.total_mb }}</td>
-                    <td>{{ undotbsinfo.used_mb }}</td>
-                  <td><span class="badge bg-{{ undotbsinfo.rate_level }}">{{ undotbsinfo.pct_used }}%</span></td>
-                </tr>
-                {% endfor %}
-              </tbody></table>
-            </div>
-         </div>
-          <!-- /.box -->
-           <div class="box box-default">
-            <div class="box-header">
-              <h3 class="box-title">临时表空间使用率</h3>
-            </div>
-           <!-- /.box-header -->
-            <div class="box-body no-padding" style="overflow: auto">
-              <table class="table table-striped">
-                <tbody><tr>
-                  <th style="width: 10px">#</th>
-                  <th>标签</th>
-                  <th>TMP表空间名</th>
-                    <th>TMP表空间大小(MB)</th>
-                    <th>已使用空间(MB)</th>
-                  <th>使用率</th>
-                </tr>
-                {% for tmptbsinfo in tmptbsinfos %}
-                <tr>
-                  <td>{{ forloop.counter }}</td>
-                  <td>{{ tmptbsinfo.tags }}</td>
-                    <td>{{ tmptbsinfo.tmp_tbs_name }}</td>
-                    <td>{{ tmptbsinfo.total_mb }}</td>
-                    <td>{{ tmptbsinfo.used_mb }}</td>
-                  <td><span class="badge bg-{{ tmptbsinfo.rate_level }}">{{ tmptbsinfo.pct_used }}%</span></td>
-                </tr>
-                {% endfor %}
-              </tbody></table>
-            </div>
-          </div>
-             <!-- /.box -->
-           <div class="box box-default">
-            <div class="box-header">
-              <h3 class="box-title">控制文件</h3>
-            </div>
-           <!-- /.box-header -->
-            <div class="box-body no-padding" style="overflow: auto">
-              <table class="table table-striped">
-                <tbody><tr>
-                  <th style="width: 10px">#</th>
-                  <th>控制文件名</th>
-                  <th>大小(MB)</th>
-                </tr>
-                {% for oracle_controlfile in oracle_controlfiles %}
-                <tr>
-                  <td>{{ forloop.counter }}</td>
-                  <td>{{ oracle_controlfile.NAME }}</td>
-                    <td>{{ oracle_controlfile.SIZE_M }}</td>
-                </tr>
-                {% endfor %}
-              </tbody></table>
-            </div>
-          </div>
-             <!-- /.box -->
-           <div class="box box-default">
-            <div class="box-header">
-              <h3 class="box-title">在线日志</h3>
-            </div>
-           <!-- /.box-header -->
-            <div class="box-body no-padding" style="overflow: auto">
-              <table class="table table-striped">
-                <tbody><tr>
-                  <th>组</th>
-                  <th>线程</th>
-                    <th>类型</th>
-                    <th>序列号</th>
-                    <th>大小(MB)</th>
-                    <th>是否归档</th>
-                    <th>状态</th>
-                    <th>文件名</th>
-                </tr>
-                {% for oracle_redo_file in oracle_redo_files %}
-                <tr>
-                <td>{{ oracle_redo_file.GROUP_NO }}</td>
-                <td>{{ oracle_redo_file.THREAD_NO }}</td>
-                <td>{{ oracle_redo_file.TYPE }}</td>
-                <td>{{ oracle_redo_file.SEQUENCE_NO }}</td>
-                <td>{{ oracle_redo_file.SIZE_M }}</td>
-                <td>{{ oracle_redo_file.ARCHIVED }}</td>
-                <td>{{ oracle_redo_file.STATUS }}</td>
-                <td>{{ oracle_redo_file.MEMBER }}</td>
-                </tr>
-                {% endfor %}
-              </tbody></table>
-            </div>
-          </div>
-            </div>
-        <div class="col-md-6">
           <!-- /.row -->
             <!-- interactive chart -->
+         <div class="col-xs-6">
           <div class="box box-solid">
-              <div class="box-tools">
-              <table class="table table-bordered text-center">
-             <tbody>
-                 <a href="/show_oracle_resource?tagsdefault={{ tagsdefault }}&redo_range_default=1"><button type="button" class="btn bg-olive margin">今天</button></a>
-                <a href="/show_oracle_resource?tagsdefault={{ tagsdefault }}&redo_range_default=7"><button type="button" class="btn bg-olive margin">7天</button></a>
-                 <a href="/show_oracle_resource?tagsdefault={{ tagsdefault }}&redo_range_default=15"><button type="button" class="btn bg-olive margin">15天</button></a>
-                <a href="/show_oracle_resource?tagsdefault={{ tagsdefault }}&redo_range_default=30"><button type="button" class="btn bg-olive margin">30天</button></a>
-              </tbody></table>
-              <!-- /.form-group -->
-            </div>
             <!-- /.col -->
             <div class="box-header with-border">
               <i class="fa fa-bar-chart-o"></i>
-              <h3 class="box-title">日志切换数量统计</h3>
+              <h3 class="box-title">IO请求平均大小</h3>
                  <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                 </button>
@@ -563,20 +454,116 @@ desired effect
 
             <div class="box-body">
                 <div class="row">
-                  <div class="col-md-9">
-                      </div>
-            <div class="col-md-3">
-          </div>
           <!-- /.row -->
         </div>
-              <div class="conn" id="redo-grow-chart" style="height: 300px;"></div>
+              <div class="conn" id="avkb-grow-chart" style="height: 300px;"></div>
             </div>
             <!-- /.box-body-->
           </div>
           <!-- /.box -->
-            </div>
         </div>
-                </div>
+                        <!-- interactive chart -->
+            <div class="col-xs-6">
+          <div class="box box-solid">
+
+            <!-- /.col -->
+            <div class="box-header with-border">
+              <i class="fa fa-bar-chart-o"></i>
+              <h3 class="box-title">IO响应时间</h3>
+                 <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+
+            <div class="box-body">
+                <div class="row">
+          <!-- /.row -->
+        </div>
+              <div class="conn" id="ms-grow-chart" style="height: 300px;"></div>
+            </div>
+            <!-- /.box-body-->
+          </div>
+         </div>
+          <!-- /.box -->
+            <!-- interactive chart -->
+            <div class="col-xs-6">
+          <div class="box box-solid">
+
+            <!-- /.col -->
+            <div class="box-header with-border">
+              <i class="fa fa-bar-chart-o"></i>
+              <h3 class="box-title">IO请求数</h3>
+                 <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+
+            <div class="box-body">
+                <div class="row">
+          <!-- /.row -->
+        </div>
+              <div class="conn" id="qc-grow-chart" style="height: 300px;"></div>
+            </div>
+            <!-- /.box-body-->
+          </div>
+         </div>
+          <!-- /.box -->
+         <!-- interactive chart -->
+            <div class="col-xs-6">
+          <div class="box box-solid">
+
+            <!-- /.col -->
+            <div class="box-header with-border">
+              <i class="fa fa-bar-chart-o"></i>
+              <h3 class="box-title">IO吞吐量</h3>
+                 <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+
+            <div class="box-body">
+                <div class="row">
+          <!-- /.row -->
+        </div>
+              <div class="conn" id="mb-grow-chart" style="height: 300px;"></div>
+            </div>
+            <!-- /.box-body-->
+          </div>
+         </div>
+          <!-- /.box -->
+            <!-- interactive chart -->
+            <div class="col-xs-6">
+          <div class="box box-solid">
+
+            <!-- /.col -->
+            <div class="box-header with-border">
+              <i class="fa fa-bar-chart-o"></i>
+              <h3 class="box-title">磁盘繁忙度</h3>
+                 <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+
+            <div class="box-body">
+                <div class="row">
+          <!-- /.row -->
+        </div>
+              <div class="conn" id="busy-grow-chart" style="height: 300px;"></div>
+            </div>
+            <!-- /.box-body-->
+          </div>
+         </div>
+          <!-- /.box -->
+        </div>
+       </div>
 
        <div class="tab-pane" id="table">
           <div class="box box-solid">
@@ -834,58 +821,602 @@ function submitForm(){
 }
 
   //表单提交
-function submittype(){
-    var form = document.getElementById("mytype");
+function submitForm_avkb(){
+    var form = document.getElementById("select_disk_avkb");
     form.submit();
 }
-   // ####################  【在线日志趋势】图形  ####################
-var dom = document.getElementById("redo-grow-chart");
-var myChart = echarts.init(dom);
-var app = {};
-option = null;
-app.title = '坐标轴刻度与标签对齐';
 
-option = {
-    color: ['#40918d'],
-    tooltip : {
-        trigger: 'axis',
-        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
-            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-        }
-    },
-    grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '3%',
-        containLabel: true
-    },
-    xAxis : [
-        {
-            type : 'category',
-            data : [{% for i in oracle_redo_cnts %}'{{ i.STAT_DATE }}',{% endfor %}],
-            axisTick: {
-                alignWithLabel: true
-            }
-        }
-    ],
-    yAxis : [
-        {
-            type : 'value'
-        }
-    ],
-    series : [
-        {
-            name:'日志切换数量',
-            type:'bar',
-            barWidth: '60%',
-            data:[{% for i in oracle_redo_cnts %}{{ i.LOG_COUNT }},{% endfor %}]
-        }
-    ]
-};
-;
-if (option && typeof option === "object") {
-    myChart.setOption(option, true);
+  //表单提交
+function submitForm_ms(){
+    var form = document.getElementById("select_disk_ms");
+    form.submit();
 }
+
+  // ####################  【rd_avk&wr_avkb趋势】图形  ####################
+ var myChart_avkb_grow = echarts.init(document.getElementById('avkb-grow-chart'));
+ option_avkb_grow = {
+     tooltip: {
+         trigger: 'axis',
+         axisPointer: {
+             type: 'cross'
+         }
+     },
+         legend: {
+        data:['读请求平均大小(KB)','写请求平均大小(KB)']
+    },
+     toolbox: {
+         show: true,
+         feature: {
+             saveAsImage: {}
+         }
+     },
+     xAxis:  {
+         type: 'category',
+         boundaryGap: false,
+         zlevel: 1,
+         data: [{% for i in disk_grow_list %}'{{ i.chk_time | date:"m-d H:i:s" }}',{% endfor %}]
+     },
+     yAxis: {
+         type: 'value',
+         axisLabel: {
+             formatter: '{value}'
+         },
+         axisPointer: {
+             snap: true
+         },
+         scale: true
+     },
+     series: [
+         {
+             name:'读请求平均大小(KB)',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#84d4c5"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#84d4c5"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#84d4c5",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in disk_grow_list %}{{ i.rd_avgkb }},{% endfor %}]
+         },
+         {
+             name:'写请求平均大小(KB)',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#d44e5a"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#d44e5a",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in disk_grow_list %}{{ i.wr_avgkb }},{% endfor %}]
+         }
+     ]
+ };
+ myChart_avkb_grow.showLoading();  //显示loading
+ setInterval(function () {
+     myChart_avkb_grow.hideLoading();  //显示完成后不显示loading
+     myChart_avkb_grow.setOption(option_avkb_grow, true);
+ },500);
+
+  // ####################  【rd_rt&wr_rt&q_time&s_time趋势】图形  ####################
+ var myChart_ms_grow = echarts.init(document.getElementById('ms-grow-chart'));
+ option_ms_grow = {
+     tooltip: {
+         trigger: 'axis',
+         axisPointer: {
+             type: 'cross'
+         }
+     },
+         legend: {
+        data:['读响应时间(MS)','写响应时间(MS)','IO请求队列时间(MS)','IO服务队列时间(MS)']
+    },
+     toolbox: {
+         show: true,
+         feature: {
+             saveAsImage: {}
+         }
+     },
+     xAxis:  {
+         type: 'category',
+         boundaryGap: false,
+         zlevel: 1,
+         data: [{% for i in disk_grow_list %}'{{ i.chk_time | date:"m-d H:i:s" }}',{% endfor %}]
+     },
+     yAxis: {
+         type: 'value',
+         axisLabel: {
+             formatter: '{value}'
+         },
+         axisPointer: {
+             snap: true
+         },
+         scale: true
+     },
+     series: [
+         {
+             name:'读响应时间(MS)',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#d4cda6"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#d4cda6"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#d4cda6",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in disk_grow_list %}{{ i.rd_rt }},{% endfor %}]
+         },
+         {
+             name:'写响应时间(MS)',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#84d4c5"
+              }
+              },
+             lineStyle: {
+               normal: {
+                color: "#84d4c5"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#84d4c5",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in disk_grow_list %}{{ i.wr_rt }},{% endfor %}]
+         },
+         {
+             name:'IO请求队列时间(MS)',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#228eec"
+              }
+              },
+             lineStyle: {
+               normal: {
+                color: "#228eec"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#228eec",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in disk_grow_list %}{{ i.qtime }},{% endfor %}]
+         },
+          {
+             name:'IO服务队列时间(MS)',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#d44e5a"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#d44e5a"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#d44e5a",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in disk_grow_list %}{{ i.stime }},{% endfor %}]
+         }
+     ]
+ };
+ myChart_ms_grow.showLoading();  //显示loading
+ setInterval(function () {
+     myChart_ms_grow.hideLoading();  //显示完成后不显示loading
+     myChart_ms_grow.setOption(option_ms_grow, true);
+ },500);
+
+
+ // ####################  【rd_s&wr_s&rd_mrg&wr_mgrg&iops趋势】图形  ####################
+ var myChart_qc_grow = echarts.init(document.getElementById('qc-grow-chart'));
+ option_qc_grow = {
+     tooltip: {
+         trigger: 'axis',
+         axisPointer: {
+             type: 'cross'
+         }
+     },
+         legend: {
+        data:['每秒读请求数','每秒写请求数','每秒读合并数','每秒写合并数','IOPS']
+    },
+     toolbox: {
+         show: true,
+         feature: {
+             saveAsImage: {}
+         }
+     },
+     xAxis:  {
+         type: 'category',
+         boundaryGap: false,
+         zlevel: 1,
+         data: [{% for i in disk_grow_list %}'{{ i.chk_time | date:"m-d H:i:s" }}',{% endfor %}]
+     },
+     yAxis: {
+         type: 'value',
+         axisLabel: {
+             formatter: '{value}'
+         },
+         axisPointer: {
+             snap: true
+         },
+         scale: true
+     },
+     series: [
+         {
+             name:'每秒读请求数',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#d4cda6"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#d4cda6"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#d4cda6",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in disk_grow_list %}{{ i.rd_s }},{% endfor %}]
+         },
+         {
+             name:'每秒写请求数',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#84d4c5"
+              }
+              },
+             lineStyle: {
+               normal: {
+                color: "#84d4c5"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#84d4c5",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in disk_grow_list %}{{ i.wr_s }},{% endfor %}]
+         },
+         {
+             name:'每秒读合并数',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#228eec"
+              }
+              },
+             lineStyle: {
+               normal: {
+                color: "#228eec"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#228eec",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in disk_grow_list %}{{ i.rd_mrg_s }},{% endfor %}]
+         },
+         {
+             name:'每秒写合并数',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#2d4376"
+              }
+              },
+             lineStyle: {
+               normal: {
+                color: "#2d4376"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#2d4376",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in disk_grow_list %}{{ i.rd_mrg_s }},{% endfor %}]
+         },
+          {
+             name:'IOPS',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#d44e5a"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#d44e5a"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#d44e5a",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in disk_grow_list %}{{ i.io_s }},{% endfor %}]
+         }
+     ]
+ };
+ myChart_qc_grow.showLoading();  //显示loading
+ setInterval(function () {
+     myChart_qc_grow.hideLoading();  //显示完成后不显示loading
+     myChart_qc_grow.setOption(option_qc_grow, true);
+ },500);
+
+ // ####################  【rd_m_s&wr_m_s趋势】图形  ####################
+ var myChart_mb_grow = echarts.init(document.getElementById('mb-grow-chart'));
+ option_mb_grow = {
+     tooltip: {
+         trigger: 'axis',
+         axisPointer: {
+             type: 'cross'
+         }
+     },
+         legend: {
+        data:['每秒读(MB)','每秒写(MB)']
+    },
+     toolbox: {
+         show: true,
+         feature: {
+             saveAsImage: {}
+         }
+     },
+     xAxis:  {
+         type: 'category',
+         boundaryGap: false,
+         zlevel: 1,
+         data: [{% for i in disk_grow_list %}'{{ i.chk_time | date:"m-d H:i:s" }}',{% endfor %}]
+     },
+     yAxis: {
+         type: 'value',
+         axisLabel: {
+             formatter: '{value}'
+         },
+         axisPointer: {
+             snap: true
+         },
+         scale: true
+     },
+     series: [
+         {
+             name:'每秒读(MB)',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#d4cda6"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#d4cda6"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#d4cda6",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in disk_grow_list %}{{ i.rd_m_s }},{% endfor %}]
+         },
+         {
+             name:'每秒写(MB)',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#84d4c5"
+              }
+              },
+             lineStyle: {
+               normal: {
+                color: "#84d4c5"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#84d4c5",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in disk_grow_list %}{{ i.wr_m_s }},{% endfor %}]
+         },
+     ]
+ };
+ myChart_mb_grow.showLoading();  //显示loading
+ setInterval(function () {
+     myChart_mb_grow.hideLoading();  //显示完成后不显示loading
+     myChart_mb_grow.setOption(option_mb_grow, true);
+ },500);
+
+ // ####################  【busy&rd_cnc&wr_cnc&in_prg趋势】图形  ####################
+ var myChart_busy_grow = echarts.init(document.getElementById('busy-grow-chart'));
+ option_busy_grow = {
+     tooltip: {
+         trigger: 'axis',
+         axisPointer: {
+             type: 'cross'
+         }
+     },
+         legend: {
+        data:['读并发数','写并发数','%util','排队请求数']
+    },
+     toolbox: {
+         show: true,
+         feature: {
+             saveAsImage: {}
+         }
+     },
+     xAxis:  {
+         type: 'category',
+         boundaryGap: false,
+         zlevel: 1,
+         data: [{% for i in disk_grow_list %}'{{ i.chk_time | date:"m-d H:i:s" }}',{% endfor %}]
+     },
+     yAxis: {
+         type: 'value',
+         axisLabel: {
+             formatter: '{value}'
+         },
+         axisPointer: {
+             snap: true
+         },
+         scale: true
+     },
+     series: [
+         {
+             name:'读并发数',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#d4cda6"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#d4cda6"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#d4cda6",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in disk_grow_list %}{{ i.rd_cnc }},{% endfor %}]
+         },
+         {
+             name:'写并发数',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#84d4c5"
+              }
+              },
+             lineStyle: {
+               normal: {
+                color: "#84d4c5"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#84d4c5",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in disk_grow_list %}{{ i.wr_cnc }},{% endfor %}]
+         },
+         {
+             name:'%util',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#228eec"
+              }
+              },
+             lineStyle: {
+               normal: {
+                color: "#228eec"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#228eec",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in disk_grow_list %}{{ i.busy }},{% endfor %}]
+         },
+          {
+             name:'排队请求数',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#d44e5a"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#d44e5a"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#d44e5a",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in disk_grow_list %}{{ i.in_prg }},{% endfor %}]
+         }
+     ]
+ };
+ myChart_busy_grow.showLoading();  //显示loading
+ setInterval(function () {
+     myChart_busy_grow.hideLoading();  //显示完成后不显示loading
+     myChart_busy_grow.setOption(option_busy_grow, true);
+ },500);
+
 </script>
 <script>
 function pop_profile(m,n){
