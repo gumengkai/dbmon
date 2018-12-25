@@ -22,8 +22,8 @@ def ora_check(tags_l,begin_time,end_time,file_name,file_tag):
     template = 'oracheck.xls'
     rb = xlrd.open_workbook(file_path+template, formatting_info=True)
     wb = copy(rb)
+    row = 1
     for tags in tags_l:
-        row = 1
         ws = wb.get_sheet(0)
         errinfo = ''
         check_txt_file = file_path + '/oracheck_' + file_tag + '.txt'
@@ -38,9 +38,9 @@ def ora_check(tags_l,begin_time,end_time,file_name,file_tag):
         para_conn_sql = tools.mysql_query("select max_process from oracle_db where tags= '%s'" % tags)
         para_conn = int(para_conn_sql[0][0])
         print >> check_txt, '总连接数：%s' % para_conn
-        # 指定时间段内连接数使用情况
+        # 指定时间段内连接数使用情况]
         conn_sql = tools.mysql_query(
-            "select instance_name, max(percent_process),min(percent_process),avg(percent_process) from oracle_db_his where tags= '%s' and DATE_FORMAT(chk_time,'%%Y-%%m-%%d %%H:%%i:%%S')> '%s' and DATE_FORMAT(chk_time,'%%Y-%%m-%%d %%H:%%i:%%S') < '%s'" % (
+            "select instance_name, max(percent_process),min(percent_process),avg(percent_process) from oracle_db_his where tags= '%s' and DATE_FORMAT(chk_time,'%%Y-%%m-%%d %%H:%%i:%%S')> '%s' and DATE_FORMAT(chk_time,'%%Y-%%m-%%d %%H:%%i:%%S') < '%s'  group by instance_name" % (
             tags, begin_time, end_time))
         instance_name = conn_sql[0][0]
         max_conn = float(conn_sql[0][1])
@@ -67,7 +67,7 @@ def ora_check(tags_l,begin_time,end_time,file_name,file_tag):
         for tbs in tbs_sql:
             tbs_name = str(tbs[0].encode("utf-8"))
             free_gb = float(tbs[1].encode("utf-8"))
-            pct_used = float(tbs[2].encode("utf-8"))
+            pct_used = tbs[2]
             each_tbs_info = '表空间名称：%s,剩余空间：%sGB,使用率：%s%% \n' % (tbs_name, free_gb, pct_used)
             each_err_tbsinfo = '%s表空间,' %tbs_name
             if free_gb < 5:
@@ -89,58 +89,62 @@ def ora_check(tags_l,begin_time,end_time,file_name,file_tag):
         # 检查Undo表空间
         print >> check_txt, '-------undo表空间-------'
         undo_tbs_sql = tools.mysql_query(
-            "select undo_tbs_name,used_mb,max(pct_used),min(pct_used),avg(pct_used) from oracle_undo_tbs_his where tags = '%s' and DATE_FORMAT(chk_time,'%%Y-%%m-%%d %%H:%%i:%%S')> '%s' and DATE_FORMAT(chk_time,'%%Y-%%m-%%d %%H:%%i:%%S') < '%s'" % (
+            "select undo_tbs_name,max(used_mb),max(pct_used),min(pct_used),avg(pct_used) from oracle_undo_tbs_his where tags = '%s' and DATE_FORMAT(chk_time,'%%Y-%%m-%%d %%H:%%i:%%S')> '%s' and DATE_FORMAT(chk_time,'%%Y-%%m-%%d %%H:%%i:%%S') < '%s' group by undo_tbs_name" % (
             tags, begin_time, end_time))
         undotbsinfo = ''
         err_undotbsinfo = ''
-        for undotbs in undo_tbs_sql:
-            undotbs_name = str(undotbs[0].encode("utf-8"))
-            used_mb = float(undotbs[1].encode("utf-8"))
-            max_pct_used = float(undotbs[2].encode("utf-8"))
-            min_pct_used = float(undotbs[3].encode("utf-8"))
-            avg_pct_used = round(float(undotbs[4]), 2)
-            each_undotbs_info = 'UNDO表空间名称：%s,已使用空间：%sMB,最大使用率：%s%% 最小使用率：%s%%  平均使用率：%s%% \n' % (
-            undotbs_name, used_mb, max_pct_used, min_pct_used, avg_pct_used)
-            each_err_undotbsinfo = ''
-            if max_pct_used > 1:
-                each_err_undotbsinfo = '%s表空间,' % undotbs_name
-                each_err_undotbsinfo = each_err_undotbsinfo + ' 最大使用率%s%%,大于90%%' % max_pct_used
-                err_undotbsinfo = err_undotbsinfo + each_err_undotbsinfo + '\n'
-                insert_sql = "insert into check_info(check_tag,check_type,server_tag,check_err_type,check_err,begin_time,end_time) values(%s,%s,%s,%s,%s,%s,%s)"
-                value = (
-                    file_tag, 'Oracle数据库', tags, 'undo表空间', each_err_undotbsinfo, begin_time, end_time)
-                tools.mysql_exec(insert_sql, value)
-            undotbsinfo = undotbsinfo + each_undotbs_info
+        if undo_tbs_sql:
+            for undotbs in undo_tbs_sql:
+                undotbs_name = str(undotbs[0].encode("utf-8"))
+                used_mb = float(undotbs[1].encode("utf-8"))
+                max_pct_used = float(undotbs[2].encode("utf-8"))
+                min_pct_used = float(undotbs[3].encode("utf-8"))
+                avg_pct_used = round(float(undotbs[4]), 2)
+                each_undotbs_info = 'UNDO表空间名称：%s,已使用空间：%sMB,最大使用率：%s%% 最小使用率：%s%%  平均使用率：%s%% \n' % (
+                    undotbs_name, used_mb, max_pct_used, min_pct_used, avg_pct_used)
+                each_err_undotbsinfo = ''
+                if max_pct_used > 1:
+                    each_err_undotbsinfo = '%s表空间,' % undotbs_name
+                    each_err_undotbsinfo = each_err_undotbsinfo + ' 最大使用率%s%%,大于90%%' % max_pct_used
+                    err_undotbsinfo = err_undotbsinfo + each_err_undotbsinfo + '\n'
+                    insert_sql = "insert into check_info(check_tag,check_type,server_tag,check_err_type,check_err,begin_time,end_time) values(%s,%s,%s,%s,%s,%s,%s)"
+                    value = (
+                        file_tag, 'Oracle数据库', tags, 'undo表空间', each_err_undotbsinfo, begin_time, end_time)
+                    tools.mysql_exec(insert_sql, value)
+                undotbsinfo = undotbsinfo + each_undotbs_info
+
         errinfo = errinfo + err_undotbsinfo
 
         print >> check_txt, undotbsinfo
         # 检查临时表空间
         print >> check_txt, '-------临时表空间-------'
         tmp_tbs_sql = tools.mysql_query(
-            "select tmp_tbs_name,used_mb,max(pct_used),min(pct_used),avg(pct_used) from oracle_tmp_tbs_his where tags = '%s' and DATE_FORMAT(chk_time,'%%Y-%%m-%%d %%H:%%i:%%S')> '%s' and DATE_FORMAT(chk_time,'%%Y-%%m-%%d %%H:%%i:%%S') < '%s'" % (
+            "select tmp_tbs_name,max(used_mb),max(pct_used),min(pct_used),avg(pct_used) from oracle_tmp_tbs_his where tags = '%s' and DATE_FORMAT(chk_time,'%%Y-%%m-%%d %%H:%%i:%%S')> '%s' and DATE_FORMAT(chk_time,'%%Y-%%m-%%d %%H:%%i:%%S') < '%s' group by tmp_tbs_name" % (
                 tags, begin_time, end_time))
         tmptbsinfo = ''
         err_tmptbsinfo = ''
-        for tmptbs in tmp_tbs_sql:
-            tmptbs_name = str(tmptbs[0].encode("utf-8"))
-            used_mb = float(tmptbs[1].encode("utf-8"))
-            max_pct_used = float(tmptbs[2].encode("utf-8"))
-            min_pct_used = float(tmptbs[3].encode("utf-8"))
-            avg_pct_used = round(float(tmptbs[4]), 2)
-            each_tmptbs_info = 'TMP表空间名称：%s,使用空间：%sMB,最大使用率：%s%% 最小使用率：%s%%  平均使用率：%s%% \n' % (
-            tmptbs_name, used_mb, max_pct_used, min_pct_used, avg_pct_used)
-            each_err_tmptbsinfo = ''
-            if max_pct_used > 1:
-                each_err_tmptbsinfo = '%s表空间,' % tmptbs_name
-                each_err_tmptbsinfo = each_err_tmptbsinfo + ' 最大使用率%s%%,大于90%%' % max_pct_used
-                err_tmptbsinfo = err_tmptbsinfo + each_err_tmptbsinfo + '\n'
-                insert_sql = "insert into check_info(check_tag,check_type,server_tag,check_err_type,check_err,begin_time,end_time) values(%s,%s,%s,%s,%s,%s,%s)"
-                value = (
-                    file_tag, 'Oracle数据库', tags, 'TMP表空间', each_err_tmptbsinfo, begin_time, end_time)
-                tools.mysql_exec(insert_sql, value)
-            tmptbsinfo = tmptbsinfo + each_tmptbs_info
+        if tmptbsinfo:
+            for tmptbs in tmp_tbs_sql:
+                tmptbs_name = str(tmptbs[0].encode("utf-8"))
+                used_mb = float(tmptbs[1].encode("utf-8"))
+                max_pct_used = float(tmptbs[2].encode("utf-8"))
+                min_pct_used = float(tmptbs[3].encode("utf-8"))
+                avg_pct_used = round(float(tmptbs[4]), 2)
+                each_tmptbs_info = 'TMP表空间名称：%s,使用空间：%sMB,最大使用率：%s%% 最小使用率：%s%%  平均使用率：%s%% \n' % (
+                    tmptbs_name, used_mb, max_pct_used, min_pct_used, avg_pct_used)
+                each_err_tmptbsinfo = ''
+                if max_pct_used > 1:
+                    each_err_tmptbsinfo = '%s表空间,' % tmptbs_name
+                    each_err_tmptbsinfo = each_err_tmptbsinfo + ' 最大使用率%s%%,大于90%%' % max_pct_used
+                    err_tmptbsinfo = err_tmptbsinfo + each_err_tmptbsinfo + '\n'
+                    insert_sql = "insert into check_info(check_tag,check_type,server_tag,check_err_type,check_err,begin_time,end_time) values(%s,%s,%s,%s,%s,%s,%s)"
+                    value = (
+                        file_tag, 'Oracle数据库', tags, 'TMP表空间', each_err_tmptbsinfo, begin_time, end_time)
+                    tools.mysql_exec(insert_sql, value)
+                tmptbsinfo = tmptbsinfo + each_tmptbs_info
 
-            print >> check_txt, undotbsinfo
+                print >> check_txt, undotbsinfo
+
         errinfo = errinfo + err_tmptbsinfo
 
         # 检查cpu使用率,内存使用率
@@ -203,7 +207,7 @@ def ora_check(tags_l,begin_time,end_time,file_name,file_tag):
         print >> check_txt, errinfo
         check_txt.close()
 
-        row = row + 1
+        row += 1
 
 
 
