@@ -98,6 +98,14 @@ def linux_monitor(request):
     tcp_range_default = request.GET.get('tcp_range_default')
     if not tcp_range_default:
         tcp_range_default = '1小时'.decode("utf-8")
+    iops_range_default = request.GET.get('iops_range_default')
+    if not iops_range_default:
+        iops_range_default = '1小时'.decode("utf-8")
+
+    iomb_range_default = request.GET.get('iomb_range_default')
+    if not iomb_range_default:
+        iomb_range_default = '1小时'.decode("utf-8")
+
     hostinfo = models_linux.TabLinuxServers.objects.all().order_by('tags')
 
 
@@ -106,6 +114,9 @@ def linux_monitor(request):
     cpu_begin_time = tools.range(cpu_range_default)
     mem_begin_time = tools.range(mem_range_default)
     tcp_begin_time = tools.range(tcp_range_default)
+    iops_begin_time = tools.range(iops_range_default)
+    iomb_begin_time = tools.range(iomb_range_default)
+
     end_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     netgrow = models_linux.OsInfoHis.objects.filter(tags=tagsdefault, recv_kbps__isnull=False).filter(
@@ -133,6 +144,17 @@ def linux_monitor(request):
     tcpgrow_list = list(tcpgrow)
     tcpgrow_list.reverse()
 
+    iopsgrow = models_linux.OsInfoHis.objects.filter(tags=tagsdefault, iops__isnull=False).filter(
+        chk_time__gt=iops_begin_time, chk_time__lt=end_time).order_by('-chk_time')
+    iopsgrow_list = list(iopsgrow)
+    iopsgrow_list.reverse()
+
+    iombgrow = models_linux.OsInfoHis.objects.filter(tags=tagsdefault, read_mb__isnull=False).filter(
+        chk_time__gt=iomb_begin_time, chk_time__lt=end_time).order_by('-chk_time')
+    iombgrow_list = list(iombgrow)
+    iombgrow_list.reverse()
+
+
     diskinfos = models_linux.OsFilesystem.objects.filter(tags=tagsdefault)
     # 取当前主机状态
     try:
@@ -159,7 +181,7 @@ def linux_monitor(request):
         os_status = '离线'
 
     if request.method == 'POST':
-        if request.POST.has_key('select_tags') or request.POST.has_key('select_load') or request.POST.has_key('select_cpu') or request.POST.has_key('select_mem') or request.POST.has_key('select_net') or request.POST.has_key('select_tcp') :
+        if request.POST.has_key('select_tags') or request.POST.has_key('select_load') or request.POST.has_key('select_cpu') or request.POST.has_key('select_mem') or request.POST.has_key('select_net') or request.POST.has_key('select_tcp') or request.POST.has_key('select_iops') or request.POST.has_key('select_iomb') :
             if request.POST.has_key('select_tags'):
                 tagsdefault = request.POST.get('select_tags', None).encode("utf-8")
             elif request.POST.has_key('select_net'):
@@ -172,7 +194,11 @@ def linux_monitor(request):
                 mem_range_default = request.POST.get('select_mem', None)
             elif request.POST.has_key('select_tcp'):
                 tcp_range_default = request.POST.get('select_tcp', None)
-            return HttpResponseRedirect('/linux_monitor?tagsdefault=%s&net_range_default=%s&load_range_default=%s&cpu_range_default=%s&mem_range_default=%s&tcp_range_default=%s' %(tagsdefault,net_range_default,load_range_default,cpu_range_default,mem_range_default,tcp_range_default))
+            elif request.POST.has_key('select_iops'):
+                iops_range_default = request.POST.get('select_iops', None)
+            elif request.POST.has_key('select_iomb'):
+                iomb_range_default = request.POST.get('select_iomb', None)
+            return HttpResponseRedirect('/linux_monitor?tagsdefault=%s&net_range_default=%s&load_range_default=%s&cpu_range_default=%s&mem_range_default=%s&tcp_range_default=%s&iops_range_default=%s&iomb_range_default=%s' %(tagsdefault,net_range_default,load_range_default,cpu_range_default,mem_range_default,tcp_range_default,iops_range_default,iomb_range_default))
         else:
             logout(request)
             return HttpResponseRedirect('/login/')
@@ -188,8 +214,8 @@ def linux_monitor(request):
         tim_last = ''
     return render_to_response('linux_monitor.html',
                               {'netgrow_list': netgrow_list, 'loadgrow_list': loadgrow_list,'cpugrow_list': cpugrow_list,
-                               'memgrow_list': memgrow_list,'tcpgrow_list': tcpgrow_list,
-                               'tagsdefault': tagsdefault, 'hostinfo': hostinfo, 'osinfo': osinfo,
+                               'memgrow_list': memgrow_list,'tcpgrow_list': tcpgrow_list,'iopsgrow_list':iopsgrow_list,'iops_range_default':iops_range_default,'iomb_range_default':iomb_range_default,
+                               'tagsdefault': tagsdefault, 'hostinfo': hostinfo, 'osinfo': osinfo,'iombgrow_list':iombgrow_list,
                                'net_range_default': net_range_default,'load_range_default':load_range_default, 'cpu_range_default': cpu_range_default,
                                'mem_range_default': mem_range_default,'tcp_range_default': tcp_range_default, 'messageinfo_list': messageinfo_list,
                                'msg_num': msg_num, 'msg_last_content': msg_last_content, 'tim_last': tim_last,

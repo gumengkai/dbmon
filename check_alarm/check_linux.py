@@ -70,6 +70,8 @@ class LinuxStat(object):
         self.block_devices = self.get_block_devices()
         for disk in self.block_devices:
             self.old_stat['io_' + disk] = tuple(0 for _ in xrange(11))
+        #
+        self.old_stat['vm'] = tuple(0 for _ in xrange(6))
         # 第一次状态采集
         stat1 = self.get_linux_stat()
         # 第二次状态采集
@@ -221,6 +223,7 @@ class LinuxStat(object):
         linux_stat['vmstat'] = self.get_vm_stat(elapsed)
         linux_stat['tcpstat'] = self.get_tcp_conn_stat()
         linux_stat['net'] = self.get_net_stat(elapsed)
+        linux_stat['proc'] = self.get_proc_stat(elapsed)
         linux_stat['hostinfo'] = self.get_host_info()
 
         # update timestamp
@@ -291,7 +294,7 @@ class LinuxStat(object):
 
         #used, free, buff, cache, swap used, swap free
         self.stat[stat_name] = (mem_used, mem_stat[1], mem_stat[2], mem_stat[3], swap_used, mem_stat[7])
-        label = ('used', 'free', 'buffer', 'cache')
+        label = ('used', 'free', 'buffer', 'cache','swap_used','swap_free')
         return format_stat(label, self.stat[stat_name])
 
     def get_proc_stat(self, elapsed):
@@ -305,6 +308,8 @@ class LinuxStat(object):
 
         val2 = self.curr_stat[stat_name]
         val1 = self.old_stat[stat_name]
+
+        print elapsed
 
         #proc_new, proc_running, proc_block, intrupts, ctx switchs, softirq
         self.stat[stat_name] = (1.0*(val2[0]-val1[0])/elapsed, val2[1], val2[2],

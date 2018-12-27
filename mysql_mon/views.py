@@ -66,11 +66,10 @@ def mysql_monitor(request):
 
     try:
         try:
-            mysqlinfo = models_mysql.MysqlDb.objects.get(tags=tagsdefault)
+            mysqlinfo = models_mysql.MysqlDb.objects.get(tags=tagsdefault,version__isnull=False)
         except models_mysql.MysqlDb.DoesNotExist:
-            print tagsdefault
             mysqlinfo = \
-                models_mysql.MysqlDbHis.objects.filter(tags=tagsdefault, conn_rate__isnull=False).order_by('-chk_time')[
+                models_mysql.MysqlDbHis.objects.filter(tags=tagsdefault, version__isnull=False).order_by('-chk_time')[
                     0]
     except Exception, e:
         mysqlinfo = \

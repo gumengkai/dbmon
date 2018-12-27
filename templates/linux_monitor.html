@@ -188,6 +188,9 @@ desired effect
                 </div>
               </li>
                 </form>
+            </ul>
+          </li>
+        </ul>
       </div>
     </nav>
   </header>
@@ -274,7 +277,8 @@ desired effect
           </a>
           <ul class="treeview-menu">
               <li><a href="/linux_monitor"><i class="fa fa-circle-o"></i>实时监控</a></li>
-            <li><a href="/show_linux"><i class="fa fa-circle-o"></i>概览</a></li>             <li><a href="/show_linux_res"><i class="fa fa-circle-o"></i>资源监控</a></li>
+            <li><a href="/show_linux"><i class="fa fa-circle-o"></i>概览</a></li>
+              <li><a href="/show_linux_res"><i class="fa fa-circle-o"></i>资源监控</a></li>
           </ul>
         </li>
          <li>
@@ -403,11 +407,11 @@ desired effect
 		</div>
 
         </div>
+         </div>
         <!-- /.box-body -->
-
+            <div class="row">
           <!-- LINE CHART -->
              <!-- LINE CHART -->
-          <div class="box box-solid">
             <div class="box-body chart-responsive">
                 <div class="col-md-4">
               <div class="chart" id="load-chart" style="height: 300px;"></div>
@@ -420,7 +424,6 @@ desired effect
                 </div>
             </div>
           <!-- interactive chart -->
-          <div class="box box-solid">
             <div class="box-body">
               <div class="row">
                  <div class="col-md-9">
@@ -449,9 +452,6 @@ desired effect
               <div class="load" id="load-grow-chart" style="height: 300px;"></div>
             </div>
             <!-- /.box-body-->
-          </div>
-          <!-- /.box -->
-              <div class="box box-solid">
             <div class="box-body">
               <div class="row">
                   <div class="col-md-9">
@@ -480,10 +480,6 @@ desired effect
               <div class="cpu" id="cpu-grow-chart" style="height: 300px;"></div>
             </div>
             <!-- /.box-body-->
-          </div>
-          <!-- /.box -->
-                        <!-- interactive chart -->
-          <div class="box box-solid">
             <div class="box-body">
                 <div class="row">
                   <div class="col-md-9">
@@ -512,10 +508,7 @@ desired effect
               <div class="mem" id="mem-grow-chart" style="height: 300px;"></div>
             </div>
             <!-- /.box-body-->
-          </div>
-          <!-- /.box -->
                         <!-- interactive chart -->
-          <div class="box box-solid">
             <div class="box-body">
               <div class="row">
                   <div class="col-md-9">
@@ -544,9 +537,6 @@ desired effect
               <div class="net" id="net-grow-chart" style="height: 300px;"></div>
             </div>
             <!-- /.box-body-->
-          </div>
-          <!-- /.box -->
-              <div class="box box-solid">
             <div class="box-body">
               <div class="row">
                   <div class="col-md-9">
@@ -575,13 +565,68 @@ desired effect
               <div class="tcp" id="tcp-grow-chart" style="height: 300px;"></div>
             </div>
             <!-- /.box-body-->
+                  <!-- /.box-body-->
+            <div class="box-body">
+              <div class="row">
+                  <div class="col-md-9">
+                      </div>
+            <div class="col-md-3">
+            <form action="" method="post" id="iops_range">
+                <div class="box-tools">
+              <div class="form-group" >
+                <select onchange="submitForm_iops();" class="form-control select2" style="width: 100%;" name="select_iops">
+                <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                  <option selected="selected">{{ iops_range_default }}</option>
+                  <option>0.5小时</option>
+                    <option>1小时</option>
+                  <option>1天 </option>
+                  <option>7天 </option>
+                  <option>30天 </option>
+                </select>
+              </div>
+              <!-- /.form-group -->
+            </div>
+            <!-- /.col -->
+            </form>
           </div>
-          <!-- /.box -->
+          <!-- /.row -->
+        </div>
+              <div class="" id="iops-grow-chart" style="height: 300px;"></div>
+            </div>
+            <!-- /.box-body-->
+               <!-- /.box-body-->
+            <div class="box-body">
+              <div class="row">
+                  <div class="col-md-9">
+                      </div>
+            <div class="col-md-3">
+            <form action="" method="post" id="iomb_range">
+                <div class="box-tools">
+              <div class="form-group" >
+                <select onchange="submitForm_iomb();" class="form-control select2" style="width: 100%;" name="select_iomb">
+                <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                  <option selected="selected">{{ iomb_range_default }}</option>
+                  <option>0.5小时</option>
+                    <option>1小时</option>
+                  <option>1天 </option>
+                  <option>7天 </option>
+                  <option>30天 </option>
+                </select>
+              </div>
+              <!-- /.form-group -->
+            </div>
+            <!-- /.col -->
+            </form>
+          </div>
+          <!-- /.row -->
+        </div>
+              <div class="" id="iomb-grow-chart" style="height: 300px;"></div>
+            </div>
+            <!-- /.box-body-->
           </div>
           <!-- /.box -->
       </div>
       </div>
-
     </section>
     <!-- /.content -->
   </div>
@@ -736,6 +781,18 @@ function submitForm_mem(){
 function submitForm_tcp(){
     var form_tcp = document.getElementById("tcp_range");
     form_tcp.submit();
+}
+
+  //表单提交
+function submitForm_iops(){
+    var form_iops = document.getElementById("iops_range");
+    form_iops.submit();
+}
+
+  //表单提交
+function submitForm_iomb(){
+    var form_iomb = document.getElementById("iomb_range");
+    form_iomb.submit();
 }
 
      // ####################  【load】图形  ####################
@@ -1478,6 +1535,166 @@ function submitForm_tcp(){
  setInterval(function () {
      myChart_tcp_grow.hideLoading();  //显示完成后不显示loading
      myChart_tcp_grow.setOption(option_tcp_grow, true);
+ },500);
+
+   // ####################  【IOPS趋势】图形  ####################
+ var myChart_iops_grow = echarts.init(document.getElementById('iops-grow-chart'));
+ option_iops_grow = {
+     title: {
+         text: 'IOPS',
+         subtext: ''
+     },
+     tooltip: {
+         trigger: 'axis',
+         axisPointer: {
+             type: 'cross'
+         }
+     },
+     legend: {
+        data:['iops']
+      },
+     toolbox: {
+         show: true,
+         feature: {
+             saveAsImage: {}
+         }
+     },
+     xAxis:  {
+         type: 'category',
+         boundaryGap: false,
+         zlevel: 1,
+         data: [{% for i in iopsgrow_list %}'{{ i.chk_time | date:"m-d H:i:s" }}',{% endfor %}]
+     },
+     yAxis: {
+         type: 'value',
+         axisLabel: {
+             formatter: '{value}'
+         },
+         axisPointer: {
+             snap: true
+         },
+         scale:true
+     },
+     series: [
+         {
+             name:'iops',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#84d4c5"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#84d4c5"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#84d4c5",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in iopsgrow_list %}{{ i.iops }},{% endfor %}]
+         }
+     ]
+ };
+ myChart_iops_grow.showLoading();  //显示loading
+ setInterval(function () {
+     myChart_iops_grow.hideLoading();  //显示完成后不显示loading
+     myChart_iops_grow.setOption(option_iops_grow, true);
+ },500);
+
+    // ####################  【IO吞吐量趋势】图形  ####################
+ var myChart_iomb_grow = echarts.init(document.getElementById('iomb-grow-chart'));
+ option_iomb_grow = {
+     title: {
+         text: 'IO吞吐量',
+         subtext: ''
+     },
+     tooltip: {
+         trigger: 'axis',
+         axisPointer: {
+             type: 'cross'
+         }
+     },
+     legend: {
+        data:['read_mb','write_mb']
+      },
+     toolbox: {
+         show: true,
+         feature: {
+             saveAsImage: {}
+         }
+     },
+     xAxis:  {
+         type: 'category',
+         boundaryGap: false,
+         zlevel: 1,
+         data: [{% for i in iombgrow_list %}'{{ i.chk_time | date:"m-d H:i:s" }}',{% endfor %}]
+     },
+     yAxis: {
+         type: 'value',
+         axisLabel: {
+             formatter: '{value}'
+         },
+         axisPointer: {
+             snap: true
+         },
+         scale:true
+     },
+     series: [
+         {
+             name:'read_mb',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#84d4c5"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#84d4c5"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#84d4c5",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in iombgrow_list %}{{ i.read_mb }},{% endfor %}]
+         },
+          {
+             name:'write_mb',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#d45356"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#d45356"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#d45356",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in iombgrow_list %}{{ i.write_mb }},{% endfor %}]
+         }
+     ]
+ };
+ myChart_iomb_grow.showLoading();  //显示loading
+ setInterval(function () {
+     myChart_iomb_grow.hideLoading();  //显示完成后不显示loading
+     myChart_iomb_grow.setOption(option_iomb_grow, true);
  },500);
 
 </script>
