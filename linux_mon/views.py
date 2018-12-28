@@ -252,15 +252,24 @@ def show_linux_res(request):
     linux_begin_time = tools.range(linux_range_default)
     end_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-    disk_grow = models_linux.LinuxIoStatHis.objects.filter(tags=tagsdefault, disk='sda').filter(
+    disk_grow = models_linux.LinuxIoStatHis.objects.filter(tags=tagsdefault, disk=select_disk).filter(
         chk_time__gt=linux_begin_time, chk_time__lt=end_time).order_by('-chk_time')
     disk_grow_list = list(disk_grow)
     disk_grow_list.reverse()
 
+    # 主机信息
+    linux_begin_time = tools.range(linux_range_default)
+    end_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    linux_grow = models_linux.OsInfoHis.objects.filter(tags=tagsdefault,updays__isnull=False).filter(
+        chk_time__gt=linux_begin_time, chk_time__lt=end_time).order_by('-chk_time')
+    linux_grow_list = list(linux_grow)
+    linux_grow_list.reverse()
+
     if request.method == 'POST':
         if request.POST.has_key('select_tags') :
             tagsdefault = request.POST.get('select_tags', None).encode("utf-8")
-            return HttpResponseRedirect('/show_linux_res?tagsdefault=%s&select_disk=%s' %(tagsdefault,select_disk))
+            return HttpResponseRedirect('/show_linux_res?tagsdefault=%s' %(tagsdefault))
         else:
             logout(request)
             return HttpResponseRedirect('/login/')
@@ -276,7 +285,7 @@ def show_linux_res(request):
         tim_last = ''
     return render_to_response('show_linux_res.html', {'tagsdefault': tagsdefault,'tagsinfo': tagsinfo,'msg_num':msg_num,
                                                       'msg_last_content': msg_last_content, 'tim_last': tim_last,'diskinfo':diskinfo,'select_disk':select_disk,
-                                                       'diskinfo_list': diskinfo_list,'disk_grow_list':disk_grow_list})
+                                                       'diskinfo_list': diskinfo_list,'disk_grow_list':disk_grow_list,'linux_grow_list':linux_grow_list})
 
 
 

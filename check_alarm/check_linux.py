@@ -309,8 +309,6 @@ class LinuxStat(object):
         val2 = self.curr_stat[stat_name]
         val1 = self.old_stat[stat_name]
 
-        print elapsed
-
         #proc_new, proc_running, proc_block, intrupts, ctx switchs, softirq
         self.stat[stat_name] = (1.0*(val2[0]-val1[0])/elapsed, val2[1], val2[2],
                            1.0*(val2[3]-val1[3])/elapsed, 1.0*(val2[4]-val1[4])/elapsed, 1.0*(val2[5]-val1[5])/elapsed)
@@ -528,9 +526,9 @@ if __name__ == '__main__':
     # 初始化ssh连接
     ssh_client = paramiko.SSHClient()
     ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh_client.connect('192.168.48.50', 22, 'root', 'mysqld')
+    ssh_client.connect('192.168.48.10', 22, 'root', 'oracle')
 
-    linuxstat = LinuxStat('192.168.48.50', 'root', 'mysqld',ssh_client)
+    linuxstat = LinuxStat('192.168.48.10', 'root', 'oracle',ssh_client)
     while True:
         stat = linuxstat.get_linux()
         print stat

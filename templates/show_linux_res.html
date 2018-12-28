@@ -252,7 +252,7 @@ desired effect
           </a>
           <ul class="treeview-menu" style="display: none;">
               <li><a href="/show_oracle_rate"><i class="fa fa-circle-o"></i>Oracle</a></li>
-              <li><a href="/show_mysql_rate"><i class="fa fa-circle-o"></i>Mysql</a></li>
+              <li><a href="/show_mysql_rate"><i class="fa fa-circle-o"></i>MySQL</a></li>
               <li><a href="/show_linux_rate"><i class="fa fa-circle-o"></i>Linux主机</a></li>
           </ul>
         </li>
@@ -274,7 +274,7 @@ desired effect
         </li>
           <li class="treeview">
           <a href="#">
-            <i class="fa fa-cubes"></i> <span>Mysql</span>
+            <i class="fa fa-cubes"></i> <span>MySQL</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -440,16 +440,10 @@ desired effect
           <!-- /.row -->
             <!-- interactive chart -->
          <div class="col-xs-6">
-          <div class="box box-solid">
             <!-- /.col -->
             <div class="box-header with-border">
               <i class="fa fa-bar-chart-o"></i>
               <h3 class="box-title">IO请求平均大小</h3>
-                 <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
             </div>
 
             <div class="box-body">
@@ -459,22 +453,13 @@ desired effect
               <div class="conn" id="avkb-grow-chart" style="height: 300px;"></div>
             </div>
             <!-- /.box-body-->
-          </div>
-          <!-- /.box -->
         </div>
                         <!-- interactive chart -->
             <div class="col-xs-6">
-          <div class="box box-solid">
-
             <!-- /.col -->
             <div class="box-header with-border">
               <i class="fa fa-bar-chart-o"></i>
               <h3 class="box-title">IO响应时间</h3>
-                 <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
             </div>
 
             <div class="box-body">
@@ -484,22 +469,14 @@ desired effect
               <div class="conn" id="ms-grow-chart" style="height: 300px;"></div>
             </div>
             <!-- /.box-body-->
-          </div>
          </div>
           <!-- /.box -->
             <!-- interactive chart -->
             <div class="col-xs-6">
-          <div class="box box-solid">
-
             <!-- /.col -->
             <div class="box-header with-border">
               <i class="fa fa-bar-chart-o"></i>
               <h3 class="box-title">IO请求数</h3>
-                 <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
             </div>
 
             <div class="box-body">
@@ -509,22 +486,14 @@ desired effect
               <div class="conn" id="qc-grow-chart" style="height: 300px;"></div>
             </div>
             <!-- /.box-body-->
-          </div>
          </div>
           <!-- /.box -->
          <!-- interactive chart -->
             <div class="col-xs-6">
-          <div class="box box-solid">
-
             <!-- /.col -->
             <div class="box-header with-border">
               <i class="fa fa-bar-chart-o"></i>
               <h3 class="box-title">IO吞吐量</h3>
-                 <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
             </div>
 
             <div class="box-body">
@@ -534,22 +503,14 @@ desired effect
               <div class="conn" id="mb-grow-chart" style="height: 300px;"></div>
             </div>
             <!-- /.box-body-->
-          </div>
          </div>
           <!-- /.box -->
             <!-- interactive chart -->
             <div class="col-xs-6">
-          <div class="box box-solid">
-
             <!-- /.col -->
             <div class="box-header with-border">
               <i class="fa fa-bar-chart-o"></i>
               <h3 class="box-title">磁盘繁忙度</h3>
-                 <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
             </div>
 
             <div class="box-body">
@@ -559,129 +520,44 @@ desired effect
               <div class="conn" id="busy-grow-chart" style="height: 300px;"></div>
             </div>
             <!-- /.box-body-->
-          </div>
          </div>
           <!-- /.box -->
         </div>
        </div>
 
        <div class="tab-pane" id="proc">
-          <div class="box box-solid">
             <div class="box-header">
-              <h3 class="box-title">表变化记录</h3>
+              <h3 class="box-title">进程信息</h3>
             </div>
             <!-- /.box-header -->
-            <div class="box-body" style="overflow: auto">
-              <table id="example2" class="table table-bordered table-hover">
-                <thead>
-                <tr>
-                  <th>用户名</th>
-                    <th>表名</th>
-                  <th>新增数</th>
-                    <th>更新数</th>
-                    <th>删除数</th>
-                    <th>DML数</th>
-                    <th>trunc</th>
-                    <th>上次分析时间</th>
-                    <th>采样日期</th>
-                </tr>
-                </thead>
-                {% for oracle_table_change in oracle_table_changes %}
-                 <tr>
-                 <td>{{ oracle_table_change.TABLE_OWNER }} </td>
-                 <td>{{ oracle_table_change.TABLE_NAME }} </td>
-                 <td>{{ oracle_table_change.INSS }}</td>
-                 <td>{{ oracle_table_change.UPDS }} </td>
-                 <td>{{ oracle_table_change.DELS }} </td>
-                 <td>{{ oracle_table_change.DMLS}} </td>
-                  <td>{{ oracle_table_change.TRUNCATED }} </td>
-                 <td>{{ oracle_table_change.GET_DATE }} </td>
-                 <td>{{ oracle_table_change.LAST_ANALYZED }} </td>
-
-                 </tr>
-                 {% endfor %}
-              </table>
+            <div class="box-body">
+                <div class="row">
+          <!-- /.row -->
             </div>
-          </div>
-       <div class="box box-solid">
-            <div class="box-header">
-              <h3 class="box-title">序列变化</h3>
+              <div class="conn" id="proc-grow-chart" style="height: 300px; width: 993px"></div>
             </div>
-            <!-- /.box-header -->
-            <div class="box-body" style="overflow: auto">
-              <table id="example2" class="table table-bordered table-hover">
-                <thead>
-                <tr>
-                  <th>用户名</th>
-                    <th>序列名</th>
-                  <th>最小序列号</th>
-                    <th>最大序列号</th>
-                    <th>序列自增量</th>
-                    <th>是否循环</th>
-                     <th>是否按顺序</th>
-                    <th>缓存值</th>
-                    <th>最后序列号</th>
-                    <th>可用量</th>
-                    <th>采样日期</th>
-                </tr>
-                </thead>
-                {% for oracle_sequence in oracle_sequences %}
-                 <tr>
-                 <td>{{ oracle_sequence.SEQUENCE_OWNER }} </td>
-                 <td>{{ oracle_sequence.SEQUENCE_NAME }} </td>
-                 <td>{{ oracle_sequence.MIN_VALUE }}</td>
-                 <td>{{ oracle_sequence.MAX_VALUE }} </td>
-                 <td>{{ oracle_sequence.INCREMENT_BY }} </td>
-                 <td>{{ oracle_sequence.CYCLE_FLAG }} </td>
-                  <td>{{ oracle_sequence.ORDER_FLAG }} </td>
-                 <td>{{ oracle_sequence.CACHE_SIZE }} </td>
-                 <td>{{ oracle_sequence.LAST_NUMBER }} </td>
-                  <td><span class="badge bg-{{ oracle_sequence.SEQ_COLOR }}">{{ oracle_sequence.PCT_USED }}%</span></td>
-                 <td>{{ oracle_sequence.LAST_ANALYZED }} </td>
-                 </tr>
-                 {% endfor %}
-              </table>
-            </div>
-          </div>
+            <!-- /.box-body-->
               </div>
 
-              <div class="tab-pane" id="user">
-           <div class="box box-solid">
-            <div class="box-header">
-              <h3 class="box-title">用户&权限</h3>
+              <div class="tab-pane" id="mem">
+               <div class="box-header">
+              <h3 class="box-title">内存使用信息</h3>
             </div>
             <!-- /.box-header -->
-            <div class="box-body" style="overflow: auto">
-              <table id="example2" class="table table-bordered table-hover">
-                <thead>
-                <tr>
-                  <th>用户名</th>
-                    <th>创建时间</th>
-                  <th>账号状态</th>
-                    <th>锁定时间</th>
-                    <th>到期时间</th>
-                    <th>默认表空间</th>
-                    <th>临时表空间</th>
-                    <th>配置</th>
-                    <th>权限</th>
-                </tr>
-                </thead>
-                {% for oracle_user in oracle_users %}
-                 <tr>
-                 <td>{{ oracle_user.USERNAME }} </td>
-                 <td>{{ oracle_user.CREATED }} </td>
-                 <td><span class="badge bg-{{ oracle_user.ACCOUNT_COLOR }}">{{ oracle_user.ACCOUNT_STATUS }}</span></td>
-                 <td>{{ oracle_user.LOCK_DATE }} </td>
-                 <td><span class="badge bg-{{ oracle_user.EXPIRY_COLOR }}">{{ oracle_user.EXPIRY_DATE }}</span></td>
-                 <td>{{ oracle_user.DEFAULT_TABLESPACE }} </td>
-                 <td>{{ oracle_user.TEMPORARY_TABLESPACE }} </td>
-                 <td> <a href="#" ><li onclick="return pop_profile('{{ tagsdefault }}','{{ oracle_user.PROFILE }}')">{{ oracle_user.PROFILE }}</li></a></td>
-                 <td> <a href="#" ><li onclick="return pop_grant('{{ tagsdefault }}','{{ oracle_user.USERNAME }}')">{{ oracle_user.USERNAME }}</li></a></td>
-                 </tr>
-                 {% endfor %}
-              </table>
+            <div class="box-body">
+                <div class="row">
+          <!-- /.row -->
             </div>
-          </div>
+              <div class="conn" id="mem-grow-chart" style="height: 300px; width: 993px"></div>
+            </div>
+            <!-- /.box-body-->
+            <div class="box-body">
+                <div class="row">
+          <!-- /.row -->
+            </div>
+              <div class="conn" id="swap-grow-chart" style="height: 300px; width: 993px"></div>
+            </div>
+            <!-- /.box-body-->
               </div>
               <!-- /.tab-pane -->
             </div>
@@ -1415,6 +1291,334 @@ function submitForm_ms(){
  setInterval(function () {
      myChart_busy_grow.hideLoading();  //显示完成后不显示loading
      myChart_busy_grow.setOption(option_busy_grow, true);
+ },500);
+
+
+ // ####################  【proc进程趋势】图形  ####################
+ var myChart_proc_grow = echarts.init(document.getElementById('proc-grow-chart'));
+ option_proc_grow = {
+     tooltip: {
+         trigger: 'axis',
+         axisPointer: {
+             type: 'cross'
+         }
+     },
+         legend: {
+        data:['新增进程数','运行中进程数','blocked进程数']
+    },
+     toolbox: {
+         show: true,
+         feature: {
+             saveAsImage: {}
+         }
+     },
+     xAxis:  {
+         type: 'category',
+         boundaryGap: false,
+         zlevel: 1,
+         data: [{% for i in disk_grow_list %}'{{ i.chk_time | date:"m-d H:i:s" }}',{% endfor %}]
+     },
+     yAxis: {
+         type: 'value',
+         axisLabel: {
+             formatter: '{value}'
+         },
+         axisPointer: {
+             snap: true
+         },
+         scale: true
+     },
+     series: [
+         {
+             name:'新增进程数',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#d4cda6"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#d4cda6"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#d4cda6",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in linux_grow_list %}{{ i.proc_new }},{% endfor %}]
+         },
+         {
+             name:'运行中进程数',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#84d4c5"
+              }
+              },
+             lineStyle: {
+               normal: {
+                color: "#84d4c5"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#84d4c5",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in linux_grow_list %}{{ i.proc_running }},{% endfor %}]
+         },
+          {
+             name:'blocked进程数',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#d44e5a"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#d44e5a"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#d44e5a",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in linux_grow_list %}{{ i.proc_block }},{% endfor %}]
+         }
+     ]
+ };
+ myChart_proc_grow.showLoading();  //显示loading
+ setInterval(function () {
+     myChart_proc_grow.hideLoading();  //显示完成后不显示loading
+     myChart_proc_grow.setOption(option_proc_grow, true);
+ },500);
+
+// ####################  【Mem趋势】图形  ####################
+ var myChart_mem_grow = echarts.init(document.getElementById('mem-grow-chart'));
+ option_mem_grow = {
+     tooltip: {
+         trigger: 'axis',
+         axisPointer: {
+             type: 'cross'
+         }
+     },
+         legend: {
+        data:['buffer','cache','free','used']
+    },
+     toolbox: {
+         show: true,
+         feature: {
+             saveAsImage: {}
+         }
+     },
+     xAxis:  {
+         type: 'category',
+         boundaryGap: false,
+         zlevel: 1,
+         data: [{% for i in linux_grow_list %}'{{ i.chk_time | date:"m-d H:i:s" }}',{% endfor %}]
+     },
+     yAxis: {
+         type: 'value',
+         axisLabel: {
+             formatter: '{value}'
+         },
+         axisPointer: {
+             snap: true
+         },
+         scale: true
+     },
+     series: [
+         {
+             name:'buffer',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#d4cda6"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#d4cda6"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#d4cda6",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in linux_grow_list %}{{ i.mem_buffer }},{% endfor %}]
+         },
+         {
+             name:'cache',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#84d4c5"
+              }
+              },
+             lineStyle: {
+               normal: {
+                color: "#84d4c5"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#84d4c5",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in linux_grow_list %}{{ i.mem_cache }},{% endfor %}]
+         },
+         {
+             name:'free',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#228eec"
+              }
+              },
+             lineStyle: {
+               normal: {
+                color: "#228eec"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#228eec",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in linux_grow_list %}{{ i.mem_free }},{% endfor %}]
+         },
+          {
+             name:'used',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#d44e5a"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#d44e5a"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#d44e5a",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in linux_grow_list %}{{ i.mem_used_mb }},{% endfor %}]
+         }
+     ]
+ };
+ myChart_mem_grow.showLoading();  //显示loading
+ setInterval(function () {
+     myChart_mem_grow.hideLoading();  //显示完成后不显示loading
+     myChart_mem_grow.setOption(option_mem_grow, true);
+ },500);
+
+// ####################  【Mem趋势】图形  ####################
+ var myChart_swap_grow = echarts.init(document.getElementById('swap-grow-chart'));
+ option_swap_grow = {
+     tooltip: {
+         trigger: 'axis',
+         axisPointer: {
+             type: 'cross'
+         }
+     },
+         legend: {
+        data:['swap_used','swap_free']
+    },
+     toolbox: {
+         show: true,
+         feature: {
+             saveAsImage: {}
+         }
+     },
+     xAxis:  {
+         type: 'category',
+         boundaryGap: false,
+         zlevel: 1,
+         data: [{% for i in linux_grow_list %}'{{ i.chk_time | date:"m-d H:i:s" }}',{% endfor %}]
+     },
+     yAxis: {
+         type: 'value',
+         axisLabel: {
+             formatter: '{value}'
+         },
+         axisPointer: {
+             snap: true
+         },
+         scale: true
+     },
+     series: [
+         {
+             name:'swap_used',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#d44e5a"
+              }
+              },
+             lineStyle: {
+               normal: {
+                color: "#d44e5a"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#d44e5a",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in linux_grow_list %}{{ i.swap_used }},{% endfor %}]
+         },
+         {
+             name:'swap_free',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#84d4c5"
+              }
+              },
+             lineStyle: {
+               normal: {
+                color: "#84d4c5"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#84d4c5",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in linux_grow_list %}{{ i.swap_free }},{% endfor %}]
+         }
+     ]
+ };
+ myChart_swap_grow.showLoading();  //显示loading
+ setInterval(function () {
+     myChart_swap_grow.hideLoading();  //显示完成后不显示loading
+     myChart_swap_grow.setOption(option_swap_grow, true);
  },500);
 
 </script>

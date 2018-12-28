@@ -59,6 +59,15 @@ def check_linux(tags,host,host_name,user,password):
         # 内存信息
         Memtotal = stat['Memtotal']
         memtotal = float(Memtotal['Memtotal'])/1024/1024
+
+        memstat = stat['mem']
+        mem_cache = memstat['cache']
+        mem_buffer = memstat['buffer']
+        mem_free = memstat['free']
+        mem_used_mb = memstat['used']
+        swap_used = memstat['swap_used']
+        swap_free = memstat['swap_free']
+
         # ip地址
         ipinfo = stat['ipinfo']
         ip = ipinfo['ipinfo']
@@ -140,6 +149,15 @@ def check_linux(tags,host,host_name,user,password):
         mem_cache = mem_stat['cache']
         mem_use = mem_stat['used']
         mem_free = mem_stat['free']
+        # 进程信息
+        proc_stat = stat['proc']
+        proc_new = proc_stat['new']
+        proc_runing = proc_stat['running']
+        proc_block = proc_stat['block']
+        intr = proc_stat['intr']
+        ctx = proc_stat['ctx']
+        softirq = proc_stat['softirq']
+
         # (老版本)发送网络流量，接收网络流量，cpu使用率
         # recv_kbps,send_kbps,cpu_used = check_os.os_get_info(host, user, password)
         # tcp连接数
@@ -164,14 +182,23 @@ def check_linux(tags,host,host_name,user,password):
         delete_sql = "delete from os_info where tags = '%s'" % tags
         tools.mysql_exec(delete_sql, '')
 
-        insert_os_used_sql = 'insert into os_info(tags,host,host_name,updays,recv_kbps,send_kbps,load1,load5,load15,cpu_sys,cpu_iowait,cpu_user,cpu_used,cpu_rate_level,mem_used,mem_rate_level,tcp_close,tcp_timewait,tcp_connected,tcp_syn,tcp_listen,' \
-                             'iops,read_mb,write_mb,hostname,ostype,kernel,frame,linux_version,cpu_mode,cpu_cache,processor,virtual_cnt,cpu_speed,Memtotal,ipinfo,mon_status,rate_level) value(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)'
-        value = (tags,host, host_name, up_days,recv_kbps,send_kbps,load1,load5,load15,cpu_sys,cpu_iowait,cpu_user,cpu_used,cpu_rate_level, mem_used,mem_rate_level,tcp_close,tcp_timewait,tcp_connected,tcp_syn,tcp_listen,
-                 all_iops,all_read_mb,all_write_mb,hostname,ostype,kernel,frame,linux_version,cpu_mode,cpu_cache,processor,virtual,cpu_speed,memtotal,ip,'connected',os_rate_level)
+        insert_os_info_sql = 'insert into os_info(tags,host,host_name,updays,recv_kbps,send_kbps,load1,load5,load15,cpu_sys,cpu_iowait,cpu_user,cpu_used,cpu_rate_level,' \
+                             'mem_used,mem_cache,mem_buffer,mem_free,mem_used_mb,swap_used,swap_free,mem_rate_level,tcp_close,tcp_timewait,tcp_connected,tcp_syn,tcp_listen,' \
+                             'iops,read_mb,write_mb,proc_new,proc_running,proc_block,intr,ctx,softirq,' \
+                             'hostname,ostype,kernel,frame,linux_version,cpu_mode,cpu_cache,processor,virtual_cnt,cpu_speed,Memtotal,ipinfo,mon_status,rate_level) ' \
+                             'value(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)'
+        value = (tags,host, host_name, up_days,recv_kbps,send_kbps,load1,load5,load15,
+                 cpu_sys,cpu_iowait,cpu_user,cpu_used,cpu_rate_level,
+                 mem_used,mem_cache,mem_buffer,mem_free,mem_used_mb,swap_used,swap_free,mem_rate_level,
+                 tcp_close,tcp_timewait,tcp_connected,tcp_syn,tcp_listen,
+                 all_iops,all_read_mb,all_write_mb,
+                 proc_new,proc_runing,proc_block,intr,ctx,softirq,
+                 hostname,ostype,kernel,frame,linux_version,cpu_mode,cpu_cache,processor,virtual,cpu_speed,memtotal,ip,
+                 'connected',os_rate_level)
 
         my_log.logger.info('%s：获取系统监控数据(CPU：%s MEM：%s)' % (tags, cpu_used, mem_used))
         # print insert_cpu_used_sql
-        tools.mysql_exec(insert_os_used_sql, value)
+        tools.mysql_exec(insert_os_info_sql, value)
 
         my_log.logger.info('%s：开始获取文件系统监控信息' % tags)
 

@@ -49,6 +49,8 @@ rabbitmq-server.
 ##### 安装依赖包
 pip install -r requirements.txt
 
+如果要监控Oracle数据库，需要安装Oracle instant client以使用cx_oracle
+
 ##### 修改配置文件
 
 -- 总体配置文件，主要修改mysql数据库配置  

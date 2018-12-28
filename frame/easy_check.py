@@ -43,9 +43,9 @@ def ora_check(tags_l,begin_time,end_time,file_name,file_tag):
             "select instance_name, max(percent_process),min(percent_process),avg(percent_process) from oracle_db_his where tags= '%s' and DATE_FORMAT(chk_time,'%%Y-%%m-%%d %%H:%%i:%%S')> '%s' and DATE_FORMAT(chk_time,'%%Y-%%m-%%d %%H:%%i:%%S') < '%s'  group by instance_name" % (
             tags, begin_time, end_time))
         instance_name = conn_sql[0][0]
-        max_conn = float(conn_sql[0][1])
-        min_conn = float(conn_sql[0][2])
-        avg_conn = round(float(conn_sql[0][3]), 2)
+        max_conn = conn_sql[0][1]
+        min_conn = conn_sql[0][2]
+        avg_conn = round(conn_sql[0][3], 2)
         conn_range = '最大使用率：%s%%,\n' % max_conn + '最小使用率：%s%%,\n' % min_conn + '平均使用率：%s%%,\n' % avg_conn
         print >> check_txt, '最大使用率：%s 最小使用率：%s 平均使用率：%s \n' % (max_conn,min_conn,avg_conn)
         if max_conn > 10:
@@ -190,7 +190,7 @@ def ora_check(tags_l,begin_time,end_time,file_name,file_tag):
         ws.write(row, 3, instance_name)
         ws.write(row, 4, current_conn)
         ws.write(row, 5, para_conn)
-        ws.write(row, 6, unicode(conn_range, 'utf-8'))
+        ws.write(row, 6, conn_range)
         ws.write(row, 7, unicode('正常', 'utf-8'))
         ws.write(row, 8, unicode(tbsinfo, 'utf-8'))
         ws.write(row, 9, unicode(undotbsinfo, 'utf-8'))
