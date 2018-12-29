@@ -2336,6 +2336,9 @@ def oracle_rpt(request):
     user = oracle[0][3]
     password = oracle[0][4]
     password = base64.decodestring(password)
+    user_os = oracle[0][5]
+    password_os = oracle[0][6]
+    password_os = base64.decodestring(password_os)
     url = host + ':' + port + '/' + service_name
     sql = """
            SELECT dbid,
@@ -2371,7 +2374,7 @@ def oracle_rpt(request):
         elif request.POST.has_key('commit'):
             begin_snap = request.POST.get('begin_snap', None)
             end_snap = request.POST.get('end_snap', None)
-            task.get_report.delay(tagsdefault,url,user,password,report_type,begin_snap,end_snap)
+            task.get_report.delay(tagsdefault,host,user,password,user_os,password_os,service_name,url,report_type,begin_snap,end_snap)
             messages.add_message(request, messages.SUCCESS, '正在生成')
 
         elif request.POST.has_key('commit_event'):
@@ -2460,6 +2463,9 @@ def oracle_rpt_ash(request):
     user = oracle[0][3]
     password = oracle[0][4]
     password = base64.decodestring(password)
+    user_os = oracle[0][5]
+    password_os = oracle[0][6]
+    password_os = base64.decodestring(password_os)
     url = host + ':' + port + '/' + service_name
     sql = """
            SELECT dbid,
@@ -2496,7 +2502,9 @@ def oracle_rpt_ash(request):
         elif request.POST.has_key('commit'):
             begin_snap = request.POST.get('begin_snap', None)
             end_snap = request.POST.get('end_snap', None)
-            task.get_report.delay(tagsdefault,url,user,password,report_type,begin_snap,end_snap)
+            task.get_report.delay(tagsdefault,host,user,password,user_os,password_os,service_name,url,report_type,begin_snap,end_snap)
+            messages.add_message(request, messages.SUCCESS, '正在生成')
+
         elif request.POST.has_key('commit_event'):
             begin_time = request.POST.get('begin_time', None)
             end_time = request.POST.get('end_time', None)
@@ -2659,17 +2667,6 @@ def my_task(request):
 
     my_task_list = tools.mysql_django_query(my_task_sql)
 
-    paginator_my_task = Paginator(my_task_list, 10)
-    page_my_task = request.GET.get('page')
-    try:
-        my_tasks = paginator_my_task.page(page_my_task)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        my_tasks = paginator_my_task.page(1)
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        my_tasks = paginator_my_task.page(paginator_my_task.num_pages)
-
     now = tools.now()
     if request.method == 'POST':
         logout(request)
@@ -2685,7 +2682,7 @@ def my_task(request):
         msg_last_content = ''
         tim_last = ''
     return render(request,'my_task.html',
-                              {'messageinfo_list': messageinfo_list, 'my_tasks': my_tasks,
+                              {'messageinfo_list': messageinfo_list, 'my_task_list': my_task_list,
                                'msg_num': msg_num, 'now': now,
                                'msg_last_content': msg_last_content, 'tim_last': tim_last}
                               )

@@ -23,6 +23,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
         apply the skin class to the body tag so the changes take effect. -->
   <link rel="stylesheet" href="/static/dist/css/skins/skin-blue.min.css">
 
+          <!-- DataTables -->
+  <link rel="stylesheet" href="/static/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -322,7 +325,7 @@ desired effect
                     <th>任务状态</th>
                 </tr>
                 </thead>
-                {% for my_task in my_tasks %}
+                {% for my_task in my_task_list %}
                  <tr>
                  <td>{{ my_task.task_id}} </td>
                  <td>{{ my_task.server_type }} </td>
@@ -338,19 +341,6 @@ desired effect
                  {% endfor %}
               </table>
             </div>
-            <div class="box-footer clearfix">
-           <span class="step-links">
-        {% if my_tasks.has_previous %}
-            <a href="?page={{ my_tasks.previous_page_number }}">上一页</a>
-        {% endif %}
-        <span class="current">
-            当前页{{ my_tasks.number }} 共计{{ my_tasks.paginator.num_pages }}
-        </span>
-        {% if my_tasks.has_next %}
-            <a href="?page={{ my_tasks.next_page_number }}">下一页</a>
-        {% endif %}
-           </span>
-         </div>
       </div>
       </div>
 
@@ -394,8 +384,40 @@ desired effect
 <!-- AdminLTE App -->
 <script src="/static/dist/js/adminlte.min.js"></script>
 
+<!-- DataTables -->
+<script src="/static/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="/static/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
      user experience. -->
+<script>
+ $('#example1').DataTable({
+		autoWidth:true,////不开启自动宽度，用bootstrap的自适应去调整
+		"lengthMenu": [10, 20, 50],//表格行数选择框内数目 显示2条,4条,20条,50条
+		"displayLength": 10,//默认的显示行数 (也就是每页显示几条数据)
+	    "language": {//自定义语言提示
+	    	"processing": "处理中...",
+	        "lengthMenu": "显示 _MENU_ 项结果",
+	        "zeroRecords": "没有找到相应的结果",
+	        "info": "第 _START_ 至 _END_ 行，共 _TOTAL_ 行",
+	        "infoEmpty": "第 0 至 0 项结果，共 0 项",
+	        "infoFiltered": "(由 _MAX_ 项结果过滤)",
+	        "infoPostFix": "",
+	        "url": "",
+	        "thousands": "'",
+	        "emptyTable": "表中数据为空",
+	        "loadingRecords": "载入中...",
+	        "infoThousands": ",",
+	        "paginate": {
+	            "first": "首页",
+	            "previous": "上页",
+	            "next": "下页",
+	            "last": "末页"
+	        }
+	    }
+
+	});
+</script>
 </body>
 </html>
