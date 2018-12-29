@@ -58,6 +58,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     [aria-controls="example1"] {
         font-size: 12px;
     }
+    li{list-style: none;}/*这里设置*/
 </style>
 
 </head>
@@ -274,8 +275,10 @@ desired effect
           </a>
           <ul class="treeview-menu">
               <li><a href="/mysql_monitor"><i class="fa fa-circle-o"></i>实时监控</a></li>
-            <li><a href="/show_mysql"><i class="fa fa-circle-o"></i>概览</a></li>               <li><a href="/show_mysql_res"><i class="fa fa-circle-o"></i>资源监控</a></li>
-              <li><a href="/show_mysql_repl"><i class="fa fa-circle-o"></i>复制监控</a></li>               <li><a href="/mysql_slowquery"><i class="fa fa-circle-o"></i>慢查询解析</a></li>
+            <li><a href="/show_mysql"><i class="fa fa-circle-o"></i>概览</a></li>
+              <li><a href="/show_mysql_res"><i class="fa fa-circle-o"></i>资源监控</a></li>
+              <li><a href="/show_mysql_repl"><i class="fa fa-circle-o"></i>复制监控</a></li>
+              <li><a href="/mysql_slowquery"><i class="fa fa-circle-o"></i>慢查询解析</a></li>
           </ul>
         </li>
             <li class="treeview">
@@ -287,7 +290,8 @@ desired effect
           </a>
           <ul class="treeview-menu">
               <li><a href="/linux_monitor"><i class="fa fa-circle-o"></i>实时监控</a></li>
-            <li><a href="/show_linux"><i class="fa fa-circle-o"></i>概览</a></li>             <li><a href="/show_linux_res"><i class="fa fa-circle-o"></i>资源监控</a></li>
+            <li><a href="/show_linux"><i class="fa fa-circle-o"></i>概览</a></li>
+              <li><a href="/show_linux_res"><i class="fa fa-circle-o"></i>资源监控</a></li>
           </ul>
         </li>
          <li>
@@ -325,7 +329,8 @@ desired effect
         <li class="header">消息列表</li>
         <li><a href=/show_alarm><i class="fa fa-circle-o text-red"></i> <span>监控告警</span></a></li>
         <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>待办事项</span></a></li>
-        <li><a href="/recorder"><i class="fa fa-circle-o text-aqua"></i> <span>事件记录</span></a></li> <li><a href="/my_task"><i class="fa fa-circle-o text-green"></i> <span>任务管理器</span></a></li>
+        <li><a href="/recorder"><i class="fa fa-circle-o text-aqua"></i> <span>事件记录</span></a></li>
+         <li><a href="/my_task"><i class="fa fa-circle-o text-green"></i> <span>任务管理器</span></a></li>
       </ul>
       <!-- /.sidebar-menu -->
     </section>
@@ -389,17 +394,6 @@ desired effect
                 </select>
               </div>
               <!-- /.form-group -->
-              <div class="form-group">
-                <label>生成巡检结果格式</label>
-                <select class="form-control select2" style="width: 100%;" name="select_form">
-                  <option selected="selected">{{ select_form }}</option>
-                    <option>excel</option>
-                  <option>txt</option>
-                </select>
-              </div>
-              <!-- /.form-group -->
-                <li><a href="/download?file_tag={{ file_tag }}&select_form={{ select_form }}"  download="" >下载巡检结果</a></li>
-
             </div>
             <!-- /.col -->
               </form>
@@ -408,29 +402,38 @@ desired effect
         </div>
         <!-- /.box-body -->
 
-
-        <div class="box-footer">
-
+    <div class="box-footer">
       <table class="table table-hover">
                 <tbody><tr>
+                  <th>序号</th>
                   <th>巡检类型</th>
                   <th>设备标签</th>
-                  <th>异常分类</th>
-                  <th>异常信息</th>
+                  <th>开始时间</th>
+                  <th>结束时间</th>
+                  <th>巡检时间</th>
+                  <th>巡检结果</th>
+                  <th>巡检异常</th>
+                  <th>操作</th>
                 </tr>
-                {% for err in check_err %}
+                {% for each in check_list %}
                 <tr>
-                  <td>{{ err.check_type }} </td>
-                  <td>{{ err.server_tag}} </td>
-                  <td>{{ err.check_err_type}} </td>
-                  <td>{{ err.check_err}} </td>
+                  <td>{{ each.check_tag }} </td>
+                  <td>{{ each.check_type }} </td>
+                  <td>{{ each.server_tag}} </td>
+                  <td>{{ each.begin_time}} </td>
+                  <td>{{ each.end_time}} </td>
+                  <td>{{ each.chk_time}} </td>
+                  <td ><li><a href="/download?file_tag={{ each.check_tag }}&select_form=excel"  download="" >EXCEL</a>
+                           <a href="/download?file_tag={{ each.check_tag }}&select_form=txt"  download="" >TEXT</a>
+                       </li>
+                 </td>
+                <td> <a href="#" ><li onclick="return pop_detail('{{ each.check_tag }}')">查看</li></a></td>
+                <td ><li><a href="/checklist_del?check_tag={{ each.check_tag }}" onclick="javascript:return del();" >删除</a>
+                       </li>
+                 </td>
                  </tr>
                 {% endfor %}
               </tbody></table>
-        <div class="box-footer clearfix">
-           <span class="pull-right text-muted">{{ begin_time }} -- {{ end_time }}</span>
-           </span>
-         </div>
         </div>
 
       </div>
@@ -490,6 +493,8 @@ desired effect
 <script src="/static/dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="/static/dist/js/demo.js"></script>
+
+<script src="/static/layer/layer.js"></script>
 <!-- Page script -->
 <script>
   $(function () {
@@ -573,6 +578,27 @@ desired effect
    default:alert("error");
    }
    };
+  function del() {
+     var msg = "确定要删除？\n\n请确认！";
+     if (confirm(msg)==true){
+     return true;
+     }else{
+     return false;
+     }
+  }
+
+  function pop_detail(m){
+    layer.open({
+    type: 2,
+    title: '巡检异常',
+    closeBtn: 1,
+    area: ['700px', '350px'],
+    shadeClose: true, //点击遮罩关闭
+    content: ['/check_err?check_tag='+ m]
+  });
+}
+
+
 </script>
 
 </body>

@@ -44,8 +44,6 @@ def ora_check(tags_l,begin_time,end_time,file_name,file_tag):
             tags, begin_time, end_time))
         instance_name = conn_sql[0][0]
         max_conn = float(conn_sql[0][1].encode("utf-8"))
-        print max_conn
-        print type(max_conn)
         min_conn = conn_sql[0][2]
         avg_conn = round(conn_sql[0][3], 2)
         conn_range = '最大使用率：%s%%,\n' % max_conn + '最小使用率：%s%%,\n' % min_conn + '平均使用率：%s%%,\n' % avg_conn

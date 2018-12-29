@@ -57,6 +57,20 @@ class TabAlarmInfo(models.Model):
         managed = False
         db_table = 'tab_alarm_info'
 
+
+class CheckList(models.Model):
+    id = models.IntegerField(primary_key=True)
+    check_tag = models.CharField(max_length=255)
+    check_type = models.CharField(max_length=255)
+    server_tag = models.CharField(max_length=255)
+    begin_time = models.CharField(max_length=255)
+    end_time = models.CharField(max_length=255)
+    chk_time = models.DateTimeField()
+
+    class Meta:
+        managed = False
+        db_table = 'check_list'
+
 class CheckInfo(models.Model):
     id = models.IntegerField(primary_key=True)
     check_tag = models.CharField(max_length=255)

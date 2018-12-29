@@ -846,6 +846,8 @@ def my_check(request):
     file_tag = request.GET.get('file_tag')
     if not file_tag:
         file_tag = ''
+    check_list = models_frame.CheckList.objects.all().order_by("-check_tag")
+
     check_err = models_frame.CheckInfo.objects.filter(check_tag=file_tag)
     begin_time = request.GET.get('begin_time')
     if not begin_time:
@@ -861,12 +863,16 @@ def my_check(request):
             select_type = request.POST.get('select_type', None)
             date_range = request.POST.get('date_range', None)
             select_tags = request.POST.getlist('select_tags', None)
+            print ''.join(select_tags)
             select_form = request.POST.get('select_form', None)
             # begin_time = (datetime.datetime.now() - datetime.timedelta(days=3)).strftime("%Y-%m-%d %H:%M:%S")
             begin_time = tools.range(date_range)
             end_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             file_tag = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
             check_file_name  = 'oracheck_' + file_tag +  '.xls'
+            sql = "insert into check_list(check_tag,check_type,server_tag,begin_time,end_time) values(%s,%s,%s,%s,%s)"
+            value = (file_tag,'Oracle数据库',','.join(select_tags),begin_time,end_time)
+            tools.mysql_exec(sql,value)
             easy_check.ora_check(select_tags,begin_time,end_time,check_file_name,file_tag)
             tags = ''
             for tag in select_tags:
@@ -890,11 +896,45 @@ def my_check(request):
     return render_to_response('my_check.html', {'messageinfo_list': messageinfo_list, 'msg_num': msg_num, 'now': now,
                                                 'msg_last_content': msg_last_content, 'tim_last': tim_last,
                                                 'select_type': select_type, 'date_range': date_range,
-                                                'select_tags': select_tags, 'select_form': select_form,
+                                                'select_tags': select_tags, 'select_form': select_form,'check_list':check_list,
                                                 'file_tag': file_tag, 'check_err': check_err, 'begin_time': begin_time,
                                                 'end_time': end_time,'linuxtagsinfo':linuxtagsinfo,'oracletagsinfo':oracletagsinfo,
                                                 'mysqltagsinfo':mysqltagsinfo})
 
+@login_required(login_url='/login')
+def check_err(request):
+    messageinfo_list = models_frame.TabAlarmInfo.objects.all()
+
+    check_tag = request.GET.get('check_tag')
+
+    check_err = models_frame.CheckInfo.objects.filter(check_tag=check_tag)
+
+
+    # 当前时间
+    now = tools.now()
+    if request.method == 'POST':
+        logout(request)
+        return HttpResponseRedirect('/login/')
+
+    if messageinfo_list:
+        msg_num = len(messageinfo_list)
+        msg_last = models_frame.TabAlarmInfo.objects.latest('id')
+        msg_last_content = msg_last.alarm_content
+        tim_last = (datetime.datetime.now() - msg_last.alarm_time).seconds / 60
+    else:
+        msg_num = 0
+        msg_last_content = ''
+        tim_last = ''
+
+    return render_to_response('check_err.html', {'messageinfo_list': messageinfo_list, 'msg_num': msg_num, 'now': now,
+                                                'msg_last_content': msg_last_content, 'tim_last': tim_last, 'check_err': check_err})
+
+@login_required(login_url='/login')
+def checklist_del(request):
+    check_tag = request.GET.get('check_tag')
+    print check_tag
+    models_frame.CheckList.objects.filter(check_tag=check_tag).delete()
+    return HttpResponseRedirect('/my_check/')
 
 def page_not_found(request):
     return render(request, '404.html')
