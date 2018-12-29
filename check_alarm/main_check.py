@@ -149,6 +149,14 @@ def check_linux(tags,host,host_name,user,password):
         mem_cache = mem_stat['cache']
         mem_use = mem_stat['used']
         mem_free = mem_stat['free']
+        # 虚拟内存
+        vm_stat = stat['vmstat']
+        pgin = vm_stat['pgin']
+        pgout = vm_stat['pgout']
+        swapin = vm_stat['swapin']
+        swapout = vm_stat['swapout']
+        pgfault = vm_stat['pgfault']
+        pgmajfault = vm_stat['pgmajfault']
         # 进程信息
         proc_stat = stat['proc']
         proc_new = proc_stat['new']
@@ -183,13 +191,14 @@ def check_linux(tags,host,host_name,user,password):
         tools.mysql_exec(delete_sql, '')
 
         insert_os_info_sql = 'insert into os_info(tags,host,host_name,updays,recv_kbps,send_kbps,load1,load5,load15,cpu_sys,cpu_iowait,cpu_user,cpu_used,cpu_rate_level,' \
-                             'mem_used,mem_cache,mem_buffer,mem_free,mem_used_mb,swap_used,swap_free,mem_rate_level,tcp_close,tcp_timewait,tcp_connected,tcp_syn,tcp_listen,' \
+                             'mem_used,mem_cache,mem_buffer,mem_free,mem_used_mb,swap_used,swap_free,pgin,pgout,swapin,swapout,pgfault,pgmajfault,mem_rate_level,' \
+                             'tcp_close,tcp_timewait,tcp_connected,tcp_syn,tcp_listen,' \
                              'iops,read_mb,write_mb,proc_new,proc_running,proc_block,intr,ctx,softirq,' \
                              'hostname,ostype,kernel,frame,linux_version,cpu_mode,cpu_cache,processor,virtual_cnt,cpu_speed,Memtotal,ipinfo,mon_status,rate_level) ' \
-                             'value(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)'
+                             'value(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)'
         value = (tags,host, host_name, up_days,recv_kbps,send_kbps,load1,load5,load15,
                  cpu_sys,cpu_iowait,cpu_user,cpu_used,cpu_rate_level,
-                 mem_used,mem_cache,mem_buffer,mem_free,mem_used_mb,swap_used,swap_free,mem_rate_level,
+                 mem_used,mem_cache,mem_buffer,mem_free,mem_used_mb,swap_used,swap_free,pgin,pgout,swapin,swapout,pgfault,pgmajfault,mem_rate_level,
                  tcp_close,tcp_timewait,tcp_connected,tcp_syn,tcp_listen,
                  all_iops,all_read_mb,all_write_mb,
                  proc_new,proc_runing,proc_block,intr,ctx,softirq,

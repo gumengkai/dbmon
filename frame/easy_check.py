@@ -43,13 +43,15 @@ def ora_check(tags_l,begin_time,end_time,file_name,file_tag):
             "select instance_name, max(percent_process),min(percent_process),avg(percent_process) from oracle_db_his where tags= '%s' and DATE_FORMAT(chk_time,'%%Y-%%m-%%d %%H:%%i:%%S')> '%s' and DATE_FORMAT(chk_time,'%%Y-%%m-%%d %%H:%%i:%%S') < '%s'  group by instance_name" % (
             tags, begin_time, end_time))
         instance_name = conn_sql[0][0]
-        max_conn = conn_sql[0][1]
+        max_conn = float(conn_sql[0][1].encode("utf-8"))
+        print max_conn
+        print type(max_conn)
         min_conn = conn_sql[0][2]
         avg_conn = round(conn_sql[0][3], 2)
         conn_range = '最大使用率：%s%%,\n' % max_conn + '最小使用率：%s%%,\n' % min_conn + '平均使用率：%s%%,\n' % avg_conn
         print >> check_txt, '最大使用率：%s 最小使用率：%s 平均使用率：%s \n' % (max_conn,min_conn,avg_conn)
-        if max_conn > 10:
-            conn_errinfo = '连接数最大使用率%s%%,超过10%%\n' %max_conn
+        if max_conn > 80:
+            conn_errinfo = '连接数最大使用率%s%%,超过80%%\n' %max_conn
             insert_sql = "insert into check_info(check_tag,check_type,server_tag,check_err_type,check_err,begin_time,end_time) values(%s,%s,%s,%s,%s,%s,%s)"
             value = (
                 file_tag, 'Oracle数据库', tags,'连接数', conn_errinfo,begin_time,end_time)
@@ -70,8 +72,8 @@ def ora_check(tags_l,begin_time,end_time,file_name,file_tag):
             pct_used = tbs[2]
             each_tbs_info = '表空间名称：%s,剩余空间：%sGB,使用率：%s%% \n' % (tbs_name, free_gb, pct_used)
             each_err_tbsinfo = '%s表空间,' %tbs_name
-            if free_gb < 5:
-                each_err_tbsinfo = each_err_tbsinfo + '剩余空间%sG,小于5G  ' %free_gb
+            if free_gb < 1:
+                each_err_tbsinfo = each_err_tbsinfo + '剩余空间%sG,小于1G  ' %free_gb
             if pct_used > 90:
                 each_err_tbsinfo = each_err_tbsinfo + '使用率%s%%,大于90%%' % pct_used
             tbsinfo = tbsinfo + each_tbs_info
@@ -103,7 +105,7 @@ def ora_check(tags_l,begin_time,end_time,file_name,file_tag):
                 each_undotbs_info = 'UNDO表空间名称：%s,已使用空间：%sMB,最大使用率：%s%% 最小使用率：%s%%  平均使用率：%s%% \n' % (
                     undotbs_name, used_mb, max_pct_used, min_pct_used, avg_pct_used)
                 each_err_undotbsinfo = ''
-                if max_pct_used > 1:
+                if max_pct_used > 90:
                     each_err_undotbsinfo = '%s表空间,' % undotbs_name
                     each_err_undotbsinfo = each_err_undotbsinfo + ' 最大使用率%s%%,大于90%%' % max_pct_used
                     err_undotbsinfo = err_undotbsinfo + each_err_undotbsinfo + '\n'
@@ -133,7 +135,7 @@ def ora_check(tags_l,begin_time,end_time,file_name,file_tag):
                 each_tmptbs_info = 'TMP表空间名称：%s,使用空间：%sMB,最大使用率：%s%% 最小使用率：%s%%  平均使用率：%s%% \n' % (
                     tmptbs_name, used_mb, max_pct_used, min_pct_used, avg_pct_used)
                 each_err_tmptbsinfo = ''
-                if max_pct_used > 1:
+                if max_pct_used > 90:
                     each_err_tmptbsinfo = '%s表空间,' % tmptbs_name
                     each_err_tmptbsinfo = each_err_tmptbsinfo + ' 最大使用率%s%%,大于90%%' % max_pct_used
                     err_tmptbsinfo = err_tmptbsinfo + each_err_tmptbsinfo + '\n'
@@ -166,8 +168,8 @@ def ora_check(tags_l,begin_time,end_time,file_name,file_tag):
         print >> check_txt, '-------cpu使用率-------'
         cpu_range_value = '最大使用率：%s%%,\n' % cpu_max + '最小使用率：%s%%,\n' % cpu_min + '平均使用率：%s%%,\n' % cpu_avg
         print >> check_txt, cpu_range_value
-        if cpu_max > 10:
-            cpu_errinfo = ' CPU最大使用率%s%%,超过10%%\n' % cpu_max
+        if cpu_max > 80:
+            cpu_errinfo = ' CPU最大使用率%s%%,超过80%%\n' % cpu_max
             insert_sql = "insert into check_info(check_tag,check_type,server_tag,check_err_type,check_err,begin_time,end_time) values(%s,%s,%s,%s,%s,%s,%s)"
             value = (
                 file_tag, 'Oracle数据库', tags, 'CPU使用率', cpu_errinfo, begin_time, end_time)
@@ -176,8 +178,8 @@ def ora_check(tags_l,begin_time,end_time,file_name,file_tag):
         print >> check_txt, '-------内存使用率-------'
         mem_range_value = '最大使用率：%s%%,\n' % mem_max + '最小使用率：%s%%,\n' % mem_min + '平均使用率：%s%%,\n' % mem_avg
         print >> check_txt, mem_range_value
-        if mem_max > 10:
-            mem_errinfo = '内存最大使用率%s%%,超过10%%\n' % mem_max
+        if mem_max > 80:
+            mem_errinfo = '内存最大使用率%s%%,超过80%%\n' % mem_max
             insert_sql = "insert into check_info(check_tag,check_type,server_tag,check_err_type,check_err,begin_time,end_time) values(%s,%s,%s,%s,%s,%s,%s)"
             value = (
                 file_tag, 'Oracle数据库', tags, '内存使用率', mem_errinfo, begin_time, end_time)

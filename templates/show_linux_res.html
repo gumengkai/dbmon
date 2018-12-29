@@ -390,7 +390,7 @@ desired effect
             <ul class="nav nav-tabs">
               <li class="active"><a href="#disk" data-toggle="tab" aria-expanded="false">磁盘</a></li>
               <li class=""><a href="#proc" data-toggle="tab" aria-expanded="false">进程</a></li>
-              <li class=""><a href="#mem" data-toggle="tab" aria-expanded="true">内存</a></li>
+              <li class=""><a href="#mem" data-toggle="tab" aria-expanded="true">内存&虚拟内存</a></li>
             </ul>
             <div class="tab-content">
                 <div class="active tab-pane" id="disk">
@@ -537,6 +537,13 @@ desired effect
               <div class="conn" id="proc-grow-chart" style="height: 300px; width: 993px"></div>
             </div>
             <!-- /.box-body-->
+           <div class="box-body">
+                <div class="row">
+          <!-- /.row -->
+            </div>
+              <div class="conn" id="switch-grow-chart" style="height: 300px; width: 993px"></div>
+            </div>
+            <!-- /.box-body-->
               </div>
 
               <div class="tab-pane" id="mem">
@@ -558,6 +565,22 @@ desired effect
               <div class="conn" id="swap-grow-chart" style="height: 300px; width: 993px"></div>
             </div>
             <!-- /.box-body-->
+                  <div class="box-header">
+              <h3 class="box-title">虚拟内存</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <div class="row">
+          <!-- /.row -->
+            </div>
+              <div class="conn" id="vmpage-grow-chart" style="height: 300px; width: 993px"></div>
+            </div>
+                  <div class="box-body">
+                <div class="row">
+          <!-- /.row -->
+            </div>
+              <div class="conn" id="vmswap-grow-chart" style="height: 300px; width: 993px"></div>
+            </div>
               </div>
               <!-- /.tab-pane -->
             </div>
@@ -771,12 +794,12 @@ function submitForm_ms(){
              smooth: true,
              itemStyle: {
               normal: {
-                color: "#d44e5a"
+                color: "#d4cda6"
               }
               },
              areaStyle: {
                normal: {
-                color: "#d44e5a",
+                color: "#d4cda6",
                 opacity: 0.8
                }
              },
@@ -875,17 +898,17 @@ function submitForm_ms(){
              smooth: true,
              itemStyle: {
               normal: {
-                color: "#228eec"
+                color: "#a57fd4"
               }
               },
              lineStyle: {
                normal: {
-                color: "#228eec"
+                color: "#a57fd4"
               }
               },
              areaStyle: {
                normal: {
-                color: "#228eec",
+                color: "#a57fd4",
                 opacity: 0.8
                }
              },
@@ -897,17 +920,17 @@ function submitForm_ms(){
              smooth: true,
              itemStyle: {
               normal: {
-                color: "#d44e5a"
+                color: "#ce7258"
               }
               },
               lineStyle: {
                normal: {
-                color: "#d44e5a"
+                color: "#ce7258"
               }
               },
              areaStyle: {
                normal: {
-                color: "#d44e5a",
+                color: "#ce7258",
                 opacity: 0.8
                }
              },
@@ -985,17 +1008,17 @@ function submitForm_ms(){
              smooth: true,
              itemStyle: {
               normal: {
-                color: "#84d4c5"
+                color: "#d45356"
               }
               },
              lineStyle: {
                normal: {
-                color: "#84d4c5"
+                color: "#d45356"
               }
               },
              areaStyle: {
                normal: {
-                color: "#84d4c5",
+                color: "#d45356",
                 opacity: 0.8
                }
              },
@@ -1003,6 +1026,28 @@ function submitForm_ms(){
          },
          {
              name:'每秒读合并数',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#a57fd4"
+              }
+              },
+             lineStyle: {
+               normal: {
+                color: "#a57fd4"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#a57fd4",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in disk_grow_list %}{{ i.rd_mrg_s }},{% endfor %}]
+         },
+         {
+             name:'每秒写合并数',
              type:'line',
              smooth: true,
              itemStyle: {
@@ -1023,45 +1068,23 @@ function submitForm_ms(){
              },
              data: [{% for i in disk_grow_list %}{{ i.rd_mrg_s }},{% endfor %}]
          },
-         {
-             name:'每秒写合并数',
-             type:'line',
-             smooth: true,
-             itemStyle: {
-              normal: {
-                color: "#2d4376"
-              }
-              },
-             lineStyle: {
-               normal: {
-                color: "#2d4376"
-              }
-              },
-             areaStyle: {
-               normal: {
-                color: "#2d4376",
-                opacity: 0.8
-               }
-             },
-             data: [{% for i in disk_grow_list %}{{ i.rd_mrg_s }},{% endfor %}]
-         },
           {
              name:'IOPS',
              type:'line',
              smooth: true,
              itemStyle: {
               normal: {
-                color: "#d44e5a"
+                color: "#84d4c5"
               }
               },
               lineStyle: {
                normal: {
-                color: "#d44e5a"
+                color: "#84d4c5"
               }
               },
              areaStyle: {
                normal: {
-                color: "#d44e5a",
+                color: "#84d4c5",
                 opacity: 0.8
                }
              },
@@ -1247,17 +1270,17 @@ function submitForm_ms(){
              smooth: true,
              itemStyle: {
               normal: {
-                color: "#228eec"
+                color: "#a57fd4"
               }
               },
              lineStyle: {
                normal: {
-                color: "#228eec"
+                color: "#a57fd4"
               }
               },
              areaStyle: {
                normal: {
-                color: "#228eec",
+                color: "#a57fd4",
                 opacity: 0.8
                }
              },
@@ -1269,17 +1292,17 @@ function submitForm_ms(){
              smooth: true,
              itemStyle: {
               normal: {
-                color: "#d44e5a"
+                color: "#ce7258"
               }
               },
               lineStyle: {
                normal: {
-                color: "#d44e5a"
+                color: "#ce7258"
               }
               },
              areaStyle: {
                normal: {
-                color: "#d44e5a",
+                color: "#ce7258",
                 opacity: 0.8
                }
              },
@@ -1316,7 +1339,7 @@ function submitForm_ms(){
          type: 'category',
          boundaryGap: false,
          zlevel: 1,
-         data: [{% for i in disk_grow_list %}'{{ i.chk_time | date:"m-d H:i:s" }}',{% endfor %}]
+         data: [{% for i in linux_grow_list %}'{{ i.chk_time | date:"m-d H:i:s" }}',{% endfor %}]
      },
      yAxis: {
          type: 'value',
@@ -1401,6 +1424,115 @@ function submitForm_ms(){
  setInterval(function () {
      myChart_proc_grow.hideLoading();  //显示完成后不显示loading
      myChart_proc_grow.setOption(option_proc_grow, true);
+ },500);
+
+ // ####################  【中断次数趋势】图形  ####################
+ var myChart_switch_grow = echarts.init(document.getElementById('switch-grow-chart'));
+ option_switch_grow = {
+     tooltip: {
+         trigger: 'axis',
+         axisPointer: {
+             type: 'cross'
+         }
+     },
+         legend: {
+        data:['软中断次数','中断次数','上下文切换次数']
+    },
+     toolbox: {
+         show: true,
+         feature: {
+             saveAsImage: {}
+         }
+     },
+     xAxis:  {
+         type: 'category',
+         boundaryGap: false,
+         zlevel: 1,
+         data: [{% for i in linux_grow_list %}'{{ i.chk_time | date:"m-d H:i:s" }}',{% endfor %}]
+     },
+     yAxis: {
+         type: 'value',
+         axisLabel: {
+             formatter: '{value}'
+         },
+         axisPointer: {
+             snap: true
+         },
+         scale: true
+     },
+     series: [
+         {
+             name:'软中断次数',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#d4cda6"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#d4cda6"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#d4cda6",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in linux_grow_list %}{{ i.softirq }},{% endfor %}]
+         },
+         {
+             name:'中断次数',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#d44e5a"
+              }
+              },
+             lineStyle: {
+               normal: {
+                color: "#d44e5a"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#d44e5a",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in linux_grow_list %}{{ i.intr }},{% endfor %}]
+         },
+          {
+             name:'上下文切换次数',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#84d4c5"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#84d4c5"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#84d4c5",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in linux_grow_list %}{{ i.ctx }},{% endfor %}]
+         }
+     ]
+ };
+ myChart_switch_grow.showLoading();  //显示loading
+ setInterval(function () {
+     myChart_switch_grow.hideLoading();  //显示完成后不显示loading
+     myChart_switch_grow.setOption(option_switch_grow, true);
  },500);
 
 // ####################  【Mem趋势】图形  ####################
@@ -1488,17 +1620,17 @@ function submitForm_ms(){
              smooth: true,
              itemStyle: {
               normal: {
-                color: "#228eec"
+                color: "#a57fd4"
               }
               },
              lineStyle: {
                normal: {
-                color: "#228eec"
+                color: "#a57fd4"
               }
               },
              areaStyle: {
                normal: {
-                color: "#228eec",
+                color: "#a57fd4",
                 opacity: 0.8
                }
              },
@@ -1510,17 +1642,17 @@ function submitForm_ms(){
              smooth: true,
              itemStyle: {
               normal: {
-                color: "#d44e5a"
+                color: "#ce7258"
               }
               },
               lineStyle: {
                normal: {
-                color: "#d44e5a"
+                color: "#ce7258"
               }
               },
              areaStyle: {
                normal: {
-                color: "#d44e5a",
+                color: "#ce7258",
                 opacity: 0.8
                }
              },
@@ -1619,6 +1751,225 @@ function submitForm_ms(){
  setInterval(function () {
      myChart_swap_grow.hideLoading();  //显示完成后不显示loading
      myChart_swap_grow.setOption(option_swap_grow, true);
+ },500);
+
+// ####################  【vmpage趋势】图形  ####################
+ var myChart_vmpage_grow = echarts.init(document.getElementById('vmpage-grow-chart'));
+ option_vmpage_grow = {
+     tooltip: {
+         trigger: 'axis',
+         axisPointer: {
+             type: 'cross'
+         }
+     },
+         legend: {
+        data:['page_in','page_out','page_fault','page_mjfault']
+    },
+     toolbox: {
+         show: true,
+         feature: {
+             saveAsImage: {}
+         }
+     },
+     xAxis:  {
+         type: 'category',
+         boundaryGap: false,
+         zlevel: 1,
+         data: [{% for i in linux_grow_list %}'{{ i.chk_time | date:"m-d H:i:s" }}',{% endfor %}]
+     },
+     yAxis: {
+         type: 'value',
+         axisLabel: {
+             formatter: '{value}'
+         },
+         axisPointer: {
+             snap: true
+         },
+         scale: true
+     },
+     series: [
+         {
+             name:'page_in',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#84d4c5"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#84d4c5"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#84d4c5",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in linux_grow_list %}{{ i.pgin }},{% endfor %}]
+         },
+         {
+             name:'page_out',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#d4cda6"
+              }
+              },
+             lineStyle: {
+               normal: {
+                color: "#d4cda6"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#d4cda6",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in linux_grow_list %}{{ i.pgout }},{% endfor %}]
+         },
+         {
+             name:'page_fault',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#ce7258"
+              }
+              },
+             lineStyle: {
+               normal: {
+                color: "#ce7258"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#ce7258",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in linux_grow_list %}{{ i.pgfault }},{% endfor %}]
+         },
+          {
+             name:'page_mjfault',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#a57fd4"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#a57fd4"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#a57fd4",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in linux_grow_list %}{{ i.pgmajfault }},{% endfor %}]
+         }
+     ]
+ };
+ myChart_vmpage_grow.showLoading();  //显示loading
+ setInterval(function () {
+     myChart_vmpage_grow.hideLoading();  //显示完成后不显示loading
+     myChart_vmpage_grow.setOption(option_vmpage_grow, true);
+ },500);
+
+
+// ####################  【vmswap趋势】图形  ####################
+ var myChart_vmswap_grow = echarts.init(document.getElementById('vmswap-grow-chart'));
+ option_vmswap_grow = {
+     tooltip: {
+         trigger: 'axis',
+         axisPointer: {
+             type: 'cross'
+         }
+     },
+         legend: {
+        data:['swap_in','swap_out']
+    },
+     toolbox: {
+         show: true,
+         feature: {
+             saveAsImage: {}
+         }
+     },
+     xAxis:  {
+         type: 'category',
+         boundaryGap: false,
+         zlevel: 1,
+         data: [{% for i in linux_grow_list %}'{{ i.chk_time | date:"m-d H:i:s" }}',{% endfor %}]
+     },
+     yAxis: {
+         type: 'value',
+         axisLabel: {
+             formatter: '{value}'
+         },
+         axisPointer: {
+             snap: true
+         },
+         scale: true
+     },
+     series: [
+         {
+             name:'swap_in',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#d4cda6"
+              }
+              },
+             lineStyle: {
+               normal: {
+                color: "#d4cda6"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#d4cda6",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in linux_grow_list %}{{ i.swapin }},{% endfor %}]
+         },
+         {
+             name:'swap_out',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#84d4c5"
+              }
+              },
+             lineStyle: {
+               normal: {
+                color: "#84d4c5"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#84d4c5",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in linux_grow_list %}{{ i.swapout }},{% endfor %}]
+         }
+     ]
+ };
+ myChart_vmswap_grow.showLoading();  //显示loading
+ setInterval(function () {
+     myChart_vmswap_grow.hideLoading();  //显示完成后不显示loading
+     myChart_vmswap_grow.setOption(option_vmswap_grow, true);
  },500);
 
 </script>
