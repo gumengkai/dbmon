@@ -118,12 +118,12 @@ function pop(m,n){
 另外，上传了一份我自己在阿里云服务器上部署的记录：install.log，不一定完整，可以参考一下
 
 ### 版本说明
-服务端: 
-centos6.5
-监控客户端：
-linux: centos6.5,centos6.8,redhat7.2
-oracle: oracle11.2.0.4
-mysql: mysql5.6,mysql5.7
+服务端:  
+centos6.5 
+监控客户端： 
+linux: centos6.5,centos6.8,redhat7.2 
+oracle: oracle11.2.0.4 
+mysql: mysql5.6,mysql5.7 
 
 使用其他版本的linux或数据库版本可能会遇到未知问题，待后续适配
 
