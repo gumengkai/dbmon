@@ -25,10 +25,17 @@ def ora_check(tags_l,begin_time,end_time,file_name,file_tag):
     row = 1
     for tags in tags_l:
         ws = wb.get_sheet(0)
+
         errinfo = ''
         check_txt_file = file_path + '/oracheck_' + file_tag + '.txt'
         check_txt =file(check_txt_file,'a+')
         print >> check_txt, '*******oracle数据库：%s 开始时间：%s 结束时间：%s *******\n' % (tags,begin_time,end_time)
+
+        # 基础信息
+        ws.write(row, 0, begin_time)
+        ws.write(row, 1, end_time)
+        ws.write(row, 2, tags)
+
         # 检查连接数
         # 当前连接数
         print >> check_txt, '-------连接数-------'
@@ -40,7 +47,7 @@ def ora_check(tags_l,begin_time,end_time,file_name,file_tag):
         print >> check_txt, '总连接数：%s' % para_conn
         # 指定时间段内连接数使用情况]
         conn_sql = tools.mysql_query(
-            "select instance_name, max(percent_process),min(percent_process),avg(percent_process) from oracle_db_his where tags= '%s' and DATE_FORMAT(chk_time,'%%Y-%%m-%%d %%H:%%i:%%S')> '%s' and DATE_FORMAT(chk_time,'%%Y-%%m-%%d %%H:%%i:%%S') < '%s'  group by instance_name" % (
+            "select instance_name, max(percent_process),min(percent_process),avg(percent_process) from oracle_db_his where instance_name is not null and tags= '%s' and DATE_FORMAT(chk_time,'%%Y-%%m-%%d %%H:%%i:%%S')> '%s' and DATE_FORMAT(chk_time,'%%Y-%%m-%%d %%H:%%i:%%S') < '%s'  group by instance_name" % (
             tags, begin_time, end_time))
         instance_name = conn_sql[0][0]
         max_conn = float(conn_sql[0][1].encode("utf-8"))
@@ -55,8 +62,17 @@ def ora_check(tags_l,begin_time,end_time,file_name,file_tag):
                 file_tag, 'Oracle数据库', tags,'连接数', conn_errinfo,begin_time,end_time)
             tools.mysql_exec(insert_sql, value)
             errinfo = conn_errinfo
+        # 实例名
+        ws.write(row, 3, instance_name)
+        # 连接数信息
+        ws.write(row, 4, current_conn)
+        ws.write(row, 5, para_conn)
+        ws.write(row, 6, max_conn )
+        ws.write(row, 7, avg_conn )
+        ws.write(row, 8, min_conn )
 
-
+        # ASM信息
+        ws.write(row, 9, unicode('无', 'utf-8'))
 
         # 检查表空间
         print >> check_txt, '-------表空间-------'
@@ -84,6 +100,8 @@ def ora_check(tags_l,begin_time,end_time,file_name,file_tag):
         if not tbsinfo:
             err_tbsinfo = '正常'
         print >> check_txt, tbsinfo
+        # 表空间信息
+        ws.write(row, 10, unicode(tbsinfo, 'utf-8'))
 
 
         # 检查Undo表空间
@@ -97,25 +115,29 @@ def ora_check(tags_l,begin_time,end_time,file_name,file_tag):
             for undotbs in undo_tbs_sql:
                 undotbs_name = str(undotbs[0].encode("utf-8"))
                 used_mb = float(undotbs[1].encode("utf-8"))
-                max_pct_used = float(undotbs[2].encode("utf-8"))
-                min_pct_used = float(undotbs[3].encode("utf-8"))
-                avg_pct_used = round(float(undotbs[4]), 2)
+                max_undo_used = float(undotbs[2].encode("utf-8"))
+                min_undo_used = float(undotbs[3].encode("utf-8"))
+                avg_undo_used = round(float(undotbs[4]), 2)
                 each_undotbs_info = 'UNDO表空间名称：%s,已使用空间：%sMB,最大使用率：%s%% 最小使用率：%s%%  平均使用率：%s%% \n' % (
-                    undotbs_name, used_mb, max_pct_used, min_pct_used, avg_pct_used)
+                    undotbs_name, used_mb, max_undo_used, min_undo_used, avg_undo_used)
                 each_err_undotbsinfo = ''
-                if max_pct_used > 90:
+                if max_undo_used > 90:
                     each_err_undotbsinfo = '%s表空间,' % undotbs_name
-                    each_err_undotbsinfo = each_err_undotbsinfo + ' 最大使用率%s%%,大于90%%' % max_pct_used
+                    each_err_undotbsinfo = each_err_undotbsinfo + ' 最大使用率%s%%,大于90%%' % max_undo_used
                     err_undotbsinfo = err_undotbsinfo + each_err_undotbsinfo + '\n'
                     insert_sql = "insert into check_info(check_tag,check_type,server_tag,check_err_type,check_err,begin_time,end_time) values(%s,%s,%s,%s,%s,%s,%s)"
                     value = (
                         file_tag, 'Oracle数据库', tags, 'undo表空间', each_err_undotbsinfo, begin_time, end_time)
                     tools.mysql_exec(insert_sql, value)
                 undotbsinfo = undotbsinfo + each_undotbs_info
-
+            # undo表空间信息
+            ws.write(row, 11, undotbs_name)
+            ws.write(row, 12, max_undo_used)
+            ws.write(row, 13, avg_undo_used)
+            ws.write(row, 14, min_undo_used)
         errinfo = errinfo + err_undotbsinfo
-
         print >> check_txt, undotbsinfo
+
         # 检查临时表空间
         print >> check_txt, '-------临时表空间-------'
         tmp_tbs_sql = tools.mysql_query(
@@ -123,29 +145,39 @@ def ora_check(tags_l,begin_time,end_time,file_name,file_tag):
                 tags, begin_time, end_time))
         tmptbsinfo = ''
         err_tmptbsinfo = ''
-        if tmptbsinfo:
+        if tmp_tbs_sql:
             for tmptbs in tmp_tbs_sql:
                 tmptbs_name = str(tmptbs[0].encode("utf-8"))
+                print tmptbs_name
                 used_mb = float(tmptbs[1].encode("utf-8"))
-                max_pct_used = float(tmptbs[2].encode("utf-8"))
-                min_pct_used = float(tmptbs[3].encode("utf-8"))
-                avg_pct_used = round(float(tmptbs[4]), 2)
+                max_temp_used = float(tmptbs[2].encode("utf-8"))
+                min_temp_used = float(tmptbs[3].encode("utf-8"))
+                avg_temp_used = round(float(tmptbs[4]), 2)
                 each_tmptbs_info = 'TMP表空间名称：%s,使用空间：%sMB,最大使用率：%s%% 最小使用率：%s%%  平均使用率：%s%% \n' % (
-                    tmptbs_name, used_mb, max_pct_used, min_pct_used, avg_pct_used)
+                    tmptbs_name, used_mb, max_temp_used, min_temp_used, avg_temp_used)
                 each_err_tmptbsinfo = ''
-                if max_pct_used > 90:
+                if max_temp_used > 90:
                     each_err_tmptbsinfo = '%s表空间,' % tmptbs_name
-                    each_err_tmptbsinfo = each_err_tmptbsinfo + ' 最大使用率%s%%,大于90%%' % max_pct_used
+                    each_err_tmptbsinfo = each_err_tmptbsinfo + ' 最大使用率%s%%,大于90%%' % max_temp_used
                     err_tmptbsinfo = err_tmptbsinfo + each_err_tmptbsinfo + '\n'
                     insert_sql = "insert into check_info(check_tag,check_type,server_tag,check_err_type,check_err,begin_time,end_time) values(%s,%s,%s,%s,%s,%s,%s)"
                     value = (
                         file_tag, 'Oracle数据库', tags, 'TMP表空间', each_err_tmptbsinfo, begin_time, end_time)
                     tools.mysql_exec(insert_sql, value)
                 tmptbsinfo = tmptbsinfo + each_tmptbs_info
-
                 print >> check_txt, undotbsinfo
+                # temp表空间信息
+                ws.write(row, 15, tmptbs_name)
+                ws.write(row, 16, max_temp_used)
+                ws.write(row, 17, avg_temp_used)
+                ws.write(row, 18, min_temp_used)
 
         errinfo = errinfo + err_tmptbsinfo
+
+        # 文件系统、后台日志、监听日志
+        ws.write(row, 19, unicode('正常', 'utf-8'))
+        ws.write(row, 20, unicode('正常', 'utf-8'))
+        ws.write(row, 21, unicode('正常', 'utf-8'))
 
         # 检查cpu使用率,内存使用率
         # 当前使用率
@@ -173,6 +205,10 @@ def ora_check(tags_l,begin_time,end_time,file_name,file_tag):
                 file_tag, 'Oracle数据库', tags, 'CPU使用率', cpu_errinfo, begin_time, end_time)
             tools.mysql_exec(insert_sql, value)
             errinfo = errinfo + cpu_errinfo
+        # CPU使用率信息
+        ws.write(row, 22, cpu_max)
+        ws.write(row, 23, cpu_avg)
+        ws.write(row, 24, cpu_min)
         print >> check_txt, '-------内存使用率-------'
         mem_range_value = '最大使用率：%s%%,\n' % mem_max + '最小使用率：%s%%,\n' % mem_min + '平均使用率：%s%%,\n' % mem_avg
         print >> check_txt, mem_range_value
@@ -183,23 +219,17 @@ def ora_check(tags_l,begin_time,end_time,file_name,file_tag):
                 file_tag, 'Oracle数据库', tags, '内存使用率', mem_errinfo, begin_time, end_time)
             tools.mysql_exec(insert_sql, value)
             errinfo = errinfo + mem_errinfo
-
-        ws.write(row, 0, begin_time)
-        ws.write(row, 1, end_time)
-        ws.write(row, 2, tags)
-        ws.write(row, 3, instance_name)
-        ws.write(row, 4, current_conn)
-        ws.write(row, 5, para_conn)
-        ws.write(row, 6, conn_range)
-        ws.write(row, 7, unicode('正常', 'utf-8'))
-        ws.write(row, 8, unicode(tbsinfo, 'utf-8'))
-        ws.write(row, 9, unicode(undotbsinfo, 'utf-8'))
-        ws.write(row, 10, unicode(tmptbsinfo, 'utf-8'))
-        ws.write(row, 11, unicode('正常', 'utf-8'))
-        ws.write(row, 12, unicode('正常', 'utf-8'))
-        ws.write(row, 13, unicode('正常', 'utf-8'))
-        ws.write(row, 14, unicode(cpu_range_value, 'utf-8'))
-        ws.write(row, 15, unicode(mem_range_value, 'utf-8'))
+        # 内存使用率信息
+        ws.write(row, 25, mem_max )
+        ws.write(row, 26, mem_avg )
+        ws.write(row, 27, mem_min )
+        # 连接、CPU、内存/是否满足本地高可用，备份是否正常，是否有失效索引，巡检发现问题
+        ws.write(row, 28, unicode('是', 'utf-8'))
+        ws.write(row, 29, unicode('是', 'utf-8'))
+        ws.write(row, 30, unicode('是', 'utf-8'))
+        ws.write(row, 31, unicode('是', 'utf-8'))
+        ws.write(row, 32, unicode('否', 'utf-8'))
+        ws.write(row, 33, unicode('无', 'utf-8'))
 
         check_path = os.getcwd() + '\check_result' + '\\'
         wb.save(check_path + file_name)
@@ -208,8 +238,4 @@ def ora_check(tags_l,begin_time,end_time,file_name,file_tag):
         check_txt.close()
 
         row += 1
-
-
-
-
 

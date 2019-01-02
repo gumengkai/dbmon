@@ -386,7 +386,7 @@ desired effect
       </div>
       <!-- /.row -->
               <div class="box-body">
-                  <div class="nav-tabs-custom">
+                  <div class="nav-tabs-custom" id="resmenu">
             <ul class="nav nav-tabs">
               <li class="active"><a href="#disk" data-toggle="tab" aria-expanded="false">磁盘</a></li>
               <li class=""><a href="#proc" data-toggle="tab" aria-expanded="false">进程</a></li>
@@ -1971,6 +1971,28 @@ function submitForm_ms(){
      myChart_vmswap_grow.hideLoading();  //显示完成后不显示loading
      myChart_vmswap_grow.setOption(option_vmswap_grow, true);
  },500);
+
+$(function () {
+    myChart_avkb_grow.setOption(option_avkb_grow, true);
+
+    $(".resmenu").click(function (e) {
+        var href = $(this).attr("href"),i=$(this).attr("data-sid");
+        if (href == "#disk") {
+            myChart_avkb_grow.setOption(option_avkb_grow, true);
+            return
+        }
+        if (href == "#proc") {
+            myChart_avkb_grow.setOption(option_avkb_grow, true);
+            return
+        }
+        if (href == "#mem") {
+            myChart_avkb_grow.setOption(option_avkb_grow, true);
+            return
+        }
+        
+    })
+
+})
 
 </script>
 <script>

@@ -91,10 +91,12 @@ class LinuxStat(object):
         kernel = res.split(' ')[2]
         frame = res.split(' ')[11]
         # linux version
-        command = 'cat /etc/issue'
+        command = 'lsb_release -a'
         std_in, std_out, std_err = self.ssh_client.exec_command(command)
-        res =  std_out.readlines()[0]
-        linux_version = res
+        for each in  std_out.readlines():
+            string = each.encode("utf-8")
+            if string.startswith('Description'):
+                linux_version = string.split(':')[1].strip()
 
         return {
             'hostname': hostname,
@@ -189,10 +191,14 @@ class LinuxStat(object):
         std_in, std_out, std_err = self.ssh_client.exec_command(command)
         res =  std_out.readlines()
         for line in res:
-            if line.strip().startswith('inet'):
+            if line.strip().startswith('inet') and not line.strip().startswith('inet6'):
                 ip_addr =  line.strip().split(' ')[1]
-                ip =ip_addr.split(':')[1]
-                if ip <> '127.0.0.1' and ip:
+                if ip_addr.encode("utf-8").startswith('addr'):
+                    ip = ip_addr.split(':')[1]
+                else:
+                    ip = ip_addr
+
+                if ip <> '127.0.0.1' and ip.startswith(''):
                     ip_list.append(ip)
         ipinfo =  ','.join(ip_list)
         return {
@@ -526,9 +532,9 @@ if __name__ == '__main__':
     # 初始化ssh连接
     ssh_client = paramiko.SSHClient()
     ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh_client.connect('192.168.48.10', 22, 'root', 'oracle')
+    ssh_client.connect('192.168.48.60', 22, 'root', 'oracle')
 
-    linuxstat = LinuxStat('192.168.48.10', 'root', 'oracle',ssh_client)
+    linuxstat = LinuxStat('192.168.48.60', 'root', 'oracle',ssh_client)
     while True:
-        stat = linuxstat.get_linux()
-        print stat
+        print linuxstat.get_host_ip()
+

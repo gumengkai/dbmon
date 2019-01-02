@@ -143,19 +143,14 @@ def ora_qry(url,username,password,sql):
 
 def range(range_value):
     if range_value == unicode('1小时', 'utf-8'):
-        cpu_range = 1
         begin_time = (datetime.datetime.now() - datetime.timedelta(hours=1)).strftime("%Y-%m-%d %H:%M:%S")
     elif range_value== unicode('0.5小时', 'utf-8'):
-        cpu_range = 0.5
         begin_time = (datetime.datetime.now() - datetime.timedelta(hours=0.5)).strftime("%Y-%m-%d %H:%M:%S")
     elif range_value == unicode('1天', 'utf-8'):
-        cpu_range = 0.5
         begin_time = (datetime.datetime.now() - datetime.timedelta(days=1)).strftime("%Y-%m-%d %H:%M:%S")
     elif range_value == unicode('7天', 'utf-8'):
-        cpu_range = 0.5
         begin_time = (datetime.datetime.now() - datetime.timedelta(days=7)).strftime("%Y-%m-%d %H:%M:%S")
     elif range_value == unicode('30天', 'utf-8'):
-        cpu_range = 0.5
         begin_time = (datetime.datetime.now() - datetime.timedelta(days=30)).strftime("%Y-%m-%d %H:%M:%S")
     return begin_time
 
