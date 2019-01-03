@@ -93,37 +93,31 @@ desired effect
                   <div class="form-group">
                   <label for="inputEmail3" class="col-sm-2 control-label">设备类型</label>
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" name="db_type" value={{ alarm_setting_edit.db_type }}>
+                    <input type="text" class="form-control" name="db_type" value={{ alarm_setting_edit.server_type }} disabled>
                   </div>
                 </div>
                    <div class="form-group">
                   <label for="inputEmail3" class="col-sm-2 control-label">告警类型</label>
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" name="alarm_name" value={{ alarm_setting_edit.alarm_name }}>
+                    <input type="text" class="form-control" name="alarm_name" value={{ alarm_setting_edit.alarm_name }} disabled>
                   </div>
                 </div>
                    <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label">上线阈值(百分比)</label>
+                  <label for="inputEmail3" class="col-sm-2 control-label">运算符</label>
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" name="pct_max" value={{ alarm_setting_edit.pct_max }}>
+                    <input type="text" class="form-control" name="pct_max" value={{ alarm_setting_edit.judge }} disabled>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">下限阈值</label>
+                  <label for="inputPassword3" class="col-sm-2 control-label">告警阈值</label>
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" name="size_min" value={{ alarm_setting_edit.size_min }}>
+                    <input type="text" class="form-control" name="size_min" value={{ alarm_setting_edit.jdg_value }}>
                   </div>
                 </div>
                   <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label">时间阈值(秒)</label>
+                  <label for="inputEmail3" class="col-sm-2 control-label">阈值说明</label>
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" name="time_max" value={{ alarm_setting_edit.time_max }}>
-                  </div>
-                </div>
-                  <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label">数量阈值(个)</label>
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control" name="num_max" value={{ alarm_setting_edit.num_max }}>
+                    <input type="text" class="form-control" name="time_max" value={{ alarm_setting_edit.jdg_des }}>
                   </div>
                 </div>
                      <!-- /.box-body -->

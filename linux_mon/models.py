@@ -170,13 +170,10 @@ class TabLinuxServers(models.Model):
     user = models.CharField(max_length=255)
     password = models.CharField(max_length=255)
     connect = models.CharField(max_length=255)
-    connect_cn = models.CharField(max_length=255, blank=True, null=True)
     cpu = models.CharField(max_length=255)
-    cpu_cn = models.CharField(max_length=255, blank=True, null=True)
     mem = models.CharField(max_length=255)
-    mem_cn = models.CharField(max_length=255, blank=True, null=True)
+    swap = models.CharField(max_length=255)
     disk = models.CharField(max_length=255)
-    disk_cn = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
         managed = False

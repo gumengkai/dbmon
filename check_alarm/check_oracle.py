@@ -30,7 +30,7 @@ def get_pwd_info(conn):
   from dba_users
  where expiry_date is not null
    and account_status = 'OPEN'
-   and expiry_date - sysdate <  10
+   and expiry_date - sysdate <  7
    and username not in ('SYS')
  '''
     cur.execute(pwd_sql)

@@ -214,13 +214,9 @@ class TabMysqlServers(models.Model):
     user_os = models.CharField(max_length=255)
     password_os = models.CharField(max_length=255)
     connect = models.CharField(max_length=255, blank=True, null=True)
-    connect_cn = models.CharField(max_length=255, blank=True, null=True)
     repl = models.CharField(max_length=255, blank=True, null=True)
-    repl_cn = models.CharField(max_length=255, blank=True, null=True)
     conn = models.CharField(max_length=255, blank=True, null=True)
-    conn_cn = models.CharField(max_length=255, blank=True, null=True)
     err_info = models.CharField(max_length=255, blank=True, null=True)
-    err_info_cn = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
         managed = False

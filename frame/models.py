@@ -20,12 +20,11 @@ class EventRecorder(models.Model):
 
 class TabAlarmConf(models.Model):
     id = models.IntegerField(primary_key=True)
-    db_type = models.CharField(max_length=255)
+    server_type = models.CharField(max_length=255)
     alarm_name = models.CharField(max_length=255)
-    pct_max = models.CharField(max_length=255, blank=True, null=True)
-    size_min = models.CharField(max_length=255, blank=True, null=True)
-    time_max = models.CharField(max_length=255, blank=True, null=True)
-    num_max = models.CharField(max_length=255, blank=True, null=True)
+    judge = models.CharField(max_length=255, blank=True, null=True)
+    jdg_value = models.FloatField()
+    jdg_des = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
         managed = False

@@ -128,7 +128,7 @@ def mon_servers(request):
 def alarm_setting(request):
     messageinfo_list = models_frame.TabAlarmInfo.objects.all()
     # 告警策略
-    alarm_list = models_frame.TabAlarmConf.objects.all().order_by('db_type')
+    alarm_list = models_frame.TabAlarmConf.objects.all().order_by('server_type')
 
     if request.method == 'POST':
         logout(request)
@@ -183,19 +183,20 @@ def linux_servers_edit(request):
             host = request.POST.get('host', None)
             user = request.POST.get('user', None)
             password = base64.encodestring(request.POST.get('password', None))
-            connect_cn = request.POST.get('connect', None)
-            connect = tools.isno(connect_cn)
-            cpu_cn = request.POST.get('cpu', None)
-            cpu = tools.isno(cpu_cn)
-            mem_cn = request.POST.get('mem', None)
-            mem = tools.isno(mem_cn)
-            disk_cn = request.POST.get('disk', None)
-            disk = tools.isno(disk_cn)
+            connect = request.POST.get('connect', None)
+            connect = tools.isno(connect)
+            cpu = request.POST.get('cpu', None)
+            cpu = tools.isno(cpu)
+            mem = request.POST.get('mem', None)
+            mem = tools.isno(mem)
+            swap = request.POST.get('swap', None)
+            swap = tools.isno(swap)
+            disk = request.POST.get('disk', None)
+            disk = tools.isno(disk)
             models_linux.TabLinuxServers.objects.filter(id=rid).update(tags=tags,host_name=host_name, host=host, user=user,
-                                                                 password=password, connect_cn=connect_cn,
+                                                                 password=password,
                                                                  connect=connect,
-                                                                 cpu_cn=cpu_cn, cpu=cpu, mem_cn=mem_cn, mem=mem,
-                                                                 disk_cn=disk_cn, disk=disk)
+                                                                 cpu=cpu, mem=mem,swap=swap,disk=disk)
             status = 1
         elif request.POST.has_key('logout'):
             logout(request)
@@ -213,18 +214,18 @@ def linux_servers_add(request):
             host = request.POST.get('host', None)
             user = request.POST.get('user', None)
             password = base64.encodestring(request.POST.get('password', None))
-            connect_cn = request.POST.get('connect', None)
-            connect = tools.isno(connect_cn)
-            cpu_cn = request.POST.get('cpu', None)
-            cpu = tools.isno(cpu_cn)
-            mem_cn = request.POST.get('mem', None)
-            mem = tools.isno(mem_cn)
-            disk_cn = request.POST.get('disk', None)
-            disk = tools.isno(disk_cn)
+            connect = request.POST.get('connect', None)
+            connect = tools.isno(connect)
+            cpu = request.POST.get('cpu', None)
+            cpu = tools.isno(cpu)
+            mem = request.POST.get('mem', None)
+            mem = tools.isno(mem)
+            swap = request.POST.get('swap', None)
+            swap = tools.isno(swap)
+            disk = request.POST.get('disk', None)
+            disk = tools.isno(disk)
             models_linux.TabLinuxServers.objects.create(tags=tags,host_name=host_name, host=host, user=user, password=password,
-                                                  connect_cn=connect_cn, connect=connect,
-                                                  cpu_cn=cpu_cn, cpu=cpu, mem_cn=mem_cn, mem=mem, disk_cn=disk_cn,
-                                                  disk=disk)
+                                                  connect=connect, cpu=cpu, mem=mem, swap=swap,disk=disk )
             status = 1
         elif request.POST.has_key('logout'):
             logout(request)
@@ -252,42 +253,41 @@ def oracle_servers_add(request):
             password = base64.encodestring(request.POST.get('password', None))
             user_os = request.POST.get('user_os', None)
             password_os = base64.encodestring(request.POST.get('password_os', None))
-            connect_cn = request.POST.get('connect', None)
-            connect = tools.isno(connect_cn)
-            tbs_cn = request.POST.get('tbs', None)
-            tbs = tools.isno(tbs_cn)
-            adg_cn = request.POST.get('adg', None)
-            adg = tools.isno(adg_cn)
-            temp_tbs_cn = request.POST.get('temp_tbs', None)
-            temp_tbs = tools.isno(temp_tbs_cn)
-            undo_tbs_cn = request.POST.get('undo_tbs', None)
-            undo_tbs = tools.isno(undo_tbs_cn)
-            conn_cn = request.POST.get('conn', None)
-            conn = tools.isno(conn_cn)
-            err_info_cn = request.POST.get('err_info', None)
-            err_info = tools.isno(err_info_cn)
-            invalid_index_cn = request.POST.get('invalid_index', None)
-            invalid_index = tools.isno(invalid_index_cn)
-            oracle_lock_cn = request.POST.get('oracle_lock', None)
-            oracle_lock = tools.isno(oracle_lock_cn)
-            oracle_pwd_cn = request.POST.get('oracle_pwd', None)
-            oracle_pwd = tools.isno(oracle_pwd_cn)
-            oracle_event_cn = request.POST.get('oracle_event', None)
-            oracle_event = tools.isno(oracle_event_cn)
-            oracle_pga_cn = request.POST.get('oracle_pga', None)
-            oracle_pga = tools.isno(oracle_pga_cn)
-            oracle_archive_cn = request.POST.get('oracle_archive', None)
-            oracle_archive = tools.isno(oracle_archive_cn)
+            connect = request.POST.get('connect', None)
+            connect = tools.isno(connect)
+            tbs = request.POST.get('tbs', None)
+            tbs = tools.isno(tbs)
+            adg = request.POST.get('adg', None)
+            adg = tools.isno(adg)
+            temp_tbs = request.POST.get('temp_tbs', None)
+            temp_tbs = tools.isno(temp_tbs)
+            undo_tbs = request.POST.get('undo_tbs', None)
+            undo_tbs = tools.isno(undo_tbs)
+            conn = request.POST.get('conn', None)
+            conn = tools.isno(conn)
+            err_info = request.POST.get('err_info', None)
+            err_info = tools.isno(err_info)
+            invalid_index = request.POST.get('invalid_index', None)
+            invalid_index = tools.isno(invalid_index)
+            oracle_lock = request.POST.get('oracle_lock', None)
+            oracle_lock = tools.isno(oracle_lock)
+            oracle_pwd = request.POST.get('oracle_pwd', None)
+            oracle_pwd = tools.isno(oracle_pwd)
+            oracle_event = request.POST.get('oracle_event', None)
+            oracle_event = tools.isno(oracle_event)
+            oracle_pga = request.POST.get('oracle_pga', None)
+            oracle_pga = tools.isno(oracle_pga)
+            oracle_archive = request.POST.get('oracle_archive', None)
+            oracle_archive = tools.isno(oracle_archive)
             models_oracle.TabOracleServers.objects.create(tags=tags,host=host, port=port, service_name=service_name,
                                                    user=user, password=password,
                                                    user_os=user_os, password_os=password_os, connect=connect,
-                                                   connect_cn=connect_cn, tbs=tbs, tbs_cn=tbs_cn,
-                                                   adg=adg, adg_cn=adg_cn, temp_tbs=temp_tbs, temp_tbs_cn=temp_tbs_cn,
-                                                   undo_tbs=undo_tbs, undo_tbs_cn=undo_tbs_cn,
-                                                   conn=conn, conn_cn=conn_cn, err_info=err_info,
-                                                   err_info_cn=err_info_cn,invalid_index=invalid_index,invalid_index_cn=invalid_index_cn,
-                                                   oracle_lock =oracle_lock,oracle_lock_cn=oracle_lock_cn,oracle_pwd =oracle_pwd,oracle_pwd_cn=oracle_pwd_cn,
-                                                   oracle_event=oracle_event,oracle_event_cn=oracle_event_cn,pga=oracle_pga,pga_cn=oracle_pga_cn,archive=oracle_archive,archive_cn=oracle_archive_cn)
+                                                   tbs=tbs,
+                                                   adg=adg, temp_tbs=temp_tbs,
+                                                   undo_tbs=undo_tbs,
+                                                   conn=conn, err_info=err_info,invalid_index=invalid_index,
+                                                   oracle_lock =oracle_lock,oracle_pwd =oracle_pwd,
+                                                   oracle_event=oracle_event,pga=oracle_pga,archive=oracle_archive)
             status = 1
         elif request.POST.has_key('logout'):
             logout(request)
@@ -322,44 +322,40 @@ def oracle_servers_edit(request):
             password_os_value =  models_oracle.TabOracleServers.objects.values("password_os").filter(id=rid)[0]
             if  password_os.encode('utf-8') + '\n'  != password_os_value['password_os'].encode('utf-8'):
                 password_os = base64.encodestring(request.POST.get('password_os', None))
-            connect_cn = request.POST.get('connect', None)
-            connect = tools.isno(connect_cn)
-            tbs_cn = request.POST.get('tbs', None)
-            tbs = tools.isno(tbs_cn)
-            adg_cn = request.POST.get('adg', None)
-            adg = tools.isno(adg_cn)
-            temp_tbs_cn = request.POST.get('temp_tbs', None)
-            temp_tbs = tools.isno(temp_tbs_cn)
-            undo_tbs_cn = request.POST.get('undo_tbs', None)
-            undo_tbs = tools.isno(undo_tbs_cn)
-            conn_cn = request.POST.get('conn', None)
-            conn = tools.isno(conn_cn)
-            err_info_cn = request.POST.get('err_info', None)
-            err_info = tools.isno(err_info_cn)
-            invalid_index_cn = request.POST.get('invalid_index', None)
-            invalid_index = tools.isno(invalid_index_cn)
-            oracle_lock_cn = request.POST.get('oracle_lock', None)
-            oracle_lock = tools.isno(oracle_lock_cn)
-            oracle_pwd_cn = request.POST.get('oracle_pwd', None)
-            oracle_pwd = tools.isno(oracle_pwd_cn)
-            oracle_event_cn = request.POST.get('oracle_event', None)
-            oracle_event = tools.isno(oracle_event_cn)
-            oracle_pga_cn = request.POST.get('oracle_pga', None)
-            oracle_pga = tools.isno(oracle_pga_cn)
-            oracle_archive_cn = request.POST.get('oracle_archive', None)
-            oracle_archive = tools.isno(oracle_archive_cn)
+            connect = request.POST.get('connect', None)
+            connect = tools.isno(connect)
+            tbs = request.POST.get('tbs', None)
+            tbs = tools.isno(tbs)
+            adg = request.POST.get('adg', None)
+            adg = tools.isno(adg)
+            temp_tbs = request.POST.get('temp_tbs', None)
+            temp_tbs = tools.isno(temp_tbs)
+            undo_tbs = request.POST.get('undo_tbs', None)
+            undo_tbs = tools.isno(undo_tbs)
+            conn = request.POST.get('conn', None)
+            conn = tools.isno(conn)
+            err_info = request.POST.get('err_info', None)
+            err_info = tools.isno(err_info)
+            invalid_index = request.POST.get('invalid_index', None)
+            invalid_index = tools.isno(invalid_index)
+            oracle_lock = request.POST.get('oracle_lock', None)
+            oracle_lock = tools.isno(oracle_lock)
+            oracle_pwd = request.POST.get('oracle_pwd', None)
+            oracle_pwd = tools.isno(oracle_pwd)
+            oracle_event = request.POST.get('oracle_event', None)
+            oracle_event = tools.isno(oracle_event)
+            oracle_pga = request.POST.get('oracle_pga', None)
+            oracle_pga = tools.isno(oracle_pga)
+            oracle_archive = request.POST.get('oracle_archive', None)
+            oracle_archive = tools.isno(oracle_archive)
             models_oracle.TabOracleServers.objects.filter(id=rid).update(tags=tags,host=host, port=port, service_name=service_name,
                                                                   user=user, password=password,
                                                                   user_os=user_os, password_os=password_os,
-                                                                  connect=connect,
-                                                                  connect_cn=connect_cn, tbs=tbs, tbs_cn=tbs_cn,
-                                                                  adg=adg, adg_cn=adg_cn, temp_tbs=temp_tbs,
-                                                                  temp_tbs_cn=temp_tbs_cn,
-                                                                  undo_tbs=undo_tbs, undo_tbs_cn=undo_tbs_cn,
-                                                                  conn=conn, conn_cn=conn_cn, err_info=err_info,
-                                                                  err_info_cn=err_info_cn,invalid_index=invalid_index,invalid_index_cn=invalid_index_cn,
-                                                          oracle_lock =oracle_lock,oracle_lock_cn=oracle_lock_cn,oracle_pwd =oracle_pwd,oracle_pwd_cn=oracle_pwd_cn,
-                                                          oracle_event=oracle_event,oracle_event_cn=oracle_event_cn,pga=oracle_pga,pga_cn=oracle_pga_cn,archive=oracle_archive,archive_cn=oracle_archive_cn)
+                                                                  connect=connect,tbs=tbs,temp_tbs=temp_tbs,
+                                                                  undo_tbs=undo_tbs, conn=conn, err_info=err_info,
+                                                                  invalid_index=invalid_index,
+                                                          oracle_lock =oracle_lock,oracle_pwd =oracle_pwd,
+                                                          oracle_event=oracle_event,pga=oracle_pga,archive=oracle_archive)
             status = 1
         elif request.POST.has_key('logout'):
             logout(request)
@@ -370,7 +366,6 @@ def oracle_servers_edit(request):
 @login_required(login_url='/login')
 def mysql_servers_add(request):
     status = 0
-    messageinfo_list = models_frame.TabAlarmInfo.objects.all()
     if request.method == "POST":
         if request.POST.has_key('commit'):
             tags = request.POST.get('tags', None)
@@ -380,21 +375,18 @@ def mysql_servers_add(request):
             password = base64.encodestring(request.POST.get('password', None))
             user_os = request.POST.get('user_os', None)
             password_os = base64.encodestring(request.POST.get('password_os', None))
-            connect_cn = request.POST.get('connect', None)
-            connect = tools.isno(connect_cn)
-            repl_cn = request.POST.get('repl', None)
-            repl = tools.isno(repl_cn)
-            conn_cn = request.POST.get('conn', None)
-            conn = tools.isno(conn_cn)
-            err_info_cn = request.POST.get('err_info', None)
-            err_info = tools.isno(err_info_cn)
+            connect = request.POST.get('connect', None)
+            connect = tools.isno(connect)
+            repl = request.POST.get('repl', None)
+            repl = tools.isno(repl)
+            conn = request.POST.get('conn', None)
+            conn = tools.isno(conn)
+            err_info = request.POST.get('err_info', None)
+            err_info = tools.isno(err_info)
             models_mysql.TabMysqlServers.objects.create(host=host, port=port, tags=tags,
                                                    user=user, password=password,
                                                    user_os=user_os, password_os=password_os, connect=connect,
-                                                   connect_cn=connect_cn,
-                                                   repl=repl, repl_cn=repl_cn,
-                                                   conn=conn, conn_cn=conn_cn, err_info=err_info,
-                                                   err_info_cn=err_info_cn)
+                                                   repl=repl,conn=conn,  err_info=err_info,)
             status = 1
         elif request.POST.has_key('logout'):
             logout(request)
@@ -428,22 +420,20 @@ def mysql_servers_edit(request):
             password_os_value = models_mysql.TabMysqlServers.objects.values("password_os").filter(id=rid)[0]
             if password_os.encode('utf-8') + '\n' != password_os_value['password_os'].encode('utf-8'):
                 password_os = base64.encodestring(request.POST.get('password_os', None))
-            connect_cn = request.POST.get('connect', None)
-            connect = tools.isno(connect_cn)
-            repl_cn = request.POST.get('repl', None)
-            repl = tools.isno(repl_cn)
-            conn_cn = request.POST.get('conn', None)
-            conn = tools.isno(conn_cn)
-            err_info_cn = request.POST.get('err_info', None)
-            err_info = tools.isno(err_info_cn)
+            connect = request.POST.get('connect', None)
+            connect = tools.isno(connect)
+            repl = request.POST.get('repl', None)
+            repl = tools.isno(repl)
+            conn = request.POST.get('conn', None)
+            conn = tools.isno(conn)
+            err_info = request.POST.get('err_info', None)
+            err_info = tools.isno(err_info)
             models_mysql.TabMysqlServers.objects.filter(id=rid).update(tags=tags,host=host, port=port,
                                                                   user=user, password=password,
                                                                   user_os=user_os, password_os=password_os,
                                                                   connect=connect,
-                                                                  connect_cn=connect_cn,
-                                                                  repl=repl, repl_cn=repl_cn,
-                                                                  conn=conn, conn_cn=conn_cn, err_info=err_info,
-                                                                  err_info_cn=err_info_cn)
+                                                                  repl=repl,
+                                                                  conn=conn, err_info=err_info)
             status = 1
 
         elif request.POST.has_key('logout'):

@@ -39,6 +39,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     [aria-controls="example1"] {
         font-size: 12px;
     }
+    li{list-style: none;}/*这里设置*/
 </style>
 
 <!--
@@ -309,27 +310,22 @@ desired effect
                   <th>ID</th>
                   <th>设备类型</th>
                   <th>告警类型</th>
-                  <th>上限阈值(百分比)</th>
-                  <th>下限阈值</th>
-                   <th>时间阈值(秒)</th>
-                    <th>数量阈值(个)</th>
-                   <th>编辑</th>
+                  <th>运算符</th>
+                  <th>告警阈值</th>
+                   <th>阈值说明</th>
+                   <th>操作</th>
                 </tr>
                 </thead>
                 {% for alarm_setting in alarm_list %}
                  <tr>
                  <td>{{ forloop.counter }} </td>
-                 <td>{{ alarm_setting.db_type}} </td>
+                 <td>{{ alarm_setting.server_type}} </td>
                  <td>{{ alarm_setting.alarm_name}} </td>
-                 <td>{{ alarm_setting.pct_max}} </td>
-                 <td>{{ alarm_setting.size_min }} </td>
-                 <td>{{ alarm_setting.time_max }} </td>
-                 <td>{{ alarm_setting.num_max }} </td>
-                 <td>
-              <div class="box-tools pull-right">
-                <a href="#">
-            <button type="button" class="btn btn-default btn-sm" onclick="return pop(this.value)" value="{{ alarm_setting.id }}"><i class="fa fa-edit"></i></button></a>
-              </div>
+                 <td>{{ alarm_setting.judge}} </td>
+                 <td>{{ alarm_setting.jdg_value }} </td>
+                 <td>{{ alarm_setting.jdg_des }} </td>
+                 <td ><li><a href="#" onclick="return pop('{{ alarm_setting.id }}')" >修改</a>
+                       </li>
                  </td>
                  </tr>
                  {% endfor %}

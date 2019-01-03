@@ -330,6 +330,7 @@ desired effect
                   <th>主机通断告警</th>
                     <th>CPU使用率告警</th>
                     <th>内存使用率告警</th>
+                    <th>swap使用率告警</th>
                     <th>磁盘使用率告警</th>
                     <th>编辑</th>
                     <th>删除</th>
@@ -350,6 +351,9 @@ desired effect
                  </label> </div></td>
                  <td><div class="checkbox"><label>
                  <input type="checkbox"  value="1" name="check_box" {% if linux_server.mem == '1' %} checked {% endif %} disabled>
+                 </label> </div></td>
+                 <td><div class="checkbox"><label>
+                 <input type="checkbox"  value="1" name="check_box" {% if linux_server.swap == '1' %} checked {% endif %} disabled>
                  </label> </div></td>
                  <td><div class="checkbox"><label>
                  <input type="checkbox"  value="1" name="check_box" {% if linux_server.disk == '1' %} checked {% endif %} disabled>
