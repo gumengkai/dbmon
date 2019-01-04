@@ -758,315 +758,337 @@ def check_mysql(tags, host,port,user,password):
     my_log.logger.info('等待2秒待Linux主机信息采集完毕')
     password = base64.decodestring(password)
 
-    conn = MySQLdb.connect(host=host, user=user, passwd=password, port=int(port), connect_timeout=5, charset='utf8')
+    try:
+        conn = MySQLdb.connect(host=host, user=user, passwd=password, port=int(port), connect_timeout=5, charset='utf8')
 
-    my_log.logger.info('%s：开始获取mysql数据库监控信息' % tags)
+        my_log.logger.info('%s：开始获取mysql数据库监控信息' % tags)
 
-    db_rate_level = 'green'
-    # 获取两次状态值
-    my_log.logger.info('%s：获取第一次MySQL状态采样' % tags)
-    mysql_stat = check_msql.get_mysql_status(conn)
-    time.sleep(1)
-    my_log.logger.info('%s：获取第二次MySQL状态采样' % tags)
-    mysql_stat_next = check_msql.get_mysql_status(conn)
+        db_rate_level = 'green'
+        # 获取两次状态值
+        my_log.logger.info('%s：获取第一次MySQL状态采样' % tags)
+        mysql_stat = check_msql.get_mysql_status(conn)
+        time.sleep(1)
+        my_log.logger.info('%s：获取第二次MySQL状态采样' % tags)
+        mysql_stat_next = check_msql.get_mysql_status(conn)
 
-    # 基础信息
-    mysql_version = check_msql.get_mysql_para(conn, 'version')
-    mysql_uptime = float(mysql_stat['Uptime']) / 86400
+        # 基础信息
+        mysql_version = check_msql.get_mysql_para(conn, 'version')
+        mysql_uptime = float(mysql_stat['Uptime']) / 86400
 
-    # 连接信息
-    mysql_max_connections = check_msql.get_mysql_para(conn, 'max_connections')
-    current_conn = mysql_stat['Threads_connected']
-    threads_running = mysql_stat['Threads_running']
-    threads_created = mysql_stat['Threads_created']
-    threads_cached = mysql_stat['Threads_cached']
-    threads_waited = int(check_msql.get_mysql_waits(conn))
-    max_connect_errors = check_msql.get_mysql_para(conn, 'max_connect_errors')
+        # 连接信息
+        mysql_max_connections = check_msql.get_mysql_para(conn, 'max_connections')
+        current_conn = mysql_stat['Threads_connected']
+        threads_running = mysql_stat['Threads_running']
+        threads_created = mysql_stat['Threads_created']
+        threads_cached = mysql_stat['Threads_cached']
+        threads_waited = int(check_msql.get_mysql_waits(conn))
+        max_connect_errors = check_msql.get_mysql_para(conn, 'max_connect_errors')
 
-    mysql_conn_rate = "%2.2f" % (float(current_conn) / float(mysql_max_connections))
+        mysql_conn_rate = "%2.2f" % (float(current_conn) / float(mysql_max_connections))
 
-    # _buffer_size
-    key_buffer_size = float(check_msql.get_mysql_para(conn, 'key_buffer_size')) / 1024 / 1024
-    sort_buffer_size = float(check_msql.get_mysql_para(conn, 'sort_buffer_size')) / 1024
-    join_buffer_size = float(check_msql.get_mysql_para(conn, 'join_buffer_size')) / 1024
-    # _blocks_unused
-    key_blocks_unused = mysql_stat['Key_blocks_unused']
-    key_blocks_used = mysql_stat['Key_blocks_used']
-    key_blocks_not_flushed = mysql_stat['Key_blocks_not_flushed']
+        # _buffer_size
+        key_buffer_size = float(check_msql.get_mysql_para(conn, 'key_buffer_size')) / 1024 / 1024
+        sort_buffer_size = float(check_msql.get_mysql_para(conn, 'sort_buffer_size')) / 1024
+        join_buffer_size = float(check_msql.get_mysql_para(conn, 'join_buffer_size')) / 1024
+        # _blocks_unused
+        key_blocks_unused = mysql_stat['Key_blocks_unused']
+        key_blocks_used = mysql_stat['Key_blocks_used']
+        key_blocks_not_flushed = mysql_stat['Key_blocks_not_flushed']
 
-    key_blocks_used_rate = "%2.2f" % (float(key_blocks_used) / (float(key_blocks_used) + float(key_blocks_unused)))
-    key_buffer_read_rate = "%2.2f" % (1 - float(mysql_stat['Key_reads']) / float(mysql_stat['Key_read_requests']))
-    if float(mysql_stat['Key_write_requests']) <> 0:
-        key_buffer_write_rate = "%2.2f" % (
-                float(mysql_stat['Key_writes']) / float(mysql_stat['Key_write_requests']))
-    else:
-        key_buffer_write_rate = 0
+        key_blocks_used_rate = "%2.2f" % (float(key_blocks_used) / (float(key_blocks_used) + float(key_blocks_unused)))
+        key_buffer_read_rate = "%2.2f" % (1 - float(mysql_stat['Key_reads']) / float(mysql_stat['Key_read_requests']))
+        if float(mysql_stat['Key_write_requests']) <> 0:
+            key_buffer_write_rate = "%2.2f" % (
+                    float(mysql_stat['Key_writes']) / float(mysql_stat['Key_write_requests']))
+        else:
+            key_buffer_write_rate = 0
 
-    # 打开文件数
-    open_files_limit = check_msql.get_mysql_para(conn, 'open_files_limit')
-    open_files = mysql_stat['Open_files']
+        # 打开文件数
+        open_files_limit = check_msql.get_mysql_para(conn, 'open_files_limit')
+        open_files = mysql_stat['Open_files']
 
-    # 表缓存数，已打开表
-    table_open_cache = check_msql.get_mysql_para(conn, 'table_open_cache')
-    open_tables = mysql_stat['Open_tables']
+        # 表缓存数，已打开表
+        table_open_cache = check_msql.get_mysql_para(conn, 'table_open_cache')
+        open_tables = mysql_stat['Open_tables']
 
-    # QPS,TPS
-    mysql_qps = int(mysql_stat_next['Questions']) - int(mysql_stat['Questions'])
-    mysql_tps = int(mysql_stat_next['Com_commit']) + int(mysql_stat_next['Com_rollback']) - (
+        # QPS,TPS
+        mysql_qps = int(mysql_stat_next['Questions']) - int(mysql_stat['Questions'])
+        mysql_tps = int(mysql_stat_next['Com_commit']) + int(mysql_stat_next['Com_rollback']) - (
                 int(mysql_stat['Com_commit']) + int(mysql_stat['Com_rollback']))
 
-    # sql执行情况
-    mysql_sel = int(mysql_stat_next['Com_select']) - int(mysql_stat['Com_select'])
-    mysql_ins = int(mysql_stat_next['Com_insert']) - int(mysql_stat['Com_insert'])
-    mysql_upd = int(mysql_stat_next['Com_update']) - int(mysql_stat['Com_update'])
-    mysql_del = int(mysql_stat_next['Com_delete']) - int(mysql_stat['Com_delete'])
+        # sql执行情况
+        mysql_sel = int(mysql_stat_next['Com_select']) - int(mysql_stat['Com_select'])
+        mysql_ins = int(mysql_stat_next['Com_insert']) - int(mysql_stat['Com_insert'])
+        mysql_upd = int(mysql_stat_next['Com_update']) - int(mysql_stat['Com_update'])
+        mysql_del = int(mysql_stat_next['Com_delete']) - int(mysql_stat['Com_delete'])
 
-    # 流量
-    mysql_bytes_received = (int(mysql_stat_next['Bytes_received']) - int(mysql_stat['Bytes_received'])) / 1024
-    mysql_bytes_sent = (int(mysql_stat_next['Bytes_sent']) - int(mysql_stat['Bytes_sent'])) / 1024
+        # 流量
+        mysql_bytes_received = (int(mysql_stat_next['Bytes_received']) - int(mysql_stat['Bytes_received'])) / 1024
+        mysql_bytes_sent = (int(mysql_stat_next['Bytes_sent']) - int(mysql_stat['Bytes_sent'])) / 1024
 
-    # innodb
-    # innodb_buffer_pool
-    innodb_buffer_pool_size = int(check_msql.get_mysql_para(conn, 'innodb_buffer_pool_size')) / 1024 / 1024
-    innodb_buffer_pool_pages_total = mysql_stat['Innodb_buffer_pool_pages_total']
-    innodb_buffer_pool_pages_data = mysql_stat['Innodb_buffer_pool_pages_data']
-    innodb_buffer_pool_pages_dirty = mysql_stat['Innodb_buffer_pool_pages_dirty']
-    innodb_buffer_pool_pages_flushed = mysql_stat['Innodb_buffer_pool_pages_flushed']
-    innodb_buffer_pool_pages_free = mysql_stat['Innodb_buffer_pool_pages_free']
+        # innodb
+        # innodb_buffer_pool
+        innodb_buffer_pool_size = int(check_msql.get_mysql_para(conn, 'innodb_buffer_pool_size')) / 1024 / 1024
+        innodb_buffer_pool_pages_total = mysql_stat['Innodb_buffer_pool_pages_total']
+        innodb_buffer_pool_pages_data = mysql_stat['Innodb_buffer_pool_pages_data']
+        innodb_buffer_pool_pages_dirty = mysql_stat['Innodb_buffer_pool_pages_dirty']
+        innodb_buffer_pool_pages_flushed = mysql_stat['Innodb_buffer_pool_pages_flushed']
+        innodb_buffer_pool_pages_free = mysql_stat['Innodb_buffer_pool_pages_free']
 
-    # io
-    innodb_io_capacity = check_msql.get_mysql_para(conn, 'innodb_io_capacity')
-    innodb_read_io_threads = check_msql.get_mysql_para(conn, 'innodb_read_io_threads')
-    innodb_write_io_threads = check_msql.get_mysql_para(conn, 'innodb_write_io_threads')
+        # io
+        innodb_io_capacity = check_msql.get_mysql_para(conn, 'innodb_io_capacity')
+        innodb_read_io_threads = check_msql.get_mysql_para(conn, 'innodb_read_io_threads')
+        innodb_write_io_threads = check_msql.get_mysql_para(conn, 'innodb_write_io_threads')
 
-    # innodb_rows
-    innodb_rows_deleted_persecond = int(mysql_stat_next['Innodb_rows_deleted']) - int(
-        mysql_stat['Innodb_rows_deleted'])
-    innodb_rows_inserted_persecond = int(mysql_stat_next['Innodb_rows_inserted']) - int(
-        mysql_stat['Innodb_rows_inserted'])
-    innodb_rows_read_persecond = int(mysql_stat_next['Innodb_rows_read']) - int(mysql_stat['Innodb_rows_read'])
-    innodb_rows_updated_persecond = int(mysql_stat_next['Innodb_rows_updated']) - int(
-        mysql_stat['Innodb_rows_updated'])
+        # innodb_rows
+        innodb_rows_deleted_persecond = int(mysql_stat_next['Innodb_rows_deleted']) - int(
+            mysql_stat['Innodb_rows_deleted'])
+        innodb_rows_inserted_persecond = int(mysql_stat_next['Innodb_rows_inserted']) - int(
+            mysql_stat['Innodb_rows_inserted'])
+        innodb_rows_read_persecond = int(mysql_stat_next['Innodb_rows_read']) - int(mysql_stat['Innodb_rows_read'])
+        innodb_rows_updated_persecond = int(mysql_stat_next['Innodb_rows_updated']) - int(
+            mysql_stat['Innodb_rows_updated'])
 
-    # big_table
-    mysql_big_table_list = check_msql.get_mysql_big_table(conn)
+        # big_table
+        mysql_big_table_list = check_msql.get_mysql_big_table(conn)
 
-    my_log.logger.info('%s：初始化mysql_big_table表' % tags)
-    insert_sql = "insert into mysql_big_table_his select * from mysql_big_table where tags = '%s'" % tags
-    tools.mysql_exec(insert_sql, '')
-    delete_sql = "delete from mysql_big_table where tags = '%s'" % tags
-    tools.mysql_exec(delete_sql, '')
+        my_log.logger.info('%s：初始化mysql_big_table表' % tags)
+        insert_sql = "insert into mysql_big_table_his select * from mysql_big_table where tags = '%s'" % tags
+        tools.mysql_exec(insert_sql, '')
+        delete_sql = "delete from mysql_big_table where tags = '%s'" % tags
+        tools.mysql_exec(delete_sql, '')
 
-    if mysql_big_table_list:
-        for mysql_big_table in mysql_big_table_list:
-            table_size = mysql_big_table[2]
-            if table_size:
-                table_size = float(table_size.encode('utf-8'))
-                if table_size >= 5:
-                    sql = "insert into mysql_big_table(host,tags,db,table_name,total,table_comment) values('%s','%s','%s','%s',%s,'%s')" % (
-                        host, tags, mysql_big_table[0], mysql_big_table[1], table_size, mysql_big_table[3])
-                    tools.mysql_exec(sql, '')
+        if mysql_big_table_list:
+            for mysql_big_table in mysql_big_table_list:
+                table_size = mysql_big_table[2]
+                if table_size:
+                    table_size = float(table_size.encode('utf-8'))
+                    if table_size >= 5:
+                        sql = "insert into mysql_big_table(host,tags,db,table_name,total,table_comment) values('%s','%s','%s','%s',%s,'%s')" % (
+                            host, tags, mysql_big_table[0], mysql_big_table[1], table_size, mysql_big_table[3])
+                        tools.mysql_exec(sql, '')
 
-    # 连接数评级
-    conn_rate_level = tools.get_rate_level(float(mysql_conn_rate))
+        # 连接数评级
+        conn_rate_level = tools.get_rate_level(float(mysql_conn_rate))
 
-    # 归档历史监控数据
-    my_log.logger.info('%s：初始化mysql_db表' % tags)
-    insert_sql = "insert into mysql_db_his select * from mysql_db where tags = '%s'" % tags
-    tools.mysql_exec(insert_sql, '')
-    delete_sql = "delete from mysql_db where tags = '%s'" % tags
-    tools.mysql_exec(delete_sql, '')
+        # 归档历史监控数据
+        my_log.logger.info('%s：初始化mysql_db表' % tags)
+        insert_sql = "insert into mysql_db_his select * from mysql_db where tags = '%s'" % tags
+        tools.mysql_exec(insert_sql, '')
+        delete_sql = "delete from mysql_db where tags = '%s'" % tags
+        tools.mysql_exec(delete_sql, '')
 
-    insert_db_sql = "insert into mysql_db(host,port,tags,version,uptime,max_connections,max_connect_errors,threads_connected,threads_running,threads_created,threads_cached,threads_waited,conn_rate,conn_rate_level,QPS,TPS,bytes_received,bytes_send,open_files_limit,open_files,table_open_cache,open_tables," \
-                    "key_buffer_size,sort_buffer_size,join_buffer_size,key_blocks_unused,key_blocks_used,key_blocks_not_flushed," \
-                    "key_blocks_used_rate,key_buffer_read_rate,key_buffer_write_rate,innodb_buffer_pool_size,innodb_buffer_pool_pages_total,innodb_buffer_pool_pages_data," \
-                    "innodb_buffer_pool_pages_dirty,innodb_buffer_pool_pages_flushed,innodb_buffer_pool_pages_free,innodb_io_capacity,innodb_read_io_threads,innodb_write_io_threads," \
-                    "innodb_rows_deleted_persecond,innodb_rows_inserted_persecond,innodb_rows_read_persecond,innodb_rows_updated_persecond,mon_status,rate_level) values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s," \
-                    "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-    value = (host, port, tags, mysql_version, mysql_uptime, mysql_max_connections, max_connect_errors, current_conn,
-             threads_running,
-             threads_created, threads_cached, threads_waited, mysql_conn_rate,
-             conn_rate_level, mysql_qps, mysql_tps, mysql_bytes_received, mysql_bytes_sent, open_files_limit,
-             open_files, table_open_cache, open_tables,
-             key_buffer_size, sort_buffer_size, join_buffer_size, key_blocks_unused, key_blocks_used,
-             key_blocks_not_flushed,
-             float(key_blocks_used_rate) * 100, float(key_buffer_read_rate) * 100,
-             float(key_buffer_write_rate) * 100,
-             innodb_buffer_pool_size, innodb_buffer_pool_pages_total, innodb_buffer_pool_pages_data,
-             innodb_buffer_pool_pages_dirty, innodb_buffer_pool_pages_flushed, innodb_buffer_pool_pages_free,
-             innodb_io_capacity, innodb_read_io_threads, innodb_write_io_threads, innodb_rows_deleted_persecond,
-             innodb_rows_inserted_persecond, innodb_rows_read_persecond, innodb_rows_updated_persecond,
-             'connected', 'green')
-    tools.mysql_exec(insert_db_sql, value)
-    my_log.logger.info('%s：获取Mysql数据库监控数据(IP：%s 端口号：%s 连接使用率：%s 连接状态：%s )' % (
-        tags, host, port, mysql_conn_rate, 'connected'))
+        insert_db_sql = "insert into mysql_db(host,port,tags,version,uptime,max_connections,max_connect_errors,threads_connected,threads_running,threads_created,threads_cached,threads_waited,conn_rate,conn_rate_level,QPS,TPS,bytes_received,bytes_send,open_files_limit,open_files,table_open_cache,open_tables," \
+                        "key_buffer_size,sort_buffer_size,join_buffer_size,key_blocks_unused,key_blocks_used,key_blocks_not_flushed," \
+                        "key_blocks_used_rate,key_buffer_read_rate,key_buffer_write_rate,innodb_buffer_pool_size,innodb_buffer_pool_pages_total,innodb_buffer_pool_pages_data," \
+                        "innodb_buffer_pool_pages_dirty,innodb_buffer_pool_pages_flushed,innodb_buffer_pool_pages_free,innodb_io_capacity,innodb_read_io_threads,innodb_write_io_threads," \
+                        "innodb_rows_deleted_persecond,innodb_rows_inserted_persecond,innodb_rows_read_persecond,innodb_rows_updated_persecond,mon_status,rate_level) values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s," \
+                        "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+        value = (host, port, tags, mysql_version, mysql_uptime, mysql_max_connections, max_connect_errors, current_conn,
+                 threads_running,
+                 threads_created, threads_cached, threads_waited, mysql_conn_rate,
+                 conn_rate_level, mysql_qps, mysql_tps, mysql_bytes_received, mysql_bytes_sent, open_files_limit,
+                 open_files, table_open_cache, open_tables,
+                 key_buffer_size, sort_buffer_size, join_buffer_size, key_blocks_unused, key_blocks_used,
+                 key_blocks_not_flushed,
+                 float(key_blocks_used_rate) * 100, float(key_buffer_read_rate) * 100,
+                 float(key_buffer_write_rate) * 100,
+                 innodb_buffer_pool_size, innodb_buffer_pool_pages_total, innodb_buffer_pool_pages_data,
+                 innodb_buffer_pool_pages_dirty, innodb_buffer_pool_pages_flushed, innodb_buffer_pool_pages_free,
+                 innodb_io_capacity, innodb_read_io_threads, innodb_write_io_threads, innodb_rows_deleted_persecond,
+                 innodb_rows_inserted_persecond, innodb_rows_read_persecond, innodb_rows_updated_persecond,
+                 'connected', 'green')
+        tools.mysql_exec(insert_db_sql, value)
+        my_log.logger.info('%s：获取Mysql数据库监控数据(IP：%s 端口号：%s 连接使用率：%s 连接状态：%s )' % (
+            tags, host, port, mysql_conn_rate, 'connected'))
 
-    # 复制
-    server_id = check_msql.get_mysql_para(conn, 'server_id')
-    is_slave = ''
-    is_master = ''
-    read_only_result = ''
-    master_server = ''
-    master_port = ''
-    slave_io_run = ''
-    slave_io_rate = ''
-    slave_sql_run = ''
-    slave_sql_rate = ''
-    delay = '-'
-    delay_rate = ''
-    current_binlog_file = ''
-    current_binlog_pos = ''
-    master_binlog_file = ''
-    master_binlog_pos = ''
-    master_binlog_space = ''
-    curs = conn.cursor()
-    master_thread = curs.execute("select * from information_schema.processlist where COMMAND = 'Binlog Dump'")
-    slave_stats = curs.execute('show slave status;')
-    # 判断Mysql角色
-    if master_thread:
-        is_master = 'YES'
-    if slave_stats:
-        is_slave = 'YES'
-    mysql_role = ''
-    if is_master == 'YES' and is_slave <> 'YES':
-        mysql_role = 'master'
-    if is_master <> 'YES' and is_slave == 'YES':
-        mysql_role = 'slave'
-    if is_master == 'YES' and is_slave == 'YES':
-        mysql_role = 'master/slave'
-    if slave_stats:
-        read_only = curs.execute(
-            "select * from information_schema.global_variables where variable_name='read_only';")
-        read_only_query = curs.fetchone()
-        read_only_result = read_only_query[1]
-        slave_info = curs.execute("show slave status;")
-        slave_result = curs.fetchone()
-        master_server = slave_result[1]
-        master_port = slave_result[3]
-        slave_io_run = slave_result[10]
-        if slave_io_run == 'Yes':
-            slave_io_rate = 'green'
-        else:
-            slave_io_rate = 'red'
-        slave_sql_run = slave_result[11]
-        if slave_sql_run == 'Yes':
-            slave_sql_rate = 'green'
-        else:
-            slave_sql_rate = 'red'
-        delay = slave_result[32]
-
-        if delay is None:
-            delay_rate = 'red'
-        else:
-            if int(delay) == 0:
-                delay_rate = 'green'
-            elif int(delay) > 0 and int(delay) < 300:
-                delay_rate = 'yellow'
+        # 复制
+        server_id = check_msql.get_mysql_para(conn, 'server_id')
+        is_slave = ''
+        is_master = ''
+        read_only_result = ''
+        master_server = ''
+        master_port = ''
+        slave_io_run = ''
+        slave_io_rate = ''
+        slave_sql_run = ''
+        slave_sql_rate = ''
+        delay = '-'
+        delay_rate = ''
+        current_binlog_file = ''
+        current_binlog_pos = ''
+        master_binlog_file = ''
+        master_binlog_pos = ''
+        master_binlog_space = ''
+        curs = conn.cursor()
+        master_thread = curs.execute("select * from information_schema.processlist where COMMAND = 'Binlog Dump'")
+        slave_stats = curs.execute('show slave status;')
+        # 判断Mysql角色
+        if master_thread:
+            is_master = 'YES'
+        if slave_stats:
+            is_slave = 'YES'
+        mysql_role = ''
+        if is_master == 'YES' and is_slave <> 'YES':
+            mysql_role = 'master'
+        if is_master <> 'YES' and is_slave == 'YES':
+            mysql_role = 'slave'
+        if is_master == 'YES' and is_slave == 'YES':
+            mysql_role = 'master/slave'
+        if slave_stats:
+            read_only = curs.execute(
+                "select * from information_schema.global_variables where variable_name='read_only';")
+            read_only_query = curs.fetchone()
+            read_only_result = read_only_query[1]
+            slave_info = curs.execute("show slave status;")
+            slave_result = curs.fetchone()
+            master_server = slave_result[1]
+            master_port = slave_result[3]
+            slave_io_run = slave_result[10]
+            if slave_io_run == 'Yes':
+                slave_io_rate = 'green'
             else:
+                slave_io_rate = 'red'
+            slave_sql_run = slave_result[11]
+            if slave_sql_run == 'Yes':
+                slave_sql_rate = 'green'
+            else:
+                slave_sql_rate = 'red'
+            delay = slave_result[32]
+
+            if delay is None:
                 delay_rate = 'red'
+            else:
+                if int(delay) == 0:
+                    delay_rate = 'green'
+                elif int(delay) > 0 and int(delay) < 300:
+                    delay_rate = 'yellow'
+                else:
+                    delay_rate = 'red'
 
-        current_binlog_file = slave_result[9]
-        current_binlog_pos = slave_result[21]
-        master_binlog_file = slave_result[5]
-        master_binlog_pos = slave_result[6]
-    elif master_thread:
-        read_only = curs.execute(
-            "select * from information_schema.global_variables where variable_name='read_only';")
-        read_only_query = curs.fetchone()
-        read_only_result = read_only_query[1]
-        master_info = curs.execute('show master status;')
-        master_result = curs.fetchone()
-        master_binlog_file = master_result[0]
-        master_binlog_pos = master_result[1]
-    if master_thread:
-        binlog_file = curs.execute('show master logs;')
-        binlogs = 0
-        if binlog_file:
-            for row in curs.fetchall():
-                binlogs = binlogs + row[1]
-        master_binlog_space = int(binlogs) / 1024 / 1024
+            current_binlog_file = slave_result[9]
+            current_binlog_pos = slave_result[21]
+            master_binlog_file = slave_result[5]
+            master_binlog_pos = slave_result[6]
+        elif master_thread:
+            read_only = curs.execute(
+                "select * from information_schema.global_variables where variable_name='read_only';")
+            read_only_query = curs.fetchone()
+            read_only_result = read_only_query[1]
+            master_info = curs.execute('show master status;')
+            master_result = curs.fetchone()
+            master_binlog_file = master_result[0]
+            master_binlog_pos = master_result[1]
+        if master_thread:
+            binlog_file = curs.execute('show master logs;')
+            binlogs = 0
+            if binlog_file:
+                for row in curs.fetchall():
+                    binlogs = binlogs + row[1]
+            master_binlog_space = int(binlogs) / 1024 / 1024
 
-    # 初始化mysql_repl表
-    my_log.logger.info('%s：初始化mysql_repl表' % tags)
-    insert_sql = "insert into mysql_repl_his select * from mysql_repl where tags = '%s'" % tags
-    tools.mysql_exec(insert_sql, '')
-    delete_sql = "delete from mysql_repl where tags = '%s'" % tags
-    tools.mysql_exec(delete_sql, '')
+        # 初始化mysql_repl表
+        my_log.logger.info('%s：初始化mysql_repl表' % tags)
+        insert_sql = "insert into mysql_repl_his select * from mysql_repl where tags = '%s'" % tags
+        tools.mysql_exec(insert_sql, '')
+        delete_sql = "delete from mysql_repl where tags = '%s'" % tags
+        tools.mysql_exec(delete_sql, '')
 
-    insert_repl_sql = "insert into mysql_repl(tags,server_id,host,port,is_master,is_slave,mysql_role,read_only,master_server,master_port,slave_io_run,slave_io_rate,slave_sql_run,slave_sql_rate,delay,delay_rate,current_binlog_file,current_binlog_pos,master_binlog_file,master_binlog_pos,master_binlog_space) values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-    value = (
-        tags, server_id, host, port, is_master, is_slave, mysql_role, read_only_result, master_server, master_port,
-        slave_io_run, slave_io_rate, slave_sql_run, slave_sql_rate, delay, delay_rate, current_binlog_file,
-        current_binlog_pos, master_binlog_file, master_binlog_pos, master_binlog_space)
-    tools.mysql_exec(insert_repl_sql, value)
-    my_log.logger.info('%s：获取Mysql数据库复制数据' % tags)
+        insert_repl_sql = "insert into mysql_repl(tags,server_id,host,port,is_master,is_slave,mysql_role,read_only,master_server,master_port,slave_io_run,slave_io_rate,slave_sql_run,slave_sql_rate,delay,delay_rate,current_binlog_file,current_binlog_pos,master_binlog_file,master_binlog_pos,master_binlog_space) values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+        value = (
+            tags, server_id, host, port, is_master, is_slave, mysql_role, read_only_result, master_server, master_port,
+            slave_io_run, slave_io_rate, slave_sql_run, slave_sql_rate, delay, delay_rate, current_binlog_file,
+            current_binlog_pos, master_binlog_file, master_binlog_pos, master_binlog_space)
+        tools.mysql_exec(insert_repl_sql, value)
+        my_log.logger.info('%s：获取Mysql数据库复制数据' % tags)
 
-    # 更新数据库打分信息
-    my_log.logger.info('%s :开始更新Mysql数据库评分信息' % tags)
+        # 更新数据库打分信息
+        my_log.logger.info('%s :开始更新Mysql数据库评分信息' % tags)
 
-    # 内存使用率扣分
-    db_mem_decute = 0
-    db_mem_decute_reason = ''
-    mem_stat = tools.mysql_query(
-        "select host,host_name,mem_used from os_info where mem_used is not null and host = '%s'" % host)
-    if mem_stat == 0:
-        my_log.logger.warning('%s：内存使用率未采集到数据' % host)
+        # 内存使用率扣分
         db_mem_decute = 0
-    else:
-        db_mem_used = float(mem_stat[0][2])
-        db_mem_decute = tools.get_decute(db_mem_used)
-        if db_mem_decute <> 0:
-            db_mem_decute_reason = '内存使用率：%d%% \n' % db_mem_used
+        db_mem_decute_reason = ''
+        mem_stat = tools.mysql_query(
+            "select host,host_name,mem_used from os_info where mem_used is not null and host = '%s'" % host)
+        if mem_stat == 0:
+            my_log.logger.warning('%s：内存使用率未采集到数据' % host)
+            db_mem_decute = 0
         else:
-            db_mem_decute_reason = ''
+            db_mem_used = float(mem_stat[0][2])
+            db_mem_decute = tools.get_decute(db_mem_used)
+            if db_mem_decute <> 0:
+                db_mem_decute_reason = '内存使用率：%d%% \n' % db_mem_used
+            else:
+                db_mem_decute_reason = ''
 
-    # cpu使用率扣分
-    db_cpu_decute_reason = ''
-    cpu_stat = tools.mysql_query(
-        "select host,host_name,cpu_used from os_info where cpu_used is not null and host = '%s'" % host)
-    if cpu_stat == 0:
-        my_log.logger.warning('%s：CPU使用率未采集到数据' % host)
-        db_cpu_decute = 0
-    else:
-        db_cpu_used = float(cpu_stat[0][2])
-        db_cpu_decute = tools.get_decute(db_cpu_used)
-        if db_cpu_decute <> 0:
-            db_cpu_decute_reason = 'CPU使用率：%d%% \n' % db_cpu_used
+        # cpu使用率扣分
+        db_cpu_decute_reason = ''
+        cpu_stat = tools.mysql_query(
+            "select host,host_name,cpu_used from os_info where cpu_used is not null and host = '%s'" % host)
+        if cpu_stat == 0:
+            my_log.logger.warning('%s：CPU使用率未采集到数据' % host)
+            db_cpu_decute = 0
         else:
-            db_cpu_decute_reason = ''
+            db_cpu_used = float(cpu_stat[0][2])
+            db_cpu_decute = tools.get_decute(db_cpu_used)
+            if db_cpu_decute <> 0:
+                db_cpu_decute_reason = 'CPU使用率：%d%% \n' % db_cpu_used
+            else:
+                db_cpu_decute_reason = ''
 
-    # 连接数扣分
-    db_conn_decute = 0
-    db_conn_decute_reason = ''
-    db_conn_decute = tools.get_decute(float(mysql_conn_rate))
-    if db_conn_decute <> 0:
-        db_conn_decute_reason = '连接数：%d%% \n' % mysql_conn_rate
-    else:
+        # 连接数扣分
+        db_conn_decute = 0
         db_conn_decute_reason = ''
+        db_conn_decute = tools.get_decute(float(mysql_conn_rate))
+        if db_conn_decute <> 0:
+            db_conn_decute_reason = '连接数：%d%% \n' % mysql_conn_rate
+        else:
+            db_conn_decute_reason = ''
 
-    db_top_decute = max(db_conn_decute, db_cpu_decute, db_mem_decute)
-    db_all_rate = 100 - db_top_decute
-    if db_all_rate >= 60:
-        db_rate_color = 'green'
-        db_rate_level = 'success'
-    elif db_all_rate >= 20 and db_all_rate < 60:
-        db_rate_color = 'yellow'
-        db_rate_level = 'warning'
-    else:
-        db_rate_color = 'red'
-        db_rate_level = 'danger'
-    db_all_decute_reason = db_conn_decute_reason + db_cpu_decute_reason + db_mem_decute_reason
+        db_top_decute = max(db_conn_decute, db_cpu_decute, db_mem_decute)
+        db_all_rate = 100 - db_top_decute
+        if db_all_rate >= 60:
+            db_rate_color = 'green'
+            db_rate_level = 'success'
+        elif db_all_rate >= 20 and db_all_rate < 60:
+            db_rate_color = 'yellow'
+            db_rate_level = 'warning'
+        else:
+            db_rate_color = 'red'
+            db_rate_level = 'danger'
+        db_all_decute_reason = db_conn_decute_reason + db_cpu_decute_reason + db_mem_decute_reason
 
-    delete_sql = "delete from mysql_db_rate where tags= '%s'" % tags
-    tools.mysql_exec(delete_sql, '')
+        delete_sql = "delete from mysql_db_rate where tags= '%s'" % tags
+        tools.mysql_exec(delete_sql, '')
 
-    # 插入总评分及扣分明细
-    insert_sql = "insert into mysql_db_rate(host,port,tags,conn_decute,cpu_decute,mem_decute,db_rate,db_rate_level,db_rate_color,db_rate_reason) select host,port,tags,'%s','%s','%s','%s','%s','%s','%s' from tab_mysql_servers where tags ='%s'" % (
-        db_conn_decute, db_cpu_decute, db_mem_decute, db_all_rate, db_rate_level, db_rate_color,
-        db_all_decute_reason, tags)
-    tools.mysql_exec(insert_sql, '')
-    my_log.logger.info('%s扣分明细，连接数扣分:%s，cpu使用率扣分:%s，内存使用率扣分:%s，总评分:%s,扣分原因:%s' % (
-        tags, db_conn_decute, db_cpu_decute, db_mem_decute, db_all_rate, db_all_decute_reason))
+        # 插入总评分及扣分明细
+        insert_sql = "insert into mysql_db_rate(host,port,tags,conn_decute,cpu_decute,mem_decute,db_rate,db_rate_level,db_rate_color,db_rate_reason) select host,port,tags,'%s','%s','%s','%s','%s','%s','%s' from tab_mysql_servers where tags ='%s'" % (
+            db_conn_decute, db_cpu_decute, db_mem_decute, db_all_rate, db_rate_level, db_rate_color,
+            db_all_decute_reason, tags)
+        tools.mysql_exec(insert_sql, '')
+        my_log.logger.info('%s扣分明细，连接数扣分:%s，cpu使用率扣分:%s，内存使用率扣分:%s，总评分:%s,扣分原因:%s' % (
+            tags, db_conn_decute, db_cpu_decute, db_mem_decute, db_all_rate, db_all_decute_reason))
+
+    except Exception, e:
+        error_msg = "%s mysql数据库连接失败：%s" % (tags, unicode(str(e), errors='ignore'))
+        db_rate_level = 'red'
+        my_log.logger.error(error_msg)
+        my_log.logger.info('%s：初始化mysql_db表' % tags)
+        insert_sql = "insert into mysql_db_his select * from mysql_db where tags = '%s'" % tags
+        tools.mysql_exec(insert_sql, '')
+        delete_sql = "delete from mysql_db where tags = '%s'" % tags
+        tools.mysql_exec(delete_sql, '')
+        error_sql = "insert into mysql_db(host,port,tags,mon_status,rate_level) values(%s,%s,%s,%s,%s)"
+        value = (host, port, tags, 'connected error', db_rate_level)
+        tools.mysql_exec(error_sql, value)
+        # 更新数据库打分信息
+        my_log.logger.info('%s :开始更新数据库评分信息' % tags)
+        delete_sql = "delete from mysql_db_rate where tags= '%s'" % tags
+        tools.mysql_exec(delete_sql, '')
+        insert_sql = "insert into mysql_db_rate(host,port,tags,db_rate,db_rate_level,db_rate_color,db_rate_reason) select host,port,tags,'0','danger','red','connected error' from tab_mysql_servers where tags ='%s'" % tags
+        tools.mysql_exec(insert_sql, '')
+        my_log.logger.info('%s扣分明细，总评分:%s,扣分原因:%s' % (tags, '0', 'conected error'))
+
 
 
 

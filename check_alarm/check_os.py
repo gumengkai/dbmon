@@ -92,7 +92,6 @@ def os_get_mem(host,user,password):
     return use*100
 
 
-
 # 获取文件系统使用率
 def os_get_disk(host,user,password):
     ssh_client = paramiko.SSHClient()

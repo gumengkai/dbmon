@@ -216,11 +216,11 @@ def show_oracle(request):
 @login_required(login_url='/login')
 def show_oracle_resource(request):
     messageinfo_list = models_frame.TabAlarmInfo.objects.all()
-    tagsinfo = models_oracle.TabOracleServers.objects.all()
+    tagsinfo = models_oracle.OracleDb.objects.filter(mon_status='connected')
 
     tagsdefault = request.GET.get('tagsdefault')
     if not tagsdefault:
-        tagsdefault = models_oracle.TabOracleServers.objects.order_by('tags')[0].tags
+        tagsdefault = models_oracle.OracleDb.objects.filter(mon_status='connected').order_by('tags')[0].tags
     typedefault = request.GET.get('typedefault')
 
     redo_range_default = request.GET.get('redo_range_default')

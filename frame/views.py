@@ -445,7 +445,7 @@ def mysql_servers_edit(request):
 @login_required(login_url='/login')
 def show_alarm(request):
     messageinfo_list = models_frame.TabAlarmInfo.objects.all()
-    paginator_msg = Paginator(messageinfo_list, 5)
+    paginator_msg = Paginator(messageinfo_list, 10)
     page_msg = request.GET.get('page')
     try:
         messageinfos = paginator_msg.page(page_msg)
@@ -2136,11 +2136,11 @@ def oracle_switchover(request):
 @login_required(login_url='/login')
 def oracle_top_sql(request):
     messageinfo_list = models_frame.TabAlarmInfo.objects.all()
-    tagsinfo = models_oracle.TabOracleServers.objects.all().order_by('tags')
+    tagsinfo = models_oracle.OracleDb.objects.all().filter(mon_status='connected',open_mode='READ WRITE').order_by('tags')
 
     tagsdefault = request.GET.get('tagsdefault')
     if not tagsdefault:
-        tagsdefault = models_oracle.TabOracleServers.objects.order_by('tags')[0].tags
+        tagsdefault = models_oracle.OracleDb.objects.filter(mon_status='connected',open_mode='READ WRITE').order_by('tags')[0].tags
     sql = "select host,port,service_name,user,password,user_os,password_os from tab_oracle_servers where tags= '%s' " % tagsdefault
     oracle = tools.mysql_query(sql)
     host = oracle[0][0]
@@ -2288,11 +2288,11 @@ def oracle_backup(request):
 @login_required(login_url='/login')
 def oracle_rpt(request):
     messageinfo_list = models_frame.TabAlarmInfo.objects.all()
-    tagsinfo = models_oracle.TabOracleServers.objects.all()
+    tagsinfo = models_oracle.OracleDb.objects.filter(mon_status='connected')
 
     tagsdefault = request.GET.get('tagsdefault')
     if not tagsdefault:
-        tagsdefault = models_oracle.TabOracleServers.objects.order_by('tags')[0].tags
+        tagsdefault = models_oracle.OracleDb.objects.filter(mon_status='connected').order_by('tags')[0].tags
     typedefault = request.GET.get('typedefault')
     if not typedefault:
         typedefault = '生成AWR报告'
@@ -3341,11 +3341,11 @@ def crontab_edit(request):
 @login_required(login_url='/login')
 def mysql_slowquery(request):
     messageinfo_list = models_frame.TabAlarmInfo.objects.all()
-    tagsinfo = models_mysql.TabMysqlServers.objects.all()
+    tagsinfo = models_mysql.MysqlDb.objects.filter(mon_status='connected')
 
     tagsdefault = request.GET.get('tagsdefault')
     if not tagsdefault:
-        tagsdefault = models_mysql.TabMysqlServers.objects.order_by('tags')[0].tags
+        tagsdefault = models_mysql.MysqlDb.objects.filter(mon_status='connected').order_by('tags')[0].tags
 
     sql = "select host,port,user,password,user_os,password_os from tab_mysql_servers where tags= '%s' " % tagsdefault
     mysql_conf = tools.mysql_query(sql)
@@ -3396,5 +3396,5 @@ def mysql_slowquery(request):
         msg_num = 0
         msg_last_content = ''
         tim_last = ''
-    return render(request,'mysql_slowquery.html', {'tagsdefault': tagsdefault,'tagsinfo':tagsinfo,'msg_num':msg_num,'msg_last_content':msg_last_content,'tim_last':tim_last,'slow_log_file':slow_log_file,'slow_query_list':slow_query_list })
+    return render(request,'mysql_slowquery.html', {'tagsdefault': tagsdefault,'tagsinfo':tagsinfo,'msg_num':msg_num,'msg_last_content':msg_last_content,'tim_last':tim_last,'slow_query_list':slow_query_list })
 

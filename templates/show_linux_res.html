@@ -386,9 +386,9 @@ desired effect
       </div>
       <!-- /.row -->
               <div class="box-body">
-                  <div class="nav-tabs-custom" id="resmenu">
-            <ul class="nav nav-tabs">
-              <li class="active"><a href="#disk" data-toggle="tab" aria-expanded="false">磁盘</a></li>
+                  <div class="nav-tabs-custom" >
+            <ul class="nav nav-tabs" id="resmenu">
+              <li class="active" href=""><a href="#disk" data-toggle="tab" aria-expanded="false">磁盘</a></li>
               <li class=""><a href="#proc" data-toggle="tab" aria-expanded="false">进程</a></li>
               <li class=""><a href="#mem" data-toggle="tab" aria-expanded="true">内存&虚拟内存</a></li>
             </ul>
@@ -534,14 +534,14 @@ desired effect
                 <div class="row">
           <!-- /.row -->
             </div>
-              <div class="conn" id="proc-grow-chart" style="height: 300px; width: 993px"></div>
+              <div class="conn" id="proc-grow-chart" style="height: 300px; width: 943px"></div>
             </div>
             <!-- /.box-body-->
            <div class="box-body">
                 <div class="row">
           <!-- /.row -->
             </div>
-              <div class="conn" id="switch-grow-chart" style="height: 300px; width: 993px"></div>
+              <div class="conn" id="switch-grow-chart" style="height: 300px; width: 943px"></div>
             </div>
             <!-- /.box-body-->
               </div>
@@ -555,14 +555,14 @@ desired effect
                 <div class="row">
           <!-- /.row -->
             </div>
-              <div class="conn" id="mem-grow-chart" style="height: 300px; width: 993px"></div>
+              <div class="conn" id="mem-grow-chart" style="height: 300px; width: 943px"></div>
             </div>
             <!-- /.box-body-->
             <div class="box-body">
                 <div class="row">
           <!-- /.row -->
             </div>
-              <div class="conn" id="swap-grow-chart" style="height: 300px; width: 993px"></div>
+              <div class="conn" id="swap-grow-chart" style="height: 300px; width: 943px"></div>
             </div>
             <!-- /.box-body-->
                   <div class="box-header">
@@ -573,13 +573,13 @@ desired effect
                 <div class="row">
           <!-- /.row -->
             </div>
-              <div class="conn" id="vmpage-grow-chart" style="height: 300px; width: 993px"></div>
+              <div class="conn" id="vmpage-grow-chart" style="height: 300px; width: 943px"></div>
             </div>
                   <div class="box-body">
                 <div class="row">
           <!-- /.row -->
             </div>
-              <div class="conn" id="vmswap-grow-chart" style="height: 300px; width: 993px"></div>
+              <div class="conn" id="vmswap-grow-chart" style="height: 300px; width: 943px"></div>
             </div>
               </div>
               <!-- /.tab-pane -->
@@ -647,71 +647,6 @@ desired effect
 <script src="/static/layer/layer.js"></script>
 
 <script>
-  $(function () {
-    //Initialize Select2 Elements
-    $('.select2').select2()
-
-    //Datemask dd/mm/yyyy
-    $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
-    //Datemask2 mm/dd/yyyy
-    $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
-    //Money Euro
-    $('[data-mask]').inputmask()
-
-    //Date range picker
-    $('#reservation').daterangepicker()
-    //Date range picker with time picker
-    $('#reservationtime').daterangepicker({ timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A' })
-    //Date range as a button
-    $('#daterange-btn').daterangepicker(
-      {
-        ranges   : {
-          'Today'       : [moment(), moment()],
-          'Yesterday'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-          'Last 7 Days' : [moment().subtract(6, 'days'), moment()],
-          'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-          'This Month'  : [moment().startOf('month'), moment().endOf('month')],
-          'Last Month'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-        },
-        startDate: moment().subtract(29, 'days'),
-        endDate  : moment()
-      },
-      function (start, end) {
-        $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
-      }
-    )
-
-    //Date picker
-    $('#datepicker').datepicker({
-      autoclose: true
-    })
-
-    //iCheck for checkbox and radio inputs
-    $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
-      checkboxClass: 'icheckbox_minimal-blue',
-      radioClass   : 'iradio_minimal-blue'
-    })
-    //Red color scheme for iCheck
-    $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
-      checkboxClass: 'icheckbox_minimal-red',
-      radioClass   : 'iradio_minimal-red'
-    })
-    //Flat red color scheme for iCheck
-    $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
-      checkboxClass: 'icheckbox_flat-green',
-      radioClass   : 'iradio_flat-green'
-    })
-
-    //Colorpicker
-    $('.my-colorpicker1').colorpicker()
-    //color picker with addon
-    $('.my-colorpicker2').colorpicker()
-
-    //Timepicker
-    $('.timepicker').timepicker({
-      showInputs: false
-    })
-  })
 
   //表单提交
 function submitForm(){
@@ -732,89 +667,82 @@ function submitForm_ms(){
 }
 
   // ####################  【rd_avk&wr_avkb趋势】图形  ####################
- var myChart_avkb_grow = echarts.init(document.getElementById('avkb-grow-chart'));
- option_avkb_grow = {
-     tooltip: {
-         trigger: 'axis',
-         axisPointer: {
-             type: 'cross'
-         }
-     },
-         legend: {
-        data:['读请求平均大小(KB)','写请求平均大小(KB)']
-    },
-     toolbox: {
-         show: true,
-         feature: {
-             saveAsImage: {}
-         }
-     },
-     xAxis:  {
-         type: 'category',
-         boundaryGap: false,
-         zlevel: 1,
-         data: [{% for i in disk_grow_list %}'{{ i.chk_time | date:"m-d H:i:s" }}',{% endfor %}]
-     },
-     yAxis: {
-         type: 'value',
-         axisLabel: {
-             formatter: '{value}'
-         },
-         axisPointer: {
-             snap: true
-         },
-         scale: true
-     },
-     series: [
-         {
-             name:'读请求平均大小(KB)',
-             type:'line',
-             smooth: true,
-             itemStyle: {
-              normal: {
-                color: "#84d4c5"
-              }
-              },
-              lineStyle: {
-               normal: {
-                color: "#84d4c5"
-              }
-              },
-             areaStyle: {
-               normal: {
-                color: "#84d4c5",
-                opacity: 0.8
-               }
-             },
-             data: [{% for i in disk_grow_list %}{{ i.rd_avgkb }},{% endfor %}]
-         },
-         {
-             name:'写请求平均大小(KB)',
-             type:'line',
-             smooth: true,
-             itemStyle: {
-              normal: {
-                color: "#d4cda6"
-              }
-              },
-             areaStyle: {
-               normal: {
-                color: "#d4cda6",
-                opacity: 0.8
-               }
-             },
-             data: [{% for i in disk_grow_list %}{{ i.wr_avgkb }},{% endfor %}]
-         }
-     ]
- };
- myChart_avkb_grow.showLoading();  //显示loading
- setInterval(function () {
-     myChart_avkb_grow.hideLoading();  //显示完成后不显示loading
-     myChart_avkb_grow.setOption(option_avkb_grow, true);
- },500);
+    option_avkb_grow = {
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross'
+            }
+        },
+            legend: {
+           data:['读请求平均大小(KB)','写请求平均大小(KB)']
+       },
+        toolbox: {
+            show: true,
+            feature: {
+                saveAsImage: {}
+            }
+        },
+        xAxis:  {
+            type: 'category',
+            boundaryGap: false,
+            zlevel: 1,
+            data: [{% for i in disk_grow_list %}'{{ i.chk_time | date:"m-d H:i:s" }}',{% endfor %}]
+        },
+        yAxis: {
+            type: 'value',
+            axisLabel: {
+                formatter: '{value}'
+            },
+            axisPointer: {
+                snap: true
+            },
+            scale: true
+        },
+        series: [
+            {
+                name:'读请求平均大小(KB)',
+                type:'line',
+                smooth: true,
+                itemStyle: {
+                 normal: {
+                   color: "#84d4c5"
+                 }
+                 },
+                 lineStyle: {
+                  normal: {
+                   color: "#84d4c5"
+                 }
+                 },
+                areaStyle: {
+                  normal: {
+                   color: "#84d4c5",
+                   opacity: 0.8
+                  }
+                },
+                data: [{% for i in disk_grow_list %}{{ i.rd_avgkb }},{% endfor %}]
+            },
+            {
+                name:'写请求平均大小(KB)',
+                type:'line',
+                smooth: true,
+                itemStyle: {
+                 normal: {
+                   color: "#d4cda6"
+                 }
+                 },
+                areaStyle: {
+                  normal: {
+                   color: "#d4cda6",
+                   opacity: 0.8
+                  }
+                },
+                data: [{% for i in disk_grow_list %}{{ i.wr_avgkb }},{% endfor %}]
+            }
+        ]
+    };
 
   // ####################  【rd_rt&wr_rt&q_time&s_time趋势】图形  ####################
- var myChart_ms_grow = echarts.init(document.getElementById('ms-grow-chart'));
  option_ms_grow = {
      tooltip: {
          trigger: 'axis',
@@ -938,15 +866,8 @@ function submitForm_ms(){
          }
      ]
  };
- myChart_ms_grow.showLoading();  //显示loading
- setInterval(function () {
-     myChart_ms_grow.hideLoading();  //显示完成后不显示loading
-     myChart_ms_grow.setOption(option_ms_grow, true);
- },500);
-
 
  // ####################  【rd_s&wr_s&rd_mrg&wr_mgrg&iops趋势】图形  ####################
- var myChart_qc_grow = echarts.init(document.getElementById('qc-grow-chart'));
  option_qc_grow = {
      tooltip: {
          trigger: 'axis',
@@ -1092,14 +1013,8 @@ function submitForm_ms(){
          }
      ]
  };
- myChart_qc_grow.showLoading();  //显示loading
- setInterval(function () {
-     myChart_qc_grow.hideLoading();  //显示完成后不显示loading
-     myChart_qc_grow.setOption(option_qc_grow, true);
- },500);
 
  // ####################  【rd_m_s&wr_m_s趋势】图形  ####################
- var myChart_mb_grow = echarts.init(document.getElementById('mb-grow-chart'));
  option_mb_grow = {
      tooltip: {
          trigger: 'axis',
@@ -1179,14 +1094,8 @@ function submitForm_ms(){
          },
      ]
  };
- myChart_mb_grow.showLoading();  //显示loading
- setInterval(function () {
-     myChart_mb_grow.hideLoading();  //显示完成后不显示loading
-     myChart_mb_grow.setOption(option_mb_grow, true);
- },500);
 
  // ####################  【busy&rd_cnc&wr_cnc&in_prg趋势】图形  ####################
- var myChart_busy_grow = echarts.init(document.getElementById('busy-grow-chart'));
  option_busy_grow = {
      tooltip: {
          trigger: 'axis',
@@ -1310,11 +1219,6 @@ function submitForm_ms(){
          }
      ]
  };
- myChart_busy_grow.showLoading();  //显示loading
- setInterval(function () {
-     myChart_busy_grow.hideLoading();  //显示完成后不显示loading
-     myChart_busy_grow.setOption(option_busy_grow, true);
- },500);
 
 
  // ####################  【proc进程趋势】图形  ####################
@@ -1420,11 +1324,6 @@ function submitForm_ms(){
          }
      ]
  };
- myChart_proc_grow.showLoading();  //显示loading
- setInterval(function () {
-     myChart_proc_grow.hideLoading();  //显示完成后不显示loading
-     myChart_proc_grow.setOption(option_proc_grow, true);
- },500);
 
  // ####################  【中断次数趋势】图形  ####################
  var myChart_switch_grow = echarts.init(document.getElementById('switch-grow-chart'));
@@ -1529,11 +1428,6 @@ function submitForm_ms(){
          }
      ]
  };
- myChart_switch_grow.showLoading();  //显示loading
- setInterval(function () {
-     myChart_switch_grow.hideLoading();  //显示完成后不显示loading
-     myChart_switch_grow.setOption(option_switch_grow, true);
- },500);
 
 // ####################  【Mem趋势】图形  ####################
  var myChart_mem_grow = echarts.init(document.getElementById('mem-grow-chart'));
@@ -1660,13 +1554,9 @@ function submitForm_ms(){
          }
      ]
  };
- myChart_mem_grow.showLoading();  //显示loading
- setInterval(function () {
-     myChart_mem_grow.hideLoading();  //显示完成后不显示loading
-     myChart_mem_grow.setOption(option_mem_grow, true);
- },500);
 
-// ####################  【Mem趋势】图形  ####################
+
+ // ####################  【Mem趋势】图形  ####################
  var myChart_swap_grow = echarts.init(document.getElementById('swap-grow-chart'));
  option_swap_grow = {
      tooltip: {
@@ -1747,11 +1637,7 @@ function submitForm_ms(){
          }
      ]
  };
- myChart_swap_grow.showLoading();  //显示loading
- setInterval(function () {
-     myChart_swap_grow.hideLoading();  //显示完成后不显示loading
-     myChart_swap_grow.setOption(option_swap_grow, true);
- },500);
+
 
 // ####################  【vmpage趋势】图形  ####################
  var myChart_vmpage_grow = echarts.init(document.getElementById('vmpage-grow-chart'));
@@ -1878,12 +1764,6 @@ function submitForm_ms(){
          }
      ]
  };
- myChart_vmpage_grow.showLoading();  //显示loading
- setInterval(function () {
-     myChart_vmpage_grow.hideLoading();  //显示完成后不显示loading
-     myChart_vmpage_grow.setOption(option_vmpage_grow, true);
- },500);
-
 
 // ####################  【vmswap趋势】图形  ####################
  var myChart_vmswap_grow = echarts.init(document.getElementById('vmswap-grow-chart'));
@@ -1966,33 +1846,124 @@ function submitForm_ms(){
          }
      ]
  };
- myChart_vmswap_grow.showLoading();  //显示loading
- setInterval(function () {
-     myChart_vmswap_grow.hideLoading();  //显示完成后不显示loading
-     myChart_vmswap_grow.setOption(option_vmswap_grow, true);
- },500);
 
-$(function () {
-    myChart_avkb_grow.setOption(option_avkb_grow, true);
+  $(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2()
 
-    $(".resmenu").click(function (e) {
-        var href = $(this).attr("href"),i=$(this).attr("data-sid");
+     var myChart_avkb_grow = echarts.init(document.getElementById('avkb-grow-chart'));
+     myChart_avkb_grow.showLoading();  //显示loading
+     setInterval(function () {
+     myChart_avkb_grow.hideLoading();  //显示完成后不显示loading
+     myChart_avkb_grow.setOption(option_avkb_grow, true);
+    },500);
+
+     var myChart_ms_grow = echarts.init(document.getElementById('ms-grow-chart'));
+     myChart_ms_grow.showLoading();  //显示loading
+     setInterval(function () {
+     myChart_ms_grow.hideLoading();  //显示完成后不显示loading
+     myChart_ms_grow.setOption(option_ms_grow, true);
+     },500);
+
+     var myChart_qc_grow = echarts.init(document.getElementById('qc-grow-chart'));
+     myChart_qc_grow.showLoading();  //显示loading
+     setInterval(function () {
+     myChart_qc_grow.hideLoading();  //显示完成后不显示loading
+     myChart_qc_grow.setOption(option_qc_grow, true);
+     },500);
+
+     var myChart_mb_grow = echarts.init(document.getElementById('mb-grow-chart'));
+     myChart_mb_grow.showLoading();  //显示loading
+     setInterval(function () {
+     myChart_mb_grow.hideLoading();  //显示完成后不显示loading
+     myChart_mb_grow.setOption(option_mb_grow, true);
+     },500);
+
+     var myChart_busy_grow = echarts.init(document.getElementById('busy-grow-chart'));
+     myChart_busy_grow.showLoading();  //显示loading
+     setInterval(function () {
+     myChart_busy_grow.hideLoading();  //显示完成后不显示loading
+     myChart_busy_grow.setOption(option_busy_grow, true);
+     },500);
+
+    $("#resmenu li a").click(function (e) {
+
+
+        var href = $(this).attr("href");
         if (href == "#disk") {
+            myChart_avkb_grow.showLoading();  //显示loading
+            setInterval(function () {
+            myChart_avkb_grow.hideLoading();  //显示完成后不显示loading
             myChart_avkb_grow.setOption(option_avkb_grow, true);
+           },500);
+
+            myChart_ms_grow.showLoading();  //显示loading
+            setInterval(function () {
+            myChart_ms_grow.hideLoading();  //显示完成后不显示loading
+            myChart_ms_grow.setOption(option_ms_grow, true);
+            },500);
+
+            myChart_qc_grow.showLoading();  //显示loading
+            setInterval(function () {
+            myChart_qc_grow.hideLoading();  //显示完成后不显示loading
+            myChart_qc_grow.setOption(option_qc_grow, true);
+            },500);
+
+            myChart_mb_grow.showLoading();  //显示loading
+            setInterval(function () {
+            myChart_mb_grow.hideLoading();  //显示完成后不显示loading
+            myChart_mb_grow.setOption(option_mb_grow, true);
+            },500);
+
+            myChart_busy_grow.showLoading();  //显示loading
+            setInterval(function () {
+            myChart_busy_grow.hideLoading();  //显示完成后不显示loading
+            myChart_busy_grow.setOption(option_busy_grow, true);
+            },500);
+
             return
         }
         if (href == "#proc") {
-            myChart_avkb_grow.setOption(option_avkb_grow, true);
+            myChart_proc_grow.showLoading();  //显示loading
+            setInterval(function () {
+            myChart_proc_grow.hideLoading();  //显示完成后不显示loading
+            myChart_proc_grow.setOption(option_proc_grow, true);
+            },500);
+            myChart_switch_grow.showLoading();  //显示loading
+            setInterval(function () {
+            myChart_switch_grow.hideLoading();  //显示完成后不显示loading
+            myChart_switch_grow.setOption(option_switch_grow, true);
+            },500);
             return
         }
         if (href == "#mem") {
-            myChart_avkb_grow.setOption(option_avkb_grow, true);
+            myChart_mem_grow.showLoading();  //显示loading
+            setInterval(function () {
+            myChart_mem_grow.hideLoading();  //显示完成后不显示loading
+            myChart_mem_grow.setOption(option_mem_grow, true);
+            },500);
+            myChart_swap_grow.showLoading();  //显示loading
+            setInterval(function () {
+            myChart_swap_grow.hideLoading();  //显示完成后不显示loading
+            myChart_swap_grow.setOption(option_swap_grow, true);
+            },500);
+            myChart_vmpage_grow.showLoading();  //显示loading
+            setInterval(function () {
+            myChart_vmpage_grow.hideLoading();  //显示完成后不显示loading
+            myChart_vmpage_grow.setOption(option_vmpage_grow, true);
+            },500);
+            myChart_vmswap_grow.showLoading();  //显示loading
+            setInterval(function () {
+            myChart_vmswap_grow.hideLoading();  //显示完成后不显示loading
+            myChart_vmswap_grow.setOption(option_vmswap_grow, true);
+            },500);
             return
         }
-        
+
     })
 
-})
+
+  })
 
 </script>
 <script>
