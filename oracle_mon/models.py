@@ -456,3 +456,17 @@ class OracleLogmnr(models.Model):
     class Meta:
         managed = False
         db_table = 'oracle_logmnr'
+
+
+class OracleAlertLog(models.Model):
+    id = models.IntegerField(primary_key=True)
+    tags = models.CharField(max_length=255)
+    host = models.CharField(max_length=255)
+    log_time = models.CharField(max_length=255)
+    log_level = models.CharField(max_length=255)
+    log_content = models.TextField(blank=True, null=True)
+    chk_time = models.DateTimeField()
+
+    class Meta:
+        managed = False
+        db_table = 'oracle_alert_log'

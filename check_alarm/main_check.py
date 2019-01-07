@@ -16,6 +16,7 @@ import check_mysql as check_msql
 import check_oracle as check_ora
 import check_os as check_os
 from check_linux import LinuxStat
+import log_parser
 import tools as tools
 import alarm as alarm
 import my_log as my_log
@@ -390,6 +391,8 @@ def check_oracle(tags,host,port,service_name,user,password,user_os,password_os):
         adg_trs = check_ora.check_adg_trs(conn)
         adg_apl = check_ora.check_adg_apl(conn)
         err_info = check_ora.check_err(conn, host, user_os, password_os)
+        # 详细后台日志入库
+        log_parser.get_oracle_alert(conn,tags,host,user_os,password_os)
         db_rate_level = 'green'
         # 连接数评级
         conn_percent = float(process[0][3])

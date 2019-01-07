@@ -360,6 +360,9 @@ def show_oracle_resource(request):
         """
     oracle_users = tools.oracle_django_query(user, password, url, sql)
 
+    # alert日志
+    oracle_alert_logs = models_oracle.OracleAlertLog.objects.all().order_by('-log_time')
+
 
     if request.method == 'POST':
         if request.POST.has_key('select_tags') :
@@ -382,7 +385,7 @@ def show_oracle_resource(request):
                                                       'msg_last_content': msg_last_content, 'tim_last': tim_last,
                                                        'tbsinfos': tbsinfos, 'undotbsinfos': undotbsinfos,'tmptbsinfos': tmptbsinfos,'oracle_controlfiles':oracle_controlfiles,
                                                        'oracle_redo_files':oracle_redo_files,'oracle_redo_cnts':oracle_redo_cnts,'oracle_table_changes':oracle_table_changes,
-                                                       'oracle_sequences':oracle_sequences,'oracle_users':oracle_users })
+                                                       'oracle_sequences':oracle_sequences,'oracle_users':oracle_users,'oracle_alert_logs':oracle_alert_logs})
 
 
 @login_required(login_url='/login')

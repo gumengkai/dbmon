@@ -137,11 +137,12 @@ def alarm():
             host_name = str(line[2].encode("utf-8"))
             swap_used = float(line[3])
             swap_free = float(line[4])
+            swap_used_pct = float(swap_used /(swap_used+swap_free)/2)*100
             url = host_ip + '/' + host_name
             is_alarm = tools.mysql_query("select mem from tab_linux_servers where tags = '%s'" % tags)
             if is_alarm[0][0] == '1':
-                if mem_used > pct_alarm:
-                    alarm_content = '%s：Linux主机内存使用率告警 \n 告警时间：%s \n 主机ip：%s \n 主机名：%s \n 内存使用率：%s \n' % (
+                if swap_used_pct > pct_alarm:
+                    alarm_content = '%s：Linux主机swap使用率告警 \n 告警时间：%s \n 主机ip：%s \n 主机名：%s \n 内存使用率：%s \n' % (
                         tags, tools.now(), host_ip, host_name, mem_used)
                     email_header = '%s：Linux主机内存使用率告警' % tags
                     my_log.logger.info(alarm_content)
