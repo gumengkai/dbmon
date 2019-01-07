@@ -142,9 +142,9 @@ def alarm():
             is_alarm = tools.mysql_query("select mem from tab_linux_servers where tags = '%s'" % tags)
             if is_alarm[0][0] == '1':
                 if swap_used_pct > pct_alarm:
-                    alarm_content = '%s：Linux主机swap使用率告警 \n 告警时间：%s \n 主机ip：%s \n 主机名：%s \n 内存使用率：%s \n' % (
-                        tags, tools.now(), host_ip, host_name, mem_used)
-                    email_header = '%s：Linux主机内存使用率告警' % tags
+                    alarm_content = '%s：Linux主机swap使用率告警 \n 告警时间：%s \n 主机ip：%s \n 主机名：%s \n swap使用率：%s \n' % (
+                        tags, tools.now(), host_ip, host_name, swap_used_pct)
+                    email_header = '%s：Linux主机swap使用率告警' % tags
                     my_log.logger.info(alarm_content)
                     alarm_sql = 'insert into tab_alarm_info(tags,url,alarm_type,alarm_header,alarm_content) value(%s,%s,%s,%s,%s)'
                     value = (tags, url, alarm_name, email_header, alarm_content,)
