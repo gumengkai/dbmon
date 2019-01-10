@@ -378,6 +378,7 @@ desired effect
               <li class=""><a href="#key" data-toggle="tab" aria-expanded="false">键缓存</a></li>
               <li class=""><a href="#innodb" data-toggle="tab" aria-expanded="true">innodb</a></li>
               <li class=""><a href="#big_table" data-toggle="tab" aria-expanded="true">big table</a></li>
+              <li class=""><a href="#log" data-toggle="tab" aria-expanded="true">日志</a></li>
             </ul>
             <div class="tab-content">
                 <div class="active tab-pane" id="res">
@@ -563,6 +564,20 @@ desired effect
               </table>
              </div>
           </div>
+              </div>
+              <!-- /.tab-pane -->
+
+                <div class="tab-pane" id="log">
+            {% for log in mysql_alert_logs %}
+        <div class="box-header with-border">
+          <h3 class="box-title">{{ log.log_time }} <small style="color: {% if log.log_level == 'error' %} red  {% endif %};">{{ log.log_level }}</small></h3>
+        </div>
+        <div class="box-body">
+            <pre>{{ log.log_content }}</pre>
+        </div>
+        <!-- /.box-body -->
+        <!-- /.box-footer-->
+              {% endfor %}
               </div>
               <!-- /.tab-pane -->
 

@@ -253,6 +253,9 @@ def show_mysql_res(request):
     dbinfo_list = models_mysql.MysqlDb.objects.filter(tags=tagsdefault).all()
     big_table_list = models_mysql.MysqlBigTable.objects.filter(tags=tagsdefault).all()
 
+    # alert日志
+    mysql_alert_logs = models_oracle.AlertLog.objects.filter(server_type='MySQL',tags=tagsdefault).order_by('-log_time')
+
     if request.method == 'POST':
         if request.POST.has_key('select_tags') :
             tagsdefault = request.POST.get('select_tags', None).encode("utf-8")
@@ -272,7 +275,7 @@ def show_mysql_res(request):
         tim_last = ''
     return render_to_response('show_mysql_res.html', {'tagsdefault': tagsdefault,'tagsinfo': tagsinfo,'msg_num':msg_num,
                                                       'msg_last_content': msg_last_content, 'tim_last': tim_last, 'dbinfo_list':dbinfo_list,
-                                                      'big_table_list':big_table_list})
+                                                      'big_table_list':big_table_list,'mysql_alert_logs':mysql_alert_logs})
 
 
 

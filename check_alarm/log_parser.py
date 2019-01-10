@@ -5,6 +5,8 @@ import re
 import paramiko
 import tools
 from datetime import datetime, timedelta
+import check_mysql
+import MySQLdb
 
 
 log1="""/usr/sbin/mysqld, Version: 5.6.27-0ubuntu0.14.04.1 ((Ubuntu)). started with:
@@ -326,11 +328,11 @@ def test_slow_log():
 
 def get_log_level_oracle(log_content):
     if 'ORA-' in log_content or 'Error' in log_content:
-        return "ERROR"
+        return "error"
     elif 'Starting ORACLE instance' in log_content:
-        return 'STARTUP'
+        return 'startup'
     elif 'Shutting down instance' in log_content:
-        return 'SHUTDOWN'
+        return 'shutdown'
     else:
         return "info"
 
@@ -342,17 +344,17 @@ def oracle_alert_stream(log):
 
     yield ('', 0)
 
-KeyWordList=['ORA-','Starting ORACLE instance','Shutting down instance']
+OracleKeyWordList=['ORA-','Starting ORACLE instance','Shutting down instance']
 
 def save_oracle_alert_log(tags,host,log_meta):
-    for key in KeyWordList:
+    for key in OracleKeyWordList:
         if log_meta:
             save = False
             if key in log_meta['log_content']:
                 save = True
             if save:
-                sql = "insert into oracle_alert_log(tags,host,log_time,log_level,log_content) values(%s,%s,%s,%s,%s)"
-                values = (tags, host, log_meta['log_time'], log_meta['log_level'], log_meta['log_content'])
+                sql = "insert into alert_log(tags,host,server_type,log_time,log_level,log_content) values(%s,%s,%s,%s,%s,%s)"
+                values = (tags, host, 'Oracle',log_meta['log_time'], log_meta['log_level'], log_meta['log_content'])
                 tools.mysql_exec(sql, values)
                 log_meta = []
 
@@ -416,6 +418,98 @@ def mysql_slow_query(tags,host,port,user,password,slow_log_file):
     # 日志解析
     parse_slow_logs(slowlog_test_stream(log), tags,host,port,slow_log_file)
 
+
+MysqlKeyWordList=['ERROR','Warning']
+
+def mysql_errorlog_stream(log):
+    log_lines = log.splitlines()
+    for line in log_lines:
+        if log_lines != '':
+            yield (line, 0)
+
+    yield ('', 0)
+
+def get_log_level_mysql(log_content):
+    if "[ERROR]" in log_content:
+        return "error"
+    elif "[Warning]" in log_content:
+        return "warn"
+    else:
+        return "info"
+
+
+def save_mysql_alert_log(tags,host,log_meta):
+    for key in MysqlKeyWordList:
+        if log_meta:
+            save = False
+            if key in log_meta['log_content']:
+                save = True
+            if save:
+                sql = "insert into alert_log(tags,host,server_type,log_time,log_level,log_content) values(%s,%s,%s,%s,%s,%s)"
+                values = (tags, host,'MySQL',log_meta['log_time'], log_meta['log_level'], log_meta['log_content'])
+                tools.mysql_exec(sql, values)
+                log_meta = []
+
+
+def parse_mysql_alert_logs(tags,host,log_stream):
+
+    log_meta = {}
+
+    reg_date = re.compile('(\d{6} \d{2}:\d{2}:\d{2})|(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})|(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})')
+
+    log_buffer = []
+
+    for log_line, log_pos in log_stream:
+        if log_line == '\n' or log_line == '':
+            if len(log_buffer) > 0:
+                log_content = "".join(log_buffer).strip()
+                log_meta['log_content'] = log_content
+                log_meta['log_level'] = get_log_level_mysql(log_content)
+                save_mysql_alert_log(tags,host,log_meta)
+                log_buffer = []
+            continue
+
+        m = reg_date.match(log_line)
+        if m:
+            if len(log_buffer) > 0:
+                log_content = "".join(log_buffer).strip()
+                log_meta['log_content'] = log_content
+                log_meta['log_level'] = get_log_level_mysql(log_content)
+                save_mysql_alert_log(tags,host,log_meta)
+                log_buffer = []
+
+            log_t1, log_t2,log_t3 = m.groups()
+            if log_t2 is not None:
+                log_time = datetime.strptime(log_t2, '%Y-%m-%d %H:%M:%S')
+            elif log_t3 is not None:
+                log_time = datetime.strptime(log_t3, '%Y-%m-%dT%H:%M:%S')
+            else:
+                log_time = datetime.strptime(log_t1, '%y%m%d %H:%M:%S')
+
+            log_meta['log_time'] = str(log_time - TZ_ADJUST)
+            log_meta['log_content'] = log_line.strip()
+            log_meta['log_level'] = get_log_level_mysql(log_line)
+            save_mysql_alert_log(tags, host, log_meta)
+            continue
+
+        log_buffer.append(log_line)
+        if len(log_buffer) > 100:
+            log_content = "".join(log_buffer).strip()
+            log_meta['log_content'] = log_content
+            log_meta['log_level'] = get_log_level_mysql(log_content)
+            save_mysql_alert_log(tags, host, log_meta)
+            log_buffer = []
+
+    if len(log_buffer) > 0:
+        log_content = "".join(log_buffer).strip()
+        log_meta['log_content'] = log_content
+        log_meta['log_level'] = get_log_level_mysql(log_content)
+        save_mysql_alert_log(tags, host, log_meta)
+        log_buffer = []
+
+    return log_pos
+
+
 def get_oracle_alert(conn,tags,host,user,password):
     # 取后台日志路径
     cur = conn.cursor()
@@ -427,28 +521,44 @@ def get_oracle_alert(conn,tags,host,user,password):
     ssh_client = paramiko.SSHClient()
     ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     ssh_client.connect(host, 22, user, password)
-    command = 'tail -30000 %s/alert_*.log' %diag_trace_dir
+    command = 'tail -300 %s/alert_*.log' %diag_trace_dir
     std_in, std_out, std_err = ssh_client.exec_command(command)
     fd = std_out
     log = fd.read()
     # 清空原日志数据
-    sql = "delete from oracle_alert_log"
+    sql = "delete from alert_log where tags='%s'  and server_type='Oracle' " %tags
     tools.mysql_exec(sql,'')
     parse_oracle_alert_logs(tags,host,oracle_alert_stream(log))
 
+def get_mysql_alert(conn,tags,host,user,password):
+    # 取后台日志路径
+    alert_log = check_mysql.get_mysql_para(conn,'log_error')
+    # 建立ssh连接，抓取后台日志
+    ssh_client = paramiko.SSHClient()
+    ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    ssh_client.connect(host, 22, user, password)
+    command = 'tail -300 %s' %alert_log
+    std_in, std_out, std_err = ssh_client.exec_command(command)
+    fd = std_out
+    log = fd.read()
+    # 清空原日志数据
+    sql = "delete from alert_log where tags='%s' and server_type='MySQL' " %tags
+    tools.mysql_exec(sql,'')
+    parse_mysql_alert_logs(tags,host,oracle_alert_stream(log))
+
+
 if __name__ == '__main__':
 
-    tags = 'orcl'
-    host = '192.168.48.10'
-    user = 'oracle'
-    password = 'oracle'
-
-    alert_log = '/u01/app/oracle/diag/rdbms/orcl/orcl/trace/alert*.log'
-
-    test_oracle_alert(tags,host,user,password,alert_log)
-
-
-
+    tags = 'mysql'
+    host = '192.168.48.50'
+    port = 3306
+    user = 'mysql'
+    password = 'mysqld'
+    conn = MySQLdb.connect(host=host, user='root', passwd='mysqld', port=int(port), connect_timeout=5, charset='utf8')
+    # 清空原日志数据
+    sql = "delete from alert_log where tags='%s' " % tags
+    tools.mysql_exec(sql, '')
+    get_mysql_alert(conn,tags,host,user,password)
 
 
 

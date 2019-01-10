@@ -709,7 +709,7 @@ desired effect
         <div class="tab-pane" id="log">
             {% for log in oracle_alert_logs %}
         <div class="box-header with-border">
-          <h3 class="box-title">{{ log.log_time }} <small style="color: {% if log.log_level == 'ERROR' %} red  {% endif %};">{{ log.log_level }}</small></h3>
+          <h3 class="box-title">{{ log.log_time }} <small style="color: {% if log.log_level == 'error' %} red  {% endif %};">{{ log.log_level }}</small></h3>
         </div>
         <div class="box-body">
             <pre>{{ log.log_content }}</pre>

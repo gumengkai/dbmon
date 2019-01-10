@@ -757,9 +757,11 @@ def check_oracle(tags,host,port,service_name,user,password,user_os,password_os):
 
 
 
-def check_mysql(tags, host,port,user,password):
+def check_mysql(tags, host,port,user,password,user_os,password_os):
     my_log.logger.info('等待2秒待Linux主机信息采集完毕')
     password = base64.decodestring(password)
+    password_os = base64.decodestring(password_os)
+
 
     try:
         conn = MySQLdb.connect(host=host, user=user, passwd=password, port=int(port), connect_timeout=5, charset='utf8')
@@ -777,6 +779,9 @@ def check_mysql(tags, host,port,user,password):
         # 基础信息
         mysql_version = check_msql.get_mysql_para(conn, 'version')
         mysql_uptime = float(mysql_stat['Uptime']) / 86400
+
+        # 后台日志
+        log_parser.get_mysql_alert(conn,tags,host,user_os,password_os)
 
         # 连接信息
         mysql_max_connections = check_msql.get_mysql_para(conn, 'max_connections')
@@ -1187,7 +1192,7 @@ if __name__ =='__main__':
             for i in xrange(len(mysql_servers)):
                 m_server = Process(target=check_mysql, args=(
                     mysql_servers[i][0], mysql_servers[i][1], mysql_servers[i][2], mysql_servers[i][3],
-                    mysql_servers[i][4]))
+                    mysql_servers[i][4],mysql_servers[i][5],mysql_servers[i][6]))
                 m_server.start()
                 my_log.logger.info('%s 开始采集mysql数据库信息' %mysql_servers[i][0])
                 p_pool.append(m_server)
