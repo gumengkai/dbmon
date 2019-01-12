@@ -11,8 +11,8 @@ python+Django数据库监控平台
 核心功能：
 想了想，太多了，Oracle的能想到的都做了，基本可以涵盖所有日常运维、监控内容。主机的主要是CPU，内存，流量一些核心指标，用作参考，MySQL部分的还不是很多，正在着手开发
 
-示例访问地址：
-http://www.dbmon.cn/login/
+Demo：
+http://8h01fi1rdy.51http.tech/login/
 用户名密码：admin/111111
 
 webssh用户名密码：
