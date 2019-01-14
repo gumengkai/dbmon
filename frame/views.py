@@ -2638,7 +2638,7 @@ def my_task(request):
     messageinfo_list = models_frame.TabAlarmInfo.objects.all()
 
     # 数据库操作面板
-    my_task_sql = '''select t1.task_id,
+    my_task_sql = '''select t1.id,t1.task_id,
                t1.task_name,
                t1.server_type,
                t1.tags,
@@ -2653,7 +2653,7 @@ def my_task(request):
                when 'RUNNING' then 'default' 
                when 'SUCCESS' then 'success' 
                else 'danger' end) state_color
-          from my_task t1 order by start_time desc '''
+          from my_task t1 order by id desc '''
 
     my_task_list = tools.mysql_django_query(my_task_sql)
 

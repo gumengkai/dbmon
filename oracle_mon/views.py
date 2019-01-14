@@ -361,7 +361,7 @@ def show_oracle_resource(request):
     oracle_users = tools.oracle_django_query(user, password, url, sql)
 
     # alert日志
-    oracle_alert_logs = models_oracle.AlertLog.objects.filter(server_type='Oracle').order_by('-log_time')
+    oracle_alert_logs = models_oracle.AlertLog.objects.filter(server_type='Oracle',tags=tagsdefault).order_by('-log_time')
 
 
     if request.method == 'POST':

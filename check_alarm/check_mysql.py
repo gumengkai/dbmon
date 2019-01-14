@@ -20,7 +20,7 @@ def get_mysql_para(conn,par):
 # 取状态
 def get_mysql_status(conn):
     curs = conn.cursor()
-    mysql_stat = curs.execute("show global status")
+    curs.execute("show global status")
     mysql_stat_list = curs.fetchall()
     mysql_stat_dict = {}
     for item in mysql_stat_list:

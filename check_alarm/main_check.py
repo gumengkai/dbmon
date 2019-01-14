@@ -762,7 +762,6 @@ def check_mysql(tags, host,port,user,password,user_os,password_os):
     password = base64.decodestring(password)
     password_os = base64.decodestring(password_os)
 
-
     try:
         conn = MySQLdb.connect(host=host, user=user, passwd=password, port=int(port), connect_timeout=5, charset='utf8')
 
@@ -781,7 +780,7 @@ def check_mysql(tags, host,port,user,password,user_os,password_os):
         mysql_uptime = float(mysql_stat['Uptime']) / 86400
 
         # 后台日志
-        log_parser.get_mysql_alert(conn,tags,host,user_os,password_os)
+        log_parser.get_mysql_alert(conn, tags, host, user_os, password_os)
 
         # 连接信息
         mysql_max_connections = check_msql.get_mysql_para(conn, 'max_connections')
@@ -829,6 +828,18 @@ def check_mysql(tags, host,port,user,password,user_os,password_os):
         mysql_ins = int(mysql_stat_next['Com_insert']) - int(mysql_stat['Com_insert'])
         mysql_upd = int(mysql_stat_next['Com_update']) - int(mysql_stat['Com_update'])
         mysql_del = int(mysql_stat_next['Com_delete']) - int(mysql_stat['Com_delete'])
+
+        # 全表扫描数
+        select_scan = int(mysql_stat_next['Select_scan']) - int(mysql_stat['Select_scan'])
+
+        # 慢查询数量
+        slow_queries = int(mysql_stat_next['Slow_queries']) - int(mysql_stat['Slow_queries'])
+
+        # myisam读写次数
+        key_read_requests = int(mysql_stat_next['Key_read_requests']) - int(mysql_stat['Key_read_requests'])
+        key_reads = int(mysql_stat_next['Key_reads']) - int(mysql_stat['Key_reads'])
+        key_write_requests = int(mysql_stat_next['Key_write_requests']) - int(mysql_stat['Key_write_requests'])
+        Key_writes = int(mysql_stat_next['Key_writes']) - int(mysql_stat['Key_writes'])
 
         # 流量
         mysql_bytes_received = (int(mysql_stat_next['Bytes_received']) - int(mysql_stat['Bytes_received'])) / 1024
@@ -886,12 +897,16 @@ def check_mysql(tags, host,port,user,password,user_os,password_os):
         delete_sql = "delete from mysql_db where tags = '%s'" % tags
         tools.mysql_exec(delete_sql, '')
 
-        insert_db_sql = "insert into mysql_db(host,port,tags,version,uptime,max_connections,max_connect_errors,threads_connected,threads_running,threads_created,threads_cached,threads_waited,conn_rate,conn_rate_level,QPS,TPS,bytes_received,bytes_send,open_files_limit,open_files,table_open_cache,open_tables," \
+        insert_db_sql = "insert into mysql_db(host,port,tags,version,uptime,max_connections,max_connect_errors,threads_connected,threads_running,threads_created,threads_cached,threads_waited," \
+                        "conn_rate,conn_rate_level,QPS,TPS,bytes_received,bytes_send,open_files_limit,open_files,table_open_cache,open_tables," \
                         "key_buffer_size,sort_buffer_size,join_buffer_size,key_blocks_unused,key_blocks_used,key_blocks_not_flushed," \
-                        "key_blocks_used_rate,key_buffer_read_rate,key_buffer_write_rate,innodb_buffer_pool_size,innodb_buffer_pool_pages_total,innodb_buffer_pool_pages_data," \
+                        "key_blocks_used_rate,key_buffer_read_rate,key_buffer_write_rate," \
+                        "mysql_sel,mysql_ins,mysql_upd,mysql_del,select_scan,slow_queries,key_read_requests,key_reads,key_write_requests,Key_writes," \
+                        "innodb_buffer_pool_size,innodb_buffer_pool_pages_total,innodb_buffer_pool_pages_data," \
                         "innodb_buffer_pool_pages_dirty,innodb_buffer_pool_pages_flushed,innodb_buffer_pool_pages_free,innodb_io_capacity,innodb_read_io_threads,innodb_write_io_threads," \
-                        "innodb_rows_deleted_persecond,innodb_rows_inserted_persecond,innodb_rows_read_persecond,innodb_rows_updated_persecond,mon_status,rate_level) values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s," \
-                        "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+                        "innodb_rows_deleted_persecond,innodb_rows_inserted_persecond,innodb_rows_read_persecond,innodb_rows_updated_persecond,mon_status,rate_level) " \
+                        "values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s," \
+                        "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
         value = (host, port, tags, mysql_version, mysql_uptime, mysql_max_connections, max_connect_errors, current_conn,
                  threads_running,
                  threads_created, threads_cached, threads_waited, mysql_conn_rate,
@@ -900,7 +915,9 @@ def check_mysql(tags, host,port,user,password,user_os,password_os):
                  key_buffer_size, sort_buffer_size, join_buffer_size, key_blocks_unused, key_blocks_used,
                  key_blocks_not_flushed,
                  float(key_blocks_used_rate) * 100, float(key_buffer_read_rate) * 100,
-                 float(key_buffer_write_rate) * 100,
+                 float(key_buffer_write_rate) * 100, mysql_sel, mysql_ins, mysql_upd, mysql_del, select_scan,
+                 slow_queries,
+                 key_read_requests, key_reads, key_write_requests, Key_writes,
                  innodb_buffer_pool_size, innodb_buffer_pool_pages_total, innodb_buffer_pool_pages_data,
                  innodb_buffer_pool_pages_dirty, innodb_buffer_pool_pages_flushed, innodb_buffer_pool_pages_free,
                  innodb_io_capacity, innodb_read_io_threads, innodb_write_io_threads, innodb_rows_deleted_persecond,
@@ -1076,7 +1093,6 @@ def check_mysql(tags, host,port,user,password,user_os,password_os):
         tools.mysql_exec(insert_sql, '')
         my_log.logger.info('%s扣分明细，连接数扣分:%s，cpu使用率扣分:%s，内存使用率扣分:%s，总评分:%s,扣分原因:%s' % (
             tags, db_conn_decute, db_cpu_decute, db_mem_decute, db_all_rate, db_all_decute_reason))
-
     except Exception, e:
         error_msg = "%s mysql数据库连接失败：%s" % (tags, unicode(str(e), errors='ignore'))
         db_rate_level = 'red'
@@ -1096,8 +1112,6 @@ def check_mysql(tags, host,port,user,password,user_os,password_os):
         insert_sql = "insert into mysql_db_rate(host,port,tags,db_rate,db_rate_level,db_rate_color,db_rate_reason) select host,port,tags,'0','danger','red','connected error' from tab_mysql_servers where tags ='%s'" % tags
         tools.mysql_exec(insert_sql, '')
         my_log.logger.info('%s扣分明细，总评分:%s,扣分原因:%s' % (tags, '0', 'conected error'))
-
-
 
 
 if __name__ =='__main__':

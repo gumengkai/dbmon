@@ -387,7 +387,7 @@ desired effect
               <div class="form-group">
                 <label>选择巡检设备</label>
                 <select id="select_tags" class="form-control select2"  multiple="multiple"
-                         name="select_tags">
+                         name="select_tags" required="required">
                   {% for oracletags in oracletagsinfo %}
                       <option>{{ oracletags.tags }}</option>
                   {% endfor %}

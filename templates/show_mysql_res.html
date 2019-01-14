@@ -352,7 +352,7 @@ desired effect
             <form action="" method="post" id="myform">
                 <div class="box-tools pull-left">
               <div class="form-group">
-                <label>选择Mysql数据库：</label>
+                <label>选择MySQL数据库：</label>
                 <select onchange="submitForm();" class="form-control select2" style="width: 100%;" name="select_tags">
                 <span class="glyphicon glyphicon-search form-control-feedback"></span>
                   <option selected="selected">{{ tagsdefault }}</option>
@@ -363,10 +363,21 @@ desired effect
               </div>
               <!-- /.form-group -->
             </div>
-
             <!-- /.col -->
             </form>
           </div>
+                <div class="col-md-6">
+           <div class="box-tools">
+              <table class="table table-bordered text-center">
+             <tbody>
+                <a href="/show_mysql_res?tagsdefault={{ tagsdefault }}&range_default=1小时"><button type="button" class="btn bg-olive margin">1小时</button></a>
+                 <a href="/show_mysql_res?tagsdefault={{ tagsdefault }}&range_default=1天"><button type="button" class="btn bg-olive margin">1天</button></a>
+                <a href="/show_mysql_res?tagsdefault={{ tagsdefault }}&range_default=7天"><button type="button" class="btn bg-olive margin">7天</button></a>
+                <a href="/show_mysql_res?tagsdefault={{ tagsdefault }}&range_default=30天"><button type="button" class="btn bg-olive margin">30天</button></a>
+              </tbody></table>
+              <!-- /.form-group -->
+            </div>
+        </div>
         </div>
         <!-- /.col -->
       </div>
@@ -375,7 +386,6 @@ desired effect
                   <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
               <li class="active"><a href="#res" data-toggle="tab" aria-expanded="false">资源</a></li>
-              <li class=""><a href="#key" data-toggle="tab" aria-expanded="false">键缓存</a></li>
               <li class=""><a href="#innodb" data-toggle="tab" aria-expanded="true">innodb</a></li>
               <li class=""><a href="#big_table" data-toggle="tab" aria-expanded="true">big table</a></li>
               <li class=""><a href="#log" data-toggle="tab" aria-expanded="true">日志</a></li>
@@ -406,7 +416,7 @@ desired effect
 
                 </tr>
                 </thead>
-                {% for dbinfo in dbinfo_list %}
+                {% for dbinfo in dbinfo %}
                  <tr>
                  <td>{{ forloop.counter }} </td>
                  <td>{{ dbinfo.tags}} </td>
@@ -423,12 +433,10 @@ desired effect
               </table>
             </div>
             <!-- /.box-body -->
-          </div>
-                </div>
-
-       <div class="tab-pane" id="key">
-          <div class="box box-solid">
-            <!-- /.box-header -->
+                      <!-- /.box-header -->
+              <div class="box-header">
+              <h3 class="box-title">键缓存</h3>
+            </div>
             <div class="box-body" style="overflow: auto">
               <table id="example2" class="table table-bordered table-hover">
                 <thead>
@@ -453,7 +461,7 @@ desired effect
                   <th>key_buffer_write</th>
                 </tr>
                 </thead>
-                {% for dbinfo in dbinfo_list %}
+                {% for dbinfo in dbinfo %}
                  <tr>
                  <td>{{ forloop.counter }} </td>
                  <td>{{ dbinfo.tags }} </td>
@@ -472,8 +480,112 @@ desired effect
               </table>
             </div>
           </div>
-         </div>
 
+         <div class="row">
+          <!-- /.row -->
+             <!-- /.box -->
+            <!-- interactive chart -->
+            <div class="col-xs-6">
+            <!-- /.col -->
+            <div class="box-header with-border">
+              <i class="fa fa-bar-chart-o"></i>
+              <h3 class="box-title">打开文件、表数量</h3>
+            </div>
+
+            <div class="box-body">
+                <div class="row">
+          <!-- /.row -->
+        </div>
+              <div class="conn" id="file-grow-chart" style="height: 300px;"></div>
+            </div>
+            <!-- /.box-body-->
+         </div>
+          <!-- /.box -->
+         <!-- interactive chart -->
+            <div class="col-xs-6">
+            <!-- /.col -->
+            <div class="box-header with-border">
+              <i class="fa fa-bar-chart-o"></i>
+              <h3 class="box-title">慢查询数量</h3>
+            </div>
+
+            <div class="box-body">
+                <div class="row">
+          <!-- /.row -->
+        </div>
+              <div class="conn" id="slow-grow-chart" style="height: 300px;"></div>
+            </div>
+            <!-- /.box-body-->
+         </div>
+          <!-- /.box -->
+            <!-- interactive chart -->
+         <div class="col-xs-6">
+            <!-- /.col -->
+            <div class="box-header with-border">
+              <i class="fa fa-bar-chart-o"></i>
+              <h3 class="box-title">每秒sql执行次数</h3>
+            </div>
+
+            <div class="box-body">
+                <div class="row">
+          <!-- /.row -->
+        </div>
+              <div class="conn" id="sql-grow-chart" style="height: 300px;"></div>
+            </div>
+            <!-- /.box-body-->
+        </div>
+                        <!-- interactive chart -->
+            <div class="col-xs-6">
+            <!-- /.col -->
+            <div class="box-header with-border">
+              <i class="fa fa-bar-chart-o"></i>
+              <h3 class="box-title">全表扫描数</h3>
+            </div>
+
+            <div class="box-body">
+                <div class="row">
+          <!-- /.row -->
+        </div>
+              <div class="conn" id="fullscan-grow-chart" style="height: 300px;"></div>
+            </div>
+            <!-- /.box-body-->
+         </div>
+            <!-- interactive chart -->
+            <div class="col-xs-6">
+            <!-- /.col -->
+            <div class="box-header with-border">
+              <i class="fa fa-bar-chart-o"></i>
+              <h3 class="box-title">MyISAM读写次数</h3>
+            </div>
+
+            <div class="box-body">
+                <div class="row">
+          <!-- /.row -->
+        </div>
+              <div class="conn" id="rwcnt-grow-chart" style="height: 300px;"></div>
+            </div>
+            <!-- /.box-body-->
+         </div>
+          <!-- /.box -->
+             <!-- interactive chart -->
+            <div class="col-xs-6">
+            <!-- /.col -->
+            <div class="box-header with-border">
+              <i class="fa fa-bar-chart-o"></i>
+              <h3 class="box-title">MyISAM  Key Buffer读写利用率</h3>
+            </div>
+
+            <div class="box-body">
+                <div class="row">
+          <!-- /.row -->
+        </div>
+              <div class="conn" id="key-grow-chart" style="height: 300px;"></div>
+            </div>
+            <!-- /.box-body-->
+         </div>
+          <!-- /.box -->
+        </div>
+        </div>
           <div class="tab-pane" id="innodb">
            <div class="box box-solid">
             <!-- /.box-header -->
@@ -506,7 +618,7 @@ desired effect
                   <th>delete</th>
                 </tr>
                 </thead>
-                {% for dbinfo in dbinfo_list %}
+                {% for dbinfo in dbinfo %}
                  <tr>
                   <td>{{ forloop.counter }} </td>
                   <td>{{ dbinfo.tags }}</td>
@@ -722,54 +834,573 @@ function submittype(){
     var form = document.getElementById("mytype");
     form.submit();
 }
-   // ####################  【在线日志趋势】图形  ####################
-var dom = document.getElementById("redo-grow-chart");
-var myChart = echarts.init(dom);
-var app = {};
-option = null;
-app.title = '坐标轴刻度与标签对齐';
 
-option = {
-    color: ['#40918d'],
-    tooltip : {
-        trigger: 'axis',
-        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
-            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-        }
+   // ####################  【打开文件、表数量趋势】图形  ####################
+ var myChart_file_grow = echarts.init(document.getElementById('file-grow-chart'));
+ option_file_grow = {
+     tooltip: {
+         trigger: 'axis',
+         axisPointer: {
+             type: 'cross'
+         }
+     },
+         legend: {
+        data:['open_files','open_tables']
     },
-    grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '3%',
-        containLabel: true
+     toolbox: {
+         show: true,
+         feature: {
+             saveAsImage: {}
+         }
+     },
+     xAxis:  {
+         type: 'category',
+         boundaryGap: false,
+         zlevel: 1,
+         data: [{% for i in mysql_grow_list %}'{{ i.chk_time | date:"m-d H:i:s" }}',{% endfor %}]
+     },
+     yAxis: {
+         type: 'value',
+         axisLabel: {
+             formatter: '{value}'
+         },
+         axisPointer: {
+             snap: true
+         },
+         scale: true
+     },
+     series: [
+         {
+             name:'open_files',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#d4d098"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#d4d098"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#d4d098",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in mysql_grow_list %}{{ i.open_files }},{% endfor %}]
+         },
+          {
+             name:'open_tables',
+             type:'line',
+             smooth: true,
+              itemStyle: {
+              normal: {
+                color: "#79d4bc"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#79d4bc"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#79d4bc",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in mysql_grow_list %}{{ i.open_tables }},{% endfor %}]
+         }
+     ]
+ };
+ myChart_file_grow.showLoading();  //显示loading
+ setInterval(function () {
+     myChart_file_grow.hideLoading();  //显示完成后不显示loading
+     myChart_file_grow.setOption(option_file_grow, true);
+ },500);
+
+    // ####################  【慢查询数趋势】图形  ####################
+ var myChart_slow_grow = echarts.init(document.getElementById('slow-grow-chart'));
+ option_slow_grow = {
+     tooltip: {
+         trigger: 'axis',
+         axisPointer: {
+             type: 'cross'
+         }
+     },
+         legend: {
+        data:['slow queries']
     },
-    xAxis : [
-        {
-            type : 'category',
-            data : [{% for i in oracle_redo_cnts %}'{{ i.STAT_DATE }}',{% endfor %}],
-            axisTick: {
-                alignWithLabel: true
-            }
-        }
-    ],
-    yAxis : [
-        {
-            type : 'value'
-        }
-    ],
-    series : [
-        {
-            name:'日志切换数量',
-            type:'bar',
-            barWidth: '60%',
-            data:[{% for i in oracle_redo_cnts %}{{ i.LOG_COUNT }},{% endfor %}]
-        }
-    ]
-};
-;
-if (option && typeof option === "object") {
-    myChart.setOption(option, true);
-}
+     toolbox: {
+         show: true,
+         feature: {
+             saveAsImage: {}
+         }
+     },
+     xAxis:  {
+         type: 'category',
+         boundaryGap: false,
+         zlevel: 1,
+         data: [{% for i in mysql_grow_list %}'{{ i.chk_time | date:"m-d H:i:s" }}',{% endfor %}]
+     },
+     yAxis: {
+         type: 'value',
+         axisLabel: {
+             formatter: '{value}'
+         },
+         axisPointer: {
+             snap: true
+         },
+         scale: true
+     },
+     series: [
+         {
+             name:'select scan',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#d4d098"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#d4d098"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#d4d098",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in mysql_grow_list %}{{ i.slow_queries }},{% endfor %}]
+         }
+     ]
+ };
+ myChart_slow_grow.showLoading();  //显示loading
+ setInterval(function () {
+     myChart_slow_grow.hideLoading();  //显示完成后不显示loading
+     myChart_slow_grow.setOption(option_slow_grow, true);
+ },500);
+
+   // ####################  【每秒sql执行次数趋势】图形  ####################
+ var myChart_sql_grow = echarts.init(document.getElementById('sql-grow-chart'));
+ option_sql_grow = {
+     tooltip: {
+         trigger: 'axis',
+         axisPointer: {
+             type: 'cross'
+         }
+     },
+         legend: {
+        data:['mysql_sel','mysql_ins','mysql_upd','mysql_del']
+    },
+     toolbox: {
+         show: true,
+         feature: {
+             saveAsImage: {}
+         }
+     },
+     xAxis:  {
+         type: 'category',
+         boundaryGap: false,
+         zlevel: 1,
+         data: [{% for i in mysql_grow_list %}'{{ i.chk_time | date:"m-d H:i:s" }}',{% endfor %}]
+     },
+     yAxis: {
+         type: 'value',
+         axisLabel: {
+             formatter: '{value}'
+         },
+         axisPointer: {
+             snap: true
+         },
+         scale: true
+     },
+     series: [
+         {
+             name:'mysql_sel',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#d4d098"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#d4d098"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#d4d098",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in mysql_grow_list %}{{ i.mysql_sel }},{% endfor %}]
+         },
+          {
+             name:'mysql_ins',
+             type:'line',
+             smooth: true,
+              itemStyle: {
+              normal: {
+                color: "#79d4bc"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#79d4bc"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#79d4bc",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in mysql_grow_list %}{{ i.mysql_ins }},{% endfor %}]
+         },
+         {
+             name:'mysql_upd',
+             type:'line',
+             smooth: true,
+              itemStyle: {
+              normal: {
+                color: "#828dd4"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#828dd4"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#828dd4",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in mysql_grow_list %}{{ i.mysql_upd }},{% endfor %}]
+         },
+         {
+             name:'mysql_del',
+             type:'line',
+             smooth: true,
+              itemStyle: {
+              normal: {
+                color: "#ce7258"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#ce7258"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#ce7258",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in mysql_grow_list %}{{ i.mysql_del }},{% endfor %}]
+         }
+     ]
+ };
+ myChart_sql_grow.showLoading();  //显示loading
+ setInterval(function () {
+     myChart_sql_grow.hideLoading();  //显示完成后不显示loading
+     myChart_sql_grow.setOption(option_sql_grow, true);
+ },500);
+
+   // ####################  【全表扫描数趋势】图形  ####################
+ var myChart_fullscan_grow = echarts.init(document.getElementById('fullscan-grow-chart'));
+ option_fullscan_grow = {
+     tooltip: {
+         trigger: 'axis',
+         axisPointer: {
+             type: 'cross'
+         }
+     },
+         legend: {
+        data:['select scan']
+    },
+     toolbox: {
+         show: true,
+         feature: {
+             saveAsImage: {}
+         }
+     },
+     xAxis:  {
+         type: 'category',
+         boundaryGap: false,
+         zlevel: 1,
+         data: [{% for i in mysql_grow_list %}'{{ i.chk_time | date:"m-d H:i:s" }}',{% endfor %}]
+     },
+     yAxis: {
+         type: 'value',
+         axisLabel: {
+             formatter: '{value}'
+         },
+         axisPointer: {
+             snap: true
+         },
+         scale: true
+     },
+     series: [
+         {
+             name:'select scan',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#d4d098"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#d4d098"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#d4d098",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in mysql_grow_list %}{{ i.select_scan }},{% endfor %}]
+         }
+     ]
+ };
+ myChart_fullscan_grow.showLoading();  //显示loading
+ setInterval(function () {
+     myChart_fullscan_grow.hideLoading();  //显示完成后不显示loading
+     myChart_fullscan_grow.setOption(option_fullscan_grow, true);
+ },500);
+
+   // ####################  【Mysam读写次数趋势】图形  ####################
+ var myChart_rwcnt_grow = echarts.init(document.getElementById('rwcnt-grow-chart'));
+ option_rwcnt_grow = {
+     tooltip: {
+         trigger: 'axis',
+         axisPointer: {
+             type: 'cross'
+         }
+     },
+         legend: {
+        data:['key_read_requests','Key_reads','Key_write_requests','Key_writes']
+    },
+     toolbox: {
+         show: true,
+         feature: {
+             saveAsImage: {}
+         }
+     },
+     xAxis:  {
+         type: 'category',
+         boundaryGap: false,
+         zlevel: 1,
+         data: [{% for i in mysql_grow_list %}'{{ i.chk_time | date:"m-d H:i:s" }}',{% endfor %}]
+     },
+     yAxis: {
+         type: 'value',
+         axisLabel: {
+             formatter: '{value}'
+         },
+         axisPointer: {
+             snap: true
+         },
+         scale: true
+     },
+     series: [
+         {
+             name:'key_read_requests',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#d4d098"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#d4d098"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#d4d098",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in mysql_grow_list %}{{ i.key_read_requests }},{% endfor %}]
+         },
+          {
+             name:'Key_reads',
+             type:'line',
+             smooth: true,
+              itemStyle: {
+              normal: {
+                color: "#79d4bc"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#79d4bc"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#79d4bc",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in mysql_grow_list %}{{ i.key_reads }},{% endfor %}]
+         },
+         {
+             name:'Key_write_requests',
+             type:'line',
+             smooth: true,
+              itemStyle: {
+              normal: {
+                color: "#828dd4"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#828dd4"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#828dd4",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in mysql_grow_list %}{{ i.key_write_requests }},{% endfor %}]
+         },
+         {
+             name:'Key_writes',
+             type:'line',
+             smooth: true,
+              itemStyle: {
+              normal: {
+                color: "#ce7258"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#ce7258"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#ce7258",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in mysql_grow_list %}{{ i.Key_writes }},{% endfor %}]
+         }
+     ]
+ };
+ myChart_rwcnt_grow.showLoading();  //显示loading
+ setInterval(function () {
+     myChart_rwcnt_grow.hideLoading();  //显示完成后不显示loading
+     myChart_rwcnt_grow.setOption(option_rwcnt_grow, true);
+ },500);
+
+   // ####################  【Key Buffer读写利用率趋势】图形  ####################
+ var myChart_key_grow = echarts.init(document.getElementById('key-grow-chart'));
+ option_key_grow = {
+     tooltip: {
+         trigger: 'axis',
+         axisPointer: {
+             type: 'cross'
+         }
+     },
+         legend: {
+        data:['key_buffer_read_rate','key_buffer_write_rate']
+    },
+     toolbox: {
+         show: true,
+         feature: {
+             saveAsImage: {}
+         }
+     },
+     xAxis:  {
+         type: 'category',
+         boundaryGap: false,
+         zlevel: 1,
+         data: [{% for i in mysql_grow_list %}'{{ i.chk_time | date:"m-d H:i:s" }}',{% endfor %}]
+     },
+     yAxis: {
+         type: 'value',
+         axisLabel: {
+             formatter: '{value}'
+         },
+         axisPointer: {
+             snap: true
+         },
+         scale: true
+     },
+     series: [
+         {
+             name:'key_buffer_read_rate',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#d4d098"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#d4d098"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#d4d098",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in mysql_grow_list %}{{ i.key_buffer_read_rate }},{% endfor %}]
+         },
+          {
+             name:'key_buffer_write_rate',
+             type:'line',
+             smooth: true,
+              itemStyle: {
+              normal: {
+                color: "#79d4bc"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#79d4bc"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#79d4bc",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in mysql_grow_list %}{{ i.key_buffer_write_rate }},{% endfor %}]
+         }
+     ]
+ };
+ myChart_key_grow.showLoading();  //显示loading
+ setInterval(function () {
+     myChart_key_grow.hideLoading();  //显示完成后不显示loading
+     myChart_key_grow.setOption(option_key_grow, true);
+ },500);
+
 </script>
 <script>
 function pop_profile(m,n){

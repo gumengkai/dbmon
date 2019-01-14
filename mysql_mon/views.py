@@ -247,10 +247,26 @@ def show_mysql_res(request):
     tagsinfo = models_mysql.TabMysqlServers.objects.all()
 
     tagsdefault = request.GET.get('tagsdefault')
+    range_default = request.GET.get('range_default')
+
     if not tagsdefault:
         tagsdefault = models_mysql.TabMysqlServers.objects.order_by('tags')[0].tags
 
-    dbinfo_list = models_mysql.MysqlDb.objects.filter(tags=tagsdefault).all()
+     # 时间区间
+    range_default = request.GET.get('range_default')
+    if not range_default:
+        range_default  = '1小时'
+
+    # 主机信息
+    begin_time = tools.range(range_default)
+    end_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    mysql_grow = models_mysql.MysqlDbHis.objects.filter(tags=tagsdefault,uptime__isnull=False).filter(
+        chk_time__gt=begin_time, chk_time__lt=end_time).order_by('-chk_time')
+    mysql_grow_list = list(mysql_grow)
+    mysql_grow_list.reverse()
+
+    dbinfo = models_mysql.MysqlDb.objects.filter(tags=tagsdefault).all()
     big_table_list = models_mysql.MysqlBigTable.objects.filter(tags=tagsdefault).all()
 
     # alert日志
@@ -274,7 +290,7 @@ def show_mysql_res(request):
         msg_last_content = ''
         tim_last = ''
     return render_to_response('show_mysql_res.html', {'tagsdefault': tagsdefault,'tagsinfo': tagsinfo,'msg_num':msg_num,
-                                                      'msg_last_content': msg_last_content, 'tim_last': tim_last, 'dbinfo_list':dbinfo_list,
+                                                      'msg_last_content': msg_last_content, 'tim_last': tim_last, 'dbinfo':dbinfo,'mysql_grow_list':mysql_grow_list,
                                                       'big_table_list':big_table_list,'mysql_alert_logs':mysql_alert_logs})
 
 
