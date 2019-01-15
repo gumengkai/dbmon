@@ -10,30 +10,29 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2018-12-22 14:37:38
+Date: 2019-01-15 15:43:43
 */
 
-SET FOREIGN_KEY_CHECKS=0;
-
--- ---------------------------
-
--- ----------------------------
--- Records of tab_alarm_conf
--- ----------------------------
-INSERT INTO `tab_alarm_conf` VALUES ('1', 'oracle', 'Oracle数据库通断告警', '0', '0', '1', '0');
-INSERT INTO `tab_alarm_conf` VALUES ('2', 'oracle', 'Oracle数据库表空间使用率告警', '80', '0', '0', '0');
-INSERT INTO `tab_alarm_conf` VALUES ('3', 'oracle', 'Oracle数据库adg延迟告警', '0', '0', '300', '0');
-INSERT INTO `tab_alarm_conf` VALUES ('4', 'oracle', 'Oracle数据库临时表空间告警', '90', '0.1', '0', '0');
-INSERT INTO `tab_alarm_conf` VALUES ('5', 'oracle', 'Oracle数据库undo表空间告警', '90', '0.1', '0', '0');
-INSERT INTO `tab_alarm_conf` VALUES ('6', 'oracle', 'Oracle数据库连接数告警', '90', '20', '0', '0');
-INSERT INTO `tab_alarm_conf` VALUES ('7', 'os', 'Linux主机通断告警', '0', '0', '0', '0');
-INSERT INTO `tab_alarm_conf` VALUES ('8', 'os', 'Linux主机CPU使用率告警', '90', '0', '0', '0');
-INSERT INTO `tab_alarm_conf` VALUES ('9', 'os', 'Linux主机内存使用率告警', '90', '0', '0', '0');
-INSERT INTO `tab_alarm_conf` VALUES ('10', 'os', 'Linux主机文件系统使用率告警', '90', '0.1', '0', '0');
-INSERT INTO `tab_alarm_conf` VALUES ('11', 'oracle', 'Oracle数据库后台日志告警', '0', '0', '0', '0');
-INSERT INTO `tab_alarm_conf` VALUES ('12', 'oracle', 'Oracle数据库综合性能告警', '0', '0', '0', '100');
-INSERT INTO `tab_alarm_conf` VALUES ('13', 'oracle', 'Oracle数据库pga使用率告警', '90', '0', '0', '0');
-INSERT INTO `tab_alarm_conf` VALUES ('14', 'oracle', 'Oracle数据库归档使用率告警', '90', '0', '0', '0');
-INSERT INTO `tab_alarm_conf` VALUES ('15', 'oracle', 'Oracle数据库锁异常告警', '0', '0', '100', '0');
-INSERT INTO `tab_alarm_conf` VALUES ('16', 'oracle', 'Oracle数据库密码过期告警', '0', '10', '0', '0');
-INSERT INTO `tab_alarm_conf` VALUES ('17', 'oracle', 'Oracle失效索引告警', '0', '0', '0', '0');
+INSERT INTO `tab_alarm_conf` VALUES ('1', 'Oracle', 'Oracle数据库通断告警', '>=', '1', '连续中断次数');
+INSERT INTO `tab_alarm_conf` VALUES ('2', 'Oracle', 'Oracle数据库表空间使用率告警', '>=', '90', '使用百分比');
+INSERT INTO `tab_alarm_conf` VALUES ('3', 'Oracle', 'Oracle数据库表空间使用率告警', '<=', '0.5', '单位：GB');
+INSERT INTO `tab_alarm_conf` VALUES ('4', 'Oracle', 'Oracle数据库临时表空间告警', '>=', '90', '使用百分比');
+INSERT INTO `tab_alarm_conf` VALUES ('5', 'Oracle', 'Oracle数据库临时表空间告警', '<=', '0.5', '单位：GB');
+INSERT INTO `tab_alarm_conf` VALUES ('6', 'Oracle', 'Oracle数据库Undo表空间告警', '>=', '90', '使用百分比');
+INSERT INTO `tab_alarm_conf` VALUES ('7', 'Oracle', 'Oracle数据库Undo表空间告警', '<=', '0.5', '单位：GB');
+INSERT INTO `tab_alarm_conf` VALUES ('8', 'Oracle', 'Oracle数据库连接数告警', '>=', '90', '使用百分比');
+INSERT INTO `tab_alarm_conf` VALUES ('9', 'Oracle', 'Oracle数据库adg延迟告警', '>=', '300', '单位：秒');
+INSERT INTO `tab_alarm_conf` VALUES ('10', 'Oracle', 'Oracle数据库后台日志告警', '', null, '检测后台日志异常');
+INSERT INTO `tab_alarm_conf` VALUES ('11', 'Oracle', 'Oracle数据库综合性能告警', '>=', '200', '');
+INSERT INTO `tab_alarm_conf` VALUES ('12', 'Oracle', 'Oracle数据库pga使用率告警', '>=', '90', '使用百分比');
+INSERT INTO `tab_alarm_conf` VALUES ('13', 'Oracle', 'Oracle数据库归档使用率告警', '>=', '90', '使用百分比');
+INSERT INTO `tab_alarm_conf` VALUES ('14', 'Oracle', 'Oracle数据库锁异常告警', '>=', '100', '锁定时间，单位：秒');
+INSERT INTO `tab_alarm_conf` VALUES ('15', 'Oracle', 'Oracle数据库密码过期告警', '<=', '7', '密码过期剩余时间，单位：天');
+INSERT INTO `tab_alarm_conf` VALUES ('16', 'Oracle', 'Oracle失效索引告警', null, null, '检测失效索引');
+INSERT INTO `tab_alarm_conf` VALUES ('17', 'Linux', 'Linux主机通断告警', '>=', '1', '连续中断次数');
+INSERT INTO `tab_alarm_conf` VALUES ('18', 'Linux', 'Linux主机CPU使用率告警', '>=', '90', '使用百分比');
+INSERT INTO `tab_alarm_conf` VALUES ('19', 'Linux', 'Linux主机内存使用率告警', '>=', '90', '使用百分比');
+INSERT INTO `tab_alarm_conf` VALUES ('20', 'Linux', 'Linux主机文件系统使用率告警', '>=', '95', '使用百分比');
+INSERT INTO `tab_alarm_conf` VALUES ('21', 'MySQL', 'MySQL数据库通断告警', '>=', '1', '连续中断次数');
+INSERT INTO `tab_alarm_conf` VALUES ('22', 'Linux', 'Linux主机文件系统使用率告警', '<=', '1', '单位：GB');
+INSERT INTO `tab_alarm_conf` VALUES ('23', 'Linux', 'Linux主机swap使用率告警', '>=', '10', '使用百分比');

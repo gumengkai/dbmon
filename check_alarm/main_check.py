@@ -778,6 +778,9 @@ def check_mysql(tags, host,port,user,password,user_os,password_os):
         # 基础信息
         mysql_version = check_msql.get_mysql_para(conn, 'version')
         mysql_uptime = float(mysql_stat['Uptime']) / 86400
+        mysql_datadir = check_msql.get_mysql_para(conn,'datadir')
+        mysql_slow_query = check_msql.get_mysql_para(conn,'slow_query_log')
+        mysql_binlog = check_msql.get_mysql_para(conn,'log_bin')
 
         # 后台日志
         log_parser.get_mysql_alert(conn, tags, host, user_os, password_os)
@@ -790,13 +793,13 @@ def check_mysql(tags, host,port,user,password,user_os,password_os):
         threads_cached = mysql_stat['Threads_cached']
         threads_waited = int(check_msql.get_mysql_waits(conn))
         max_connect_errors = check_msql.get_mysql_para(conn, 'max_connect_errors')
-
         mysql_conn_rate = "%2.2f" % (float(current_conn) / float(mysql_max_connections))
 
         # _buffer_size
         key_buffer_size = float(check_msql.get_mysql_para(conn, 'key_buffer_size')) / 1024 / 1024
         sort_buffer_size = float(check_msql.get_mysql_para(conn, 'sort_buffer_size')) / 1024
         join_buffer_size = float(check_msql.get_mysql_para(conn, 'join_buffer_size')) / 1024
+
         # _blocks_unused
         key_blocks_unused = mysql_stat['Key_blocks_unused']
         key_blocks_used = mysql_stat['Key_blocks_used']
@@ -854,6 +857,19 @@ def check_mysql(tags, host,port,user,password,user_os,password_os):
         innodb_buffer_pool_pages_flushed = mysql_stat['Innodb_buffer_pool_pages_flushed']
         innodb_buffer_pool_pages_free = mysql_stat['Innodb_buffer_pool_pages_free']
 
+        # innodb缓冲区命中率
+        innodb_buffer_pool_reads_requests = int(mysql_stat_next['Innodb_buffer_pool_read_requests']) - int(mysql_stat['Innodb_buffer_pool_read_requests'])
+        innodb_buffer_pool_reads = int(mysql_stat_next['Innodb_buffer_pool_reads']) - int(mysql_stat['Innodb_buffer_pool_reads'])
+        if innodb_buffer_pool_reads_requests == 0:
+            innodb_buffer_pool_hit = 100
+        else:
+            innodb_buffer_pool_hit = (1 - innodb_buffer_pool_reads / innodb_buffer_pool_reads_requests) * 100
+
+        # innodb缓冲区使用率
+        innodb_buffer_usage = (1-int(innodb_buffer_pool_pages_free)/int(innodb_buffer_pool_pages_total)) * 100
+        # innodb缓冲区脏块率
+        innodb_buffer_dirty_rate = (int(innodb_buffer_pool_pages_dirty)/int(innodb_buffer_pool_pages_total)) * 100
+
         # io
         innodb_io_capacity = check_msql.get_mysql_para(conn, 'innodb_io_capacity')
         innodb_read_io_threads = check_msql.get_mysql_para(conn, 'innodb_read_io_threads')
@@ -867,6 +883,25 @@ def check_mysql(tags, host,port,user,password,user_os,password_os):
         innodb_rows_read_persecond = int(mysql_stat_next['Innodb_rows_read']) - int(mysql_stat['Innodb_rows_read'])
         innodb_rows_updated_persecond = int(mysql_stat_next['Innodb_rows_updated']) - int(
             mysql_stat['Innodb_rows_updated'])
+
+        # innodb锁等待
+        innodb_row_lock_waits = int(mysql_stat_next['Innodb_row_lock_waits']) - int(mysql_stat['Innodb_row_lock_waits'])
+        innodb_row_lock_time_avg = float(mysql_stat['Innodb_row_lock_time_avg'])
+
+        # innodb脏页刷新频率
+        innodb_buffer_pool_pages_flushed_delta = int(mysql_stat_next['Innodb_buffer_pool_pages_flushed']) - int(mysql_stat['Innodb_buffer_pool_pages_flushed'])
+
+        # innodb读写量
+        innodb_data_read = (int(mysql_stat_next['Innodb_data_read']) - int(mysql_stat['Innodb_data_read']))/1024
+        innodb_data_written = (int(mysql_stat_next['Innodb_data_written']) - int(mysql_stat['Innodb_data_written']))/1024
+
+        # innodb读写次数
+        innodb_data_reads = int(mysql_stat_next['Innodb_data_reads']) - int(mysql_stat['Innodb_data_reads'])
+        innodb_data_writes = int(mysql_stat_next['Innodb_data_writes']) - int(mysql_stat['Innodb_data_writes'])
+
+        # innodb日志写出次数，日志写出量
+        innodb_log_writes = int(mysql_stat_next['Innodb_log_writes']) - int(mysql_stat['Innodb_log_writes'])
+        innodb_os_log_written = int(mysql_stat_next['Innodb_os_log_written']) - int(mysql_stat['Innodb_os_log_written'])
 
         # big_table
         mysql_big_table_list = check_msql.get_mysql_big_table(conn)
@@ -897,17 +932,20 @@ def check_mysql(tags, host,port,user,password,user_os,password_os):
         delete_sql = "delete from mysql_db where tags = '%s'" % tags
         tools.mysql_exec(delete_sql, '')
 
-        insert_db_sql = "insert into mysql_db(host,port,tags,version,uptime,max_connections,max_connect_errors,threads_connected,threads_running,threads_created,threads_cached,threads_waited," \
+        insert_db_sql = "insert into mysql_db(host,port,tags,version,uptime,mysql_datadir,mysql_slow_query,mysql_binlog,max_connections,max_connect_errors,threads_connected,threads_running,threads_created,threads_cached,threads_waited," \
                         "conn_rate,conn_rate_level,QPS,TPS,bytes_received,bytes_send,open_files_limit,open_files,table_open_cache,open_tables," \
                         "key_buffer_size,sort_buffer_size,join_buffer_size,key_blocks_unused,key_blocks_used,key_blocks_not_flushed," \
                         "key_blocks_used_rate,key_buffer_read_rate,key_buffer_write_rate," \
                         "mysql_sel,mysql_ins,mysql_upd,mysql_del,select_scan,slow_queries,key_read_requests,key_reads,key_write_requests,Key_writes," \
                         "innodb_buffer_pool_size,innodb_buffer_pool_pages_total,innodb_buffer_pool_pages_data," \
-                        "innodb_buffer_pool_pages_dirty,innodb_buffer_pool_pages_flushed,innodb_buffer_pool_pages_free,innodb_io_capacity,innodb_read_io_threads,innodb_write_io_threads," \
-                        "innodb_rows_deleted_persecond,innodb_rows_inserted_persecond,innodb_rows_read_persecond,innodb_rows_updated_persecond,mon_status,rate_level) " \
+                        "innodb_buffer_pool_pages_dirty,innodb_buffer_pool_pages_flushed,innodb_buffer_pool_pages_free,innodb_buffer_pool_hit,innodb_buffer_usage,innodb_buffer_dirty_rate," \
+                        "innodb_io_capacity,innodb_read_io_threads,innodb_write_io_threads," \
+                        "innodb_rows_deleted_persecond,innodb_rows_inserted_persecond,innodb_rows_read_persecond,innodb_rows_updated_persecond," \
+                        "innodb_row_lock_waits,innodb_row_lock_time_avg,innodb_buffer_pool_pages_flushed_delta,innodb_data_read,innodb_data_written,innodb_data_reads,innodb_data_writes,innodb_log_writes,innodb_os_log_written," \
+                        "mon_status,rate_level) " \
                         "values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s," \
-                        "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-        value = (host, port, tags, mysql_version, mysql_uptime, mysql_max_connections, max_connect_errors, current_conn,
+                        "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+        value = (host, port, tags, mysql_version, mysql_uptime, mysql_datadir,mysql_slow_query,mysql_binlog,mysql_max_connections, max_connect_errors, current_conn,
                  threads_running,
                  threads_created, threads_cached, threads_waited, mysql_conn_rate,
                  conn_rate_level, mysql_qps, mysql_tps, mysql_bytes_received, mysql_bytes_sent, open_files_limit,
@@ -920,8 +958,11 @@ def check_mysql(tags, host,port,user,password,user_os,password_os):
                  key_read_requests, key_reads, key_write_requests, Key_writes,
                  innodb_buffer_pool_size, innodb_buffer_pool_pages_total, innodb_buffer_pool_pages_data,
                  innodb_buffer_pool_pages_dirty, innodb_buffer_pool_pages_flushed, innodb_buffer_pool_pages_free,
+                 innodb_buffer_pool_hit,innodb_buffer_usage,innodb_buffer_pool_pages_dirty,
                  innodb_io_capacity, innodb_read_io_threads, innodb_write_io_threads, innodb_rows_deleted_persecond,
                  innodb_rows_inserted_persecond, innodb_rows_read_persecond, innodb_rows_updated_persecond,
+                 innodb_row_lock_waits,innodb_row_lock_time_avg,innodb_buffer_pool_pages_flushed_delta,
+                 innodb_data_read,innodb_data_written,innodb_data_reads,innodb_data_writes,innodb_log_writes,innodb_os_log_written,
                  'connected', 'green')
         tools.mysql_exec(insert_db_sql, value)
         my_log.logger.info('%s：获取Mysql数据库监控数据(IP：%s 端口号：%s 连接使用率：%s 连接状态：%s )' % (

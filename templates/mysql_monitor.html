@@ -264,8 +264,10 @@ desired effect
           </a>
           <ul class="treeview-menu">
               <li><a href="/mysql_monitor"><i class="fa fa-circle-o"></i>实时监控</a></li>
-            <li><a href="/show_mysql"><i class="fa fa-circle-o"></i>概览</a></li>               <li><a href="/show_mysql_res"><i class="fa fa-circle-o"></i>资源监控</a></li>
-              <li><a href="/show_mysql_repl"><i class="fa fa-circle-o"></i>复制监控</a></li>               <li><a href="/mysql_slowquery"><i class="fa fa-circle-o"></i>慢查询解析</a></li>
+            <li><a href="/show_mysql"><i class="fa fa-circle-o"></i>概览</a></li>
+              <li><a href="/show_mysql_res"><i class="fa fa-circle-o"></i>资源监控</a></li>
+              <li><a href="/show_mysql_repl"><i class="fa fa-circle-o"></i>复制监控</a></li>
+              <li><a href="/mysql_slowquery"><i class="fa fa-circle-o"></i>慢查询解析</a></li>
           </ul>
         </li>
             <li class="treeview">
@@ -316,7 +318,8 @@ desired effect
         <li class="header">消息列表</li>
         <li><a href=/show_alarm><i class="fa fa-circle-o text-red"></i> <span>监控告警</span></a></li>
         <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>待办事项</span></a></li>
-        <li><a href="/recorder"><i class="fa fa-circle-o text-aqua"></i> <span>事件记录</span></a></li> <li><a href="/my_task"><i class="fa fa-circle-o text-green"></i> <span>任务管理器</span></a></li>
+        <li><a href="/recorder"><i class="fa fa-circle-o text-aqua"></i> <span>事件记录</span></a></li>
+         <li><a href="/my_task"><i class="fa fa-circle-o text-green"></i> <span>任务管理器</span></a></li>
       </ul>
       <!-- /.sidebar-menu -->
     </section>
@@ -367,6 +370,41 @@ desired effect
             </form>
           </div>
           <!-- /.row -->
+           <!-- /.row -->
+          <div class="col-md-6">
+           	<div class="panel panel-default pull-right" >
+               <a data-toggle="collapse" href="#linuxconf" target="_blank" class="btn btn-default">配置信息</a>
+			</h2>
+          </div>
+        </div>
+        <div class="row">
+            <div id="linuxconf" class="panel-collapse collapse">
+			 <div class="col-sm-12 invoice-col">
+            <div class="box-body" style="overflow: auto">
+              <table id="example1" class="table table-bordered table-hover" style="table-layout: auto">
+                  <tr>
+                 <td>MySQL版本: {{ mysqlinfo.version}} </td>
+                 </tr>
+                  <tr>
+                 <td>数据目录: {{ mysqlinfo.mysql_datadir }} </td>
+                 <td>最大连接数: {{ mysqlinfo.max_connections }} </td>
+                 </tr>
+                  <tr>
+                 <td>InnoDB缓冲区大小: {{ mysqlinfo.innodb_buffer_pool_size }} MB</td>
+                 <td>排序区: {{ mysqlinfo.sort_buffer_size }} KB</td>
+                 </tr>
+                  <tr>
+                 <td>慢查询是否开启: {{ mysqlinfo.mysql_slow_query}}</td>
+                 <td>二进制日志: {{ mysqlinfo.mysql_binlog }}</td>
+                 </tr>
+              </table>
+            </div>
+
+        </div>
+		</div>
+
+        </div>
+        <!-- /.box-body -->
         </div>
             <div class="row">
         <div class="col-md-4">

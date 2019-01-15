@@ -641,6 +641,178 @@ desired effect
               </table>
              </div>
           </div>
+              <div class="row">
+          <!-- /.row -->
+             <!-- /.box -->
+            <!-- interactive chart -->
+            <div class="col-xs-6">
+            <!-- /.col -->
+            <div class="box-header with-border">
+              <i class="fa fa-bar-chart-o"></i>
+              <h3 class="box-title">InnoDB缓冲区命中率</h3>
+            </div>
+
+            <div class="box-body">
+                <div class="row">
+          <!-- /.row -->
+        </div>
+              <div class="conn" id="bhit-grow-chart" style="height: 300px; width: 437px"></div>
+            </div>
+            <!-- /.box-body-->
+         </div>
+          <!-- /.box -->
+         <!-- interactive chart -->
+            <div class="col-xs-6">
+            <!-- /.col -->
+            <div class="box-header with-border">
+              <i class="fa fa-bar-chart-o"></i>
+              <h3 class="box-title">InnoDB缓冲区使用率、脏块率</h3>
+            </div>
+
+            <div class="box-body">
+                <div class="row">
+          <!-- /.row -->
+        </div>
+              <div class="conn" id="usage-grow-chart" style="height: 300px; width: 437px"></div>
+            </div>
+            <!-- /.box-body-->
+         </div>
+          <!-- /.box -->
+            <!-- interactive chart -->
+         <div class="col-xs-6">
+            <!-- /.col -->
+            <div class="box-header with-border">
+              <i class="fa fa-bar-chart-o"></i>
+              <h3 class="box-title">InnoDB锁等待次数</h3>
+            </div>
+
+            <div class="box-body">
+                <div class="row">
+          <!-- /.row -->
+        </div>
+              <div class="conn" id="lockwaits-grow-chart" style="height: 300px; width: 437px"></div>
+            </div>
+            <!-- /.box-body-->
+        </div>
+                        <!-- interactive chart -->
+            <div class="col-xs-6">
+            <!-- /.col -->
+            <div class="box-header with-border">
+              <i class="fa fa-bar-chart-o"></i>
+              <h3 class="box-title">InnoDB锁平均等待时间</h3>
+            </div>
+
+            <div class="box-body">
+                <div class="row">
+          <!-- /.row -->
+        </div>
+              <div class="conn" id="lockavg-grow-chart" style="height: 300px; width: 437px"></div>
+            </div>
+            <!-- /.box-body-->
+         </div>
+            <!-- interactive chart -->
+            <div class="col-xs-6">
+            <!-- /.col -->
+            <div class="box-header with-border">
+              <i class="fa fa-bar-chart-o"></i>
+              <h3 class="box-title">InnoDB脏页数量</h3>
+            </div>
+
+            <div class="box-body">
+                <div class="row">
+          <!-- /.row -->
+        </div>
+              <div class="conn" id="dirtypages-grow-chart" style="height: 300px; width: 437px"></div>
+            </div>
+            <!-- /.box-body-->
+         </div>
+          <!-- /.box -->
+             <!-- interactive chart -->
+            <div class="col-xs-6">
+            <!-- /.col -->
+            <div class="box-header with-border">
+              <i class="fa fa-bar-chart-o"></i>
+              <h3 class="box-title">InnoDB脏页刷新频率</h3>
+            </div>
+
+            <div class="box-body">
+                <div class="row">
+          <!-- /.row -->
+        </div>
+              <div class="conn" id="dirtyflushed-grow-chart" style="height: 300px; width: 437px"></div>
+            </div>
+            <!-- /.box-body-->
+         </div>
+          <!-- /.box -->
+               <!-- interactive chart -->
+            <div class="col-xs-6">
+            <!-- /.col -->
+            <div class="box-header with-border">
+              <i class="fa fa-bar-chart-o"></i>
+              <h3 class="box-title">InnoDB读写量</h3>
+            </div>
+
+            <div class="box-body">
+                <div class="row">
+          <!-- /.row -->
+        </div>
+              <div class="conn" id="read-grow-chart" style="height: 300px; width: 437px"></div>
+            </div>
+            <!-- /.box-body-->
+         </div>
+          <!-- /.box -->
+                  <!-- interactive chart -->
+            <div class="col-xs-6">
+            <!-- /.col -->
+            <div class="box-header with-border">
+              <i class="fa fa-bar-chart-o"></i>
+              <h3 class="box-title">InnoDB读写次数</h3>
+            </div>
+
+            <div class="box-body">
+                <div class="row">
+          <!-- /.row -->
+        </div>
+              <div class="conn" id="reads-grow-chart" style="height: 300px; width: 437px"></div>
+            </div>
+            <!-- /.box-body-->
+         </div>
+          <!-- /.box -->
+                  <!-- interactive chart -->
+            <div class="col-xs-6">
+            <!-- /.col -->
+            <div class="box-header with-border">
+              <i class="fa fa-bar-chart-o"></i>
+              <h3 class="box-title">InnoDB日志文件写次数</h3>
+            </div>
+
+            <div class="box-body">
+                <div class="row">
+          <!-- /.row -->
+        </div>
+              <div class="conn" id="logwrites-grow-chart" style="height: 300px; width: 437px"></div>
+            </div>
+            <!-- /.box-body-->
+         </div>
+          <!-- /.box -->
+                  <!-- interactive chart -->
+            <div class="col-xs-6">
+            <!-- /.col -->
+            <div class="box-header with-border">
+              <i class="fa fa-bar-chart-o"></i>
+              <h3 class="box-title">InnoDB日志写出量</h3>
+            </div>
+
+            <div class="box-body">
+                <div class="row">
+          <!-- /.row -->
+        </div>
+              <div class="conn" id="logkb-grow-chart" style="height: 300px; width: 437px"></div>
+            </div>
+            <!-- /.box-body-->
+         </div>
+          <!-- /.box -->
+        </div>
               </div>
               <!-- /.tab-pane -->
 
@@ -1399,6 +1571,722 @@ function submittype(){
  setInterval(function () {
      myChart_key_grow.hideLoading();  //显示完成后不显示loading
      myChart_key_grow.setOption(option_key_grow, true);
+ },500);
+
+   // ####################  【innodb缓冲区命中率趋势】图形  ####################
+ var myChart_bhit_grow = echarts.init(document.getElementById('bhit-grow-chart'));
+ option_bhit_grow = {
+     tooltip: {
+         trigger: 'axis',
+         axisPointer: {
+             type: 'cross'
+         }
+     },
+         legend: {
+        data:['命中率']
+    },
+     toolbox: {
+         show: true,
+         feature: {
+             saveAsImage: {}
+         }
+     },
+     xAxis:  {
+         type: 'category',
+         boundaryGap: false,
+         zlevel: 1,
+         data: [{% for i in mysql_grow_list %}'{{ i.chk_time | date:"m-d H:i:s" }}',{% endfor %}]
+     },
+     yAxis: {
+         type: 'value',
+         axisLabel: {
+             formatter: '{value}'
+         },
+         axisPointer: {
+             snap: true
+         },
+         scale: true
+     },
+     series: [
+         {
+             name:'命中率%',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#d4d098"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#d4d098"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#d4d098",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in mysql_grow_list %}{{ i.innodb_buffer_pool_hit }},{% endfor %}]
+         }
+     ]
+ };
+ myChart_bhit_grow.showLoading();  //显示loading
+ setInterval(function () {
+     myChart_bhit_grow.hideLoading();  //显示完成后不显示loading
+     myChart_bhit_grow.setOption(option_bhit_grow, true);
+ },500);
+
+   // ####################  【Innodb缓冲区使用率、脏块率趋势】图形  ####################
+ var myChart_usage_grow = echarts.init(document.getElementById('usage-grow-chart'));
+ option_usage_grow = {
+     tooltip: {
+         trigger: 'axis',
+         axisPointer: {
+             type: 'cross'
+         }
+     },
+         legend: {
+        data:['使用率','脏块率']
+    },
+     toolbox: {
+         show: true,
+         feature: {
+             saveAsImage: {}
+         }
+     },
+     xAxis:  {
+         type: 'category',
+         boundaryGap: false,
+         zlevel: 1,
+         data: [{% for i in mysql_grow_list %}'{{ i.chk_time | date:"m-d H:i:s" }}',{% endfor %}]
+     },
+     yAxis: {
+         type: 'value',
+         axisLabel: {
+             formatter: '{value}'
+         },
+         axisPointer: {
+             snap: true
+         },
+         scale: true
+     },
+     series: [
+         {
+             name:'使用率',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#d4d098"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#d4d098"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#d4d098",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in mysql_grow_list %}{{ i.innodb_buffer_usage}},{% endfor %}]
+         },
+          {
+             name:'脏块率',
+             type:'line',
+             smooth: true,
+              itemStyle: {
+              normal: {
+                color: "#79d4bc"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#79d4bc"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#79d4bc",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in mysql_grow_list %}{{ i.innodb_buffer_dirty_rate }},{% endfor %}]
+         }
+     ]
+ };
+ myChart_usage_grow.showLoading();  //显示loading
+ setInterval(function () {
+     myChart_usage_grow.hideLoading();  //显示完成后不显示loading
+     myChart_usage_grow.setOption(option_usage_grow, true);
+ },500);
+
+   // ####################  【Innodb锁等待次数趋势】图形  ####################
+ var myChart_lockwaits_grow = echarts.init(document.getElementById('lockwaits-grow-chart'));
+ option_lockwaits_grow = {
+     tooltip: {
+         trigger: 'axis',
+         axisPointer: {
+             type: 'cross'
+         }
+     },
+         legend: {
+        data:['锁等待次数']
+    },
+     toolbox: {
+         show: true,
+         feature: {
+             saveAsImage: {}
+         }
+     },
+     xAxis:  {
+         type: 'category',
+         boundaryGap: false,
+         zlevel: 1,
+         data: [{% for i in mysql_grow_list %}'{{ i.chk_time | date:"m-d H:i:s" }}',{% endfor %}]
+     },
+     yAxis: {
+         type: 'value',
+         axisLabel: {
+             formatter: '{value}'
+         },
+         axisPointer: {
+             snap: true
+         },
+         scale: true
+     },
+     series: [
+         {
+             name:'锁等待次数',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#d4d098"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#d4d098"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#d4d098",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in mysql_grow_list %}{{ i.innodb_row_lock_waits}},{% endfor %}]
+         }
+     ]
+ };
+ myChart_lockwaits_grow.showLoading();  //显示loading
+ setInterval(function () {
+     myChart_lockwaits_grow.hideLoading();  //显示完成后不显示loading
+     myChart_lockwaits_grow.setOption(option_lockwaits_grow, true);
+ },500);
+
+   // ####################  【Innodb锁平均等待时间趋势】图形  ####################
+ var myChart_lockavg_grow = echarts.init(document.getElementById('lockavg-grow-chart'));
+ option_lockavg_grow = {
+     tooltip: {
+         trigger: 'axis',
+         axisPointer: {
+             type: 'cross'
+         }
+     },
+         legend: {
+        data:['平均等待时间(ms)']
+    },
+     toolbox: {
+         show: true,
+         feature: {
+             saveAsImage: {}
+         }
+     },
+     xAxis:  {
+         type: 'category',
+         boundaryGap: false,
+         zlevel: 1,
+         data: [{% for i in mysql_grow_list %}'{{ i.chk_time | date:"m-d H:i:s" }}',{% endfor %}]
+     },
+     yAxis: {
+         type: 'value',
+         axisLabel: {
+             formatter: '{value}'
+         },
+         axisPointer: {
+             snap: true
+         },
+         scale: true
+     },
+     series: [
+         {
+             name:'平均等待时间(ms)',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#d4d098"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#d4d098"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#d4d098",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in mysql_grow_list %}{{ i.innodb_row_lock_time_avg}},{% endfor %}]
+         }
+     ]
+ };
+ myChart_lockavg_grow.showLoading();  //显示loading
+ setInterval(function () {
+     myChart_lockavg_grow.hideLoading();  //显示完成后不显示loading
+     myChart_lockavg_grow.setOption(option_lockavg_grow, true);
+ },500);
+
+   // ####################  【Innodb脏页数量趋势】图形  ####################
+ var myChart_dirtypages_grow = echarts.init(document.getElementById('dirtypages-grow-chart'));
+ option_dirtypages_grow = {
+     tooltip: {
+         trigger: 'axis',
+         axisPointer: {
+             type: 'cross'
+         }
+     },
+         legend: {
+        data:['脏页数量']
+    },
+     toolbox: {
+         show: true,
+         feature: {
+             saveAsImage: {}
+         }
+     },
+     xAxis:  {
+         type: 'category',
+         boundaryGap: false,
+         zlevel: 1,
+         data: [{% for i in mysql_grow_list %}'{{ i.chk_time | date:"m-d H:i:s" }}',{% endfor %}]
+     },
+     yAxis: {
+         type: 'value',
+         axisLabel: {
+             formatter: '{value}'
+         },
+         axisPointer: {
+             snap: true
+         },
+         scale: true
+     },
+     series: [
+         {
+             name:'脏页数量',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#d4d098"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#d4d098"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#d4d098",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in mysql_grow_list %}{{ i.innodb_buffer_pool_pages_dirty}},{% endfor %}]
+         }
+     ]
+ };
+ myChart_dirtypages_grow.showLoading();  //显示loading
+ setInterval(function () {
+     myChart_dirtypages_grow.hideLoading();  //显示完成后不显示loading
+     myChart_dirtypages_grow.setOption(option_dirtypages_grow, true);
+ },500);
+
+   // ####################  【Innodb脏页刷新频率趋势】图形  ####################
+ var myChart_dirtyflushed_grow = echarts.init(document.getElementById('dirtyflushed-grow-chart'));
+ option_dirtyflushed_grow = {
+     tooltip: {
+         trigger: 'axis',
+         axisPointer: {
+             type: 'cross'
+         }
+     },
+         legend: {
+        data:['脏页刷新频率']
+    },
+     toolbox: {
+         show: true,
+         feature: {
+             saveAsImage: {}
+         }
+     },
+     xAxis:  {
+         type: 'category',
+         boundaryGap: false,
+         zlevel: 1,
+         data: [{% for i in mysql_grow_list %}'{{ i.chk_time | date:"m-d H:i:s" }}',{% endfor %}]
+     },
+     yAxis: {
+         type: 'value',
+         axisLabel: {
+             formatter: '{value}'
+         },
+         axisPointer: {
+             snap: true
+         },
+         scale: true
+     },
+     series: [
+         {
+             name:'脏页刷新频率',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#d4d098"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#d4d098"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#d4d098",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in mysql_grow_list %}{{ i.innodb_buffer_pool_pages_flushed_delta}},{% endfor %}]
+         }
+     ]
+ };
+ myChart_dirtyflushed_grow.showLoading();  //显示loading
+ setInterval(function () {
+     myChart_dirtyflushed_grow.hideLoading();  //显示完成后不显示loading
+     myChart_dirtyflushed_grow.setOption(option_dirtyflushed_grow, true);
+ },500);
+
+   // ####################  【Innodb读写量趋势】图形  ####################
+ var myChart_read_grow = echarts.init(document.getElementById('read-grow-chart'));
+ option_read_grow = {
+     tooltip: {
+         trigger: 'axis',
+         axisPointer: {
+             type: 'cross'
+         }
+     },
+         legend: {
+        data:['读数量(KB)','写数量(KB)']
+    },
+     toolbox: {
+         show: true,
+         feature: {
+             saveAsImage: {}
+         }
+     },
+     xAxis:  {
+         type: 'category',
+         boundaryGap: false,
+         zlevel: 1,
+         data: [{% for i in mysql_grow_list %}'{{ i.chk_time | date:"m-d H:i:s" }}',{% endfor %}]
+     },
+     yAxis: {
+         type: 'value',
+         axisLabel: {
+             formatter: '{value}'
+         },
+         axisPointer: {
+             snap: true
+         },
+         scale: true
+     },
+     series: [
+         {
+             name:'读数量(KB)',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#d4d098"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#d4d098"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#d4d098",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in mysql_grow_list %}{{ i.innodb_data_read}},{% endfor %}]
+         },
+          {
+             name:'写数量(KB)',
+             type:'line',
+             smooth: true,
+              itemStyle: {
+              normal: {
+                color: "#79d4bc"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#79d4bc"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#79d4bc",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in mysql_grow_list %}{{ i.innodb_data_written }},{% endfor %}]
+         }
+     ]
+ };
+ myChart_read_grow.showLoading();  //显示loading
+ setInterval(function () {
+     myChart_read_grow.hideLoading();  //显示完成后不显示loading
+     myChart_read_grow.setOption(option_read_grow, true);
+ },500);
+
+   // ####################  【Innodb读写次数趋势】图形  ####################
+ var myChart_reads_grow = echarts.init(document.getElementById('reads-grow-chart'));
+ option_reads_grow = {
+     tooltip: {
+         trigger: 'axis',
+         axisPointer: {
+             type: 'cross'
+         }
+     },
+         legend: {
+        data:['读次数','写次数']
+    },
+     toolbox: {
+         show: true,
+         feature: {
+             saveAsImage: {}
+         }
+     },
+     xAxis:  {
+         type: 'category',
+         boundaryGap: false,
+         zlevel: 1,
+         data: [{% for i in mysql_grow_list %}'{{ i.chk_time | date:"m-d H:i:s" }}',{% endfor %}]
+     },
+     yAxis: {
+         type: 'value',
+         axisLabel: {
+             formatter: '{value}'
+         },
+         axisPointer: {
+             snap: true
+         },
+         scale: true
+     },
+     series: [
+         {
+             name:'读次数',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#d4d098"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#d4d098"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#d4d098",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in mysql_grow_list %}{{ i.innodb_data_reads}},{% endfor %}]
+         },
+          {
+             name:'写次数',
+             type:'line',
+             smooth: true,
+              itemStyle: {
+              normal: {
+                color: "#79d4bc"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#79d4bc"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#79d4bc",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in mysql_grow_list %}{{ i.innodb_data_writes }},{% endfor %}]
+         }
+     ]
+ };
+ myChart_reads_grow.showLoading();  //显示loading
+ setInterval(function () {
+     myChart_reads_grow.hideLoading();  //显示完成后不显示loading
+     myChart_reads_grow.setOption(option_reads_grow, true);
+ },500);
+
+   // ####################  【Innodb日志读写次数】图形  ####################
+ var myChart_logwrites_grow = echarts.init(document.getElementById('logwrites-grow-chart'));
+ option_read_grow = {
+     tooltip: {
+         trigger: 'axis',
+         axisPointer: {
+             type: 'cross'
+         }
+     },
+         legend: {
+        data:['日志写出次数']
+    },
+     toolbox: {
+         show: true,
+         feature: {
+             saveAsImage: {}
+         }
+     },
+     xAxis:  {
+         type: 'category',
+         boundaryGap: false,
+         zlevel: 1,
+         data: [{% for i in mysql_grow_list %}'{{ i.chk_time | date:"m-d H:i:s" }}',{% endfor %}]
+     },
+     yAxis: {
+         type: 'value',
+         axisLabel: {
+             formatter: '{value}'
+         },
+         axisPointer: {
+             snap: true
+         },
+         scale: true
+     },
+     series: [
+         {
+             name:'日志写出次数',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#d4d098"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#d4d098"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#d4d098",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in mysql_grow_list %}{{ i.innodb_log_writes}},{% endfor %}]
+         }
+     ]
+ };
+ myChart_logwrites_grow.showLoading();  //显示loading
+ setInterval(function () {
+     myChart_logwrites_grow.hideLoading();  //显示完成后不显示loading
+     myChart_logwrites_grow.setOption(option_logwrites_grow, true);
+ },500);
+
+   // ####################  【Innodb读写量趋势】图形  ####################
+ var myChart_logkb_grow = echarts.init(document.getElementById('logkb-grow-chart'));
+ option_logkb_grow = {
+     tooltip: {
+         trigger: 'axis',
+         axisPointer: {
+             type: 'cross'
+         }
+     },
+         legend: {
+        data:['日志写出量(KB)']
+    },
+     toolbox: {
+         show: true,
+         feature: {
+             saveAsImage: {}
+         }
+     },
+     xAxis:  {
+         type: 'category',
+         boundaryGap: false,
+         zlevel: 1,
+         data: [{% for i in mysql_grow_list %}'{{ i.chk_time | date:"m-d H:i:s" }}',{% endfor %}]
+     },
+     yAxis: {
+         type: 'value',
+         axisLabel: {
+             formatter: '{value}'
+         },
+         axisPointer: {
+             snap: true
+         },
+         scale: true
+     },
+     series: [
+         {
+             name:'日志写出量(KB)',
+             type:'line',
+             smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#d4d098"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#d4d098"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#d4d098",
+                opacity: 0.8
+               }
+             },
+             data: [{% for i in mysql_grow_list %}{{ i.innodb_os_log_written}},{% endfor %}]
+         }
+     ]
+ };
+ myChart_logkb_grow.showLoading();  //显示loading
+ setInterval(function () {
+     myChart_logkb_grow.hideLoading();  //显示完成后不显示loading
+     myChart_logkb_grow.setOption(option_logkb_grow, true);
  },500);
 
 </script>

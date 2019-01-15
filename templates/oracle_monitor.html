@@ -484,14 +484,8 @@ desired effect
              <div class="row">
         <div class="col-md-6">
           <!-- AREA CHART -->
-      <div class="box box-default">
             <div class="box-header">
               <h3 class="box-title">即时等待事件</h3>
-                <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
             </div>
             <!-- /.box-header -->
             <div class="box-body no-padding">
@@ -511,20 +505,14 @@ desired effect
               </tbody></table>
             </div>
             <!-- /.box-body -->
-          </div>
 
         </div>
 
              <div class="col-md-6">
           <!-- AREA CHART -->
-      <div class="box box-default">
+      <div class="box box-solid">
             <div class="box-header">
               <h3 class="box-title">锁等待</h3>
-                <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
             </div>
             <!-- /.box-header -->
             <div class="box-body no-padding">
@@ -553,28 +541,26 @@ desired effect
         </div>
 
          <div class="col-md-6">
-         <div class="box box-default">
-            <div class="box-header with-border">
-              <div class="user-block">
+             <div class="box box-solid">
+                <div class="box-header with-border">
                   <h3 class="box-title">异常日志</h3>
-              </div>
-              <!-- /.user-block -->
-              <div class="box-tools">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
-              <!-- /.box-tools -->
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                  <!-- Conversations are loaded here -->
+             <div class="direct-chat-messages" style="height: 275px">
+                 <table class="table table-striped">
+                     <div class="box-body">
               <!-- post text -->
               <pre>{{ oracleinfo.err_info }}</pre>
                 <span class="pull-right text-muted">{{ oracleinfo.chk_time }}</span>
-            </div>
+                </div>
             <!-- /.box-body -->
-
-          </div>
+                </table>
+                  </div>
+                  <!--/.direct-chat-messages-->
+                </div>
+              </div>
 
         </div>
           <!-- interactive chart -->
