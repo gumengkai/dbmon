@@ -414,7 +414,7 @@ desired effect
                  </tr>
                   <tr>
                  <td>oracle版本: {{ oracleinfo.version}} </td>
-                 <td>是否为RAC: {{ is_rac }} </td>
+                 <td>是否为RAC: {{ oracleinfo.is_rac }} </td>
                  </tr>
                   <tr>
                  <td>归档模式: {{ oracleinfo.log_mode }} </td>
@@ -425,7 +425,7 @@ desired effect
                  <td>PGA: {{ oracleinfo.pga_size }} MB</td>
                  </tr>
                   <tr>
-                 <td>闪回: {{ flashback_on}}</td>
+                 <td>闪回: {{ oracleinfo.flashback_on }}</td>
                  <td>审计: {{ oracleinfo.audit_trail }}</td>
                  </tr>
               </table>

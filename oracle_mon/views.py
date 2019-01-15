@@ -140,12 +140,6 @@ def oracle_monitor(request):
     password = oracle[0][4]
     password = base64.decodestring(password)
     url = host + ':' + port + '/' + service_name
-    # 基础信息
-    is_rac = ora_do.get_oracle_para(url,user,password,'cluster_database')
-    sql = "select flashback_on from v$database"
-    dbinfo = tools.oracle_query(url,user,password,sql)
-    flashback_on =  dbinfo[0][0]
-
 
     if request.method == 'POST':
         if request.POST.has_key('select_tags') or request.POST.has_key('select_conn') or request.POST.has_key('select_undo') or request.POST.has_key('select_tmp') or request.POST.has_key('select_ps'):
@@ -177,7 +171,7 @@ def oracle_monitor(request):
     return render_to_response('oracle_monitor.html',
                               {'conngrow_list': conngrow_list, 'undogrow_list': undogrow_list, 'tmpinfo': tmpinfo,
                                'tmpgrow_list': tmpgrow_list,'psgrow_list': psgrow_list, 'tagsdefault': tagsdefault, 'tagsinfo': tagsinfo,
-                               'oracleinfo': oracleinfo, 'undoinfo': undoinfo, 'eventinfo': eventinfo,'is_rac':is_rac,'flashback_on':flashback_on,
+                               'oracleinfo': oracleinfo, 'undoinfo': undoinfo, 'eventinfo': eventinfo,
                                'lockinfo': lockinfo, 'messageinfo_list': messageinfo_list,
                                'msg_num': msg_num, 'conn_range_default': conn_range_default,
                                'undo_range_default': undo_range_default, 'tmp_range_default': tmp_range_default,'ps_range_default': ps_range_default,

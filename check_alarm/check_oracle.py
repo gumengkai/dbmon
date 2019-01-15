@@ -12,7 +12,7 @@ import re
 # 获取dbinfo,name,database_role,open_mode
 def get_dbname_info(conn):
     cur = conn.cursor()
-    dbname_sql = '''select name,db_unique_name,database_role,open_mode,log_mode,dbid from v$database'''
+    dbname_sql = '''select name,db_unique_name,database_role,open_mode,log_mode,dbid,flashback_on from v$database'''
     cur.execute(dbname_sql)
     return cur.fetchall()
 

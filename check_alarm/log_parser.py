@@ -353,8 +353,12 @@ def save_oracle_alert_log(tags,host,log_meta):
             if key in log_meta['log_content']:
                 save = True
             if save:
+                if log_meta.has_key('log_time'):
+                    log_time = log_meta['log_time']
+                else:
+                    log_time = ''
                 sql = "insert into alert_log(tags,host,server_type,log_time,log_level,log_content) values(%s,%s,%s,%s,%s,%s)"
-                values = (tags, host, 'Oracle',log_meta['log_time'], log_meta['log_level'], log_meta['log_content'])
+                values = (tags, host, 'Oracle',log_time, log_meta['log_level'], log_meta['log_content'])
                 tools.mysql_exec(sql, values)
                 log_meta = []
 
@@ -445,8 +449,12 @@ def save_mysql_alert_log(tags,host,log_meta):
             if key in log_meta['log_content']:
                 save = True
             if save:
+                if log_meta.has_key('log_time'):
+                    log_time = log_meta['log_time']
+                else:
+                    log_time = ''
                 sql = "insert into alert_log(tags,host,server_type,log_time,log_level,log_content) values(%s,%s,%s,%s,%s,%s)"
-                values = (tags, host,'MySQL',log_meta['log_time'], log_meta['log_level'], log_meta['log_content'])
+                values = (tags, host,'MySQL',log_time, log_meta['log_level'], log_meta['log_content'])
                 tools.mysql_exec(sql, values)
                 log_meta = []
 
