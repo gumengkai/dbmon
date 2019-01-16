@@ -151,7 +151,7 @@ def mysql_monitor(request):
 @login_required(login_url='/login')
 def show_mysql(request):
     messageinfo_list = models_frame.TabAlarmInfo.objects.all()
-    dbinfo_list = models_mysql.MysqlDb.objects.all()
+    dbinfo_list = models_mysql.MysqlDb.objects.all().order_by('mon_status')
     paginator = Paginator(dbinfo_list, 10)
     page = request.GET.get('page')
     try:

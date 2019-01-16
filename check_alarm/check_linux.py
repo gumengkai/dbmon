@@ -91,6 +91,7 @@ class LinuxStat(object):
         kernel = res.split(' ')[2]
         frame = res.split(' ')[11]
         # linux version
+        linux_version = ''
         command = 'lsb_release -a'
         std_in, std_out, std_err = self.ssh_client.exec_command(command)
         for each in  std_out.readlines():
