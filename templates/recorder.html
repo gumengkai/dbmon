@@ -307,11 +307,11 @@ desired effect
             </div>
             <div class="box-body no-padding">
               <ul class="nav nav-pills nav-stacked">
-                <li><a href="/recorder_os"><i class="fa fa-tasks"></i> 系统
+                <li><a href="/recorder?server_type=系统&rec_type={{ rec_type }}"><i class="fa fa-tasks"></i> 系统
                   <span class="label label-primary pull-right">{{ sys_nums }}</span></a></li>
-                <li><a href="/recorder_db"><i class="fa fa-database"></i> 数据库
+                <li><a href="/recorder?server_type=数据库&rec_type={{ rec_type }}"><i class="fa fa-database"></i> 数据库
                  <span class="label label-primary pull-right">{{ db_nums }}</span></a></li>
-                <li><a href="/recorder_others"><i class="fa fa-file-text-o"></i> 其他
+                <li><a href="/recorder?server_type=其他&rec_type={{ rec_type }}"><i class="fa fa-file-text-o"></i> 其他
                  <span class="label label-primary pull-right">{{ other_nums }}</span></a></li>
               </ul>
             </div>
@@ -324,11 +324,11 @@ desired effect
             </div>
             <div class="box-body no-padding">
               <ul class="nav nav-pills nav-stacked">
-                <li><a href="/recorder_err"><i class="fa fa-circle-o text-red"></i> 故障
+                <li><a href="/recorder?server_type={{ server_type }}&rec_type=故障"><i class="fa fa-circle-o text-red"></i> 故障
                 <span class="label label-primary pull-right">{{ err_nums }}</span></a></li>
-                <li><a href="/recorder_chg"><i class="fa fa-circle-o text-yellow"></i> 变更
+                <li><a href="/recorder?server_type={{ server_type }}&rec_type=变更"><i class="fa fa-circle-o text-yellow"></i> 变更
                 <span class="label label-primary pull-right">{{ chg_nums }}</span></a></li>
-                <li><a href="/recorder_upd"><i class="fa fa-circle-o text-light-blue"></i> 升级
+                <li><a href="/recorder?server_type={{ server_type }}&rec_type=升级"><i class="fa fa-circle-o text-light-blue"></i> 升级
                 <span class="label label-primary pull-right">{{ upg_nums }}</span></a></li>
               </ul>
             </div>

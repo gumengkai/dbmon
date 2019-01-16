@@ -55,15 +55,14 @@ def mysql_monitor(request):
     net_begin_time = tools.range(net_range_default)
 
     end_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
+    # 取最近一次采集数据
     try:
         mysql_curr = models_mysql.MysqlDb.objects.get(tags=tagsdefault)
     except models_mysql.MysqlDb.DoesNotExist:
-        print tagsdefault
         mysql_curr = \
             models_mysql.MysqlDbHis.objects.filter(tags=tagsdefault).order_by('-chk_time')[
                 0]
-
+    # 取最近一次采集正常数据
     try:
         try:
             mysqlinfo = models_mysql.MysqlDb.objects.get(tags=tagsdefault,version__isnull=False)
@@ -151,29 +150,17 @@ def mysql_monitor(request):
 @login_required(login_url='/login')
 def show_mysql(request):
     messageinfo_list = models_frame.TabAlarmInfo.objects.all()
+
+    # Django自带分页，已不再使用，改为使用前端分页
     dbinfo_list = models_mysql.MysqlDb.objects.all().order_by('mon_status')
     paginator = Paginator(dbinfo_list, 10)
     page = request.GET.get('page')
     try:
         dbinfos = paginator.page(page)
     except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
         dbinfos = paginator.page(1)
     except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
         dbinfos = paginator.page(paginator.num_pages)
-
-    mysql_threads_list = models_mysql.MysqlDb.objects.all()
-    paginator_threads = Paginator(mysql_threads_list, 5)
-    page_threads = request.GET.get('page_threads')
-    try:
-        mysql_threads = paginator_threads.page(page_threads)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        mysql_threads = paginator_threads.page(1)
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        mysql_threads = paginator_threads.page(paginator_threads.num_pages)
 
     if request.method == 'POST':
         logout(request)
@@ -184,11 +171,15 @@ def show_mysql(request):
         msg_last = models_frame.TabAlarmInfo.objects.latest('id')
         msg_last_content = msg_last.alarm_content
         tim_last = (datetime.datetime.now() - msg_last.alarm_time).seconds / 60
-        return render_to_response('show_mysql.html',
-                                  {'dbinfos': dbinfos,'mysql_threads':mysql_threads, 'messageinfo_list': messageinfo_list, 'msg_num': msg_num,
-                                   'msg_last_content': msg_last_content, 'tim_last': tim_last})
     else:
-        return render_to_response('show_mysql.html', {'dbinfos': dbinfos,'mysql_threads':mysql_threads})
+        msg_num = 0
+        msg_last_content = ''
+        tim_last = ''
+    return render_to_response('show_mysql.html',
+                              {'dbinfos': dbinfos, 'messageinfo_list': messageinfo_list,
+                               'msg_num': msg_num,
+                               'msg_last_content': msg_last_content, 'tim_last': tim_last})
+
 
 @login_required(login_url='/login')
 def show_mysql_repl(request):
@@ -214,12 +205,13 @@ def show_mysql_repl(request):
         msg_last = models_frame.TabAlarmInfo.objects.latest('id')
         msg_last_content = msg_last.alarm_content
         tim_last = (datetime.datetime.now() - msg_last.alarm_time).seconds / 60
-        return render_to_response('show_mysql_repl.html',
-                                  {'repl_infos': repl_infos, 'messageinfo_list': messageinfo_list, 'msg_num': msg_num,
-                                   'msg_last_content': msg_last_content, 'tim_last': tim_last})
     else:
-        return render_to_response('show_mysql_repl.html', {'repl_infos': repl_infos})
-
+        msg_num = 0
+        msg_last_content = ''
+        tim_last = ''
+    return render_to_response('show_mysql_repl.html',
+                              {'repl_infos': repl_infos, 'messageinfo_list': messageinfo_list, 'msg_num': msg_num,
+                               'msg_last_content': msg_last_content, 'tim_last': tim_last})
 
 @login_required(login_url='/login')
 def show_mysql_rate(request):
@@ -233,11 +225,14 @@ def show_mysql_rate(request):
         msg_last = models_frame.TabAlarmInfo.objects.latest('id')
         msg_last_content = msg_last.alarm_content
         tim_last = (datetime.datetime.now() - msg_last.alarm_time).seconds / 60
-        return render_to_response('show_mysql_rate.html', {'mysql_rate_list': mysql_rate_list, 'messageinfo_list': messageinfo_list,
-                                                   'msg_num': msg_num,
-                                                   'msg_last_content': msg_last_content, 'tim_last': tim_last})
     else:
-        return render_to_response('show_mysql_rate.html', { 'mysql_rate_list': mysql_rate_list})
+        msg_num = 0
+        msg_last_content = ''
+        tim_last = ''
+    return render_to_response('show_mysql_rate.html',
+                              {'mysql_rate_list': mysql_rate_list, 'messageinfo_list': messageinfo_list,
+                               'msg_num': msg_num,
+                               'msg_last_content': msg_last_content, 'tim_last': tim_last})
 
 
 @login_required(login_url='/login')
@@ -247,7 +242,6 @@ def show_mysql_res(request):
     tagsinfo = models_mysql.TabMysqlServers.objects.all()
 
     tagsdefault = request.GET.get('tagsdefault')
-    range_default = request.GET.get('range_default')
 
     if not tagsdefault:
         tagsdefault = models_mysql.TabMysqlServers.objects.order_by('tags')[0].tags

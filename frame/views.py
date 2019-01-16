@@ -139,11 +139,13 @@ def alarm_setting(request):
         msg_last = models_frame.TabAlarmInfo.objects.latest('id')
         msg_last_content = msg_last.alarm_content
         tim_last = (datetime.datetime.now() - msg_last.alarm_time).seconds / 60
-        return render_to_response('alarm_setting.html',
-                                  {'alarm_list': alarm_list, 'messageinfo_list': messageinfo_list, 'msg_num': msg_num,
-                                   'msg_last_content': msg_last_content, 'tim_last': tim_last})
     else:
-        return render_to_response('alarm_setting.html', {'alarm_list': alarm_list})
+        msg_num = 0
+        msg_last_content = ''
+        tim_last = ''
+    return render_to_response('alarm_setting.html',
+                              {'alarm_list': alarm_list, 'messageinfo_list': messageinfo_list, 'msg_num': msg_num,
+                               'msg_last_content': msg_last_content, 'tim_last': tim_last})
 
 
 @login_required(login_url='/login')
@@ -153,16 +155,11 @@ def alarm_settings_edit(request):
     alarm_setting_edit = models_frame.TabAlarmConf.objects.get(id=rid)
     if request.method == "POST":
         if request.POST.has_key('commit'):
-            db_type = request.POST.get('db_type', None)
-            alarm_name = request.POST.get('alarm_name', None)
+            judge = request.POST.get('judge', None)
+            jdg_value = request.POST.get('jdg_value', None)
+            jdg_des = request.POST.get('jdg_des', None)
 
-            pct_max = request.POST.get('pct_max', None)
-            size_min = request.POST.get('size_min', None)
-            time_max = request.POST.get('time_max', None)
-            num_max = request.POST.get('num_max', None)
-
-            models_frame.TabAlarmConf.objects.filter(id=rid).update(pct_max = pct_max,
-                                                              size_min = size_min, time_max = time_max,num_max = num_max)
+            models_frame.TabAlarmConf.objects.filter(id=rid).update(judge = judge,jdg_value = jdg_value, jdg_des = jdg_des)
             status = 1
         elif request.POST.has_key('logout'):
             logout(request)
@@ -242,7 +239,6 @@ def linux_servers_del(request):
 @login_required(login_url='/login')
 def oracle_servers_add(request):
     status = 0
-    messageinfo_list = models_frame.TabAlarmInfo.objects.all()
     if request.method == "POST":
         if request.POST.has_key('commit'):
             tags = request.POST.get('tags', None)
@@ -465,24 +461,46 @@ def show_alarm(request):
         msg_last = models_frame.TabAlarmInfo.objects.latest('id')
         msg_last_content = msg_last.alarm_content
         tim_last = (datetime.datetime.now() - msg_last.alarm_time).seconds / 60
-        return render_to_response('show_alarm.html', {'messageinfos': messageinfos, 'msg_num': msg_num,
-                                                   'msg_last_content': msg_last_content, 'tim_last': tim_last})
     else:
         msg_num = 0
+        msg_last = ''
+        time_last = ''
+    return render_to_response('show_alarm.html', {'messageinfos': messageinfos, 'msg_num': msg_num,
+                                                  'msg_last_content': msg_last_content, 'tim_last': tim_last})
 
-        return render_to_response('show_alarm.html', {'messageinfo_list': messageinfo_list,'msg_num': msg_num})
 
 @login_required(login_url='/login')
 def recorder(request):
     messageinfo_list = models_frame.TabAlarmInfo.objects.all()
-    recorder_list = models_frame.EventRecorder.objects.order_by('-record_time')
-    all_nums = len(recorder_list)
     sys_nums =  len(models_frame.EventRecorder.objects.filter(event_section='系统'))
     db_nums =  len(models_frame.EventRecorder.objects.filter(event_section='数据库'))
     other_nums =  len(models_frame.EventRecorder.objects.filter(event_section='其他'))
     err_nums =  len(models_frame.EventRecorder.objects.filter(event_type='故障'))
     chg_nums =  len(models_frame.EventRecorder.objects.filter(event_type='变更'))
     upg_nums =  len(models_frame.EventRecorder.objects.filter(event_type='升级'))
+
+    server_type =  request.GET.get('server_type')
+    rec_type = request.GET.get('rec_type')
+
+    if server_type == 'None':
+        server_type = ''
+    if rec_type == 'None':
+        rec_type = ''
+
+    if server_type and not rec_type:
+        server_type = server_type.encode("utf-8")
+        recorder_list = models_frame.EventRecorder.objects.filter(event_section=server_type).order_by('-record_time')
+    elif rec_type and not server_type:
+        rec_type = rec_type.encode("utf-8")
+        recorder_list = models_frame.EventRecorder.objects.filter(event_type=rec_type).order_by('-record_time')
+    elif server_type and rec_type:
+        server_type = server_type.encode("utf-8")
+        rec_type = rec_type.encode("utf-8")
+        recorder_list = models_frame.EventRecorder.objects.filter(event_type=rec_type,event_section=server_type).order_by('-record_time')
+    else:
+        recorder_list = models_frame.EventRecorder.objects.order_by('-record_time')
+    all_nums = len(recorder_list)
+
     if request.method == 'POST':
         logout(request)
         return HttpResponseRedirect('/login/')
@@ -491,186 +509,18 @@ def recorder(request):
         msg_last = models_frame.TabAlarmInfo.objects.latest('id')
         msg_last_content = msg_last.alarm_content
         tim_last = (datetime.datetime.now() - msg_last.alarm_time).seconds / 60
-        return render_to_response('recorder.html',
-                                  {'recorder_list': recorder_list,'all_nums':all_nums,'sys_nums':sys_nums,'db_nums':db_nums,'other_nums':other_nums,
-                                   'err_nums':err_nums,'chg_nums':chg_nums,'upg_nums':upg_nums, 'messageinfo_list': messageinfo_list,
-                                   'msg_num': msg_num,'msg_last_content': msg_last_content, 'tim_last': tim_last})
     else:
-        return render_to_response('recorder.html', {'recorder_list': recorder_list})
+        msg_num = 0
+        msg_last_content = ''
+        tim_last = ''
+    return render_to_response('recorder.html',
+                              {'recorder_list': recorder_list, 'all_nums': all_nums, 'sys_nums': sys_nums,
+                               'db_nums': db_nums, 'other_nums': other_nums,
+                               'err_nums': err_nums, 'chg_nums': chg_nums, 'upg_nums': upg_nums,
+                               'messageinfo_list': messageinfo_list,
+                               'msg_num': msg_num, 'msg_last_content': msg_last_content, 'tim_last': tim_last,
+                               'server_type':server_type,'rec_type':rec_type })
 
-@login_required(login_url='/login')
-def recorder_db(request):
-    messageinfo_list = models_frame.TabAlarmInfo.objects.all()
-    recorder_list = models_frame.EventRecorder.objects.order_by('-record_time')
-    recorder_db_list = models_frame.EventRecorder.objects.filter(event_section='数据库').order_by('-record_time')
-    all_nums = len(recorder_list)
-    sys_nums =  len(models_frame.EventRecorder.objects.filter(event_section='系统'))
-    db_nums =  len(models_frame.EventRecorder.objects.filter(event_section='数据库'))
-    other_nums =  len(models_frame.EventRecorder.objects.filter(event_section='其他'))
-    err_nums =  len(models_frame.EventRecorder.objects.filter(event_type='故障'))
-    chg_nums =  len(models_frame.EventRecorder.objects.filter(event_type='变更'))
-    upg_nums =  len(models_frame.EventRecorder.objects.filter(event_type='升级'))
-
-    if request.method == 'POST':
-        logout(request)
-        return HttpResponseRedirect('/login/')
-
-    if messageinfo_list:
-        msg_num = len(messageinfo_list)
-        msg_last = models_frame.TabAlarmInfo.objects.latest('id')
-        msg_last_content = msg_last.alarm_content
-        tim_last = (datetime.datetime.now() - msg_last.alarm_time).seconds / 60
-        return render_to_response('recorder.html',
-                                  {'recorder_list': recorder_db_list,'all_nums':all_nums,'sys_nums':sys_nums,'db_nums':db_nums,'other_nums':other_nums,
-                                   'err_nums':err_nums,'chg_nums':chg_nums,'upg_nums':upg_nums, 'messageinfo_list': messageinfo_list,
-                                   'msg_num': msg_num,'msg_last_content': msg_last_content, 'tim_last': tim_last})
-    else:
-        return render_to_response('recorder.html', {'recorder_list': recorder_db_list})
-
-@login_required(login_url='/login')
-def recorder_os(request):
-    messageinfo_list = models_frame.TabAlarmInfo.objects.all()
-    recorder_list = models_frame.EventRecorder.objects.order_by('-record_time')
-    recorder_os_list = models_frame.EventRecorder.objects.filter(event_section='系统').order_by('-record_time')
-    all_nums = len(recorder_list)
-    sys_nums =  len(models_frame.EventRecorder.objects.filter(event_section='系统'))
-    db_nums =  len(models_frame.EventRecorder.objects.filter(event_section='数据库'))
-    other_nums =  len(models_frame.EventRecorder.objects.filter(event_section='其他'))
-    err_nums =  len(models_frame.EventRecorder.objects.filter(event_type='故障'))
-    chg_nums =  len(models_frame.EventRecorder.objects.filter(event_type='变更'))
-    upg_nums =  len(models_frame.EventRecorder.objects.filter(event_type='升级'))
-
-    if request.method == 'POST':
-        logout(request)
-        return HttpResponseRedirect('/login/')
-
-    if messageinfo_list:
-        msg_num = len(messageinfo_list)
-        msg_last = models_frame.TabAlarmInfo.objects.latest('id')
-        msg_last_content = msg_last.alarm_content
-        tim_last = (datetime.datetime.now() - msg_last.alarm_time).seconds / 60
-        return render_to_response('recorder.html',
-                                  {'recorder_list': recorder_os_list,'all_nums':all_nums,'sys_nums':sys_nums,'db_nums':db_nums,'other_nums':other_nums,
-                                   'err_nums':err_nums,'chg_nums':chg_nums,'upg_nums':upg_nums, 'messageinfo_list': messageinfo_list,
-                                   'msg_num': msg_num,'msg_last_content': msg_last_content, 'tim_last': tim_last})
-    else:
-        return render_to_response('recorder.html', {'recorder_list': recorder_os_list})
-
-@login_required(login_url='/login')
-def recorder_others(request):
-    messageinfo_list = models_frame.TabAlarmInfo.objects.all()
-    recorder_list = models_frame.EventRecorder.objects.order_by('-record_time')
-    recorder_others_list = models_frame.EventRecorder.objects.filter(event_section='其他').order_by('-record_time')
-    all_nums = len(recorder_list)
-    sys_nums =  len(models_frame.EventRecorder.objects.filter(event_section='系统'))
-    db_nums =  len(models_frame.EventRecorder.objects.filter(event_section='数据库'))
-    other_nums =  len(models_frame.EventRecorder.objects.filter(event_section='其他'))
-    err_nums =  len(models_frame.EventRecorder.objects.filter(event_type='故障'))
-    chg_nums =  len(models_frame.EventRecorder.objects.filter(event_type='变更'))
-    upg_nums =  len(models_frame.EventRecorder.objects.filter(event_type='升级'))
-
-    if request.method == 'POST':
-        logout(request)
-        return HttpResponseRedirect('/login/')
-
-    if messageinfo_list:
-        msg_num = len(messageinfo_list)
-        msg_last = models_frame.TabAlarmInfo.objects.latest('id')
-        msg_last_content = msg_last.alarm_content
-        tim_last = (datetime.datetime.now() - msg_last.alarm_time).seconds / 60
-        return render_to_response('recorder.html',
-                                  {'recorder_list': recorder_others_list,'all_nums':all_nums,'sys_nums':sys_nums,'db_nums':db_nums,'other_nums':other_nums,
-                                   'err_nums':err_nums,'chg_nums':chg_nums,'upg_nums':upg_nums, 'messageinfo_list': messageinfo_list,
-                                   'msg_num': msg_num,'msg_last_content': msg_last_content, 'tim_last': tim_last})
-    else:
-        return render_to_response('recorder.html', {'recorder_list': recorder_others_list})
-
-@login_required(login_url='/login')
-def recorder_err(request):
-    messageinfo_list = models_frame.TabAlarmInfo.objects.all()
-    recorder_list = models_frame.EventRecorder.objects.order_by('-record_time')
-    recorder_err_list = models_frame.EventRecorder.objects.filter(event_type='故障').order_by('-record_time')
-    all_nums = len(recorder_list)
-    sys_nums =  len(models_frame.EventRecorder.objects.filter(event_section='系统'))
-    db_nums =  len(models_frame.EventRecorder.objects.filter(event_section='数据库'))
-    other_nums =  len(models_frame.EventRecorder.objects.filter(event_section='其他'))
-    err_nums =  len(models_frame.EventRecorder.objects.filter(event_type='故障'))
-    chg_nums =  len(models_frame.EventRecorder.objects.filter(event_type='变更'))
-    upg_nums =  len(models_frame.EventRecorder.objects.filter(event_type='升级'))
-
-    if request.method == 'POST':
-        logout(request)
-        return HttpResponseRedirect('/login/')
-
-    if messageinfo_list:
-        msg_num = len(messageinfo_list)
-        msg_last = models_frame.TabAlarmInfo.objects.latest('id')
-        msg_last_content = msg_last.alarm_content
-        tim_last = (datetime.datetime.now() - msg_last.alarm_time).seconds / 60
-        return render_to_response('recorder.html',
-                                  {'recorder_list': recorder_err_list,'all_nums':all_nums,'sys_nums':sys_nums,'db_nums':db_nums,'other_nums':other_nums,
-                                   'err_nums':err_nums,'chg_nums':chg_nums,'upg_nums':upg_nums, 'messageinfo_list': messageinfo_list,
-                                   'msg_num': msg_num,'msg_last_content': msg_last_content, 'tim_last': tim_last})
-    else:
-        return render_to_response('recorder.html', {'recorder_list': recorder_err_list})
-
-@login_required(login_url='/login')
-def recorder_chg(request):
-    messageinfo_list = models_frame.TabAlarmInfo.objects.all()
-    recorder_list = models_frame.EventRecorder.objects.order_by('-record_time')
-    recorder_chg_list = models_frame.EventRecorder.objects.filter(event_type='变更').order_by('-record_time')
-    all_nums = len(recorder_list)
-    sys_nums =  len(models_frame.EventRecorder.objects.filter(event_section='系统'))
-    db_nums =  len(models_frame.EventRecorder.objects.filter(event_section='数据库'))
-    other_nums =  len(models_frame.EventRecorder.objects.filter(event_section='其他'))
-    err_nums =  len(models_frame.EventRecorder.objects.filter(event_type='故障'))
-    chg_nums =  len(models_frame.EventRecorder.objects.filter(event_type='变更'))
-    upg_nums =  len(models_frame.EventRecorder.objects.filter(event_type='升级'))
-
-    if request.method == 'POST':
-        logout(request)
-        return HttpResponseRedirect('/login/')
-
-    if messageinfo_list:
-        msg_num = len(messageinfo_list)
-        msg_last = models_frame.TabAlarmInfo.objects.latest('id')
-        msg_last_content = msg_last.alarm_content
-        tim_last = (datetime.datetime.now() - msg_last.alarm_time).seconds / 60
-        return render_to_response('recorder.html',
-                                  {'recorder_list': recorder_chg_list,'all_nums':all_nums,'sys_nums':sys_nums,'db_nums':db_nums,'other_nums':other_nums,
-                                   'err_nums':err_nums,'chg_nums':chg_nums,'upg_nums':upg_nums, 'messageinfo_list': messageinfo_list,
-                                   'msg_num': msg_num,'msg_last_content': msg_last_content, 'tim_last': tim_last})
-    else:
-        return render_to_response('recorder.html', {'recorder_list': recorder_chg_list})
-
-@login_required(login_url='/login')
-def recorder_upd(request):
-    messageinfo_list = models_frame.TabAlarmInfo.objects.all()
-    recorder_list = models_frame.EventRecorder.objects.order_by('-record_time')
-    recorder_upd_list = models_frame.EventRecorder.objects.filter(event_type='升级').order_by('-record_time')
-    all_nums = len(recorder_list)
-    sys_nums =  len(models_frame.EventRecorder.objects.filter(event_section='系统'))
-    db_nums =  len(models_frame.EventRecorder.objects.filter(event_section='数据库'))
-    other_nums =  len(models_frame.EventRecorder.objects.filter(event_section='其他'))
-    err_nums =  len(models_frame.EventRecorder.objects.filter(event_type='故障'))
-    chg_nums =  len(models_frame.EventRecorder.objects.filter(event_type='变更'))
-    upg_nums =  len(models_frame.EventRecorder.objects.filter(event_type='升级'))
-
-    if request.method == 'POST':
-        logout(request)
-        return HttpResponseRedirect('/login/')
-
-    if messageinfo_list:
-        msg_num = len(messageinfo_list)
-        msg_last = models_frame.TabAlarmInfo.objects.latest('id')
-        msg_last_content = msg_last.alarm_content
-        tim_last = (datetime.datetime.now() - msg_last.alarm_time).seconds / 60
-        return render_to_response('recorder.html',
-                                  {'recorder_list': recorder_upd_list,'all_nums':all_nums,'sys_nums':sys_nums,'db_nums':db_nums,'other_nums':other_nums,
-                                   'err_nums':err_nums,'chg_nums':chg_nums,'upg_nums':upg_nums, 'messageinfo_list': messageinfo_list,
-                                   'msg_num': msg_num,'msg_last_content': msg_last_content, 'tim_last': tim_last})
-    else:
-        return render_to_response('recorder.html', {'recorder_list': recorder_upd_list})
 
 @login_required(login_url='/login')
 def recorder_del(request):
@@ -2861,9 +2711,7 @@ def show_sqltext(request):
 @login_required(login_url='/login')
 def show_sqltext_mysql(request):
     id = request.GET.get('id')
-
     sql = "select sql_text from mysql_slowquery where id =%d " %int(id)
-
     sqltext = tools.mysql_django_query(sql)
 
 
@@ -3311,9 +3159,7 @@ def crontab_add(request):
 @login_required(login_url='/login')
 def crontab_edit(request):
     rid = request.GET.get('id')
-
     status = 0
-
     # 查询crontab
     sql = "select id,minute,hour,day_of_week dw,day_of_month dm,month_of_year my from djcelery_crontabschedule b where id=%s" %rid
     my_crontabs = tools.mysql_django_query(sql)

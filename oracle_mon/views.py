@@ -86,11 +86,6 @@ def oracle_monitor(request):
     eventinfo = models_oracle.OracleDbEvent.objects.filter(tags=tagsdefault)
     lockinfo = models_oracle.OracleLock.objects.filter(tags=tagsdefault)
 
-    try:
-        conninfo = models_oracle.OracleDb.objects.get(tags=tagsdefault)
-    except models_oracle.OracleDb.DoesNotExist:
-        conninfo =  models_oracle.OracleDbHis.objects.filter(tags=tagsdefault, percent_process__isnull=False).order_by('-chk_time')[0]
-
     conngrow = models_oracle.OracleDbHis.objects.filter(tags=tagsdefault, percent_process__isnull=False).filter(
         chk_time__gt=conn_begin_time, chk_time__lt=end_time).order_by('-chk_time')
     conngrow_list = list(conngrow)
@@ -201,11 +196,14 @@ def show_oracle(request):
         msg_last = models_frame.TabAlarmInfo.objects.latest('id')
         msg_last_content = msg_last.alarm_content
         tim_last = (datetime.datetime.now() - msg_last.alarm_time).seconds / 60
-        return render_to_response('show_oracle.html',
-                                  {'dbinfos': dbinfos, 'messageinfo_list': messageinfo_list, 'msg_num': msg_num,
-                                   'msg_last_content': msg_last_content, 'tim_last': tim_last})
     else:
-        return render_to_response('show_oracle.html', {'dbinfos': dbinfos})
+        msg_num = 0
+        msg_last_content = ''
+        tim_last = ''
+    return render_to_response('show_oracle.html',
+                              {'dbinfos': dbinfos, 'messageinfo_list': messageinfo_list, 'msg_num': msg_num,
+                               'msg_last_content': msg_last_content, 'tim_last': tim_last})
+
 
 @login_required(login_url='/login')
 def show_oracle_resource(request):
@@ -492,10 +490,14 @@ def show_oracle_rate(request):
         msg_last = models_frame.TabAlarmInfo.objects.latest('id')
         msg_last_content = msg_last.alarm_content
         tim_last = (datetime.datetime.now() - msg_last.alarm_time).seconds / 60
-        return render_to_response('show_oracle_rate.html', {'oracle_rate_list': oracle_rate_list,  'messageinfo_list': messageinfo_list,
-                                                   'msg_num': msg_num,
-                                                   'msg_last_content': msg_last_content, 'tim_last': tim_last})
     else:
-        return render_to_response('show_oracle_rate.html', {'oracle_rate_list': oracle_rate_list})
+        msg_num = 0
+        msg_last_content = ''
+        tim_last = ''
+    return render_to_response('show_oracle_rate.html',
+                              {'oracle_rate_list': oracle_rate_list, 'messageinfo_list': messageinfo_list,
+                               'msg_num': msg_num,
+                               'msg_last_content': msg_last_content, 'tim_last': tim_last})
+
 
 
