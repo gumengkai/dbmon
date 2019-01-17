@@ -104,7 +104,6 @@ def mysql_monitor(request):
     netgrow = models_mysql.MysqlDbHis.objects.filter(tags=tagsdefault, bytes_received__isnull=False).filter(
         chk_time__gt=net_begin_time, chk_time__lt=end_time).order_by('-chk_time')
     netgrow_list = list(netgrow)
-    print net_begin_time
     netgrow_list.reverse()
 
 

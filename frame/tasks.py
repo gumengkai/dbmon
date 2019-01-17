@@ -10,6 +10,7 @@ import frame.oracle_backup as oracle_bak
 
 import frame.mysql_do as mysql
 import frame.mysql_backup as mysql_bak
+import frame.mysql_install as mysql_ins
 
 import uuid
 import frame.tools as tools
@@ -134,14 +135,15 @@ def oracle_logmnr(tags,url,user,password,schema,object,operation,log_list):
 
 # mysql安装
 @shared_task
-def mysql_install(host,user,password):
-    oper_type = '安装mysql数据库'
-    server_type = 'Mysql'
+def mysql_install(host,user,password,data_path,mysql_base,port):
+    oper_type = '安装MySQL数据库'
+    server_type = 'MySQL'
     task_id = uuid.uuid1()
     task_name = '%s:mysql_install' % host
-    args = 'host：' + host + '，' + 'user：' + user + '，' + 'password：' + password
+    args = 'host：' + host + '，' + 'user：' + user + '，' + 'password：' + password + \
+           'data_path: ' + data_path + 'mysql_base: ' +mysql_base + 'port: ' + port
     tools.begin_task(task_id, oper_type, server_type, host, task_name, args)
-    mysql.mysql_install(host, user, password)
+    mysql_ins.mysql_install(host, user, password,data_path,mysql_base,port)
     result = ''
     state = 'SUCCESS'
     tools.end_task(task_id, result, state)

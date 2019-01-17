@@ -313,6 +313,7 @@ desired effect
               <table id="example1" class="table table-bordered table-hover">
                 <thead>
                 <tr>
+                    <th>ID</th>
                     <th>TASK_ID</th>
                     <th>设备类型</th>
                     <th>标签</th>
@@ -327,6 +328,7 @@ desired effect
                 </thead>
                 {% for my_task in my_task_list %}
                  <tr>
+                  <td>{{ my_task.id}} </td>
                  <td>{{ my_task.task_id}} </td>
                  <td>{{ my_task.server_type }} </td>
                  <td>{{ my_task.tags}} </td>
@@ -396,7 +398,7 @@ desired effect
 		autoWidth:true,////不开启自动宽度，用bootstrap的自适应去调整
 		"lengthMenu": [10, 20, 50],//表格行数选择框内数目 显示2条,4条,20条,50条
 		"displayLength": 10,//默认的显示行数 (也就是每页显示几条数据)
-        "order": [1,'desc'],
+        "order": [0,'desc'],
 	    "language": {//自定义语言提示
 	    	"processing": "处理中...",
 	        "lengthMenu": "显示 _MENU_ 项结果",

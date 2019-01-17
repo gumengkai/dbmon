@@ -10,9 +10,11 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2019-01-15 15:43:43
+Date: 2019-01-17 17:23:38
 */
-
+-- ----------------------------
+-- Records of tab_alarm_conf
+-- ----------------------------
 INSERT INTO `tab_alarm_conf` VALUES ('1', 'Oracle', 'Oracle数据库通断告警', '>=', '1', '连续中断次数');
 INSERT INTO `tab_alarm_conf` VALUES ('2', 'Oracle', 'Oracle数据库表空间使用率告警', '>=', '90', '使用百分比');
 INSERT INTO `tab_alarm_conf` VALUES ('3', 'Oracle', 'Oracle数据库表空间使用率告警', '<=', '0.5', '单位：GB');

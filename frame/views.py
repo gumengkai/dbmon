@@ -1036,16 +1036,7 @@ def log_info(request):
 
     # 日志采集列表
     log_info = models_frame.ManyLogs.objects.filter(log_type=log_type)
-    paginator_log = Paginator(log_info, 10)
-    page_log = request.GET.get('page_log')
-    try:
-        logs = paginator_log.page(page_log)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        logs = paginator_log.page(1)
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        logs = paginator_log.page(paginator_log.num_pages)
+
     now = tools.now()
 
     if request.method == 'POST':
@@ -1057,7 +1048,7 @@ def log_info(request):
         msg_last = models_frame.TabAlarmInfo.objects.latest('id')
         msg_last_content = msg_last.alarm_content
         tim_last = (datetime.datetime.now() - msg_last.alarm_time).seconds / 60
-        return render_to_response('log_info.html', {'messageinfo_list': messageinfo_list, 'logs':logs,
+        return render_to_response('log_info.html', {'messageinfo_list': messageinfo_list, 'log_info':log_info,
                                                    'msg_num': msg_num,'now':now,
                                                    'msg_last_content': msg_last_content, 'tim_last': tim_last})
     else:
@@ -1111,11 +1102,11 @@ def mysql_install(request):
             password = request.POST.get('password', None)
             linux_version = request.POST.get('linux_version', None)
             mysql_version = request.POST.get('oracle_version', None)
-            soft_dir = request.POST.get('soft_dir', None)
-            data_dir = request.POST.get('data_dir', None)
-
-            task.mysql_install.delay(host,'root',password)
-            log_type = 'Mysql部署'
+            mysql_base = request.POST.get('mysql_base', None)
+            data_path = request.POST.get('data_path', None)
+            port = request.POST.get('port', None)
+            task.mysql_install.delay(host,'root',password,data_path,mysql_base,port)
+            log_type = 'MySQL部署'
             return HttpResponseRedirect('/log_info?log_type=%s' % log_type)
 
         elif request.POST.has_key('logout'):

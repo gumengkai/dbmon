@@ -367,7 +367,7 @@ desired effect
                     <th>时间</th>
                 </tr>
                 </thead>
-                {% for log in logs %}
+                {% for log in log_info %}
                  <tr>
                  <td>{{ forloop.counter }} </td>
                   <td>{{ log.log_info}} </td>
@@ -378,17 +378,6 @@ desired effect
               </table>
             </div>
             <div class="box-footer clearfix">
-           <span class="step-links">
-        {% if logs.has_previous %}
-            <a href="?page_log={{ logs.previous_page_number }}">上一页</a>
-        {% endif %}
-        <span class="current">
-            当前页{{ logs.number }} 共计{{ logs.paginator.num_pages }}
-        </span>
-        {% if log_collects.has_next %}
-            <a href="?page_log={{ logs.next_page_number }}">下一页</a>
-        {% endif %}
-           </span>
          </div>
       </div>
       </div>

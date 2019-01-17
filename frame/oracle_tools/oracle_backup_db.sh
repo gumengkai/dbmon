@@ -76,9 +76,6 @@ connect target /;
 configure retention policy to recovery window of ${RE_DAYS} days;
 configure controlfile autobackup on;
 configure controlfile autobackup format for device type disk to '${control_dir}/${ORACLE_SID}_control_%F';
-crosscheck backup;
-delete noprompt expired backup;
-delete noprompt obsolete;
 run
 {
 allocate channel c1 type disk;
@@ -87,6 +84,9 @@ sql 'alter system archive log current';
 backup archivelog all format '${backup_dir}/${ORACLE_SID}_db_arch_%T_%U' not backed up skip inaccessible;
 release channel c1;
 }
+crosscheck backup;
+delete noprompt expired backup;
+delete noprompt obsolete;
 exit;
 EOF
 exit
