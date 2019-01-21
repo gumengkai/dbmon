@@ -329,7 +329,7 @@ desired effect
                   <th>cpu使用率</th>
                   <th>内存使用率</th>
                     <th>主机状态</th>
-                    <th>Webssh</th>
+                    <th>操作</th>
                 </tr>
                 </thead>
                 {% for osinfo in osinfo_list %}
@@ -347,7 +347,7 @@ desired effect
                  <td><span class="badge bg-{{ osinfo.rate_level }}">{{ osinfo.mon_status }}</span></td>
                  <td>
                    <a href="#">
-                      <button type="button" class="btn bg-block btn-default bg-aqua" onclick="return pop('{{ osinfo.tags }}','{{ osinfo.host }}')" >Webssh</button></a>
+                      <button type="button" class="btn btn-xs btn-primary" onclick="return pop('{{ osinfo.tags }}','{{ osinfo.host }}')" >Webssh</button></a>
                  </td>
                  </tr>
                  {% endfor %}

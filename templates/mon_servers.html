@@ -361,13 +361,13 @@ desired effect
                  <td>
               <div class="box-tools pull-right">
                 <a href="#">
-            <button type="button" class="btn btn-default btn-sm" onclick="return pop_linux(this.value)" value="{{ linux_server.id }}"><i class="fa fa-edit"></i></button></a>
+            <button type="button" class="btn btn-xs btn-primary" onclick="return pop_linux(this.value)" value="{{ linux_server.id }}">编辑</button></a>
               </div>
                  </td>
                  <td>
               <div class="box-tools pull-right">
                 <a href="/linux_servers_del?id={{ linux_server.id }}">
-            <button type="button" class="btn btn-default btn-sm" onclick="javascript:return del();"><i class="fa fa-trash-o"></i></button></a>
+            <button type="button" class="btn btn-xs btn-danger" onclick="javascript:return del();">删除</button></a>
               </div>
                  </td>
                  </tr>
@@ -504,11 +504,11 @@ desired effect
                  </td>
                  <td>
                 <a href="#">
-            <button type="button" class="btn btn-default btn-sm" onclick="return pop_oracle(this.value)" value="{{ oracle_server.id }}"><i class="fa fa-edit"></i></button></a>
+            <button type="button" class="btn btn-xs btn-primary" onclick="return pop_oracle(this.value)" value="{{ oracle_server.id }}">编辑</button></a>
                  </td>
                  <td>
                 <a href="/oracle_servers_del?id={{ oracle_server.id }}">
-            <button type="button" class="btn btn-default btn-sm" onclick="javascript:return del();"><i class="fa fa-trash-o"></i></button></a>
+            <button type="button" class="btn btn-xs btn-danger" onclick="javascript:return del();">删除</button></a>
                  </td>
                  </tr>
                  {% endfor %}
@@ -580,13 +580,13 @@ desired effect
              <td>
               <div class="box-tools pull-right">
                 <a href="#">
-            <button type="button" class="btn btn-default btn-sm" onclick="return pop_mysql(this.value)" value="{{ mysql_server.id }}"><i class="fa fa-edit"></i></button></a>
+            <button type="button" class="btn btn-xs btn-primary" onclick="return pop_mysql(this.value)" value="{{ mysql_server.id }}">编辑</button></a>
               </div>
                  </td>
                  <td>
               <div class="box-tools pull-right">
                 <a href="/mysql_servers_del?id={{ mysql_server.id }}">
-            <button type="button" class="btn btn-default btn-sm" onclick="javascript:return del();"><i class="fa fa-trash-o"></i></button></a>
+            <button type="button" class="btn btn-xs btn-danger" onclick="javascript:return del();">删除</button></a>
               </div>
                  </td>
                  </tr>

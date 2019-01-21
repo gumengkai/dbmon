@@ -63,6 +63,18 @@ def show_all(request):
     msql_danger_cnt = len(models_mysql.MysqlDbRate.objects.filter(db_rate_level='danger'))
     # 告警
     messageinfo_list = models_frame.TabAlarmInfo.objects.all()
+    alarm_range_default = '1小时'.decode("utf-8")
+    alarm_begin_time = tools.range(alarm_range_default)
+
+    # 告警统计
+    break_cnt = len(models_frame.TabAlarmInfoHis.objects.filter(alarm_type__contains='通断').filter(alarm_time__gt=alarm_begin_time))
+    res_cnt = len(models_frame.TabAlarmInfoHis.objects.filter(alarm_type__contains='使用率').filter(alarm_time__gt=alarm_begin_time))
+    perf_cnt = len(models_frame.TabAlarmInfoHis.objects.filter(alarm_type__contains='性能').filter(alarm_time__gt=alarm_begin_time))
+    wait_cnt = len(models_frame.TabAlarmInfoHis.objects.filter(alarm_type__contains='锁').filter(alarm_time__gt=alarm_begin_time))
+    invalid_cnt = len(models_frame.TabAlarmInfoHis.objects.filter(alarm_type__contains='失效').filter(alarm_time__gt=alarm_begin_time))
+    delay_cnt = len(models_frame.TabAlarmInfoHis.objects.filter(alarm_type__contains='延迟').filter(alarm_time__gt=alarm_begin_time))
+    expire_cnt = len(models_frame.TabAlarmInfoHis.objects.filter(alarm_type__contains='过期').filter(alarm_time__gt=alarm_begin_time))
+    logerr_cnt = len(models_frame.TabAlarmInfoHis.objects.filter(alarm_type__contains='日志').filter(alarm_time__gt=alarm_begin_time))
 
     # top5
     top_5_cpu = models_linux.OsInfo.objects.filter(cpu_used__isnull=False).order_by("-cpu_used")[:5]
@@ -82,7 +94,7 @@ def show_all(request):
         msg_num = 0
         msg_last_content = ''
         tim_last = ''
-    return render_to_response('show_all.html',
+    return render_to_response('dashboard.html',
                               {'messageinfo_list': messageinfo_list, 'linux_all_cnt': linux_all_cnt,
                                'linux_seccess_cnt': linux_seccess_cnt, 'linux_warning_cnt': linux_warning_cnt,
                                'linux_danger_cnt': linux_danger_cnt, 'ora_all_cnt': ora_all_cnt,
@@ -91,7 +103,9 @@ def show_all(request):
                                'msql_all_cnt': msql_all_cnt, 'msql_seccess_cnt': msql_seccess_cnt,
                                'msql_warning_cnt': msql_warning_cnt, 'msql_danger_cnt': msql_danger_cnt,
                                'msg_num': msg_num, 'top_5_cpu': top_5_cpu, 'top_5_mem': top_5_mem,'top_5_disk':top_5_disk, 'now': now,
-                               'msg_last_content': msg_last_content, 'tim_last': tim_last})
+                               'msg_last_content': msg_last_content, 'tim_last': tim_last,
+                               'break_cnt':break_cnt,'res_cnt':res_cnt,'perf_cnt':perf_cnt,'wait_cnt':wait_cnt,'invalid_cnt':invalid_cnt,
+                               'delay_cnt':delay_cnt,'expire_cnt':expire_cnt,'logerr_cnt':logerr_cnt})
 
 
 

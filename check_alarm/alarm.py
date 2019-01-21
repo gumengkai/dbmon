@@ -35,6 +35,8 @@ def is_send_email(alarm_name,tags,url,email_header,alarm_content):
 
 def alarm():
     my_log.logger.info('初始化告警信息表')
+    ins_sql = "insert into tab_alarm_info_his select * from tab_alarm_info"
+    tools.mysql_exec(ins_sql,'')
     delete_sql = "delete from tab_alarm_info"
     tools.mysql_exec(delete_sql, '')
     my_log.logger.info('开始巡检主机数据')

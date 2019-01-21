@@ -342,106 +342,85 @@ desired effect
 
     <!-- Main content -->
     <section class="content container-fluid">
-
+        <div class="box box-primary">
+            <div class="box-body">
       <!--------------------------
         | Your Page Content Here |
         -------------------------->
-       <div class="col-md-4">
-          <!-- Widget: user widget style 1 -->
-          <div class="box box-widget widget-user-2">
-            <!-- Add the bg color to the header using any of the bg-* classes -->
-            <div class="widget-user-header bg-aqua-active">
-              <h3 class="widget-user-username">Linux主机</h3>
-              <h5 class="widget-user-desc"> 全部实例：{{ linux_all_cnt }}</h5>
-            </div>
-            <div class="box-footer no-padding">
-              <ul class="nav nav-stacked">
-                <li><a>正常 <span class="pull-right badge bg-green">{{ linux_seccess_cnt }}</span></a></li>
-                <li><a>告警 <span class="pull-right badge bg-yellow">{{ linux_warning_cnt }}</span></a></li>
-                <li><a>危险 <span class="pull-right badge bg-red">{{ linux_danger_cnt }}</span></a></li>
-              </ul>
-            </div>
-          </div>
-          <!-- /.widget-user -->
-        </div>
-        <div class="col-md-4">
-          <!-- Widget: user widget style 1 -->
-          <div class="box box-widget widget-user-2">
-            <!-- Add the bg color to the header using any of the bg-* classes -->
-            <div class="widget-user-header bg-aqua-active">
-              <h3 class="widget-user-username">Oracle数据库</h3>
-              <h5 class="widget-user-desc">全部实例：{{ ora_all_cnt }}</h5>
-            </div>
-            <div class="box-footer no-padding">
-              <ul class="nav nav-stacked">
-                <li><a>正常 <span class="pull-right badge bg-green">{{ ora_seccess_cnt }}</span></a></li>
-                <li><a>告警 <span class="pull-right badge bg-yellow">{{ ora_warning_cnt }}</span></a></li>
-                <li><a>危险 <span class="pull-right badge bg-red">{{ ora_danger_cnt }}</span></a></li>
-              </ul>
-            </div>
-          </div>
-          <!-- /.widget-user -->
-        </div>
-        <div class="col-md-4">
-          <!-- Widget: user widget style 1 -->
-          <div class="box box-widget widget-user-2">
-            <!-- Add the bg color to the header using any of the bg-* classes -->
-            <div class="widget-user-header bg-aqua-active">
-              <h3 class="widget-user-username">MySQL数据库</h3>
-              <h5 class="widget-user-desc">全部实例：{{ msql_all_cnt }}</h5>
-            </div>
-            <div class="box-footer no-padding">
-              <ul class="nav nav-stacked">
-                <li><a>正常 <span class="pull-right badge bg-green">{{ msql_seccess_cnt }}</span></a></li>
-                <li><a>告警 <span class="pull-right badge bg-yellow">{{ msql_warning_cnt }}</span></a></li>
-                <li><a>危险 <span class="pull-right badge bg-red">{{ msql_danger_cnt }}</span></a></li>
-              </ul>
-            </div>
-          </div>
-          <!-- /.widget-user -->
-        </div>
-        <section class="col-lg-7 connectedSortable ui-sortable">
-        <div class="box box-primary">
-            <div class="box-header ui-sortable-handle" style="cursor: move;">
-              <i class="ion ion-drag"></i>
-
-              <h3 class="box-title">实时告警</h3>
-
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-              <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
-              <ul class="todo-list ui-sortable">
-                  {% for message in messageinfo_list %}
-                <li class="">
-                  <!-- drag handle -->
-                  <span class="handle ui-sortable-handle">
-                        <i class="fa fa-ellipsis-v"></i>
-                        <i class="fa fa-ellipsis-v"></i>
-                      </span>
-                  <!-- checkbox -->
-                  <!-- todo text -->
-                  <span class="text">{{ message.alarm_header }}</span>
-                  <!-- Emphasis label -->
-                  <small class="label label-danger"><i class="fa fa-clock-o"></i> {{ tim_last }} min</small>
-                  <!-- General tools such as edit or delete-->
-                </li>
-                  {% endfor %}
-              </ul>
+           <div class="col-md-4">
+          <!-- AREA CHART -->
+            <div class="box-body chart-responsive">
+              <div class="chart" id="linux-chart" style="height: 300px; "></div>
             </div>
             <!-- /.box-body -->
-            <div class="box-footer clearfix no-border">
+          <!-- /.box -->
+
+        </div>
+        <div class="col-md-4">
+          <!-- AREA CHART -->
+            <div class="box-body chart-responsive">
+              <div class="chart" id="oracle-chart" style="height: 300px; "></div>
+            </div>
+            <!-- /.box-body -->
+          <!-- /.box -->
+
+        </div>
+        <div class="col-md-4">
+          <!-- AREA CHART -->
+            <div class="box-body chart-responsive">
+              <div class="chart" id="mysql-chart" style="height: 300px; "></div>
+            </div>
+            <!-- /.box-body -->
+          <!-- /.box -->
+        </div>
+        <section class="col-lg-7 connectedSortable ui-sortable">
+            <div class="nav-tabs-custom" style="cursor: move;">
+            <!-- Tabs within a box -->
+            <ul class="nav nav-tabs pull-right ui-sortable-handle">
+              <li class=""><a href="#msg" data-toggle="tab" aria-expanded="true">实时告警({{ msg_num }})</a></li>
+              <li class="active"><a href="#msg-chart" data-toggle="tab" aria-expanded="false">月度告警分布</a></li>
+              <li class="pull-left header"><i class="fa fa-warning"></i>告警概览</li>
+            </ul>
+            <div class="tab-content no-padding">
+              <!-- Morris chart - Sales -->
+             <div class="chart tab-pane active" id="msg-chart">
+              <div class="chart" id="alarm-chart" style="height: 300px; "></div>
+            </div>
+                <div class="chart tab-pane" id="msg">
+            <div class="box-body chart-responsive">
+              <table class="table table-striped">
+                <tbody>
+                {% for message in messageinfo_list %}
+                <tr>
+                    <td>{{ message.alarm_header }}
+                        <small class="label label-danger"><i class="fa fa-clock-o"></i> {{ tim_last }} min</small>
+                    </td>
+                  <td></td>
+                </tr>
+                {% endfor %}
+
+              </tbody></table>
+            </div>
+                <div class="box-footer clearfix no-border">
                 <span class="pull-right text-muted">{{ now }}</span>
+            </div>
+            </div>
             </div>
           </div>
         </section>
     <section class="col-lg-5 connectedSortable ui-sortable">
-          <!-- LINE CHART -->
-          <div class="box box-primary">
-            <div class="box-header with-border">
-              <h3 class="box-title">cpu使用率 TOP5</h3>
-            </div>
-            <div class="box-body chart-responsive">
+        <div class="nav-tabs-custom" style="cursor: move;">
+            <!-- Tabs within a box -->
+            <ul class="nav nav-tabs pull-right ui-sortable-handle">
+                <li class=""><a href="#disk" data-toggle="tab" aria-expanded="false">磁盘</a></li>
+                <li class=""><a href="#mem" data-toggle="tab" aria-expanded="false">内存</a></li>
+                <li class="active"><a href="#cpu" data-toggle="tab" aria-expanded="true">CPU</a></li>
+              <li class="pull-left header"><i class="fa fa-linux"></i>top5</li>
+            </ul>
+            <div class="tab-content no-padding">
+              <!-- Morris chart - Sales -->
+             <div class="chart tab-pane active" id="cpu">
+                 <div class="box-body chart-responsive">
               <table class="table table-striped">
                 <tbody><tr>
                   <th>标签</th>
@@ -459,15 +438,9 @@ desired effect
 
               </tbody></table>
             </div>
-            <!-- /.box-body -->
-          </div>
-          <!-- /.box -->
-    <!-- LINE CHART -->
-          <div class="box box-primary">
-            <div class="box-header with-border">
-              <h3 class="box-title">内存使用率 TOP5</h3>
             </div>
-            <div class="box-body chart-responsive">
+                <div class="chart tab-pane" id="mem">
+                    <div class="box-body chart-responsive">
               <table class="table table-striped">
                 <tbody><tr>
                   <th>标签</th>
@@ -485,14 +458,12 @@ desired effect
 
               </tbody></table>
             </div>
-            <!-- /.box-body -->
-          </div>
-              <!-- LINE CHART -->
-          <div class="box box-primary">
-            <div class="box-header with-border">
-              <h3 class="box-title">磁盘使用率 TOP5</h3>
+                <div class="box-footer clearfix no-border">
+                <span class="pull-right text-muted">{{ now }}</span>
             </div>
-            <div class="box-body chart-responsive">
+            </div>
+                <div class="chart tab-pane" id="disk">
+                    <div class="box-body chart-responsive">
               <table class="table table-striped">
                 <tbody><tr>
                   <th>标签</th>
@@ -512,11 +483,13 @@ desired effect
 
               </tbody></table>
             </div>
-            <!-- /.box-body -->
+            </div>
+            </div>
           </div>
-          <!-- /.box -->
+    <!-- LINE CHART -->
          </section>
-
+            </div>
+          </div>
     </section>
     <!-- /.content -->
   </div>
@@ -554,7 +527,316 @@ desired effect
      user experience. -->
 <script src="/static/js/echarts.js"></script>
 
+<script>
 
+     // ####################  【linux主机】图形  ####################
+        // 基于准备好的dom，初始化echarts实例
+        var myChart_linux = echarts.init(document.getElementById('linux-chart'));
+        // 指定图表的配置项和数据
+        var option_linux = {
+            title : {
+               text: 'linux主机',
+               x:'center'
+           },
+           tooltip : {
+               trigger: 'item',
+               formatter: "{a} <br/>{b} : ({d}%)"
+           },
+           legend: {
+               orient: 'vertical',
+               left: 'left',
+               data: ['正常({{ linux_seccess_cnt }})','告警({{ linux_warning_cnt }})','危险({{ linux_danger_cnt }})']
+           },
+           series : [
+               {
+                   name: '主机情况',
+                   type: 'pie',
+                   radius : '50%',
+                   center: ['50%', '60%'],
+                   data:[
+                       {value:{{ linux_seccess_cnt }}, name:'正常({{ linux_seccess_cnt }})'},
+                       {value:{{ linux_warning_cnt }}, name:'告警({{ linux_warning_cnt }})'},
+                       {value:{{ linux_danger_cnt }}, name:'危险({{ linux_danger_cnt }})'}
+                   ],
+                   itemStyle: {
+                       emphasis: {
+                           shadowBlur: 10,
+                           shadowOffsetX: 0,
+                           shadowColor: 'rgba(0, 0, 0, 0.5)'
+                       }
+                   },
+                   color: [
+                         '#22d4bf',
+                         '#d4cda6',
+                         '#d45356',
+                   ],
+               }
+           ]
+       };
+
+       setInterval(function () {
+          myChart_linux.setOption(option_linux, true);
+        },2000);
+
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart_linux.setOption(option_linux);
+
+     // ####################  【连接数使用率】图形  ####################
+        // 基于准备好的dom，初始化echarts实例
+        var myChart_oracle = echarts.init(document.getElementById('oracle-chart'));
+        // 指定图表的配置项和数据
+        var option_oracle = {
+            title : {
+               text: 'Oracle数据库',
+               x:'center'
+           },
+           tooltip : {
+               trigger: 'item',
+               formatter: "{a} <br/>{b} : ({d}%)"
+           },
+           legend: {
+               orient: 'vertical',
+               left: 'left',
+               data: ['正常({{ ora_seccess_cnt }})','告警({{ ora_warning_cnt }})','危险({{ ora_danger_cnt }})']
+           },
+           series : [
+               {
+                   name: '服务情况',
+                   type: 'pie',
+                   radius : '50%',
+                   center: ['50%', '60%'],
+                   data:[
+                       {value:{{ ora_seccess_cnt }}, name:'正常({{ ora_seccess_cnt }})'},
+                       {value:{{ ora_warning_cnt }}, name:'告警({{ ora_warning_cnt }})'},
+                       {value:{{ ora_danger_cnt }}, name:'危险({{ ora_danger_cnt }})'}
+                   ],
+                   itemStyle: {
+                       emphasis: {
+                           shadowBlur: 10,
+                           shadowOffsetX: 0,
+                           shadowColor: 'rgba(0, 0, 0, 0.5)'
+                       }
+                   },
+                   color: [
+                         '#22d4bf',
+                         '#d4cda6',
+                         '#d45356',
+                   ],
+               }
+           ]
+       };
+
+       setInterval(function () {
+          myChart_oracle.setOption(option_oracle, true);
+        },2000);
+
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart_oracle.setOption(option_oracle);
+
+        // ####################  【连接数使用率】图形  ####################
+        // 基于准备好的dom，初始化echarts实例
+        var myChart_mysql = echarts.init(document.getElementById('mysql-chart'));
+        // 指定图表的配置项和数据
+        var option_mysql = {
+            title : {
+               text: 'MySQL数据库',
+               x:'center'
+           },
+           tooltip : {
+               trigger: 'item',
+               formatter: "{a} <br/>{b} : ({d}%)"
+           },
+           legend: {
+               orient: 'vertical',
+               left: 'left',
+               data: ['正常({{ msql_seccess_cnt }})','告警({{ msql_warning_cnt }})','危险({{ msql_danger_cnt }})']
+           },
+           series : [
+               {
+                   name: '服务情况',
+                   type: 'pie',
+                   radius : '50%',
+                   center: ['50%', '60%'],
+                   data:[
+                       {value:{{ msql_seccess_cnt}}, name:'正常({{ msql_seccess_cnt }})'},
+                       {value:{{ msql_warning_cnt }}, name:'告警({{ msql_warning_cnt }})'},
+                       {value:{{ msql_danger_cnt }}, name:'危险({{ msql_danger_cnt }})'}
+                   ],
+                   itemStyle: {
+                       emphasis: {
+                           shadowBlur: 10,
+                           shadowOffsetX: 0,
+                           shadowColor: 'rgba(0, 0, 0, 0.5)'
+                       }
+                   },
+                   color: [
+                         '#22d4bf',
+                         '#d4cda6',
+                         '#d45356',
+                   ],
+               }
+           ]
+       };
+
+       setInterval(function () {
+          myChart_mysql.setOption(option_mysql, true);
+        },2000);
+
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart_mysql.setOption(option_mysql);
+
+
+        // ####################  【连接数使用率】图形  ####################
+                  // 基于准备好的dom，初始化echarts实例
+       var plantCap = [{
+         name: '设备通断',
+              value: '{{ break_cnt }}'
+          }, {
+              name: '资源耗尽',
+              value: '{{ res_cnt }}'
+          }, {
+              name: '综合性能',
+              value: '{{ perf_cnt }}'
+          }, {
+              name: '异常等待',
+              value: '{{ wait_cnt }}'
+          }, {
+              name: '对象失效',
+              value: '{{ invalid_cnt }}'
+          }, {
+              name: '同步延迟',
+              value: '{{ delay_cnt }}'
+          }, {
+              name: '日志异常',
+              value: '{{ logerr_cnt }}'
+          }, {
+              name: '资源过期',
+              value: '{{ expire_cnt }}'
+          }];
+
+          var datalist = [{
+              offset: [56, 48],
+              symbolSize: 120,
+              opacity: .95,
+              color: '#f467ce'
+          }, {
+              offset: [35, 80],
+              symbolSize: 95,
+              opacity: .88,
+              color: '#7aabe2'
+          }, {
+              offset: [20, 43],
+              symbolSize: 90,
+              opacity: .84,
+              color: '#ff7123'
+          }, {
+              offset: [83, 30],
+              symbolSize: 90,
+              opacity: .8,
+              color: '#ffc400'
+          }, {
+              offset: [36, 20],
+              symbolSize: 65,
+              opacity: .75,
+              color: '#5e333f'
+          }, {
+              offset: [64, 10],
+              symbolSize: 70,
+              opacity: .7,
+              color: '#6b3442'
+          }, {
+              offset: [75, 75],
+              symbolSize: 60,
+              opacity: .68,
+              color: '#8a3647'
+          }, {
+              offset: [88, 62],
+              symbolSize: 50,
+              opacity: .6,
+              color: '#68333f'
+          }];
+          var datas = [];
+          for (var i = 0; i < plantCap.length; i++) {
+              var item = plantCap[i];
+              var itemToStyle = datalist[i];
+              datas.push({
+                  name: item.value + '\n' + item.name,
+                  value: itemToStyle.offset,
+                  symbolSize: itemToStyle.symbolSize,
+                  label: {
+                      normal: {
+                          textStyle: {
+                              fontSize: 11
+                          }
+                      }
+                  },
+                  itemStyle: {
+                      normal: {
+                          color: itemToStyle.color,
+                          opacity: itemToStyle.opacity
+                      }
+                  },
+              })
+          }
+        var myChart_alarm = echarts.init(document.getElementById('alarm-chart'));
+        // 指定图表的配置项和数据
+        var option_alarm = {
+             grid: {
+                 show: false,
+                 top: 10,
+                 bottom: 10
+             },
+             xAxis: [{
+                 gridIndex: 0,
+                 type: 'value',
+                 show: false,
+                 min: 0,
+                 max: 100,
+                 nameLocation: 'middle',
+                 nameGap: 5
+             }],
+             yAxis: [{
+                 gridIndex: 0,
+                 min: 0,
+                 show: false,
+                 max: 100,
+                 nameLocation: 'middle',
+                 nameGap: 30
+             }],
+             series: [{
+                 type: 'scatter',
+                 symbol: 'circle',
+                 symbolSize: 120,
+                 label: {
+                     normal: {
+                         show: true,
+                         formatter: '{b}',
+                         color: '#fff',
+                         textStyle: {
+                             fontSize: '20'
+                         }
+                     },
+                 },
+                 itemStyle: {
+                     normal: {
+                         color: '#00acea'
+                     }
+                 },
+                 data: datas
+             }]
+         };
+
+       setInterval(function () {
+          myChart_alarm.setOption(option_alarm, true);
+        },2000);
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart_alarm.setOption(option_alarm);
+
+</script>
 
 </body>
 </html>
