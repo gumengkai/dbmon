@@ -5,8 +5,10 @@ import smtplib
 from email.mime.text import MIMEText
 from email.header import Header
 import ConfigParser
+import os
 conf = ConfigParser.ConfigParser()
-conf.read('D:\db_monitor.conf')
+conf_path = os.path.dirname(os.getcwd())
+conf.read('%s/config/db_monitor.conf' %conf_path)
 
 def send_email(receiver,subject,content):
     sender = conf.get("email","sender")

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+<html>
+ <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>DB monitor | Starter</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" />
+  <link rel="stylesheet" href="/static/bower_components/bootstrap/dist/css/bootstrap.min.css" />
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="/static/bower_components/font-awesome/css/font-awesome.min.css" />
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="/static/bower_components/Ionicons/css/ionicons.min.css" />
+  <!-- daterange picker -->
+  <link rel="stylesheet" href="/static/bower_components/bootstrap-daterangepicker/daterangepicker.css" />
+  <!-- bootstrap datepicker -->
+  <link rel="stylesheet" href="/static/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" />
+  <!-- iCheck for checkboxes and radio inputs -->
+  <link rel="stylesheet" href="/static/plugins/iCheck/all.css" />
+  <!-- Bootstrap time Picker -->
+  <link rel="stylesheet" href="/static/plugins/timepicker/bootstrap-timepicker.min.css" />
+  <!-- Select2 -->
+  <link rel="stylesheet" href="/static/bower_components/select2/dist/css/select2.min.css" />
+  <!-- Theme style -->
+  <link rel="stylesheet" href="/static/dist/css/AdminLTE.min.css" />
+  <!-- AdminLTE Skins. Choose a skin from the css/skins
+       folder instead of downloading all of them to reduce the load. -->
+  <link rel="stylesheet" href="/static/dist/css/skins/_all-skins.min.css" />
+
+       <!-- bootstrap wysihtml5 - text editor -->
+  <link rel="stylesheet" href="/static/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+  <!-- Google Font -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic" />
+ </head>
+ <!--
+BODY TAG OPTIONS:
+=================
+Apply one or more of the following classes to get the
+desired effect
+|---------------------------------------------------------|
+| SKINS         | skin-blue                               |
+|               | skin-black                              |
+|               | skin-purple                             |
+|               | skin-yellow                             |
+|               | skin-red                                |
+|               | skin-green                              |
+|---------------------------------------------------------|
+|LAYOUT OPTIONS | fixed                                   |
+|               | layout-boxed                            |
+|               | layout-top-nav                          |
+|               | sidebar-collapse                        |
+|               | sidebar-mini                            |
+|---------------------------------------------------------|
+-->
+ <body class="hold-transition skin-blue sidebar-mini">
+  <div class="wrapper">
+   <!-- Content Wrapper. Contains page content -->
+   <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <!-- Main content -->
+    <section class="content container-fluid">
+     <!--
+        | Your Page Content Here |
+        -------------------------->
+     <!-- Main content -->
+     <section class="content">
+      <div class="row">
+                <div class="box-body pad">
+                    <div class="col-sm-8">
+                  <pre rows="10" cols="80" > {{ faliure.analyze }}
+                    </pre>
+                    </div>
+            </div>
+                <div class="box-body">
+                    <div class="form-group">
+              <label for="inputEmail3" class="col-sm-2 control-label">故障原因</label>
+              <div class="col-sm-8">
+                  <pre>{{ faliure.reason }}</pre>
+              </div>
+             </div>
+                    <div class="form-group">
+              <label for="inputEmail3" class="col-sm-2 control-label">解决方案</label>
+              <div class="col-sm-8">
+                  <pre>{{ faliure.solution }}</pre>
+              </div>
+             </div>
+            </div>
+      </div>
+      <!-- /.row -->
+     </section>
+    </section>
+    <!-- /.content -->
+   </div>
+  </div>
+  <!-- ./wrapper -->
+  <!-- REQUIRED JS SCRIPTS -->
+  <!-- jQuery 3 -->
+  <script src="/static/bower_components/jquery/dist/jquery.min.js"></script>
+  <!-- Bootstrap 3.3.7 -->
+  <script src="/static/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <!-- Select2 -->
+  <script src="/static/bower_components/select2/dist/js/select2.full.min.js"></script>
+  <!-- InputMask -->
+  <script src="/static/plugins/input-mask/jquery.inputmask.js"></script>
+  <script src="/static/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+  <script src="/static/plugins/input-mask/jquery.inputmask.extensions.js"></script>
+  <!-- date-range-picker -->
+  <script src="/static/bower_components/moment/min/moment.min.js"></script>
+  <script src="/static/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+  <!-- bootstrap datepicker -->
+  <script src="/static/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+  <!-- bootstrap time picker -->
+  <script src="/static/plugins/timepicker/bootstrap-timepicker.min.js"></script>
+  <!-- SlimScroll -->
+  <script src="/static/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+  <!-- iCheck 1.0.1 -->
+  <script src="/static/plugins/iCheck/icheck.min.js"></script>
+  <!-- FastClick -->
+  <script src="/static/bower_components/fastclick/lib/fastclick.js"></script>
+  <!-- AdminLTE App -->
+  <script src="/static/dist/js/adminlte.min.js"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="/static/dist/js/demo.js"></script>
+
+  <!-- CK Editor -->
+<script src="/static/bower_components/ckeditor/ckeditor.js"></script>
+<!-- Bootstrap WYSIHTML5 -->
+<script src="/static/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+  <!-- Page script -->
+<script>
+  $(function () {
+    // Replace the <textarea id="editor1"> with a CKEditor
+    // instance, using default configuration.
+    CKEDITOR.replace('editor1')
+    //bootstrap WYSIHTML5 - text editor
+    $('.textarea').wysihtml5()
+  })
+</script>
+  <!-- Optionally, you can add Slimscroll and FastClick plugins.
+     Both of these plugins are recommended to enhance the
+     user experience. -->
+ </body>
+</html>

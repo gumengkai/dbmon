@@ -319,7 +319,7 @@ desired effect
         </li>
           <li class="treeview">
           <a href="#">
-            <i class="fa fa-pencil-square-o"></i> <span>配置管理</span>
+            <i class="fa fa-gears"></i> <span>配置管理</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -327,6 +327,18 @@ desired effect
           <ul class="treeview-menu">
             <li><a href="/mon_servers"><i class="fa fa-circle-o"></i>监控设备</a></li>
             <li><a href="/alarm_settings"><i class="fa fa-circle-o"></i>告警策略</a></li>
+          </ul>
+        </li>
+         <li class="treeview">
+          <a href="#">
+            <i class="fa fa-pencil-square-o"></i> <span>故障管理</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="/show_failure"><i class="fa fa-circle-o"></i>故障列表</a></li>
+            <li><a href="/failure_add"><i class="fa fa-circle-o"></i>新建故障记录</a></li>
           </ul>
         </li>
         <li class="header">消息列表</li>
@@ -520,16 +532,14 @@ desired effect
      <div class="row">
         <form class="" action="" method="POST">
         <div class="col-xs-4">
-       <div class="input-group">
-                <span class="input-group-addon">开始时间</span>
-                <input type="datetime-local" class="form-control" name="begin_time" placeholder="必填">
-              </div>
-        </div>
-        <div class="col-xs-4">
-             <div class="input-group">
-                <span class="input-group-addon">结束时间</span>
-                <input type="datetime-local" class="form-control" name="end_time" placeholder="必填">
-              </div>
+            <div class="input-group">
+                <div class="input-group-addon">
+                    <i class="fa fa-clock-o"></i>
+                  </div>
+				 <input type="text" name="date2" id="date2" class="form-control" placeholder="请选择时间范围">
+                 <input type="hidden" id = "startTime" name="startTime" class="form-control" />
+                 <input type="hidden" id = "endTime" name="endTime" class="form-control" />
+                </div>
         </div>
          <div class="col-xs-2">
       <div class="form-group">
@@ -670,7 +680,36 @@ desired effect
     //Date range picker
     $('#reservation').daterangepicker()
     //Date range picker with time picker
-    $('#reservationtime').daterangepicker({ timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A' })
+    $("input[name='date2']").daterangepicker(
+        {
+            	timePicker: true,
+            	timePickerIncrement: 1,
+            	format: 'YYYY-MM-DD HH:mm:ss',
+               // autoApply: true,
+               autoUpdateInput: false,
+               // alwaysShowCalendars: true,
+               locale: {
+                   format: "YYYY-MM-DD HH:mm:ss",
+                   separator: " - ",
+                   applyLabel: "确认",
+                   cancelLabel: "清空",
+                   fromLabel: "开始时间",
+                   toLabel: "结束时间",
+                   customRangeLabel: "自定义",
+                   daysOfWeek: ["日","一","二","三","四","五","六"],
+                   monthNames: ["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"]
+               }
+                       }
+               ).on('cancel.daterangepicker', function(ev, picker) {
+                   $("#date2").val("请选择日期范围");
+                   $("#startTime").val("");
+                   $("#endTime").val("");
+               }).on('apply.daterangepicker', function(ev, picker) {
+                   $("#startTime").val(picker.startDate.format('YYYY-MM-DD HH:mm:ss'));
+                   $("#endTime").val(picker.endDate.format('YYYY-MM-DD HH:mm:ss'));
+                   $("#date2").val(picker.startDate.format('YYYY-MM-DD')+" 至 "+picker.endDate.format('YYYY-MM-DD'));
+});
+
     //Date range as a button
     $('#daterange-btn').daterangepicker(
       {

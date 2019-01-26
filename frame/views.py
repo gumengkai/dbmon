@@ -455,16 +455,6 @@ def mysql_servers_edit(request):
 @login_required(login_url='/login')
 def show_alarm(request):
     messageinfo_list = models_frame.TabAlarmInfo.objects.all()
-    paginator_msg = Paginator(messageinfo_list, 10)
-    page_msg = request.GET.get('page')
-    try:
-        messageinfos = paginator_msg.page(page_msg)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        messageinfos = paginator_msg.page(1)
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        messageinfos = paginator_msg.page(paginator_msg.num_pages)
 
     if request.POST.has_key('logout'):
         logout(request)
@@ -479,7 +469,7 @@ def show_alarm(request):
         msg_num = 0
         msg_last = ''
         time_last = ''
-    return render_to_response('show_alarm.html', {'messageinfos': messageinfos, 'msg_num': msg_num,
+    return render_to_response('show_alarm.html', {'messageinfo_list': messageinfo_list, 'msg_num': msg_num,
                                                   'msg_last_content': msg_last_content, 'tim_last': tim_last})
 
 
@@ -2201,8 +2191,8 @@ def oracle_rpt(request):
     # 报告列表
     oracle_reports = models_oracle.OracleReport.objects.filter(tags=tagsdefault).order_by('id')
 
-    begin_time = (datetime.datetime.now() + datetime.timedelta(hours=-1)).strftime("%Y%m%d %H:%M:%S")
-    end_time = datetime.datetime.now().strftime("%Y%m%d %H:%M:%S")
+    start_time = (datetime.datetime.now() + datetime.timedelta(hours=-1)).strftime("%Y-%m-%d %H:%M:%S")
+    end_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     if request.method == 'POST':
         if request.POST.has_key('select_tags') :
@@ -2223,10 +2213,9 @@ def oracle_rpt(request):
             messages.add_message(request, messages.SUCCESS, '正在生成')
 
         elif request.POST.has_key('commit_event'):
-            begin_time = request.POST.get('begin_time', None)
-            end_time = request.POST.get('end_time', None)
-            begin_time = datetime.datetime.strptime(begin_time, '%Y-%m-%dT%H:%M').strftime("%Y%m%d %H:%M:%S")
-            end_time = datetime.datetime.strptime(end_time, '%Y-%m-%dT%H:%M').strftime("%Y%m%d %H:%M:%S")
+            start_time = request.POST.get('startTime', None)
+            end_time = request.POST.get('endTime', None)
+
         else:
             logout(request)
             return HttpResponseRedirect('/login/')
@@ -2245,11 +2234,12 @@ def oracle_rpt(request):
                MAX(a.sample_time) max_tim
           FROM dba_hist_active_sess_history a
          WHERE a.sample_time BETWEEN
-               to_date('%s','YYYYMMDD HH24:MI:SS') AND
-               to_date('%s','YYYYMMDD HH24:MI:SS')
+               to_date('%s','YYYY-MM-DD HH24:MI:SS') AND
+               to_date('%s','YYYY-MM-DD HH24:MI:SS')
          GROUP BY a.program, a.sql_id, a.session_state, a.event
          ORDER BY percent DESC)
-     WHERE ROWNUM <= 30 ''' %(begin_time,end_time)
+     WHERE ROWNUM <= 30 ''' %(start_time,end_time)
+
     oracle_events = tools.oracle_django_query(user,password,url,sql)
 
     if messageinfo_list:
@@ -2328,8 +2318,8 @@ def oracle_rpt_ash(request):
     # 报告列表
     oracle_reports = models_oracle.OracleReport.objects.filter(tags=tagsdefault).order_by('id')
 
-    begin_time = (datetime.datetime.now() + datetime.timedelta(hours=-1)).strftime("%Y%m%d %H:%M:%S")
-    end_time = datetime.datetime.now().strftime("%Y%m%d %H:%M:%S")
+    start_time = (datetime.datetime.now() + datetime.timedelta(hours=-1)).strftime("%Y-%m-%d %H:%M:%S")
+    end_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 
     if request.method == 'POST':
@@ -2345,38 +2335,38 @@ def oracle_rpt_ash(request):
                 return HttpResponseRedirect('/oracle_rpt?tagsdefault=%s&typedefault=%s&db_range_default=%s' % (
                 tagsdefault, typedefault, db_range_default))
         elif request.POST.has_key('commit'):
-            begin_snap = request.POST.get('begin_snap', None)
-            end_snap = request.POST.get('end_snap', None)
+            begin_snap = request.POST.get('ashstartTime', None)
+            end_snap = request.POST.get('ashendTime', None)
             task.get_report.delay(tagsdefault,host,user,password,user_os,password_os,service_name,url,report_type,begin_snap,end_snap)
             messages.add_message(request, messages.SUCCESS, '正在生成')
 
         elif request.POST.has_key('commit_event'):
-            begin_time = request.POST.get('begin_time', None)
-            end_time = request.POST.get('end_time', None)
-            begin_time = datetime.datetime.strptime(begin_time, '%Y-%m-%dT%H:%M').strftime("%Y%m%d %H:%M:%S")
-            end_time = datetime.datetime.strptime(end_time, '%Y-%m-%dT%H:%M').strftime("%Y%m%d %H:%M:%S")
+            start_time = request.POST.get('startTime', None)
+            end_time = request.POST.get('endTime', None)
         else:
             logout(request)
             return HttpResponseRedirect('/login/')
 
+
     sql = ''' SELECT *
-                 FROM (SELECT a.program,
-                 a.sql_id,
-                 a.session_state,
-                 a.event,
-                 count(*) cnt,
-                 lpad(round(ratio_to_report(count(*)) over() * 100) || '%%',
-                      10,
-                      ' ') percent,
-                 MIN(a.sample_time) min_tim,
-                 MAX(a.sample_time) max_tim
-            FROM dba_hist_active_sess_history a
-           WHERE a.sample_time BETWEEN
-                 to_date('%s','YYYYMMDD HH24:MI:SS') AND
-                 to_date('%s','YYYYMMDD HH24:MI:SS')
-           GROUP BY a.program, a.sql_id, a.session_state, a.event
-           ORDER BY percent DESC)
-       WHERE ROWNUM <= 30 ''' % (begin_time, end_time)
+               FROM (SELECT a.program,
+               a.sql_id,
+               a.session_state,
+               a.event,
+               count(*) cnt,
+               lpad(round(ratio_to_report(count(*)) over() * 100) || '%%',
+                    10,
+                    ' ') percent,
+               MIN(a.sample_time) min_tim,
+               MAX(a.sample_time) max_tim
+          FROM dba_hist_active_sess_history a
+         WHERE a.sample_time BETWEEN
+               to_date('%s','YYYY-MM-DD HH24:MI:SS') AND
+               to_date('%s','YYYY-MM-DD HH24:MI:SS')
+         GROUP BY a.program, a.sql_id, a.session_state, a.event
+         ORDER BY percent DESC)
+     WHERE ROWNUM <= 30 ''' %(start_time,end_time)
+
     oracle_events = tools.oracle_django_query(user, password, url, sql)
 
     if messageinfo_list:
@@ -3227,7 +3217,6 @@ def mysql_slowquery(request):
     slow_query_list = tools.mysql_django_query(sql)
 
 
-
     if request.method == 'POST':
         if request.POST.has_key('select_tags'):
             tagsdefault = request.POST.get('select_tags', None).encode("utf-8")
@@ -3249,3 +3238,151 @@ def mysql_slowquery(request):
         tim_last = ''
     return render(request,'mysql_slowquery.html', {'tagsdefault': tagsdefault,'tagsinfo':tagsinfo,'msg_num':msg_num,'msg_last_content':msg_last_content,'tim_last':tim_last,'slow_query_list':slow_query_list })
 
+
+@login_required(login_url='/login')
+def failure_add(request):
+    messageinfo_list = models_frame.TabAlarmInfo.objects.all()
+
+    if request.method == "POST":
+        if request.POST.has_key('commit'):
+            title = request.POST.get('title', None)
+            level = request.POST.get('level', None)
+            type = request.POST.get('type', None)
+            related = request.POST.get('related', None)
+            status = request.POST.get('status', None)
+            start_time = request.POST.get('startTime', None)
+            start_time = datetime.datetime.strptime(start_time, '%Y-%m-%d %H:%M:%S')
+            end_time = request.POST.get('endTime', None)
+            end_time = datetime.datetime.strptime(end_time, '%Y-%m-%d %H:%M:%S')
+            person = request.POST.get('person', None)
+            effect = request.POST.get('effect', None)
+            analyze = request.POST.get('analyze', None)
+            reason = request.POST.get('reason', None)
+            solution = request.POST.get('solution', None)
+
+            models_frame.FailureList.objects.create(title=title, level=level,type=type,related=related,status=status,
+                                                    start_time=start_time,end_time=end_time,person=person,effect=effect,
+                                                    analyze=analyze,reason=reason,solution=solution)
+
+        elif request.POST.has_key('logout'):
+            logout(request)
+            return HttpResponseRedirect('/login/')
+
+    if messageinfo_list:
+        msg_num = len(messageinfo_list)
+        msg_last = models_frame.TabAlarmInfo.objects.latest('id')
+        msg_last_content = msg_last.alarm_content
+        tim_last = (datetime.datetime.now() - msg_last.alarm_time).seconds / 60
+    else:
+        msg_num = 0
+        msg_last_content = ''
+        tim_last = ''
+
+    return render_to_response('failure_add.html',
+                              {'messageinfo_list': messageinfo_list, 'msg_num': msg_num,
+                               'msg_last_content': msg_last_content, 'tim_last': tim_last})
+
+
+
+@login_required(login_url='/login')
+def show_failure(request):
+    messageinfo_list = models_frame.TabAlarmInfo.objects.all()
+
+    failure_list = models_frame.FailureList.objects.all().order_by("-start_time")
+
+    if request.method == 'POST':
+        logout(request)
+        return HttpResponseRedirect('/login/')
+
+    if messageinfo_list:
+        msg_num = len(messageinfo_list)
+        msg_last = models_frame.TabAlarmInfo.objects.latest('id')
+        msg_last_content = msg_last.alarm_content
+        tim_last = (datetime.datetime.now() - msg_last.alarm_time).seconds / 60
+    else:
+        msg_num = 0
+        msg_last_content = ''
+        tim_last = ''
+    return render_to_response('show_failure.html',
+                              {'messageinfo_list': messageinfo_list, 'msg_num': msg_num,
+                               'msg_last_content': msg_last_content, 'tim_last': tim_last,
+                               'failure_list':failure_list})
+
+
+@login_required(login_url='/login')
+def failure_del(request):
+    rid = request.GET.get('id')
+    sql = "delete from failure_list where id = %s " %rid
+    tools.mysql_exec(sql,'')
+    return HttpResponseRedirect('/show_failure/')
+
+@login_required(login_url='/login')
+def failure_content(request):
+    messageinfo_list = models_frame.TabAlarmInfo.objects.all()
+
+    rid = request.GET.get('id')
+
+    faliure = models_frame.FailureList.objects.get(id=rid)
+
+
+    if messageinfo_list:
+        msg_num = len(messageinfo_list)
+        msg_last = models_frame.TabAlarmInfo.objects.latest('id')
+        msg_last_content = msg_last.alarm_content
+        tim_last = (datetime.datetime.now() - msg_last.alarm_time).seconds / 60
+    else:
+        msg_num = 0
+        msg_last_content = ''
+        tim_last = ''
+
+    return render_to_response('failure_content.html',
+                              {'messageinfo_list': messageinfo_list, 'msg_num': msg_num,
+                               'msg_last_content': msg_last_content, 'tim_last': tim_last,
+                               'faliure':faliure})
+
+@login_required(login_url='/login')
+def failure_edit(request):
+    messageinfo_list = models_frame.TabAlarmInfo.objects.all()
+    status = 0
+    rid = request.GET.get('id')
+    failure_edit = models_frame.FailureList.objects.get(id=rid)
+    if request.method == "POST":
+        if request.POST.has_key('commit'):
+            title = request.POST.get('title', None)
+            level = request.POST.get('level', None)
+            type = request.POST.get('type', None)
+            related = request.POST.get('related', None)
+            status = request.POST.get('status', None)
+            start_time = request.POST.get('startTime', None)
+            start_time = datetime.datetime.strptime(start_time, '%Y-%m-%d %H:%M:%S')
+            end_time = request.POST.get('endTime', None)
+            end_time = datetime.datetime.strptime(end_time, '%Y-%m-%d %H:%M:%S')
+            person = request.POST.get('person', None)
+            effect = request.POST.get('effect', None)
+            analyze = request.POST.get('analyze', None)
+            reason = request.POST.get('reason', None)
+            solution = request.POST.get('solution', None)
+
+            models_frame.FailureList.objects.filter(id=rid).update(title=title, level=level,type=type,related=related,status=status,
+                                                    start_time=start_time,end_time=end_time,person=person,effect=effect,
+                                                    analyze=analyze,reason=reason,solution=solution)
+            status = 1
+            return HttpResponseRedirect('/show_failure/')
+        elif request.POST.has_key('logout'):
+            logout(request)
+            return HttpResponseRedirect('/login/')
+
+    if messageinfo_list:
+        msg_num = len(messageinfo_list)
+        msg_last = models_frame.TabAlarmInfo.objects.latest('id')
+        msg_last_content = msg_last.alarm_content
+        tim_last = (datetime.datetime.now() - msg_last.alarm_time).seconds / 60
+    else:
+        msg_num = 0
+        msg_last_content = ''
+        tim_last = ''
+
+
+    return render_to_response('failure_edit.html', {'messageinfo_list': messageinfo_list, 'msg_num': msg_num,
+                               'msg_last_content': msg_last_content, 'tim_last': tim_last,
+                                'failure_edit': failure_edit,'status':status})

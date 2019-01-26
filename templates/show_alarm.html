@@ -23,6 +23,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
         apply the skin class to the body tag so the changes take effect. -->
   <link rel="stylesheet" href="/static/dist/css/skins/skin-blue.min.css">
 
+      <!-- DataTables -->
+  <link rel="stylesheet" href="/static/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -33,6 +36,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Google Font -->
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
 <style>
     .table tr th {
     font-size: 12px;
@@ -48,6 +52,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         font-size: 12px;
     }
 </style>
+
 </head>
 <!--
 BODY TAG OPTIONS:
@@ -76,7 +81,7 @@ desired effect
   <header class="main-header">
 
     <!-- Logo -->
-    <a href=/begin class="logo">
+    <a href="/begin" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>DB</b>m</span>
       <!-- logo for regular state and mobile devices -->
@@ -123,10 +128,11 @@ desired effect
                 </ul>
                 <!-- /.menu -->
               </li>
-              <li class="footer"><a href=/begin>查看所有消息</a></li>
+              <li class="footer"><a href=/show_alarm>查看所有消息</a></li>
             </ul>
           </li>
           <!-- /.messages-menu -->
+
           <!-- User Account Menu -->
           <li class="dropdown user user-menu">
             <!-- Menu Toggle Button -->
@@ -146,7 +152,7 @@ desired effect
                   <small>2018.03</small>
                 </p>
               </li>
-                <!-- Menu Footer-->
+               <!-- Menu Footer-->
                 <form action="" method="post">
               <li class="user-footer">
                 <div class="pull-left">
@@ -192,7 +198,7 @@ desired effect
       </form>
       <!-- /.search form -->
 
-         <!-- Sidebar Menu -->
+        <!-- Sidebar Menu -->
      <ul class="sidebar-menu tree" data-widget="tree">
         <li class="header">主导航</li>
         <li class="treeview">
@@ -215,12 +221,13 @@ desired effect
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
-           <ul class="treeview-menu">
+            <ul class="treeview-menu">
               <li><a href="/oracle_monitor"><i class="fa fa-circle-o"></i>实时监控</a></li>
             <li><a href="/show_oracle"><i class="fa fa-circle-o"></i>概览</a></li>
             <li><a href="/show_oracle_resource"><i class="fa fa-circle-o"></i>资源监控</a></li>
             <li><a href="/oracle_top_sql"><i class="fa fa-circle-o"></i>TOP SQL</a></li>
-              <li><a href="/oracle_rpt"><i class="fa fa-circle-o"></i>诊断报告</a></li> <li><a href="/oracle_perf"><i class="fa fa-circle-o"></i>性能图示</a></li>
+              <li><a href="/oracle_rpt"><i class="fa fa-circle-o"></i>诊断报告</a></li>
+                <li><a href="/oracle_perf"><i class="fa fa-circle-o"></i>性能图示</a></li>
           </ul>
         </li>
           <li class="treeview">
@@ -232,8 +239,10 @@ desired effect
           </a>
           <ul class="treeview-menu">
               <li><a href="/mysql_monitor"><i class="fa fa-circle-o"></i>实时监控</a></li>
-            <li><a href="/show_mysql"><i class="fa fa-circle-o"></i>概览</a></li>               <li><a href="/show_mysql_res"><i class="fa fa-circle-o"></i>资源监控</a></li>
-              <li><a href="/show_mysql_repl"><i class="fa fa-circle-o"></i>复制监控</a></li>               <li><a href="/mysql_slowquery"><i class="fa fa-circle-o"></i>慢查询解析</a></li>
+            <li><a href="/show_mysql"><i class="fa fa-circle-o"></i>概览</a></li>
+              <li><a href="/show_mysql_res"><i class="fa fa-circle-o"></i>资源监控</a></li>
+              <li><a href="/show_mysql_repl"><i class="fa fa-circle-o"></i>复制监控</a></li>
+              <li><a href="/mysql_slowquery"><i class="fa fa-circle-o"></i>慢查询解析</a></li>
           </ul>
         </li>
             <li class="treeview">
@@ -245,7 +254,8 @@ desired effect
           </a>
           <ul class="treeview-menu">
               <li><a href="/linux_monitor"><i class="fa fa-circle-o"></i>实时监控</a></li>
-            <li><a href="/show_linux"><i class="fa fa-circle-o"></i>概览</a></li>             <li><a href="/show_linux_res"><i class="fa fa-circle-o"></i>资源监控</a></li>
+            <li><a href="/show_linux"><i class="fa fa-circle-o"></i>概览</a></li>
+              <li><a href="/show_linux_res"><i class="fa fa-circle-o"></i>资源监控</a></li>
           </ul>
         </li>
          <li>
@@ -256,7 +266,7 @@ desired effect
             </span>
           </a>
         </li>
-         <li class="treeview">
+          <li class="treeview">
           <a href="#">
             <i class="fa fa-cogs"></i> <span>自动化运维</span>
             <span class="pull-right-container">
@@ -270,7 +280,7 @@ desired effect
         </li>
           <li class="treeview">
           <a href="#">
-            <i class="fa fa-pencil-square-o"></i> <span>配置管理</span>
+            <i class="fa fa-gears"></i> <span>配置管理</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -280,10 +290,23 @@ desired effect
             <li><a href="/alarm_settings"><i class="fa fa-circle-o"></i>告警策略</a></li>
           </ul>
         </li>
+         <li class="treeview">
+          <a href="#">
+            <i class="fa fa-pencil-square-o"></i> <span>故障管理</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="/show_failure"><i class="fa fa-circle-o"></i>故障列表</a></li>
+            <li><a href="/failure_add"><i class="fa fa-circle-o"></i>新建故障记录</a></li>
+          </ul>
+        </li>
         <li class="header">消息列表</li>
         <li><a href=/show_alarm><i class="fa fa-circle-o text-red"></i> <span>监控告警</span></a></li>
         <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>待办事项</span></a></li>
-        <li><a href="/recorder"><i class="fa fa-circle-o text-aqua"></i> <span>事件记录</span></a></li> <li><a href="/my_task"><i class="fa fa-circle-o text-green"></i> <span>任务管理器</span></a></li>
+        <li><a href="/recorder"><i class="fa fa-circle-o text-aqua"></i> <span>事件记录</span></a></li>
+         <li><a href="/my_task"><i class="fa fa-circle-o text-green"></i> <span>任务管理器</span></a></li>
       </ul>
       <!-- /.sidebar-menu -->
     </section>
@@ -293,33 +316,35 @@ desired effect
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <div class="col-xs-12">
-          <div class="box box-danger">
+
+    <!-- Main content -->
+    <section class="content container-fluid">
+
+      <!--------------------------
+        | Your Page Content Here |
+        -------------------------->
+      <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-xs-12">
+            <div class="box box-danger">
             <div class="box-header">
               <h3 class="box-title">告警消息</h3>
-
-              <div class="box-tools">
-                <div class="input-group input-group-sm" style="width: 150px;">
-                  <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
-
-                  <div class="input-group-btn">
-                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                  </div>
-                </div>
-              </div>
             </div>
             <!-- /.box-header -->
-            <div class="box-body table-responsive no-padding">
-              <table class="table table-hover">
-                <tbody><tr>
+            <div class="box-body" style="overflow: auto">
+                <table id="example1" class="table table-bordered table-striped" >
+                <thead>
+                <tr>
                   <th>tags</th>
                   <th>设备URL</th>
                   <th>告警类型</th>
                   <th>告警内容</th>
                   <th>告警时间</th>
                 </tr>
-                {% for messageinfo in messageinfos %}
+                </thead>
+                <tbody>
+                {% for messageinfo in messageinfo_list %}
                 <tr>
                   <td>{{ messageinfo.tags }} </td>
                   <td>{{ messageinfo.url}} </td>
@@ -328,34 +353,18 @@ desired effect
                   <td>{{ messageinfo.alarm_time}} </td>
                  </tr>
                 {% endfor %}
-              </tbody></table>
+                </tfoot>
+              </table>
             </div>
-           <div class="box-footer clearfix">
-           <span class="step-links">
-        {% if messageinfos.has_previous %}
-            <a href="?page={{ messageinfos.previous_page_number }}">上一页</a>
-        {% endif %}
-        <span class="current">
-            当前页{{ messageinfos.number }} 共计{{ messageinfos.paginator.num_pages }}
-        </span>
-        {% if messageinfos.has_next %}
-            <a href="?page={{ messageinfos.next_page_number }}">下一页</a>
-        {% endif %}
-           </span>
-         </div>
             <!-- /.box-body -->
           </div>
           <!-- /.box -->
+
         </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
     </section>
-
-    <!-- Main content -->
-    <section class="content container-fluid">
-
-      <!--------------------------
-        | Your Page Content Here |
-        -------------------------->
-
     </section>
     <!-- /.content -->
   </div>
@@ -384,9 +393,42 @@ desired effect
 <script src="/static/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- AdminLTE App -->
 <script src="/static/dist/js/adminlte.min.js"></script>
+<!-- DataTables -->
+<script src="/static/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="/static/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
      user experience. -->
+<script>
+
+ $('#example1').DataTable({
+		autoWidth:true,////不开启自动宽度，用bootstrap的自适应去调整
+		"lengthMenu": [10, 20, 50],//表格行数选择框内数目 显示2条,4条,20条,50条
+		"displayLength": 10,//默认的显示行数 (也就是每页显示几条数据)
+	    "language": {//自定义语言提示
+	    	"processing": "处理中...",
+	        "lengthMenu": "显示 _MENU_ 项结果",
+	        "zeroRecords": "没有找到相应的结果",
+	        "info": "第 _START_ 至 _END_ 行，共 _TOTAL_ 行",
+	        "infoEmpty": "第 0 至 0 项结果，共 0 项",
+	        "infoFiltered": "(由 _MAX_ 项结果过滤)",
+	        "infoPostFix": "",
+	        "url": "",
+	        "thousands": "'",
+	        "emptyTable": "表中数据为空",
+	        "loadingRecords": "载入中...",
+	        "infoThousands": ",",
+	        "paginate": {
+	            "first": "首页",
+	            "previous": "上页",
+	            "next": "下页",
+	            "last": "末页"
+	        }
+	    }
+
+	});
+</script>
 </body>
 </html>

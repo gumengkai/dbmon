@@ -127,10 +127,11 @@ def generate_conf(host,user,password, port, data_path, mysql_base, mysql_home, e
 
 def install_default_database(host,user,password,data_path,mysql_base,port,mysql_home):
     # 上传安装包，解压缩
-    soft = 'mysql-5.7.24-linux-glibc2.12-x86_64.tar.gz'
-    soft_loc = 'mysql_install/%s' %soft
-    remote_loc = '%s/%s' %(mysql_base,soft)
-    # sftp_upload_file(host,user,password,soft_loc,remote_loc)
+    soft_dir = os.getcwd() + '/frame/mysql_install'
+    soft_name = 'mysql-5.7.24-linux-glibc2.12-x86_64.tar.gz'
+    local_soft = '%s/%s' %(soft_dir,soft_name)
+    remote_loc = '%s/%s' %(mysql_base,soft_name)
+    sftp_upload_file(host,user,password,local_soft,remote_loc)
     tools.my_log(log_type, '上传安装文件至%s！' %remote_loc, '')
     cmd = 'tar -xzvf %s -C %s' %(remote_loc,mysql_base)
     exec_command(host,user,password,cmd)

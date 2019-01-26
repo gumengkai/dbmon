@@ -170,3 +170,23 @@ class MyTask(models.Model):
     class Meta:
         managed = False
         db_table = 'my_task'
+
+class FailureList(models.Model):
+    id = models.IntegerField(primary_key=True)
+    title = models.CharField(max_length=255)
+    level = models.CharField(max_length=255)
+    type = models.CharField(max_length=255)
+    related = models.CharField(max_length=255)
+    status = models.CharField(max_length=255)
+    start_time = models.CharField(max_length=255)
+    end_time = models.CharField(max_length=255)
+    person = models.CharField(max_length=255)
+    effect = models.TextField()
+    analyze = models.TextField()
+    reason = models.TextField()
+    solution = models.TextField()
+    ctime = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        managed = False
+        db_table = 'failure_list'

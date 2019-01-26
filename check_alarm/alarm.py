@@ -84,7 +84,7 @@ def alarm():
             is_alarm = tools.mysql_query("select cpu from tab_linux_servers where tags = '%s'" % tags)
             if is_alarm[0][0] == '1':
                 if cpu_used > pct_alarm:
-                    alarm_content = '%s：Linux主机CPU使用率告警 \n 告警时间：%s \n 主机ip：%s \n 主机名：%s \n CPU使用率：%s \n' % (
+                    alarm_content = '%s：Linux主机CPU使用率告警 \n 告警时间：%s \n 主机ip：%s \n 主机名：%s \n CPU使用率：%s%% \n' % (
                         tags, tools.now(), host_ip, host_name, cpu_used)
                     email_header = '%s：Linux主机CPU使用率告警' % tags
                     my_log.logger.info(alarm_content)
@@ -113,7 +113,7 @@ def alarm():
             is_alarm = tools.mysql_query("select mem from tab_linux_servers where tags = '%s'" % tags)
             if is_alarm[0][0] == '1':
                 if mem_used > pct_alarm:
-                    alarm_content = '%s：Linux主机内存使用率告警 \n 告警时间：%s \n 主机ip：%s \n 主机名：%s \n 内存使用率：%s \n' % (
+                    alarm_content = '%s：Linux主机内存使用率告警 \n 告警时间：%s \n 主机ip：%s \n 主机名：%s \n 内存使用率：%s%% \n' % (
                         tags, tools.now(), host_ip, host_name, mem_used)
                     email_header = '%s：Linux主机内存使用率告警' % tags
                     my_log.logger.info(alarm_content)
@@ -144,7 +144,7 @@ def alarm():
             is_alarm = tools.mysql_query("select mem from tab_linux_servers where tags = '%s'" % tags)
             if is_alarm[0][0] == '1':
                 if swap_used_pct > pct_alarm:
-                    alarm_content = '%s：Linux主机swap使用率告警 \n 告警时间：%s \n 主机ip：%s \n 主机名：%s \n swap使用率：%s \n' % (
+                    alarm_content = '%s：Linux主机swap使用率告警 \n 告警时间：%s \n 主机ip：%s \n 主机名：%s \n swap使用率：%s%% \n' % (
                         tags, tools.now(), host_ip, host_name, swap_used_pct)
                     email_header = '%s：Linux主机swap使用率告警' % tags
                     my_log.logger.info(alarm_content)
@@ -185,12 +185,12 @@ def alarm():
             is_alarm = tools.mysql_query("select disk from tab_linux_servers where host = '%s'" % host_ip)
             if is_alarm[0][0] == '1':
                 if disk_used > pct_alarm and disk_avail < gb_alarm:
-                    alarm_content = '%s：Linux主机文件系统使用率告警 \n 告警时间：%s \n 主机ip：%s \n 主机名：%s \n 目录名称：%s \n 目录总大小：%s \n 目录可用：%s \n 目录使用率：%s \n' % (
+                    alarm_content = '%s：Linux主机文件系统使用率告警 \n 告警时间：%s \n 主机ip：%s \n 主机名：%s \n 目录名称：%s \n 目录总大小：%sGB \n 目录可用：%sGB \n 目录使用率：%s%% \n' % (
                         tags, tools.now(), host_ip, host_name, disk_name, disk_size, disk_avail, disk_used)
                     email_header = '%s：Linux主机文件系统使用率告警' % tags
                     my_log.logger.info(alarm_content)
                     alarm_sql = 'insert into tab_alarm_info(tags,url,alarm_type,alarm_header,alarm_content) value(%s,%s,%s,%s,%s)'
-                    value = (tags, url, alarm_name, email_header, alarm_content,)
+                    value = (tags, url, alarm_name, email_header, alarm_content)
                     tools.mysql_exec(alarm_sql, value)
                     is_send_email(alarm_name, tags, url, email_header, alarm_content)
             else:
@@ -266,7 +266,7 @@ def alarm():
             is_alarm = tools.mysql_query("select archive from tab_oracle_servers where tags = '%s'" % tags)
             if is_alarm[0][0] == '1':
                 if archive_used > pct_alarm:
-                    alarm_content = '%s：数据库归档使用率告警 \n 告警时间：%s \n 数据库url：%s \n 使用率：%s \n' % (
+                    alarm_content = '%s：数据库归档使用率告警 \n 告警时间：%s \n 数据库url：%s \n 使用率：%s%% \n' % (
                         tags, tools.now(), url, archive_used)
                     email_header = '%s：Oracle数据库归档使用率告警' % tags
                     my_log.logger.info(alarm_content)
@@ -307,7 +307,7 @@ def alarm():
             is_alarm = tools.mysql_query("select tbs from tab_oracle_servers where tags = '%s'" % tags)
             if is_alarm[0][0] == '1':
                 if tbs_pct_used > pct_alarm and tbs_free_gb < gb_alarm:
-                    alarm_content = '%s：表空间使用率告警 \n 告警时间：%s \n 数据库url：%s \n 表空间名：%s \n 表空间大小：%s \n 表空间使用率：%s \n 表空间剩余大小：%s \n' % (
+                    alarm_content = '%s：表空间使用率告警 \n 告警时间：%s \n 数据库url：%s \n 表空间名：%s \n 表空间大小：%sGB \n 表空间使用率：%s%% \n 表空间剩余大小：%sGB \n' % (
                         tags, tools.now(), url, tbs_name, tbs_size_gb, tbs_pct_used, tbs_free_gb)
                     email_header = '%s：%s表空间使用率告警' % (tags, tbs_name)
                     my_log.logger.info(alarm_content)
@@ -345,7 +345,7 @@ def alarm():
             is_alarm = tools.mysql_query("select adg from tab_oracle_servers where tags = '%s'" % tags)
             if is_alarm[0][0] == '1':
                 if adg_transport_value > time_alarm or adg_apply_value > time_alarm:
-                    alarm_content = '%s：数据库adg延迟告警 \n 告警时间：%s \n 数据库url：%s \n 延迟时间(transport)：%s \n 延迟时间(apply)：%s \n' % (
+                    alarm_content = '%s：数据库adg延迟告警 \n 告警时间：%s \n 数据库url：%s \n 延迟时间(transport)：%s(秒) \n 延迟时间(apply)：%s(秒) \n' % (
                         tags, tools.now(), url, adg_transport_value, adg_apply_value)
                     email_header = '%s：数据库adg延迟告警' % tags
                     my_log.logger.info(alarm_content)
@@ -385,7 +385,7 @@ def alarm():
             is_alarm = tools.mysql_query("select temp_tbs from tab_oracle_servers where tags = '%s'" % tags)
             if is_alarm[0][0] == '1':
                 if tmp_tbs_pct_used > pct_alarm and (tmp_tbs_total_mb - tmp_tbs_used_mb) < gb_alarm:
-                    alarm_content = '%s：临时表空间使用率告警 \n 告警时间：%s \n 数据库url：%s \n 临时表空间名：%s \n 临时表空间大小(mb)：%s \n 临时表空间已使用大小(mb)：%s \n 临时表空间使用率：%s \n' % (
+                    alarm_content = '%s：临时表空间使用率告警 \n 告警时间：%s \n 数据库url：%s \n 临时表空间名：%s \n 临时表空间大小(MB)：%s \n 临时表空间已使用大小(MB)：%s \n 临时表空间使用率：%s%% \n' % (
                         tags, tools.now(), url, tmp_tbs_name, tmp_tbs_total_mb, tmp_tbs_used_mb, tmp_tbs_pct_used)
                     email_header = '%s：%s临时表空间使用率告警' % (tags, tmp_tbs_name)
                     my_log.logger.info(alarm_content)
@@ -423,7 +423,7 @@ def alarm():
             is_alarm = tools.mysql_query("select undo_tbs from tab_oracle_servers where tags = '%s'" % tags)
             if is_alarm[0][0] == '1':
                 if undo_tbs_pct_used > pct_alarm and (undo_tbs_total_mb - undo_tbs_used_mb) < gb_alarm:
-                    alarm_content = '%s：undo表空间使用率告警 \n 告警时间：%s \n 数据库url：%s \n undo表空间名：%s \n undo表空间大小(mb)：%s \n undo表空间已使用大小(mb)：%s \n undo表空间使用率：%s \n' % (
+                    alarm_content = '%s：undo表空间使用率告警 \n 告警时间：%s \n 数据库url：%s \n undo表空间名：%s \n undo表空间大小(MB)：%s \n undo表空间已使用大小(MB)：%s \n undo表空间使用率：%s%% \n' % (
                         tags, tools.now(), url, undo_tbs_name, undo_tbs_total_mb, undo_tbs_used_mb,
                         undo_tbs_pct_used)
                     email_header = '%s：%sundo表空间使用率告警' % (tags, undo_tbs_name)
@@ -436,7 +436,7 @@ def alarm():
                 my_log.logger.info('%s未设置%s' % (tags, alarm_name))
 
     # 连接数使用率告警
-        conn_conf = tools.mysql_query(
+    conn_conf = tools.mysql_query(
         "select alarm_name,jdg_value from tab_alarm_conf where server_type='Oracle' and alarm_name='Oracle数据库连接数告警'")
     alarm_name = str(conn_conf[0][0].encode("utf-8"))
     pct_alarm = conn_conf[0][1]
@@ -460,7 +460,7 @@ def alarm():
                     "select conn from tab_oracle_servers where tags = '%s'" % tags)
                 if is_alarm[0][0] == '1':
                     if process_pct_used > pct_alarm:
-                        alarm_content = '%s：连接数告警 \n 告警时间：%s \n 数据库url：%s \n 最大连接数：%s \n 已使用连接数：%s \n 连接数使用率百分比：%s \n' % (
+                        alarm_content = '%s：连接数告警 \n 告警时间：%s \n 数据库url：%s \n 最大连接数：%s \n 已使用连接数：%s \n 连接数使用率百分比：%s%% \n' % (
                             tags, tools.now(), url, max_process, current_process, process_pct_used)
                         email_header = '%s：连接数告警' % tags
                         my_log.logger.info(alarm_content)
@@ -517,7 +517,7 @@ def alarm():
                 ctime = str(line[5])
                 inst_id = str(line[6])
                 type = str(line[7])
-                alarm_content = '%s：数据库锁异常 \n 告警时间：%s \n 数据库url：%s \n 会话SID：%s \n 等待时间：%s \n 实例编号：%s \n 锁类型：%s \n' % (
+                alarm_content = '%s：数据库锁异常 \n 告警时间：%s \n 数据库url：%s \n 会话SID：%s \n 等待时间：%s(秒) \n 实例编号：%s \n 锁类型：%s \n' % (
                     tags, tools.now(), url, session, ctime, inst_id, type)
                 email_header = '%s：数据库锁异常告警' % tags
                 my_log.logger.info(alarm_content)

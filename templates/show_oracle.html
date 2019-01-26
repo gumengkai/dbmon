@@ -226,7 +226,8 @@ desired effect
             <li><a href="/show_oracle"><i class="fa fa-circle-o"></i>概览</a></li>
             <li><a href="/show_oracle_resource"><i class="fa fa-circle-o"></i>资源监控</a></li>
             <li><a href="/oracle_top_sql"><i class="fa fa-circle-o"></i>TOP SQL</a></li>
-              <li><a href="/oracle_rpt"><i class="fa fa-circle-o"></i>诊断报告</a></li> <li><a href="/oracle_perf"><i class="fa fa-circle-o"></i>性能图示</a></li>
+              <li><a href="/oracle_rpt"><i class="fa fa-circle-o"></i>诊断报告</a></li>
+                <li><a href="/oracle_perf"><i class="fa fa-circle-o"></i>性能图示</a></li>
           </ul>
         </li>
           <li class="treeview">
@@ -238,8 +239,10 @@ desired effect
           </a>
           <ul class="treeview-menu">
               <li><a href="/mysql_monitor"><i class="fa fa-circle-o"></i>实时监控</a></li>
-            <li><a href="/show_mysql"><i class="fa fa-circle-o"></i>概览</a></li>               <li><a href="/show_mysql_res"><i class="fa fa-circle-o"></i>资源监控</a></li>
-              <li><a href="/show_mysql_repl"><i class="fa fa-circle-o"></i>复制监控</a></li>               <li><a href="/mysql_slowquery"><i class="fa fa-circle-o"></i>慢查询解析</a></li>
+            <li><a href="/show_mysql"><i class="fa fa-circle-o"></i>概览</a></li>
+              <li><a href="/show_mysql_res"><i class="fa fa-circle-o"></i>资源监控</a></li>
+              <li><a href="/show_mysql_repl"><i class="fa fa-circle-o"></i>复制监控</a></li>
+              <li><a href="/mysql_slowquery"><i class="fa fa-circle-o"></i>慢查询解析</a></li>
           </ul>
         </li>
             <li class="treeview">
@@ -251,7 +254,8 @@ desired effect
           </a>
           <ul class="treeview-menu">
               <li><a href="/linux_monitor"><i class="fa fa-circle-o"></i>实时监控</a></li>
-            <li><a href="/show_linux"><i class="fa fa-circle-o"></i>概览</a></li>             <li><a href="/show_linux_res"><i class="fa fa-circle-o"></i>资源监控</a></li>
+            <li><a href="/show_linux"><i class="fa fa-circle-o"></i>概览</a></li>
+              <li><a href="/show_linux_res"><i class="fa fa-circle-o"></i>资源监控</a></li>
           </ul>
         </li>
          <li>
@@ -276,7 +280,7 @@ desired effect
         </li>
           <li class="treeview">
           <a href="#">
-            <i class="fa fa-pencil-square-o"></i> <span>配置管理</span>
+            <i class="fa fa-gears"></i> <span>配置管理</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -286,10 +290,23 @@ desired effect
             <li><a href="/alarm_settings"><i class="fa fa-circle-o"></i>告警策略</a></li>
           </ul>
         </li>
+         <li class="treeview">
+          <a href="#">
+            <i class="fa fa-pencil-square-o"></i> <span>故障管理</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="/show_failure"><i class="fa fa-circle-o"></i>故障列表</a></li>
+            <li><a href="/failure_add"><i class="fa fa-circle-o"></i>新建故障记录</a></li>
+          </ul>
+        </li>
         <li class="header">消息列表</li>
         <li><a href=/show_alarm><i class="fa fa-circle-o text-red"></i> <span>监控告警</span></a></li>
         <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>待办事项</span></a></li>
-        <li><a href="/recorder"><i class="fa fa-circle-o text-aqua"></i> <span>事件记录</span></a></li> <li><a href="/my_task"><i class="fa fa-circle-o text-green"></i> <span>任务管理器</span></a></li>
+        <li><a href="/recorder"><i class="fa fa-circle-o text-aqua"></i> <span>事件记录</span></a></li>
+         <li><a href="/my_task"><i class="fa fa-circle-o text-green"></i> <span>任务管理器</span></a></li>
       </ul>
       <!-- /.sidebar-menu -->
     </section>
