@@ -1956,7 +1956,7 @@ def oracle_switchover(request):
     now = tools.now()
     sql_refresh = 'update oracle_switchover t1 set t1.primary_curr_role = (select database_role from oracle_db where tags=t1.primary_tags),t1.adg_trans_lag =(select adg_transport_lag from oracle_db where tags=t1.primary_tags),t1.adg_apply_lag=(select adg_apply_lag from oracle_db where tags=t1.primary_tags)'
     tools.mysql_exec(sql_refresh,'')
-    sql_refresh = 'update oracle_switchover t1 set t1.standby_curr_role = (select database_role from oracle_db where tags=t1.standby_tags),t1.adg_trans_lag =(select ifnull(t1.adg_trans_lag,adg_transport_lag) from oracle_db where tags=t1.standby_tags),t1.adg_apply_lag=(select ifnull(t1.adg_apply_lag,adg_apply_lag) from oracle_db where tags=t1.standby_tags)'
+    sql_refresh = 'update oracle_switchover t1 set t1.standby_curr_role = (select database_role from oracle_db where tags=t1.standby_tags),t1.adg_trans_lag =(select adg_transport_lag from oracle_db where tags=t1.standby_tags),t1.adg_apply_lag=(select adg_apply_lag from oracle_db where tags=t1.standby_tags)'
     tools.mysql_exec(sql_refresh,'')
 
 
@@ -2378,11 +2378,11 @@ def oracle_rpt_ash(request):
         msg_num = 0
         msg_last_content = ''
         tim_last = ''
-    return render_to_response('oracle_rpt_ash.html', {'tagsdefault': tagsdefault,'typedefault':typedefault,'tagsinfo': tagsinfo,'msg_num':msg_num,
+
+    return render(request,'oracle_rpt_ash.html',  {'tagsdefault': tagsdefault,'typedefault':typedefault,'tagsinfo': tagsinfo,'msg_num':msg_num,
                                                       'msg_last_content': msg_last_content, 'tim_last': tim_last,'dbgrow_list':dbgrow_list,
                                                   'oracle_snap_shots':oracle_snap_shots,'oracle_reports':oracle_reports,
                                                       'oracle_events':oracle_events})
-
 
 
 @login_required(login_url='/login')
@@ -3323,7 +3323,6 @@ def failure_content(request):
     rid = request.GET.get('id')
 
     faliure = models_frame.FailureList.objects.get(id=rid)
-
 
     if messageinfo_list:
         msg_num = len(messageinfo_list)
