@@ -1,0 +1,41 @@
+{% extends 'base/base_site.html' %}
+
+{% block css %}
+<link rel="stylesheet" href="/static/css/shThemeDefault.css">
+<link rel="stylesheet" href="/static/css/prism.css">
+
+{% endblock %}
+
+  {% block main_header %}
+  {% endblock %}
+
+  {% block main_sidebar %}
+  {% endblock %}
+
+{% block content_header %}
+{% endblock %}
+
+{% block content %}
+    <div class="box-body">
+             <div class="form-group">
+              <div class="col-sm-8">
+                  <pre><code class="language-sql">{{ script.content }}</code></pre>
+              </div>
+             </div>
+            </div>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
+
+{% block javascripts %}
+
+<script src="/static/js/shCore.js"></script>
+<script src="/static/js/shBrushSql.js"></script>
+<script src="/static/js/prism.js"></script>
+
+<script>
+     SyntaxHighlighter.config.clipboardSwf = '/static/js/clipboard.swf'
+     SyntaxHighlighter.all();
+</script>
+{% endblock %}

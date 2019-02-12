@@ -43,6 +43,7 @@ INSTALLED_APPS = (
     'linux_mon',
     'oracle_mon',
     'mysql_mon',
+    'dba_blog',
     'djcelery',
 )
 
@@ -76,6 +77,10 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'libraries': {
+                'blog_tags': 'dba_blog.templatetags.blog_tags',
+
+            }
         },
     },
 ]

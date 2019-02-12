@@ -190,3 +190,15 @@ class FailureList(models.Model):
     class Meta:
         managed = False
         db_table = 'failure_list'
+
+
+class MyScripts(models.Model):
+    id = models.IntegerField(primary_key=True)
+    name = models.CharField(max_length=255)
+    server_type = models.CharField(max_length=255)
+    script_type = models.CharField(max_length=255, blank=True, null=True)
+    content = models.FloatField()
+
+    class Meta:
+        managed = False
+        db_table = 'my_scripts'

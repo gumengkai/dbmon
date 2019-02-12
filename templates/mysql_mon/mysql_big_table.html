@@ -100,10 +100,26 @@
 
      },
      series: [
-               {
+              {
              name:'used mb',
              type:'line',
              smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#d4d098"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#d4d098"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#d4d098",
+                opacity: 0.8
+               }
+             },
              data: [{% for i in tablegrow_list %}{{ i.total }},{% endfor %}]
          }
      ]

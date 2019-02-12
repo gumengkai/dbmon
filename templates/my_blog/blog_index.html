@@ -1,0 +1,109 @@
+{% extends 'base/base_site.html' %}
+{% load blog_tags %}
+
+{% block head_tips %}
+{% endblock  %}
+
+{% block content_header %}
+    <section class="content-header">
+        <h1>
+        运维DBA
+         </h1>
+        <h5>
+          大巧无功，重剑无锋
+        </h5>
+    </section>
+{% endblock %}
+
+{% block content %}
+    <div class="box box-solid">
+        <!-- /.box-header -->
+    <div class="box-body">
+    <nav class="navbar navbar-dark" role="navigation">
+    <div class="container-fluid">
+    <div class="navbar-header">
+        <a class="navbar-brand" href="#">首页</a>
+    </div>
+    <div>
+        <ul class="nav navbar-nav">
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    Oracle <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">jmeter</a></li>
+                    <li><a href="#">EJB</a></li>
+                    <li><a href="#">Jasper Report</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">分离的链接</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">另一个分离的链接</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    MySQL <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">jmeter</a></li>
+                    <li><a href="#">EJB</a></li>
+                    <li><a href="#">Jasper Report</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">分离的链接</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">另一个分离的链接</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    Linux <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">jmeter</a></li>
+                    <li><a href="#">EJB</a></li>
+                    <li><a href="#">Jasper Report</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">分离的链接</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">另一个分离的链接</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    </div>
+</nav>
+     <div class="container-fluid">
+        <article>
+        {% for article in blog_articles %}
+        <div class="header">
+            <h3>
+                <a>{{ article.title }}</a>
+            </h3>
+        </div>
+            {{ article.body|custom_markdown }}
+           <p class='comment'><a
+            href=' {{ article.get_absolute_url }}'>Read more</a>
+             </p>
+        {% endfor %}
+    </article>
+     </div>
+
+    </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+<script>
+function pop_detail(m,n){
+    layer.open({
+    type: 2,
+    title: n,
+    closeBtn: 1,
+    area: ['700px', '350px'],
+    shadeClose: true, //点击遮罩关闭
+    content: ['/show_script_content?id='+ m]
+  });
+}
+</script>
+{% endblock %}

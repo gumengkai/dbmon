@@ -16,23 +16,27 @@
             <!-- /.box-header -->
             <div class="box-body no-padding">
               <div class="mailbox-read-info">
-                <h4>sql文本</h4>
+                <h4>sql文本:</h4>
               </div>
               <div class="mailbox-read-message">
+              <pre>
                 {% for sql_text in sql_texts %}
-                <pre>{{ sql_text.SQL_TEXT }}</pre>
+                {{ sql_text.SQL_TEXT }}
                   {% endfor %}
+              </pre>
               </div>
               <!-- /.mailbox-read-message -->
             </div>
            <div class="box-body no-padding">
               <div class="mailbox-read-info">
-                <h4>执行计划</h4>
+                <h4>执行计划:</h4>
               </div>
               <div class="mailbox-read-message">
+              <pre>
                 {% for sql_plan in sql_plans %}
-                <pre>{{ sql_plan.PLAN_TABLE_OUTPUT }}</pre>
+                {{ sql_plan.PLAN_TABLE_OUTPUT }}
                   {% endfor %}
+              </pre>
               </div>
               <!-- /.mailbox-read-message -->
             </div>

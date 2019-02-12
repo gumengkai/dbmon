@@ -1,0 +1,76 @@
+{% extends 'base/base_site.html' %}
+
+{% block head_tips %}
+    <div class="btn btn-xs btn-box-tool">Tips: 如果您有好的脚本，欢迎发邮件至：gumengkai@hotmail.com，我们评估之后将会分享到平台上</div>
+{% endblock  %}
+
+{% block content_header %}
+    <section class="content-header">
+        <h1>
+        Oracle
+        <small>SQL&常用命令</small>
+         </h1>
+    </section>
+{% endblock %}
+
+{% block content %}
+
+    <div id="overview-content" class="ibox-content">
+          <div class="panel-group" id="accordion">
+           <div class="panel panel-default">
+            <div class="panel-heading">
+             <h4 class="panel-title"> <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true">Monitor</a><i class="indicator glyphicon  pull-right glyphicon-chevron-down"></i> </h4>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse in" aria-expanded="true" style="">
+                <table class="table table-bordered text-center">
+         <tbody>
+         {% for script in oracle_monitor_scripts %}
+              <a href="#"><button type="button" class="btn bg-gray margin" style="width: 130px;" onclick="return pop_detail('{{ script.id }}','{{ script.name }}')" ><i class="fa fa-file-text-o"></i> {{ script.name }}</button></a>
+         {% endfor %}
+              </tbody></table>
+            </div>
+           </div>
+           <div class="panel panel-default">
+            <div class="panel-heading">
+             <h4 class="panel-title"> <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false">Manage</a><i class="indicator glyphicon glyphicon-chevron-up pull-right"></i> </h4>
+            </div>
+            <div id="collapseTwo" class="panel-collapse collapse" aria-expanded="false">
+                <table class="table table-bordered text-center">
+         <tbody>
+         {% for script in oracle_manage_scripts %}
+              <a href="#"><button type="button" class="btn bg-gray margin" style="width: 130px;" onclick="return pop_detail('{{ script.id }}','{{ script.name }}')" ><i class="fa fa-file-text-o"></i> {{ script.name }}</button></a>
+         {% endfor %}
+              </tbody></table>
+            </div>
+           </div>
+           <div class="panel panel-default">
+            <div class="panel-heading">
+             <h4 class="panel-title"> <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false">Performance</a><i class="indicator glyphicon glyphicon-chevron-up pull-right"></i> </h4>
+            </div>
+            <div id="collapseThree" class="panel-collapse collapse" aria-expanded="false">
+                <table class="table table-bordered text-center">
+         <tbody>
+         {% for script in oracle_performance_scripts %}
+              <a href="#"><button type="button" class="btn bg-gray margin" style="width: 130px;" onclick="return pop_detail('{{ script.id }}','{{ script.name }}')" ><i class="fa fa-file-text-o"></i> {{ script.name }}</button></a>
+         {% endfor %}
+              </tbody></table>
+            </div>
+           </div>
+          </div>
+     </div>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+function pop_detail(m,n){
+    layer.open({
+    type: 2,
+    title: n,
+    closeBtn: 1,
+    area: ['700px', '350px'],
+    shadeClose: true, //点击遮罩关闭
+    content: ['/show_script_content?id='+ m]
+  });
+}
+</script>
+{% endblock %}

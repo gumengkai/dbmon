@@ -15,9 +15,11 @@
                 <h4>sql_undo</h4>
               </div>
               <div class="mailbox-read-message">
+              <text>
                 {% for sql_text in sqltext %}
                 {{ sql_text.SQL_UNDO }}
                   {% endfor %}
+              </text>
               </div>
               <!-- /.mailbox-read-message -->
             </div>
@@ -26,9 +28,11 @@
                 <h4>sql_redo</h4>
               </div>
               <div class="mailbox-read-message">
+                  <text>
                 {% for sql_text in sqltext %}
                 {{ sql_text.SQL_REDO }}
                   {% endfor %}
+                  </text>
               </div>
               <!-- /.mailbox-read-message -->
             </div>

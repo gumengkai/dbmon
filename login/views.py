@@ -26,7 +26,7 @@ def login_in(request):
             error_msg = '登录失败'
             messages.add_message(request, messages.ERROR, '请输入正确的用户名密码')
 
-    return  render(request,"login.html", {'error_msg': error_msg})
+    return  render(request, "frame/login.html", {'error_msg': error_msg})
 
 
 def page_not_found(request):

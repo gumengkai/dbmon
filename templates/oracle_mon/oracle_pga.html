@@ -31,11 +31,12 @@
                     <th>主机名</th>
                     <th>操作系统用户</th>
                     <th>登陆时间</th>
+                    <th>SID</th>
                     <th>进程号</th>
-                    <th>使用内存大小</th>
-                    <th>允许消耗内存大小</th>
-                    <th>可释放内存大小</th>
-                    <th>最大PGA内存分配</th>
+                    <th>使用内存大小(MB)</th>
+                    <th>允许消耗内存大小(MB)</th>
+                    <th>可释放内存大小(MB)</th>
+                    <th>最大PGA内存分配(MB)</th>
                 </tr>
                 </thead>
                 {% for oracle_pga in oracle_pgas %}
@@ -48,6 +49,7 @@
                  <td>{{ oracle_pga.MACHINE}} </td>
                  <td>{{ oracle_pga.OSUSER}} </td>
                  <td>{{ oracle_pga.LOGON_TIME}} </td>
+                 <td> <li><a href="/oracle_session?tags={{ tags }}&session_id={{ oracle_pga.SID }}" >{{ oracle_pga.SID }}</a></li> </td>
                  <td>{{ oracle_pga.SPID}} </td>
                  <td>{{ oracle_pga.PGA_USED_MEM}} </td>
                  <td>{{ oracle_pga.PGA_ALLOC_MEM}} </td>

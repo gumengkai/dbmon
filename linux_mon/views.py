@@ -47,7 +47,7 @@ def show_linux(request):
         msg_num = 0
         msg_last_content = ''
         tim_last = ''
-    return render_to_response('show_linux.html', {'diskinfos': diskinfos, 'messageinfo_list': messageinfo_list,
+    return render_to_response('linux_mon/show_linux.html', {'diskinfos': diskinfos, 'messageinfo_list': messageinfo_list,
                                                   'msg_num': msg_num,'osinfo_list':osinfo_list,
                                                   'msg_last_content': msg_last_content, 'tim_last': tim_last})
 
@@ -70,11 +70,11 @@ def show_linux_rate(request):
         msg_last = models_frame.TabAlarmInfo.objects.latest('id')
         msg_last_content = msg_last.alarm_content
         tim_last = (datetime.datetime.now() - msg_last.alarm_time).seconds / 60
-        return render_to_response('show_linux_rate.html', {'linux_rate_list': linux_rate_list, 'messageinfo_list': messageinfo_list,
+        return render_to_response('linux_mon/show_linux_rate.html', {'linux_rate_list': linux_rate_list, 'messageinfo_list': messageinfo_list,
                                                    'msg_num': msg_num,
                                                    'msg_last_content': msg_last_content, 'tim_last': tim_last})
     else:
-        return render_to_response('show_linux_rate.html', { 'linux_rate_list': linux_rate_list})
+        return render_to_response('linux_mon/show_linux_rate.html', {'linux_rate_list': linux_rate_list})
 
 
 @login_required(login_url='/login')
@@ -212,7 +212,7 @@ def linux_monitor(request):
         msg_num = 0
         msg_last_content = ''
         tim_last = ''
-    return render_to_response('linux_monitor.html',
+    return render_to_response('linux_mon/linux_monitor.html',
                               {'netgrow_list': netgrow_list, 'loadgrow_list': loadgrow_list,'cpugrow_list': cpugrow_list,
                                'memgrow_list': memgrow_list,'tcpgrow_list': tcpgrow_list,'iopsgrow_list':iopsgrow_list,'iops_range_default':iops_range_default,'iomb_range_default':iomb_range_default,
                                'tagsdefault': tagsdefault, 'hostinfo': hostinfo, 'osinfo': osinfo,'iombgrow_list':iombgrow_list,
@@ -283,7 +283,7 @@ def show_linux_res(request):
         msg_num = 0
         msg_last_content = ''
         tim_last = ''
-    return render_to_response('show_linux_res.html', {'tagsdefault': tagsdefault,'tagsinfo': tagsinfo,'msg_num':msg_num,
+    return render_to_response('linux_mon/show_linux_res.html', {'tagsdefault': tagsdefault, 'tagsinfo': tagsinfo, 'msg_num':msg_num,
                                                       'msg_last_content': msg_last_content, 'tim_last': tim_last,'diskinfo':diskinfo,'select_disk':select_disk,
                                                        'diskinfo_list': diskinfo_list,'disk_grow_list':disk_grow_list,'linux_grow_list':linux_grow_list})
 

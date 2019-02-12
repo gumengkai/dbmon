@@ -21,6 +21,13 @@ import frame.models as models_frame
 import linux_mon.models as models_linux
 import oracle_mon.models as models_oracle
 import mysql_mon.models as models_mysql
+import frame.tools as tools
+import MySQLdb
+import check_alarm.check_mysql as check_msql
+import frame.log_parse as logparser
+import tasks as task
+from django.contrib import messages
+
 # Create your views here.
 
 
@@ -137,13 +144,13 @@ def mysql_monitor(request):
         msg_num = 0
         msg_last_content = ''
         tim_last = ''
-    return render_to_response('mysql_monitor.html', {'messageinfo_list': messageinfo_list, 'msg_num': msg_num,
+    return render_to_response('mysql_mon/mysql_monitor.html', {'messageinfo_list': messageinfo_list, 'msg_num': msg_num,
                                                      'msg_last_content': msg_last_content, 'tim_last': tim_last,
                                                      'conngrow_list': conngrow_list,
                                                      'tagsdefault': tagsdefault, 'conn_range_default': conn_range_default,
-                                                     'ps_range_default': ps_range_default,'thread_range_default': thread_range_default,'net_range_default': net_range_default,
-                                                     'tagsinfo': tagsinfo, 'mysqlinfo': mysqlinfo, 'qpsgrow_list': qpsgrow_list,'threadgrow_list': threadgrow_list,'netgrow_list': netgrow_list,
-                                                     'tpsgrow_list': tpsgrow_list,'check_status':check_status,'mysql_status':mysql_status})
+                                                     'ps_range_default': ps_range_default,'thread_range_default': thread_range_default, 'net_range_default': net_range_default,
+                                                               'tagsinfo': tagsinfo, 'mysqlinfo': mysqlinfo, 'qpsgrow_list': qpsgrow_list, 'threadgrow_list': threadgrow_list, 'netgrow_list': netgrow_list,
+                                                               'tpsgrow_list': tpsgrow_list, 'check_status':check_status, 'mysql_status':mysql_status})
 
 
 @login_required(login_url='/login')
@@ -174,7 +181,7 @@ def show_mysql(request):
         msg_num = 0
         msg_last_content = ''
         tim_last = ''
-    return render_to_response('show_mysql.html',
+    return render_to_response('frame/show_mysql.html',
                               {'dbinfos': dbinfos, 'messageinfo_list': messageinfo_list,
                                'msg_num': msg_num,
                                'msg_last_content': msg_last_content, 'tim_last': tim_last})
@@ -208,7 +215,7 @@ def show_mysql_repl(request):
         msg_num = 0
         msg_last_content = ''
         tim_last = ''
-    return render_to_response('show_mysql_repl.html',
+    return render_to_response('mysql_mon/show_mysql_repl.html',
                               {'repl_infos': repl_infos, 'messageinfo_list': messageinfo_list, 'msg_num': msg_num,
                                'msg_last_content': msg_last_content, 'tim_last': tim_last})
 
@@ -228,7 +235,7 @@ def show_mysql_rate(request):
         msg_num = 0
         msg_last_content = ''
         tim_last = ''
-    return render_to_response('show_mysql_rate.html',
+    return render_to_response('mysql_mon/show_mysql_rate.html',
                               {'mysql_rate_list': mysql_rate_list, 'messageinfo_list': messageinfo_list,
                                'msg_num': msg_num,
                                'msg_last_content': msg_last_content, 'tim_last': tim_last})
@@ -282,7 +289,7 @@ def show_mysql_res(request):
         msg_num = 0
         msg_last_content = ''
         tim_last = ''
-    return render_to_response('show_mysql_res.html', {'tagsdefault': tagsdefault,'tagsinfo': tagsinfo,'msg_num':msg_num,
+    return render_to_response('mysql_mon/show_mysql_res.html', {'tagsdefault': tagsdefault, 'tagsinfo': tagsinfo, 'msg_num':msg_num,
                                                       'msg_last_content': msg_last_content, 'tim_last': tim_last, 'dbinfo':dbinfo,'mysql_grow_list':mysql_grow_list,
                                                       'big_table_list':big_table_list,'mysql_alert_logs':mysql_alert_logs})
 
@@ -323,5 +330,141 @@ def mysql_big_table(request):
         msg_num = 0
         msg_last_content = ''
         tim_last = ''
-    return render_to_response('mysql_big_table.html', {'tags': tags,'table_name':table_name,'msg_num':msg_num,'db':db,
-                                                      'msg_last_content': msg_last_content, 'tim_last': tim_last,'tablegrow_list':tablegrow_list,})
+    return render_to_response('mysql_mon/mysql_big_table.html', {'tags': tags, 'table_name':table_name, 'msg_num':msg_num, 'db':db,
+                                                      'msg_last_content': msg_last_content, 'tim_last': tim_last,'tablegrow_list':tablegrow_list, })
+
+@login_required(login_url='/login')
+def mysql_slowquery(request):
+    messageinfo_list = models_frame.TabAlarmInfo.objects.all()
+    tagsinfo = models_mysql.MysqlDb.objects.filter(mon_status='connected')
+
+    tagsdefault = request.GET.get('tagsdefault')
+    if not tagsdefault:
+        tagsdefault = models_mysql.MysqlDb.objects.filter(mon_status='connected').order_by('tags')[0].tags
+
+    sql = "select host,port,user,password,user_os,password_os from tab_mysql_servers where tags= '%s' " % tagsdefault
+    mysql_conf = tools.mysql_query(sql)
+    host = mysql_conf[0][0]
+    port = mysql_conf[0][1]
+    user = mysql_conf[0][2]
+    password = mysql_conf[0][3]
+    password = base64.decodestring(password)
+    user_os = mysql_conf[0][4]
+    password_os = mysql_conf[0][5]
+    password_os = base64.decodestring(password_os)
+
+    conn = MySQLdb.connect(host=host, user=user, passwd=password, port=int(port), connect_timeout=5, charset='utf8')
+    # 获取慢查询日志文件
+    slow_log_file = check_msql.get_mysql_para(conn,'slow_query_log_file')
+    # 清空历史解析结果
+    sql = "delete from mysql_slowquery where tags='%s' " %tagsdefault
+    tools.mysql_exec(sql,'')
+    # 解析慢查询日志
+    logparser.mysql_slow_query(tagsdefault,host,port,user_os,password_os,slow_log_file)
+
+
+    # 查询解析结果
+    sql = """
+      select id,
+         host,port,start_time,client_host,db_name,substr(sql_text,1,30) sql_text,sql_text sql_text_full,query_time,lock_time,rows_examined,rows_sent
+    from mysql_slowquery where tags='%s' order by start_time desc """ %tagsdefault
+    slow_query_list = tools.mysql_django_query(sql)
+
+
+    if request.method == 'POST':
+        if request.POST.has_key('select_tags'):
+            tagsdefault = request.POST.get('select_tags', None).encode("utf-8")
+            return HttpResponseRedirect('/mysql_slowquery?tagsdefault=%s' % (
+            tagsdefault))
+        else:
+            logout(request)
+            return HttpResponseRedirect('/login/')
+
+
+    if messageinfo_list:
+        msg_num = len(messageinfo_list)
+        msg_last = models_frame.TabAlarmInfo.objects.latest('id')
+        msg_last_content = msg_last.alarm_content
+        tim_last = (datetime.datetime.now() - msg_last.alarm_time).seconds / 60
+    else:
+        msg_num = 0
+        msg_last_content = ''
+        tim_last = ''
+    return render(request, 'mysql_mon/mysql_slowquery.html', {'tagsdefault': tagsdefault, 'tagsinfo':tagsinfo, 'msg_num':msg_num, 'msg_last_content':msg_last_content, 'tim_last':tim_last, 'slow_query_list':slow_query_list})
+
+@login_required(login_url='/login')
+
+def mysql_ctl(request):
+    # 告警
+    messageinfo_list = models_frame.TabAlarmInfo.objects.all()
+    oper_type = request.GET.get('oper_type')
+    host = request.GET.get('host')
+
+    if oper_type:
+        log_type = 'Mysql启停'
+        sql = '''select user,password from tab_linux_servers where host='%s' ''' % host
+        mysql = tools.mysql_query(sql)
+        user = mysql[0][0]
+        password = mysql[0][1]
+        password = base64.decodestring(password)
+        if oper_type == 'startup':
+            # ora_do.oracle_startup(host, user, password)
+            return HttpResponseRedirect('/mysql_ctl/')
+        elif oper_type == 'shutdown':
+            # ora_do.oracle_shutdown(host, user, password)
+            return HttpResponseRedirect('/mysql_ctl/')
+        else:
+            # ora_do.oracle_shutdown(host, user, password)
+            # ora_do.oracle_startup(host, user, password)
+            return HttpResponseRedirect('/mysql_ctl/')
+    else:
+        # 数据库操作面板
+        mysql_ctl_sql = '''select t1.tags,
+             t1.host,
+             t1.port,
+             (case t2.mon_status
+             when 'connected' then 'running' else 'suspend' end) run_status,
+             (case t2.mon_status
+             when 'connected' then 'success' else 'danger' end) is_run,
+               (case t2.mon_status
+             when 'connected' then 'red' else 'green' end) run_color,
+             (case t2.mon_status
+             when 'connected' then 'shutdown' else 'startup' end) oper_type
+        from tab_mysql_servers t1
+        left join mysql_db t2
+          on t1.tags = t2.tags'''
+
+        mysql_ctl_list = tools.mysql_django_query(mysql_ctl_sql)
+
+        paginator_mysql_ctl = Paginator(mysql_ctl_list, 5)
+        page_mysql_ctl = request.GET.get('page_mysql_ctl')
+        try:
+            mysql_ctls = paginator_mysql_ctl.page(page_mysql_ctl)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            mysql_ctls = paginator_mysql_ctl.page(1)
+        except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page of results.
+            mysql_ctls = paginator_mysql_ctl.page(page_mysql_ctl.num_pages)
+
+        now = tools.now()
+        if request.method == 'POST':
+            logout(request)
+            return HttpResponseRedirect('/login/')
+
+        if messageinfo_list:
+            msg_num = len(messageinfo_list)
+            msg_last = models_frame.TabAlarmInfo.objects.latest('id')
+            msg_last_content = msg_last.alarm_content
+            tim_last = (datetime.datetime.now() - msg_last.alarm_time).seconds / 60
+            return render_to_response('mysql_mon/mysql_ctl.html',
+                                      {'messageinfo_list': messageinfo_list, 'mysql_ctls': mysql_ctls,
+                                       'msg_num': msg_num, 'now': now,
+                                       'msg_last_content': msg_last_content, 'tim_last': tim_last})
+        else:
+            msg_num = 0
+            msg_last_content = ''
+            tim_last = ''
+            return render_to_response('mysql_mon/mysql_ctl.html',
+                                      {'messageinfo_list': messageinfo_list, 'mysql_ctls': mysql_ctls, 'now': now,
+                                       'msg_last_content': msg_last_content, 'tim_last': tim_last})

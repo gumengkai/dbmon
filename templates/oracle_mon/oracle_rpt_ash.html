@@ -131,7 +131,7 @@
         </div>
        </form>
         <form class="" action="" method="POST">
-        <div class="col-xs-4">
+        <div class="col-xs-5">
             <div class="input-group">
                 <div class="input-group-addon">
                     <i class="fa fa-clock-o"></i>
@@ -194,7 +194,7 @@
            <div class="box box-solid">
      <div class="row">
         <form class="" action="" method="POST">
-        <div class="col-xs-4">
+        <div class="col-xs-5">
             <div class="input-group">
                 <div class="input-group-addon">
                     <i class="fa fa-clock-o"></i>
@@ -292,7 +292,7 @@
                }).on('apply.daterangepicker', function(ev, picker) {
                    $("#ashstartTime").val(picker.startDate.format('YYYY-MM-DD HH:mm'));
                    $("#ashendTime").val(picker.endDate.format('YYYY-MM-DD HH:mm'));
-                   $("#ashdate").val(picker.startDate.format('YYYY-MM-DD')+" 至 "+picker.endDate.format('YYYY-MM-DD'));
+                   $("#ashdate").val(picker.startDate.format('YYYY-MM-DD HH:mm:ss')+" 至 "+picker.endDate.format('YYYY-MM-DD HH:mm:ss'));
     });
 
   //表单提交

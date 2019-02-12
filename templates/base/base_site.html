@@ -7,7 +7,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-   <meta http-equiv="refresh" content="60">
   <title>DB monitor | 数据库监控平台</title>
   <!-- Tell the browser to be responsive to screen width -->
   {% block css %}
@@ -89,14 +88,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
   {% endblock %}
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-
       <!-- Content Header (Page header) -->
         {% block content_header %}
         {% endblock content_header %}
         <!-- Main content -->
     <section class="content container-fluid">
-        {% block content %}
+    <!--
+    <a href="#" data-toggle="tooltip" data-placement="top" title="顶部的 Tooltip">Tips: </a>
+    -->
+    {% block head_tips %}
+    {% endblock head_tips %}
 
+        {% block content %}
         {% endblock content %}
     </section>
 
@@ -149,6 +152,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 		autoWidth:true,////不开启自动宽度，用bootstrap的自适应去调整
 		"lengthMenu": [10, 20, 50],//表格行数选择框内数目 显示2条,4条,20条,50条
 		"displayLength": 10,//默认的显示行数 (也就是每页显示几条数据)
+        "order": [],
 	    "language": {//自定义语言提示
 	    	"processing": "处理中...",
 	        "lengthMenu": "显示 _MENU_ 项结果",

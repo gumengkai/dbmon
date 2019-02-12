@@ -1,0 +1,102 @@
+{% extends 'base/base_site.html' %}
+  {% block main_header %}
+  {% endblock %}
+  {% block main_sidebar %}
+  {% endblock %}
+
+{% block content_header %}
+{% endblock %}
+
+{% block content %}
+    <div class="box box-solid">
+        <!-- /.box-header -->
+        <div class="box-body">
+        <!-- /.box-body -->
+            <div class="box-body">
+              <table id="example2" class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                  <th>ID</th>
+                    <th>标签</th>
+                  <th>undo表空间名</th>
+                  <th>undo状态</th>
+                  <th>undo大小(MB)</th>
+                </tr>
+                </thead>
+                {% for oracle_undo in oracle_undos %}
+                 <tr>
+                 <td>{{ forloop.counter }} </td>
+                 <td>{{ tags}} </td>
+                 <td>{{ oracle_undo.TABLESPACE_NAME}} </td>
+                 <td>{{ oracle_undo.STATUS}} </td>
+                 <td>{{ oracle_undo.MB}} </td>
+                 {% endfor %}
+              </table>
+            </div>
+      </div>
+      </div>
+      <div class="box box-solid">
+        <!-- /.box-header -->
+        <div class="box-body">
+        <!-- /.box-body -->
+         <div class="box-header">
+              <h3 class="box-title">会话使用Undo情况分析</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body" style="overflow: auto">
+              <table id="example2" class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                  <th>ID</th>
+                    <th>标签</th>
+                  <th>回滚段</th>
+                  <th>数据库用户</th>
+                  <th>客户端用户</th>
+                    <th>操作系统用户</th>
+                    <th>客户端来源</th>
+                    <th>会话SID</th>
+                    <th>Unix进程号</th>
+                    <th>使用undo量(MB)</th>
+                    <th>登录时间</th>
+                    <th>事务开始时间</th>
+                    <th>会话详情</th>
+                </tr>
+                </thead>
+                {% for oracle_session_undo in oracle_session_undos %}
+                 <tr>
+                 <td>{{ forloop.counter }} </td>
+                 <td>{{ tags}} </td>
+                 <td>{{ oracle_session_undo.RBS}} </td>
+                 <td>{{ oracle_session_undo.ORACLE_USER}}</td>
+                 <td>{{ oracle_session_undo.CLIENT_USER}}</td>
+                 <td>{{ oracle_session_undo.UNIX_USER}}</td>
+                 <td>{{ oracle_session_undo.PROGRAM}}</td>
+                 <td>{{ oracle_session_undo.SID}} </td>
+                  <td>{{ oracle_session_undo.UNIX_PID}} </td>
+                  <td>{{ oracle_session_undo.UNDO_MB}} </td>
+                  <td>{{ oracle_session_undo.LOGIN_TIME}} </td>
+                  <td>{{ oracle_session_undo.TRANSACTION_STARTTIME}} </td>
+                 <td> <li><a href="/oracle_session?tags={{ tags }}&session_id={{ oracle_session_undo.SID }}" >详情</a></li> </td>
+                 </tr>
+                 {% endfor %}
+              </table>
+            </div>
+            <div class="box-footer clearfix">
+           <span class="step-links">
+        {% if oracle_session_undos.has_previous %}
+            <a href="?page_log={{ oracle_session_undos.previous_page_number }}">上一页</a>
+        {% endif %}
+        <span class="current">
+            当前页{{ oracle_session_undos.number }} 共计{{ oracle_session_undos.paginator.num_pages }}
+        </span>
+        {% if oracle_session_undos.has_next %}
+            <a href="?page_log={{ oracle_session_undos.next_page_number }}">下一页</a>
+        {% endif %}
+           </span>
+         </div>
+      </div>
+      </div>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

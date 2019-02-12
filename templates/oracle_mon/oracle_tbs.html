@@ -3,13 +3,13 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Oracle表空间分析
+        Oracle表空间分析:{{ tbs_name }}
       </h1>
         </h1>
         <ol class="breadcrumb">
         <li><a href="/begin"><i class="fa fa-dashboard"></i>首页</a></li>
         <li><a href="#">Oracle</a></li>
-        <li><a href="/my_tools">资源监控</a></li>
+        <li><a href="/show_oracle_resource/?tagsdefault=orcl">资源监控</a></li>
         <li class="active">表空间分析</li>
       </ol>
     </section>
@@ -182,10 +182,26 @@
          min:0
      },
      series: [
-               {
+         {
              name:'pct used',
              type:'line',
              smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#d4d098"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#d4d098"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#d4d098",
+                opacity: 0.8
+               }
+             },
              data: [{% for i in tbsgrow_list %}{{ i.pct_used }},{% endfor %}]
          }
      ]
@@ -231,10 +247,26 @@
          scale:true,
      },
      series: [
-               {
+        {
              name:'used gb',
              type:'line',
              smooth: true,
+             itemStyle: {
+              normal: {
+                color: "#d4d098"
+              }
+              },
+              lineStyle: {
+               normal: {
+                color: "#d4d098"
+              }
+              },
+             areaStyle: {
+               normal: {
+                color: "#d4d098",
+                opacity: 0.8
+               }
+             },
              data: [{% for i in tbsgrow_list %}{{ i.used_gb }},{% endfor %}]
          }
      ]
