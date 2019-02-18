@@ -23,6 +23,7 @@
         <li><a href="/begin"><i class="fa fa-dashboard"></i>首页</a></li>
         <li><a href="#">文档资料库</a></li>
         <li><a href="/blog_index">DBA BLOG</a></li>
+         <li><a href="#">文章归档</a></li>
       </ol>
     </section>
 {% endblock %}
@@ -89,6 +90,11 @@
                 </a>
             </li>
         </ul>
+        <div class="box-tools pull-right">
+            <a href="/article_add">
+            <button type="button" class="btn btn-xs btn-primary" data-toggle="tooltip">
+              <i class="fa fa-plus">新增文章</i></button></a>
+          </div>
     </div>
 </nav>
     <hr />
@@ -123,16 +129,20 @@
             </div>
          </div>
       <div class="col-md-3">
-       <div class="has-feedback">
-                  <input type="text" class="form-control input-sm" placeholder="搜索">
-                  <span class="glyphicon glyphicon-search form-control-feedback"></span>
-       </div>
+      <form action="" method="post">
+         <div class="input-group input-group-sm" style="width: 200px;">
+                  <input type="text" name="search" class="form-control pull-right" placeholder="Search">
+                  <div class="input-group-btn">
+                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                  </div>
+         </div>
+            </form>
        <br>
          <aside id="views-4" class="widget widget_views">
              <h5 class="widget-title">热门文章</h5>
             <p>
                 {% for a in blog_views %}
-                    <li>
+                    <li style="list-style: none; margin: 0px; padding: 0px; line-height: 25px;">
                         <a class="mailbox-read-time" style="text-decoration: underline" href="/article_detail?id={{ a.id }}" title="{{ a.title }}">
                             {{ a.title }}
                         </a> - {{ a.views }} views
@@ -143,13 +153,13 @@
      <br>
      <aside id="su_siloed_terms-2" class="widget widget_su_siloed_terms">
          <h5 class="widget-title">分类目录</h5>
-            <ul><li><a class="mailbox-read-time" style="text-decoration: underline" href="/blog_index?type=Oracle">Oracle</a>
+            <ul style="margin: 0px; padding: 0px; line-height: 25px;"><li style="list-style: none; margin: 0px; padding: 0px;"><a class="mailbox-read-time" style="text-decoration: underline" href="/blog_index?type=Oracle">Oracle</a>
            </li>
-            <li><a  class="mailbox-read-time" style="text-decoration: underline" href="/blog_index?type=MySQL">MySQL</a>
+            <li style="list-style: none; margin: 0px; padding: 0px;"><a  class="mailbox-read-time" style="text-decoration: underline" href="/blog_index?type=MySQL">MySQL</a>
             </li>
-            <li><a  class="mailbox-read-time" style="text-decoration: underline" href="/blog_index?type=Linux">Linux</a>
+            <li style="list-style: none; margin: 0px; padding: 0px;"><a  class="mailbox-read-time" style="text-decoration: underline" href="/blog_index?type=Linux">Linux</a>
             </li>
-            <li><a  class="mailbox-read-time" style="text-decoration: underline" href="/blog_index?type=系统运维">MySQL</a>
+            <li style="list-style: none; margin: 0px; padding: 0px;"><a  class="mailbox-read-time" style="text-decoration: underline" href="/blog_index?type=系统运维">MySQL</a>
             </li>
             </ul>
         </aside>

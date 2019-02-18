@@ -1,6 +1,62 @@
 {% extends 'base/base_site.html' %}
 {% load blog_tags %}
 
+{% block style %}
+<style>
+li{list-style: none; margin: 0px; padding: 0px;}/*这里设置*/
+ul{margin: 0px; padding: 0px;}/*这里设置*/
+/* 小火箭css */
+#gotop2 {
+    width: 80px;
+    position: fixed;
+    bottom: 90px;
+    cursor: pointer;
+    z-index: 99998;
+    right: 50%;
+    margin-right: -620px;
+}
+
+/* 小火箭悬停特效 */
+
+#gotop2:hover {
+    animation: rubberBand 1s;
+}
+
+@keyframes rubberBand {
+  from {
+    transform: scale3d(1, 1, 1);
+  }
+
+  30% {
+    transform: scale3d(1.25, 0.75, 1);
+  }
+
+  40% {
+    transform: scale3d(0.75, 1.25, 1);
+  }
+
+  50% {
+    transform: scale3d(1.15, 0.85, 1);
+  }
+
+  65% {
+    transform: scale3d(.95, 1.05, 1);
+  }
+
+  75% {
+    transform: scale3d(1.05, .95, 1);
+  }
+
+  to {
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+/* end 小火箭 */
+
+</style>
+{% endblock  %}
+
 {% block head_tips %}
 {% endblock  %}
 
@@ -86,6 +142,11 @@
                 </a>
             </li>
         </ul>
+        <div class="box-tools pull-right">
+            <a href="/article_add">
+            <button type="button" class="btn btn-xs btn-primary" data-toggle="tooltip">
+              <i class="fa fa-plus">新增文章</i></button></a>
+          </div>
     </div>
 </nav>
     <hr />
@@ -96,7 +157,8 @@
         {% for article in article_detail %}
         <header class="entry-header ">
             <h3>
-                {{ article.title }}
+                <a>
+                    {{ article.title }}</a>
             </h3>
             <div class="comments-link">
             <div style="float:right">
@@ -139,16 +201,20 @@
     </article>
          </div>
     <div class="col-md-3">
-       <div class="has-feedback">
-                  <input type="text" class="form-control input-sm" placeholder="搜索">
-                  <span class="glyphicon glyphicon-search form-control-feedback"></span>
-       </div>
+      <form action="" method="post">
+         <div class="input-group input-group-sm" style="width: 200px;">
+                  <input type="text" name="search" class="form-control pull-right" placeholder="Search">
+                  <div class="input-group-btn">
+                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                  </div>
+         </div>
+      </form>
        <br>
-         <aside id="views-4" class="widget widget_views">
+       <aside id="views-4" class="widget widget_views">
              <h5 class="widget-title">热门文章</h5>
             <p>
                 {% for a in blog_views %}
-                    <li>
+                    <li style="line-height: 25px">
                         <a class="mailbox-read-time" style="text-decoration: underline" href="/article_detail?id={{ a.id }}" title="{{ a.title }}">
                             {{ a.title }}
                         </a> - {{ a.views }} views
@@ -159,7 +225,7 @@
      <br>
      <aside id="su_siloed_terms-2" class="widget widget_su_siloed_terms">
          <h5 class="widget-title">分类目录</h5>
-            <ul><li><a class="mailbox-read-time" style="text-decoration: underline" href="/blog_index?type=Oracle">Oracle</a>
+            <ul style="line-height: 25px"><li><a class="mailbox-read-time" style="text-decoration: underline" href="/blog_index?type=Oracle">Oracle</a>
            </li>
             <li><a  class="mailbox-read-time" style="text-decoration: underline" href="/blog_index?type=MySQL">MySQL</a>
             </li>
@@ -175,19 +241,58 @@
      </div>
     </div>
     </div>
+    <!-- 右侧小火箭图标返回顶部 -->
+	<div id="shangxia2">
+		<span id="gotop2">
+			<img src="/static/img/huojian.svg" alt="返回顶部小火箭">
+		</span>
+	</div>
 {% endblock %}
 
 {% block javascripts %}
+<script src="/static/js/TweenMax.min.js"></script>
+<script src="/static/js/ScrollToPlugin.min.js"></script>
+
 <script>
-function pop_detail(m,n){
-    layer.open({
-    type: 2,
-    title: n,
-    closeBtn: 1,
-    area: ['700px', '350px'],
-    shadeClose: true, //点击遮罩关闭
-    content: ['/show_script_content?id='+ m]
-  });
-}
+
+/* 选择你喜欢的速度类型，复制下面的某段代码即可。不明处请咨询：qpjk.cc */
+
+$(function() {
+
+// 默认速度
+$("#gotop6").click(function() {
+TweenMax.to(window, 1, {scrollTo:0});
+ });
+
+
+// 弹跳球式滚动底部 .box2是要滚动地方的id或者锚点
+$("#gotop5").click(function() {
+TweenMax.to(window, 2, {scrollTo:".box2", ease:Bounce.easeOut});
+ });
+
+
+// 返回顶部，绑定gotop1图标和gotop2文字事件
+$("#gotop1,#gotop2").click(function(e) {
+   TweenMax.to(window, 1.5, {scrollTo:0, ease: Expo.easeInOut});
+   var huojian = new TimelineLite();
+	huojian.to("#gotop1", 1, {rotationY:720, scale:0.6, y:"+=40", ease:  Power4.easeOut})
+	.to("#gotop1", 1, {y:-1000, opacity:0, ease:  Power4.easeOut}, 0.6)
+	.to("#gotop1", 1, {y:0, rotationY:0, opacity:1, scale:1, ease: Expo.easeOut, clearProps: "all"}, "1.4");
+ });
+
+
+// 以1秒慢快慢的速度滚动顶部
+$("#gotop3").click(function() {
+TweenMax.to(window, 1, {scrollTo:0, ease:Expo.easeInOut});
+ });
+
+// 以1.5秒快慢快的速度滚动顶部
+$("#gotop4").click(function() {
+TweenMax.to(window, 1.5, {scrollTo:0, ease:SlowMo.ease.config(0.7, 0.7, false)});
+ });
+
+
+});
+
 </script>
 {% endblock %}

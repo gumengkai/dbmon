@@ -1,66 +1,11 @@
 {% extends 'base/base_site.html' %}
 {% load blog_tags %}
 
-{% block style %}
-<style>
-
-li{list-style: none; margin: 0px; padding: 0px;}/*这里设置*/
-ul{margin: 0px; padding: 0px;}/*这里设置*/
-/* 小火箭css */
-#gotop2 {
-    width: 80px;
-    position: fixed;
-    bottom: 90px;
-    cursor: pointer;
-    z-index: 99998;
-    right: 50%;
-    margin-right: -620px;
-}
-
-/* 小火箭悬停特效 */
-
-#gotop2:hover {
-    animation: rubberBand 1s;
-}
-
-@keyframes rubberBand {
-  from {
-    transform: scale3d(1, 1, 1);
-  }
-
-  30% {
-    transform: scale3d(1.25, 0.75, 1);
-  }
-
-  40% {
-    transform: scale3d(0.75, 1.25, 1);
-  }
-
-  50% {
-    transform: scale3d(1.15, 0.85, 1);
-  }
-
-  65% {
-    transform: scale3d(.95, 1.05, 1);
-  }
-
-  75% {
-    transform: scale3d(1.05, .95, 1);
-  }
-
-  to {
-    transform: scale3d(1, 1, 1);
-  }
-}
-
-/* end 小火箭 */
-
-</style>
+{% block css %}
 {% endblock %}
 
 {% block head_tips %}
 {% endblock  %}
-
 
 {% block content_header %}
     <section class="content-header">
@@ -70,11 +15,14 @@ ul{margin: 0px; padding: 0px;}/*这里设置*/
         <h5>
           大巧无功，重剑无锋
         </h5>
-     <ol class="breadcrumb">
+        {% for article in article_detail %}
+        <ol class="breadcrumb">
         <li><a href="/begin"><i class="fa fa-dashboard"></i>首页</a></li>
         <li><a href="#">文档资料库</a></li>
         <li><a href="/blog_index">DBA BLOG</a></li>
+        <li><a href="#">新增文章</a></li>
       </ol>
+    {% endfor %}
     </section>
 {% endblock %}
 
@@ -140,87 +88,50 @@ ul{margin: 0px; padding: 0px;}/*这里设置*/
                 </a>
             </li>
         </ul>
-        <div class="box-tools pull-right">
-            <a href="/article_add">
-            <button type="button" class="btn btn-xs btn-primary" data-toggle="tooltip">
-              <i class="fa fa-plus">新增文章</i></button></a>
-          </div>
     </div>
 </nav>
     <hr />
      <div class="container-fluid">
      <div class="row">
          <div class="col-md-9">
-         {% if type %}
-         <header class="archive-header">
-             <p class="title">分类目录：<span><b>{{ type }}{% if subtype %}-{{ subtype }}{% endif %}</b></span></p>
-                </header>
-         {% endif %}
-             {% if search %}
-         <header class="archive-header">
-             <p class="title">搜索：<span style="color: red"><b>{{ search }}</b></span></p>
-                </header>
-         {% endif %}
         <article>
-        {% for article in blog_articles %}
+            <form method="post" class="form-horizontal" action="">
+             <div class="box-body pad">
+               <div class="form-group">
+                <input class="form-control" name="title" placeholder="文章标题">
+              </div>
+              <div class="form-group">
+                      <select class="form-control select2" style="width: 100%;" id="type" name="type" onchange="select_tag()">
+                        <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                      <option selected="selected">------</option>
+                          <option>Oracle</option>
+                          <option>MySQL</option>
+                          <option>Linux</option>
+                          <option>系统运维</option>
+                      </select>
+                </div>
+                 <div class="form-group">
+                      <select class="form-control select2" style="width: 100%;" id="tags" name="subtype">
+                        <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                      <option selected="selected">------</option>
+                      </select>
+                </div>
+             <div class="form-group">
+                    <textarea id="editor1" name="body" rows="10" cols="80">
+                    </textarea>
+            </div>
+            <div class="box-footer">
+              <div class="pull-right">
+                <button type="submit" class="btn btn-primary" name="commit"><i class="fa fa-save"></i> 保存</button>
+              </div>
+            </div>
+            </div>
             </br>
-        <header class="entry-header ">
-            <h3>
-                <a href="/article_detail?&id={{ article.id }}">{{ article.title }}</a>
-            </h3>
-            <div class="comments-link">
-            <div style="float:right">
-                {{ article.views }} views
-            </div>
-        </div><!-- .comments-link -->
-        </br>
-        </header>
-            <div class="entry-content">
-                {{ article.body|custom_markdown|truncatechars_content }}
-            </div>
-           <p ><a class="mailbox-read-time" style="text-decoration: underline"
-            href='/article_detail?id={{ article.id }}' class="" >Read more</a>
-             </p>
-            <footer class="entry-meta">
-    本条目发布于<a href="#" title="{{ article.created_time }}">
-    <time class="mailbox-read-time"
-          datetime="{{ article.created_time }}">
-        {{ article.created_time }}
-    </time>
-</a>
-        。属于<a class="mailbox-read-time" style="text-decoration: underline" href="/blog_index?type={{ article.type }}" rel="category tag">{{ article.type }}</a>分类，
-    <span class="by-author">作者是
-        <span class="author vcard">
-            <a class="url fn n" href="/blog_index?author_id={{ article.author_id }}"
-               title="查看所有由{{ article.username }}发布的文章"
-               rel="author">
-            <span itemprop="author" itemscope itemtype="http://schema.org/Person">
-            <span itemprop="name" itemprop="publisher" class="mailbox-read-time" style="text-decoration: underline">
-            {{ article.username }}
-        </span>
-            </span>
-    </a>
-        </span>。
-        <a class="mailbox-read-time" style="text-decoration: underline" href="/article_edit?id={{ article.id }}">编辑</a>
-    </span>
-</footer><!-- .entry-meta -->
-<HR>
-        {% endfor %}
+           <HR style="">
+            </form>
     </article>
-      {% if blog_articles.has_next %}
-        <div class="pull-left"><a
-                href="?page={{ blog_articles.next_page_number }}"><span
-                class="meta-nav">&larr;</span> 早期文章</a></div>
-    {% endif %}
-      {% if blog_articles.has_previous %}
-        <div class="pull-right" ><a href="?page={{ blog_articles.previous_page_number }}">较新文章
-            <span
-                    class="meta-nav">→</span></a>
-        </div>
-    {% endif %}
-
          </div>
-     <div class="col-md-3">
+         <div class="col-md-3">
       <form action="" method="post">
          <div class="input-group input-group-sm" style="width: 200px;">
                   <input type="text" name="search" class="form-control pull-right" placeholder="Search">
@@ -228,9 +139,9 @@ ul{margin: 0px; padding: 0px;}/*这里设置*/
                     <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
                   </div>
          </div>
-            </form>
+      </form>
        <br>
-         <aside id="views-4" class="widget widget_views">
+       <aside id="views-4" class="widget widget_views">
              <h5 class="widget-title">热门文章</h5>
             <p>
                 {% for a in blog_views %}
@@ -261,58 +172,26 @@ ul{margin: 0px; padding: 0px;}/*这里设置*/
      </div>
     </div>
     </div>
-<!-- 右侧小火箭图标返回顶部 -->
-	<div id="shangxia2">
-		<span id="gotop2">
-			<img src="/static/img/huojian.svg" alt="返回顶部小火箭">
-		</span>
-	</div>
 {% endblock %}
 
 {% block javascripts %}
-<script src="/static/js/TweenMax.min.js"></script>
-<script src="/static/js/ScrollToPlugin.min.js"></script>
-
 <script>
-
-/* 选择你喜欢的速度类型，复制下面的某段代码即可。不明处请咨询：qpjk.cc */
-
-$(function() {
-
-// 默认速度
-$("#gotop6").click(function() {
-TweenMax.to(window, 1, {scrollTo:0});
- });
-
-
-// 弹跳球式滚动底部 .box2是要滚动地方的id或者锚点
-$("#gotop5").click(function() {
-TweenMax.to(window, 2, {scrollTo:".box2", ease:Bounce.easeOut});
- });
-
-
-// 返回顶部，绑定gotop1图标和gotop2文字事件
-$("#gotop1,#gotop2").click(function(e) {
-   TweenMax.to(window, 1.5, {scrollTo:0, ease: Expo.easeInOut});
-   var huojian = new TimelineLite();
-	huojian.to("#gotop1", 1, {rotationY:720, scale:0.6, y:"+=40", ease:  Power4.easeOut})
-	.to("#gotop1", 1, {y:-1000, opacity:0, ease:  Power4.easeOut}, 0.6)
-	.to("#gotop1", 1, {y:0, rotationY:0, opacity:1, scale:1, ease: Expo.easeOut, clearProps: "all"}, "1.4");
- });
-
-
-// 以1秒慢快慢的速度滚动顶部
-$("#gotop3").click(function() {
-TweenMax.to(window, 1, {scrollTo:0, ease:Expo.easeInOut});
- });
-
-// 以1.5秒快慢快的速度滚动顶部
-$("#gotop4").click(function() {
-TweenMax.to(window, 1.5, {scrollTo:0, ease:SlowMo.ease.config(0.7, 0.7, false)});
- });
-
-
-});
-
-</script>
+    function select_tag(){
+var select=document.getElementById("type");
+var c=select.value;
+var tags=document.getElementById("tags");
+       switch(c)
+{
+case "Oracle": tags.innerHTML="<option>安装部署</option><option>日常管理</option><option>备份恢复</option><option>数据迁移</option><option>性能分析</option>";
+break;
+case "MySQL":tags.innerHTML="<option>安装部署</option><option>日常管理</option><option>备份恢复</option><option>数据迁移</option><option>性能分析</option>";
+break;
+case "Linux":tags.innerHTML="<option>日常管理</option><option>故障诊断</option><option>性能分析</option>";
+break;
+case "系统运维":tags.innerHTML="<option>日常管理</option><option>故障诊断</option><option>性能分析</option>";
+break;
+default:alert("error");
+}
+};
+ </script>
 {% endblock %}

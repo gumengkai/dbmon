@@ -22,6 +22,7 @@ def blog_index(request):
 
     type = request.GET.get('type')
     subtype = request.GET.get('subtype')
+    search = request.GET.get('search')
 
     author_id = request.GET.get('author_id')
     blog_tags = models_blog.BlogTag.objects.all()
@@ -41,26 +42,37 @@ def blog_index(request):
   from blog_article a
   left join accounts_bloguser b
     on a.author_id = b. id where if ('%s'='None',1=1,a.type='%s') and if ('%s'='None',1=1,a.author_id='%s')
-     and if ('%s'='None',1=1,a.subtype='%s')  order by a.id desc
-""" %(type,type,author_id,author_id,subtype,subtype)
+     and if ('%s'='None',1=1,a.subtype='%s') and if ('%s'='None',1=1,a.title like '%%%s%%' )  order by a.id desc
+""" %(type,type,author_id,author_id,subtype,subtype,search,search)
+
+    print sql
     blog_article_list = tools.mysql_django_query(sql)
 
-    paginator = Paginator(blog_article_list, 10)
+    if blog_article_list:
+        paginator = Paginator(blog_article_list, 10)
 
-    page = request.GET.get('page')
-    try:
-        blog_articles = paginator.page(page)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        blog_articles = paginator.page(1)
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        blog_articles = paginator.page(paginator.num_pages)
+        page = request.GET.get('page')
+        try:
+            blog_articles = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            blog_articles = paginator.page(1)
+        except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page of results.
+            blog_articles = paginator.page(paginator.num_pages)
+    else:
+        blog_articles = {}
+
 
     now = tools.now()
     if request.method == 'POST':
-        logout(request)
-        return HttpResponseRedirect('/login/')
+        if request.POST.has_key('search'):
+            search = request.POST.get('search', None)
+            return HttpResponseRedirect('/blog_index?search=%s' %search)
+        else:
+            logout(request)
+            return HttpResponseRedirect('/login/')
+
     if messageinfo_list:
         msg_num = len(messageinfo_list)
         msg_last = models_frame.TabAlarmInfo.objects.latest('id')
@@ -74,7 +86,8 @@ def blog_index(request):
                                                         'msg_num': msg_num, 'now': now,
                                                         'msg_last_content': msg_last_content,
                                                         'tim_last': tim_last,'blog_articles':blog_articles,
-                                                          'blog_tags':blog_tags,'blog_views':blog_views})
+                                                          'blog_tags':blog_tags,'blog_views':blog_views,'type':type,
+                                                          'subtype':subtype,'search':search})
 
 @login_required(login_url='/login')
 def article_detail(request):
@@ -108,8 +121,13 @@ def article_detail(request):
 
     now = tools.now()
     if request.method == 'POST':
-        logout(request)
-        return HttpResponseRedirect('/login/')
+        if request.POST.has_key('search'):
+            search = request.POST.get('search', None)
+            return HttpResponseRedirect('/blog_index?search=%s' %search)
+        else:
+            logout(request)
+            return HttpResponseRedirect('/login/')
+
     if messageinfo_list:
         msg_num = len(messageinfo_list)
         msg_last = models_frame.TabAlarmInfo.objects.latest('id')
@@ -162,6 +180,9 @@ def article_edit(request):
 
             models_blog.BlogArticle.objects.filter(id=article_id).update(title=title, body=body, type=type, subtype=subtype,author_id=author_id)
             return HttpResponseRedirect('/blog_index/')
+        elif request.POST.has_key('search'):
+            search = request.POST.get('search', None)
+            return HttpResponseRedirect('/blog_index?search=%s' % search)
         else:
             logout(request)
             return HttpResponseRedirect('/login/')
@@ -179,6 +200,51 @@ def article_edit(request):
                                                         'msg_num': msg_num, 'now': now,
                                                         'msg_last_content': msg_last_content,
                                                         'tim_last': tim_last,'article_detail':article_detail,
+
+                                                          'blog_tags':blog_tags,'blog_views':blog_views})
+@login_required(login_url='/login')
+def article_add(request):
+    # 告警
+    article_id = request.GET.get('id')
+    messageinfo_list = models_frame.TabAlarmInfo.objects.all()
+    blog_tags = models_blog.BlogTag.objects.all()
+    blog_views = models_blog.BlogArticle.objects.order_by('-views')[:10]
+    author_id = 1
+
+    now = tools.now()
+    if request.method == 'POST':
+        if request.POST.has_key('commit'):
+            title = request.POST.get('title', None)
+            body = request.POST.get('body', None)
+            type = request.POST.get('type', None)
+            subtype = request.POST.get('subtype', None)
+
+            created_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+            models_blog.BlogArticle.objects.create(title=title, body=body, type=type, subtype=subtype,author_id=author_id, created_time=created_time,views=0)
+            # models_blog.BlogArticle.objects.filter(id=article_id).update(title=title, body=body, type=type, subtype=subtype,author_id=author_id)
+
+            return HttpResponseRedirect('/blog_index')
+        elif request.POST.has_key('search'):
+            search = request.POST.get('search', None)
+            return HttpResponseRedirect('/blog_index?search=%s' % search)
+        else:
+            logout(request)
+            return HttpResponseRedirect('/login/')
+
+    if messageinfo_list:
+        msg_num = len(messageinfo_list)
+        msg_last = models_frame.TabAlarmInfo.objects.latest('id')
+        msg_last_content = msg_last.alarm_content
+        tim_last = (datetime.datetime.now() - msg_last.alarm_time).seconds / 60
+    else:
+        msg_num = 0
+        msg_last_content = ''
+        tim_last = ''
+    return render_to_response('my_blog/article_add.html', {'messageinfo_list': messageinfo_list,
+                                                        'msg_num': msg_num, 'now': now,
+                                                        'msg_last_content': msg_last_content,
+                                                        'tim_last': tim_last,
                                                           'blog_tags':blog_tags,'blog_views':blog_views})
 
 
@@ -216,8 +282,12 @@ def article_archive(request):
 
     now = tools.now()
     if request.method == 'POST':
-        logout(request)
-        return HttpResponseRedirect('/login/')
+        if request.POST.has_key('search'):
+            search = request.POST.get('search', None)
+            return HttpResponseRedirect('/blog_index?search=%s' % search)
+        else:
+            logout(request)
+            return HttpResponseRedirect('/login/')
     if messageinfo_list:
         msg_num = len(messageinfo_list)
         msg_last = models_frame.TabAlarmInfo.objects.latest('id')
@@ -232,3 +302,9 @@ def article_archive(request):
                                                         'msg_last_content': msg_last_content,
                                                         'tim_last': tim_last,'blog_articles':blog_articles,
                                                           'blog_tags':blog_tags,'blog_views':blog_views})
+
+@login_required(login_url='/login')
+def article_delete(request):
+    rid = request.GET.get('id')
+    models_blog.BlogArticle.objects.filter(id=rid).delete()
+    return HttpResponseRedirect('/blog_index/')
