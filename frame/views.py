@@ -11,9 +11,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # Create your views here.
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-
 from django.http import FileResponse
-
 from django.contrib import messages
 
 import datetime
@@ -774,6 +772,8 @@ def checklist_del(request):
 def page_not_found(request):
     return render(request, '404.html')
 
+def page_inter_error(request):
+    return render(request, '500.html')
 
 def download(request):
     select_form = request.GET.get('select_form')

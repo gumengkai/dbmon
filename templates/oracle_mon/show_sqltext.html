@@ -1,4 +1,9 @@
 {% extends 'base/base_site.html' %}
+{% block css %}
+<link rel="stylesheet" href="/static/css/shThemeDefault.css">
+<link rel="stylesheet" href="/static/css/prism.css">
+{% endblock %}
+
   {% block main_header %}
   {% endblock %}
   {% block main_sidebar %}
@@ -17,7 +22,7 @@
               <div class="mailbox-read-message">
               <text>
                 {% for sql_text in sqltext %}
-                {{ sql_text.SQL_UNDO }}
+                <pre><code class="language-sql">{{ sql_text.SQL_UNDO }}</code></pre>
                   {% endfor %}
               </text>
               </div>
@@ -30,7 +35,7 @@
               <div class="mailbox-read-message">
                   <text>
                 {% for sql_text in sqltext %}
-                {{ sql_text.SQL_REDO }}
+                 <pre><code class="language-sql">{{ sql_text.SQL_REDO }}</code></pre>
                   {% endfor %}
                   </text>
               </div>
@@ -40,4 +45,16 @@
 {% endblock %}
 
 {% block footer %}
+{% endblock %}
+
+{% block javascripts %}
+
+<script src="/static/js/shCore.js"></script>
+<script src="/static/js/shBrushSql.js"></script>
+<script src="/static/js/prism.js"></script>
+
+<script>
+     SyntaxHighlighter.config.clipboardSwf = '/static/js/clipboard.swf'
+     SyntaxHighlighter.all();
+</script>
 {% endblock %}

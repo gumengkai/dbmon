@@ -1,4 +1,10 @@
 {% extends 'base/base_site.html' %}
+
+{% block css %}
+<link rel="stylesheet" href="/static/css/shThemeDefault.css">
+<link rel="stylesheet" href="/static/css/prism.css">
+{% endblock %}
+
   {% block main_header %}
   {% endblock %}
   {% block main_sidebar %}
@@ -12,7 +18,7 @@
             <!-- /.box-header -->
               <div class="mailbox-read-message">
                 {% for sql_text in sqltext %}
-                    {{ sql_text.sql_text }}
+                    <pre><code class="language-sql">{{ sql_text.sql_text }}</code></pre>
                   {% endfor %}
               </div>
               <!-- /.mailbox-read-message -->
@@ -20,4 +26,16 @@
 {% endblock %}
 
 {% block footer %}
+{% endblock %}
+
+{% block javascripts %}
+
+<script src="/static/js/shCore.js"></script>
+<script src="/static/js/shBrushSql.js"></script>
+<script src="/static/js/prism.js"></script>
+
+<script>
+     SyntaxHighlighter.config.clipboardSwf = '/static/js/clipboard.swf'
+     SyntaxHighlighter.all();
+</script>
 {% endblock %}

@@ -9,8 +9,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>DB monitor | 数据库监控平台</title>
   <!-- Tell the browser to be responsive to screen width -->
-  {% block css %}
-  <!-- Tell the browser to be responsive to screen width -->
 
     <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -31,6 +29,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
         page. However, you can choose any other skin. Make sure you
         apply the skin class to the body tag so the changes take effect. -->
   <link rel="stylesheet" href="/static/dist/css/skins/skin-blue.min.css">
+      <!-- iCheck -->
+  <link rel="stylesheet" href="/static/plugins/iCheck/flat/blue.css">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -50,6 +50,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Google Font -->
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  {% block css %}
+
    {% endblock %}
 
 {% block style %}
@@ -68,7 +70,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
         font-size: 12px;
     }
 
-    li{list-style: none;}/*这里设置*/
+    li{list-style: none; margin: 0px; padding: 0px;}/*这里设置*/
+    ul{margin: 0px; padding: 0px;}/*这里设置*/
 
   </style>
 {% endblock style %}
@@ -140,13 +143,55 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="/static/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
   <!-- CK Editor -->
 <script src="/static/bower_components/ckeditor/ckeditor.js"></script>
-
+<!-- iCheck -->
+<script src="/static/plugins/iCheck/icheck.min.js"></script>
 <script src="/static/js/hullabaloo.js"></script>
 
 <script>
   $(function () {
     //Initialize Select2 Elements
     $('.select2').select2()
+      //Enable iCheck plugin for checkboxes
+    //iCheck for checkbox and radio inputs
+    $('.mailbox-messages input[type="checkbox"]').iCheck({
+      checkboxClass: 'icheckbox_flat-blue',
+      radioClass: 'iradio_flat-blue'
+    });
+
+    //Enable check and uncheck all functionality
+    $(".checkbox-toggle").click(function () {
+      var clicks = $(this).data('clicks');
+      if (clicks) {
+        //Uncheck all checkboxes
+        $(".mailbox-messages input[type='checkbox']").iCheck("uncheck");
+        $(".fa", this).removeClass("fa-check-square-o").addClass('fa-square-o');
+      } else {
+        //Check all checkboxes
+        $(".mailbox-messages input[type='checkbox']").iCheck("check");
+        $(".fa", this).removeClass("fa-square-o").addClass('fa-check-square-o');
+      }
+      $(this).data("clicks", !clicks);
+    });
+
+    //Handle starring for glyphicon and font awesome
+    $(".mailbox-star").click(function (e) {
+      e.preventDefault();
+      //detect type
+      var $this = $(this).find("a > i");
+      var glyph = $this.hasClass("glyphicon");
+      var fa = $this.hasClass("fa");
+
+      //Switch states
+      if (glyph) {
+        $this.toggleClass("glyphicon-star");
+        $this.toggleClass("glyphicon-star-empty");
+      }
+
+      if (fa) {
+        $this.toggleClass("fa-star");
+        $this.toggleClass("fa-star-o");
+      }
+    });
   })
     $('#table1').DataTable({
 		autoWidth:true,////不开启自动宽度，用bootstrap的自适应去调整

@@ -1,0 +1,193 @@
+{% extends 'base/base_site.html' %}
+{% load blog_tags %}
+
+{% block head_tips %}
+{% endblock  %}
+
+{% block content_header %}
+    <section class="content-header">
+        <h1>
+        运维DBA
+         </h1>
+        <h5>
+          大巧无功，重剑无锋
+        </h5>
+        {% for article in article_detail %}
+        <ol class="breadcrumb">
+        <li><a href="/begin"><i class="fa fa-dashboard"></i>首页</a></li>
+        <li><a href="#">文档资料库</a></li>
+        <li><a href="/blog_index">DBA BLOG</a></li>
+        <li><a href="/blog_index?type={{ article.type }}">{{ article.type }}-{{ article.subtype }}</a></li>
+        <li><a href="#">查看：{{ article.title }}</a></li>
+      </ol>
+    {% endfor %}
+    </section>
+{% endblock %}
+
+{% block content %}
+    <div class="box box-solid">
+        <!-- /.box-header -->
+    <div class="box-body">
+    <nav class="navbar navbar-dark" role="navigation">
+    <div class="navbar-header">
+        <a class="navbar-brand" href="/blog_index">首页</a>
+    </div>
+    <div>
+        <ul class="nav navbar-nav">
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    Oracle <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="/blog_index?type=Oracle&subtype=安装部署">安装部署</a></li>
+                    <li><a href="/blog_index?type=Oracle&subtype=日常管理">日常管理</a></li>
+                    <li><a href="/blog_index?type=Oracle&subtype=故障诊断">故障诊断</a></li>
+                    <li><a href="/blog_index?type=Oracle&subtype=备份恢复">备份恢复</a></li>
+                    <li><a href="/blog_index?type=Oracle&subtype=数据迁移">数据迁移</a></li>
+                    <li><a href="/blog_index?type=Oracle&subtype=性能分析">性能分析</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    MySQL <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="/blog_index?type=MySQL&subtype=安装部署">安装部署</a></li>
+                    <li><a href="/blog_index?type=MySQL&subtype=日常管理">日常管理</a></li>
+                    <li><a href="/blog_index?type=MySQL&subtype=故障诊断">故障诊断</a></li>
+                    <li><a href="/blog_index?type=MySQL&subtype=备份恢复">备份恢复</a></li>
+                    <li><a href="/blog_index?type=MySQL&subtype=数据迁移">数据迁移</a></li>
+                    <li><a href="/blog_index?type=MySQL&subtype=性能分析">性能分析</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    Linux <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="/blog_index?type=Linux&subtype=安装部署">日常管理</a></li>
+                    <li><a href="/blog_index?type=Linux&subtype=故障诊断">故障诊断</a></li>
+                    <li><a href="/blog_index?type=Linux&subtype=性能分析">性能分析</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    系统运维 <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="/blog_index?type=系统运维&subtype=安装部署">日常管理</a></li>
+                    <li><a href="/blog_index?type=系统运维&subtype=故障诊断">故障诊断</a></li>
+                    <li><a href="/blog_index?type=系统运维&subtype=性能分析">性能分析</a></li>
+                </ul>
+            </li>
+            <li>
+               <a href="/article_archive" class="">
+                    文章归档
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+    <hr />
+     <div class="container-fluid">
+     <div class="row">
+         <div class="col-md-9">
+        <article>
+        {% for article in article_detail %}
+        <header class="entry-header ">
+            <h3>
+                {{ article.title }}
+            </h3>
+            <div class="comments-link">
+            <div style="float:right">
+                {{ article.views }} views
+            </div>
+        </div><!-- .comments-link -->
+        </br>
+        </header>
+            <div class="entry-content">
+                {{ article.body|custom_markdown }}
+            </div>
+           <p >
+             </p>
+            </br>
+            <footer class="entry-meta">
+    本条目发布于<a href="#" title="{{ article.created_time }}">
+    <time class="mailbox-read-time"
+          datetime="{{ article.created_time }}">
+        {{ article.created_time }}
+    </time>
+</a>
+        。属于<a class="mailbox-read-time" style="text-decoration: underline" href="/blog_index?type={{ article.type }}" rel="category tag">{{ article.type }}</a>分类，
+    <span class="by-author">作者是
+        <span class="author vcard">
+            <a class="url fn n" href="/blog_index?author_id={{ article.author_id }}"
+               title="查看所有由{{ article.username }}发布的文章"
+               rel="author">
+            <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+            <span itemprop="name" itemprop="publisher" class="mailbox-read-time" style="text-decoration: underline">
+            {{ article.username }}
+        </span>
+            </span>
+    </a>
+        </span>。
+        <a class="mailbox-read-time" style="text-decoration: underline" href="/article_edit?id={{ article.id }}">编辑</a>
+    </span>
+</footer><!-- .entry-meta -->
+           <HR style="">
+        {% endfor %}
+    </article>
+         </div>
+    <div class="col-md-3">
+       <div class="has-feedback">
+                  <input type="text" class="form-control input-sm" placeholder="搜索">
+                  <span class="glyphicon glyphicon-search form-control-feedback"></span>
+       </div>
+       <br>
+         <aside id="views-4" class="widget widget_views">
+             <h5 class="widget-title">热门文章</h5>
+            <p>
+                {% for a in blog_views %}
+                    <li>
+                        <a class="mailbox-read-time" style="text-decoration: underline" href="/article_detail?id={{ a.id }}" title="{{ a.title }}">
+                            {{ a.title }}
+                        </a> - {{ a.views }} views
+                    </li>
+                {% endfor %}
+            </p>
+        </aside>
+     <br>
+     <aside id="su_siloed_terms-2" class="widget widget_su_siloed_terms">
+         <h5 class="widget-title">分类目录</h5>
+            <ul><li><a class="mailbox-read-time" style="text-decoration: underline" href="/blog_index?type=Oracle">Oracle</a>
+           </li>
+            <li><a  class="mailbox-read-time" style="text-decoration: underline" href="/blog_index?type=MySQL">MySQL</a>
+            </li>
+            <li><a  class="mailbox-read-time" style="text-decoration: underline" href="/blog_index?type=Linux">Linux</a>
+            </li>
+            <li><a  class="mailbox-read-time" style="text-decoration: underline" href="/blog_index?type=系统运维">MySQL</a>
+            </li>
+            </ul>
+        </aside>
+     </br>
+     </div>
+     </div>
+     </div>
+    </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+function pop_detail(m,n){
+    layer.open({
+    type: 2,
+    title: n,
+    closeBtn: 1,
+    area: ['700px', '350px'],
+    shadeClose: true, //点击遮罩关闭
+    content: ['/show_script_content?id='+ m]
+  });
+}
+</script>
+{% endblock %}

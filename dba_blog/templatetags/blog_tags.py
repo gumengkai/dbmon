@@ -35,3 +35,23 @@ register = template.Library()
 def custom_markdown(value):
    return mark_safe(markdown2.markdown(force_text(value),
           extras=["fenced-code-blocks", "cuddled-lists", "metadata", "tables", "spoiler"]))
+
+
+@register.filter(is_safe=True)
+@stringfilter
+def truncatechars_content(content):
+    """
+    获得文章内容的摘要
+    :param content:
+    :return:
+    """
+    from django.template.defaultfilters import truncatechars_html
+    return truncatechars_html(content, 100)
+
+@register.simple_tag
+def datetimeformat(data):
+    try:
+        return data.strftime(settings.DATE_TIME_FORMAT)
+    except Exception as e:
+        logger.error(e)
+        return ""
