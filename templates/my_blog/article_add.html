@@ -193,5 +193,16 @@ break;
 default:alert("error");
 }
 };
+
+$(function () {
+    // Replace the <textarea id="editor1"> with a CKEditor
+    // instance, using default configuration.
+    CKEDITOR.replace('editor1',
+        {
+            height : '300px'
+        })
+    //bootstrap WYSIHTML5 - text editor
+    $('.textarea').wysihtml5()
+  })
  </script>
 {% endblock %}

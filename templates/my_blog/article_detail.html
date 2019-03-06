@@ -168,7 +168,7 @@ ul{margin: 0px; padding: 0px;}/*这里设置*/
         </br>
         </header>
             <div class="entry-content">
-                {{ article.body|custom_markdown }}
+                {{ article.body|custom_markdown|escape }}
             </div>
            <p >
              </p>

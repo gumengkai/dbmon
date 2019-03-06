@@ -202,3 +202,18 @@ class MyScripts(models.Model):
     class Meta:
         managed = False
         db_table = 'my_scripts'
+
+
+class WebUrlStats(models.Model):
+    id = models.IntegerField(primary_key=True)
+    tags = models.CharField(max_length=255)
+    url = models.CharField(max_length=255)
+    res = models.CharField(max_length=255)
+    status_code = models.CharField(max_length=255)
+    reason = models.CharField(max_length=255)
+    tim = models.FloatField()
+    chk_time = models.DateTimeField()
+
+    class Meta:
+        managed = False
+        db_table = 'web_url_stats'

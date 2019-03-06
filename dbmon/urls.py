@@ -125,6 +125,7 @@ urlpatterns = patterns('',
     (r'^article_archive/', dba_blog.article_archive),
     (r'^article_add/', dba_blog.article_add),
     (r'^article_delete/', dba_blog.article_delete),
-                       )
+    (r'^show_web_stats/', frame.show_web_stats),
+    )
 
 handler404 = frame.page_not_found

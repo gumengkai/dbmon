@@ -8,7 +8,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render,render_to_response,RequestContext
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-
+import markdown
 
 import datetime
 import frame.models as models_frame
@@ -45,7 +45,6 @@ def blog_index(request):
      and if ('%s'='None',1=1,a.subtype='%s') and if ('%s'='None',1=1,a.title like '%%%s%%' )  order by a.id desc
 """ %(type,type,author_id,author_id,subtype,subtype,search,search)
 
-    print sql
     blog_article_list = tools.mysql_django_query(sql)
 
     if blog_article_list:

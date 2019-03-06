@@ -24,7 +24,6 @@ from django.shortcuts import get_object_or_404
 import hashlib
 import urllib
 import logging
-import markdown2
 
 logger = logging.getLogger(__name__)
 
@@ -32,10 +31,9 @@ register = template.Library()
 
 @register.filter(is_safe=True)
 @stringfilter
-def custom_markdown(value):
-   return mark_safe(markdown2.markdown(force_text(value),
-          extras=["fenced-code-blocks", "cuddled-lists", "metadata", "tables", "spoiler"]))
-
+def custom_markdown(content):
+    from dbmon.utils import CommonMarkdown
+    return mark_safe(CommonMarkdown.get_markdown(content))
 
 @register.filter(is_safe=True)
 @stringfilter

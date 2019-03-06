@@ -1832,3 +1832,25 @@ def show_script_content(request):
 
     return render_to_response('frame/show_script_content.html',
                               {'script':script})
+
+
+def show_web_stats(request):
+    messageinfo_list = models_frame.TabAlarmInfo.objects.all()
+    web_url_list = models_frame.WebUrlStats.objects.order_by("res")
+
+    if request.method == 'POST':
+        logout(request)
+        return HttpResponseRedirect('/login/')
+
+    if messageinfo_list:
+        msg_num = len(messageinfo_list)
+        msg_last = models_frame.TabAlarmInfo.objects.latest('id')
+        msg_last_content = msg_last.alarm_content
+        tim_last = (datetime.datetime.now() - msg_last.alarm_time).seconds / 60
+    else:
+        msg_num = 0
+        msg_last_content = ''
+        tim_last = ''
+    return render_to_response('frame/show_web_stats.html',
+                              {'web_url_list': web_url_list, 'messageinfo_list': messageinfo_list, 'msg_num': msg_num,
+                               'msg_last_content': msg_last_content, 'tim_last': tim_last})

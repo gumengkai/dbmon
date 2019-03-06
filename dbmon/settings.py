@@ -45,6 +45,7 @@ INSTALLED_APPS = (
     'mysql_mon',
     'dba_blog',
     'djcelery',
+    'ckeditor'
 )
 
 MIDDLEWARE_CLASSES = (

@@ -89,10 +89,13 @@ BROKER_URL = 'amqp://guest:guest@localhost//'
 ### 5. 启动
 --数据采集  
 [root@aliyun check_alarm]# python main_check.py  
+注：在前端界面添加监控设备
 --django  
-[root@aliyun dbmon]# python manage.py runserver   
+[root@aliyun dbmon]# python manage.py runserver 0.0.0.0:8000  --自己选择IP和端口号
+访问：0.0.0.0:8000/login
 --webssh  
 [root@aliyun webssh]# python main.py  
+注：webssh不可单独访问，必须通过db_monitor的Linux主机概览页面跳转
 --celery  
 [root@aliyun dbmon]# celery -A dbmon worker -l info  
 [root@aliyun dbmon]# celery -A dbmon beat -l info  

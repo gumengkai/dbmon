@@ -20,6 +20,7 @@ import tools as tools
 import alarm as alarm
 import my_log as my_log
 from oracle_stat import  Oraclestat
+import web_check
 reload(sys)
 sys.setdefaultencoding('utf-8')
 # 配置文件
@@ -1170,6 +1171,22 @@ def check_mysql(tags, host,port,user,password,user_os,password_os):
             tags, db_conn_decute, db_cpu_decute, db_mem_decute, db_all_rate, db_all_decute_reason))
 
 
+def check_web(tags, url):
+    # 初始化表
+    my_log.logger.info('%s：初始化web_url_stats表' % tags)
+    insert_sql = "insert into web_url_stats_his select * from web_url_stats where tags = '%s'" % tags
+    tools.mysql_exec(insert_sql, '')
+    delete_sql = "delete from web_url_stats where tags = '%s'" % tags
+    tools.mysql_exec(delete_sql, '')
+    web_stats = web_check.http_check(url)
+    res = web_stats['res']
+    status_code = web_stats['status_code']
+    reason = web_stats['reason']
+    tim = web_stats['tim']
+    insert_sql = 'insert into web_url_stats(tags,url,res,status_code,reason,tim) values(%s,%s,%s,%s,%s,%s)'
+    value = (tags,url,res,status_code,reason,tim)
+    tools.mysql_exec(insert_sql,value)
+
 if __name__ =='__main__':
     while True:
         # 读取配置文件，采集周期
@@ -1182,6 +1199,7 @@ if __name__ =='__main__':
         linux_clr_list = ['os_info','os_filesystem']
         oracle_clr_list = ['oracle_tbs','oracle_db','oracle_db_event','oracle_tmp_tbs','oracle_undo_tbs','oracle_db_rate']
         mysql_clr_list =  ['mysql_db','mysql_db_rate','mysql_repl']
+        url_clr_list = ['mysql_db']
         for table in linux_clr_list:
             # 清空无效监控数据
             my_log.logger.info('清除%s表无效监控数据' %table)
@@ -1206,12 +1224,15 @@ if __name__ =='__main__':
             delete_sql = "delete from %s where tags not in (select tags from tab_mysql_servers)" %table
             tools.mysql_exec(delete_sql, '')
 
+
         # 采集设备
         linux_servers = tools.mysql_query('select tags,host,host_name,user,password from tab_linux_servers')
         oracle_servers = tools.mysql_query(
             'select tags,host,port,service_name,user,password,user_os,password_os from tab_oracle_servers')
         mysql_servers = tools.mysql_query(
             'select tags,host,port,user,password,user_os,password_os from tab_mysql_servers')
+        url_list = tools.mysql_query(
+            'select tags,url from tab_url_conf')
 
         p_pool = []
         if linux_servers:
@@ -1237,6 +1258,12 @@ if __name__ =='__main__':
                 m_server.start()
                 my_log.logger.info('%s 开始采集mysql数据库信息' %mysql_servers[i][0])
                 p_pool.append(m_server)
+        if url_list:
+            for i in xrange(len(url_list)):
+                url = Process(target=check_web, args=(url_list[i][0], url_list[i][1]))
+                url.start()
+                my_log.logger.info('%s 开始采集web信息' %url_list[i][0])
+                p_pool.append(url)
 
         for each_server in p_pool:
             each_server.join()

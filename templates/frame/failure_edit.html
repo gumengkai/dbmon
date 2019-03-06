@@ -137,5 +137,16 @@ function pop_content(n){
     content: ['/failure_content?id='+n,],
   });
 }
-</script>
+
+$(function () {
+    // Replace the <textarea id="editor1"> with a CKEditor
+    // instance, using default configuration.
+    CKEDITOR.replace('editor1',
+        {
+            height : '300px'
+        })
+    //bootstrap WYSIHTML5 - text editor
+    $('.textarea').wysihtml5()
+  })
+ </script>
 {% endblock %}

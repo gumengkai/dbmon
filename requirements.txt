@@ -29,3 +29,4 @@ tornado==5.1.1
 xlrd==1.2.0
 xlutils==2.0.0
 xlwt==1.3.0
+markdown2==2.3.7
