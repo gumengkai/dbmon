@@ -1,0 +1,94 @@
+﻿1. 安装python2.7
+wget https://www.python.org/ftp/python/2.7.13/Python-2.7.13.tgz
+tar zxf Python-2.7.13.tgz
+cd Python-2.7.13
+yum groupinstall -y 'development tools'
+yum install -y zlib-devel bzip2-devel openssl-devel xz-libs wget
+./configure
+make all
+make install
+mv /usr/bin/python /usr/bin/python.old
+rm -f /usr/bin/python-config
+ln -s /usr/local/bin/python /usr/bin/python
+ln -s /usr/local/bin/python-config /usr/bin/python-config
+ln -s /usr/local/include/python2.7/ /usr/include/python2.7
+vi /usr/bin/yum
+修改第一行为
+#!/usr/bin/python.old
+wget https://bootstrap.pypa.io/get-pip.py
+python get-pip.py
+pip install -r 
+ 
+2.安装mysql5.7
+rpm -Uvh http://dev.mysql.com/get/mysql-community-release-el6-5.noarch.rpm
+yum install yum-utils -y
+yum-config-manager --disable mysql56-community
+yum-config-manager --enable mysql57-community-dmr
+yum -y install mysql-community-server
+yum -y install MySQL-python    
+yum -y install mysql-devel 
+初始化数据
+service mysqld start
+service mysqld stop
+进入安全模式修改root口令
+/usr/bin/mysqld_safe --skip-grant-tables &
+mysql -uroot -p
+>use mysql;
+update user set authentication_string=password('xxx') where user='root';
+
+service mysqld start
+#创建数据库导入sql
+create database db_monitor default character set utf8;
+
+cd setup/mysql/
+mysql -uroot -p
+>use db_monitor
+>source dbmon.sql
+>source initdata.sql
+
+(监控Oracle时在被监控库、监控用户下执行)：setup/oracle/procedure.sql & setup/oracle/table.sql
+
+修改数据库连接配置
+vi config/db_monitor.conf
+vi dbmon/settings.py 
+
+3.同步数据库，建用户
+暂时没有做用户/角色体系，可以先通过django自带的admin页面来管理
+[root@aliyun dbmon]# python manage.py migrate
+[root@aliyun dbmon]# python manage.py createsuperuser
+user/passwd
+
+4. 安装rabbitmq
+
+用于celery任务管理
+[root@aliyun dbmon]# yum install erlang
+[root@aliyun dbmon]# yum install rabbitmq-server
+[root@aliyun dbmon]# service rabbitmq-server start
+Starting rabbitmq-server: SUCCESS
+rabbitmq-server.
+
+5. 启动
+--数据采集
+[root@aliyun check_alarm]# python main_check.py
+--django
+[root@aliyun dbmon]# python manage.py runserver 0.0.0.0:8000
+浏览器访问
+http://127.0.0.1:8005/login
+如果提示缺少markdown2 安装 pip install markdown2
+
+--webssh
+[root@aliyun webssh]# python main.py
+--celery
+[root@aliyun dbmon]# celery -A dbmon worker -l info
+[root@aliyun dbmon]# celery -A dbmon beat -l info
+
+6.安装oracle客户端
+下载客户端基本包（instantclient-basic-linux.x64-12.2.0.1.0.zip） 地址 https://www.oracle.com/technetwork/topics/linuxx86-64soft-092277.html
+mkdir -p /opt/oracle
+cd /opt/oracle
+unzip instantclient-basic-linux.x64-12.2.0.1.0.zip
+yum install libaio
+sudo sh -c "echo /opt/oracle/instantclient_12_2 > /etc/ld.so.conf.d/oracle-instantclient.conf"
+sudo ldconfig
+
+参考 https://oracle.github.io/odpi/doc/installation.html#linux
