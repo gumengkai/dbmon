@@ -8,6 +8,7 @@ import delegator
 import requests
 requests.packages.urllib3.disable_warnings()
 from utils import ping
+import socket
 
 def get_python():
     c = delegator.run('pipenv run which python')
@@ -119,6 +120,8 @@ def ping_check(host, lossrate=0, threshold=1):
 
     start_time = time.time()
     res = '0'
+    percent_lost, mrtt, _ = ping.quiet_ping(host, timeout=10, count=4)  # 返回值表示丢失率(0~100),最大耗时(ms),平均耗时(ms)
+
     try:
         percent_lost, mrtt, _ = ping.quiet_ping(host, timeout=10, count=4)  # 返回值表示丢失率(0~100),最大耗时(ms),平均耗时(ms)
         tim = '%.2f' % ((time.time() - start_time) * 1000)
@@ -144,8 +147,38 @@ def ping_check(host, lossrate=0, threshold=1):
     ret = {"res": res, "tim": tim, "sta": sta, "loss": percent_lost}
     return ret
 
+
+def tcp_check(ip, port, timeout=5):
+    try:
+        res = '1'
+        start_time = time.time()
+        cs = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        cs.settimeout(timeout)
+        address = (str(ip), int(port))
+        status = cs.connect_ex((address))
+        tim = '%.2f' % ((time.time() - start_time) * 1000)
+        # this status is returnback from tcpserver
+        if status == 0:
+            res = '1'
+            sta = 'TCP_CONNECT_OK'
+        else:
+            res = '0'
+            sta = 'TCP_CONNECT_ERR'
+
+    except:
+        res = '0'
+        tim = '%.2f' % ((time.time() - start_time) * 1000)
+        sta = 'TCP_CONNECT_ERR'
+    ret = {'res': res, 'tim': tim, 'sta': sta}
+    return ret
+
+
 def main():
-    print(http_check('https://www.baidu.com'))  # 'Connection timed out
+    print(http_check('https://www.baidu.com'))
+
+    # print(ping_check('192.168.48.50'))
+
+    print(tcp_check('192.168.48.10',1521))
 
 
 if __name__ == '__main__':

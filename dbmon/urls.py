@@ -68,8 +68,8 @@ urlpatterns = patterns('',
     (r'^oracle_ctl$', oracle_mon.oracle_ctl),
     (r'^mysql_ctl/', mysql_mon.mysql_ctl),
     (r'^mysql_ctl$', mysql_mon.mysql_ctl),
-    (r'^sql_exec/', frame.sql_exec),
-    (r'^uploadFile/', frame.upload_file),
+    (r'^sql_exec/', oracle_mon.sql_exec),
+    (r'^uploadFile/', oracle_mon.upload_file),
     (r'^oracle_lock_manage/', oracle_mon.oracle_lock_manage),
     (r'^oracle_session$', oracle_mon.oracle_session),
     (r'^oracle_process$', oracle_mon.oracle_process),
@@ -126,6 +126,7 @@ urlpatterns = patterns('',
     (r'^article_add/', dba_blog.article_add),
     (r'^article_delete/', dba_blog.article_delete),
     (r'^show_web_stats/', frame.show_web_stats),
-    )
+    (r'^show_tcp_stats/', frame.show_tcp_stats),
+                       )
 
 handler404 = frame.page_not_found

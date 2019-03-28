@@ -217,3 +217,18 @@ class WebUrlStats(models.Model):
     class Meta:
         managed = False
         db_table = 'web_url_stats'
+
+
+class TcpStats(models.Model):
+    id = models.IntegerField(primary_key=True)
+    tags = models.CharField(max_length=255)
+    ip = models.CharField(max_length=255)
+    port=models.IntegerField()
+    res = models.CharField(max_length=255)
+    sta = models.CharField(max_length=255)
+    tim = models.FloatField()
+    chk_time = models.DateTimeField()
+
+    class Meta:
+        managed = False
+        db_table = 'tcp_stats'

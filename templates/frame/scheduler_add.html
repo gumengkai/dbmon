@@ -157,6 +157,13 @@ default:alert("error");
 }
 };
 
+$("#add_para").click(function () {
+    var paradiv = $(this).parents('.box-body');
+    var _para_html = $(this).parents('.form-group').prev().html();
+    paradiv.append("<div class='form-group'></div>");
+    paradiv.children().last().html(_para_html);
+});
+
 function pop_crontab_add(){
     layer.open({
     type: 2,

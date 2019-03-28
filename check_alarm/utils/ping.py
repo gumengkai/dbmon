@@ -1,4 +1,6 @@
 #pylint: skip-file
+#! /usr/bin/python
+# encoding:utf-8
 
 import os
 import sys
@@ -27,10 +29,18 @@ def checksum(source_string):
     to suggest that it gives the same answers as in_cksum in ping.c
     """
     sum = 0
+    print source_string
+
     countTo = len(source_string)
     count = 0
+    print source_string[count + 1]
     while count < countTo:
         thisVal = source_string[count + 1] * 256 + source_string[count]
+        print type(thisVal.strip())
+        print thisVal
+        if not thisVal.strip():
+            thisVal = 0
+        print thisVal
         sum = sum + thisVal
         count = count + 2
 
@@ -137,7 +147,7 @@ def verbose_ping(dest_addr, timeout=4, count=4):
         Formatted ping results printed.
     """
     for i in range(count):
-        print("ping '{}' ... ".format(dest_addr),)
+        print("ping '{}' ... ".format(dest_addr))
         try:
             delay = do_one(dest_addr, timeout)
         except socket.gaierror as e:

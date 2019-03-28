@@ -181,7 +181,7 @@ def show_mysql(request):
         msg_num = 0
         msg_last_content = ''
         tim_last = ''
-    return render_to_response('frame/show_mysql.html',
+    return render_to_response('mysql_mon/show_mysql.html',
                               {'dbinfos': dbinfos, 'messageinfo_list': messageinfo_list,
                                'msg_num': msg_num,
                                'msg_last_content': msg_last_content, 'tim_last': tim_last})

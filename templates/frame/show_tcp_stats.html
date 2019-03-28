@@ -6,14 +6,14 @@
         <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        HTTP监控列表
+        TCP监控列表
       </h1>
         </h1>
         <ol class="breadcrumb">
         <li><a href="/begin"><i class="fa fa-dashboard"></i>首页</a></li>
-         <li><a href="#">自动化运维</a></li>
+        <li><a href="#">自动化运维</a></li>
         <li><a href="/my_tools">工具包</a></li>
-        <li class="active">HTTP监控</li>
+        <li class="active">TCP监控</li>
       </ol>
     </section>
 {% endblock %}
@@ -26,25 +26,23 @@
                 <tr>
                     <th>ID</th>
                     <th>标签</th>
-                    <th>URL</th>
-                    <th>状态代码</th>
-                    <th>状态描述</th>
+                    <th>IP</th>
+                    <th>端口</th>
+                    <th>状态</th>
                     <th>请求延时(ms)</th>
                     <th>连接状态</th>
                 </tr>
                 </thead>
                 <tbody>
-                 {% for web_url in web_url_list %}
+                 {% for tcp in tcp_list %}
                  <tr>
                  <td>{{ forloop.counter }} </td>
-                 <td>{{ web_url.tags}} </td>
-                 <td>
-                 <li><a href="{{ web_url.url }}">{{ web_url.url }}</a></li>
-                 </td>
-                 <td>{{ web_url.status_code}} </td>
-                 <td>{{ web_url.reason}} </td>
-                 <td><span class="badge bg-{% if web_url.tim < 1000  %}green{% else %}red{% endif %}">{{ web_url.tim }}</span></td>
-                 <td><span class="badge bg-{% if web_url.res == '1' %}green{% else %}red{% endif %}">{% if web_url.res == '1' %}  success {% else %} failed {% endif %}</span></td>
+                 <td>{{ tcp.tags}} </td>
+                 <td>{{ tcp.ip}} </td>
+                 <td>{{ tcp.port}} </td>
+                 <td>{{ tcp.sta}} </td>
+                 <td><span class="badge bg-{% if tcp.tim < 1000  %}green{% else %}red{% endif %}">{{ tcp.tim }}</span></td>
+                 <td><span class="badge bg-{% if tcp.res == '1' %}green{% else %}red{% endif %}">{% if tcp.res == '1' %}  success {% else %} failed {% endif %}</span></td>
                  </tr>
                  {% endfor %}
                 </tfoot>

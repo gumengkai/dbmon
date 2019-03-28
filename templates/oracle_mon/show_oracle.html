@@ -14,7 +14,7 @@
     </section>
 {% endblock %}
 {% block content %}
-    <div class="box box-primary">
+    <div class="box box-solid">
             <!-- /.box-header -->
             <div class="box-body" style="overflow: auto">
               <table id="table1" class="table table-bordered table-striped" >
@@ -43,13 +43,13 @@
                  {% for dbinfo in dbinfos %}
                  <tr>
                  <td>{{ forloop.counter }} </td>
-                     <td>{{ dbinfo.tags}} </td>
+                 <td>{{ dbinfo.tags}} </td>
                  <td>{{ dbinfo.host}} </td>
                  <td>{{ dbinfo.port}} </td>
-                 <td>{{ dbinfo.instance_name}} </td>
-                 <td>{{ dbinfo.database_role}} </td>
-                     <td>{{ dbinfo.uptime}}</td>
-                     <td>{{ dbinfo.audit_trail}}</td>
+                 <td>{{ dbinfo.instance_name}}</td>
+                 <td>{{ dbinfo.database_role}}</td>
+                 <td>{{ dbinfo.uptime}}</td>
+                 <td>{{ dbinfo.audit_trail}}</td>
                  <td>{{ dbinfo.log_mode}} </td>
                  <td><span class="badge bg-{{ dbinfo.archive_rate_level }}">{{ dbinfo.archive_used }}%</span></td>
                  <td> {{ dbinfo.max_process}}</td>

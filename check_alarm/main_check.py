@@ -441,13 +441,19 @@ def check_oracle(tags,host,port,service_name,user,password,user_os,password_os):
                 transport_rate_level = 'yellow'
             else:
                 transport_rate_level = 'green'
-            apply_value = float(adg_apl[0][1])
-            if apply_value >= 60 * 5:
-                apply_rate_level = 'red'
-            elif apply_value > 0 and transport_value < 60 * 5:
-                apply_rate_level = 'yellow'
+            if len(adg_apl)>0:
+                apply_value = float(adg_apl[0][1])
+                if apply_value >= 60 * 5:
+                    apply_rate_level = 'red'
+                elif apply_value > 0 and apply_value < 60 * 5:
+                    apply_rate_level = 'yellow'
+                else:
+                    apply_rate_level = 'green'
             else:
-                apply_rate_level = 'green'
+                apply_value=0
+                apply_rate_level=''
+
+
             adg_transport_lag = adg_trs[0][0]
             adg_apply_lag = adg_apl[0][0]
         else:
@@ -1187,6 +1193,23 @@ def check_web(tags, url):
     value = (tags,url,res,status_code,reason,tim)
     tools.mysql_exec(insert_sql,value)
 
+def check_tcp(tags, ip, port):
+    # 初始化表
+    my_log.logger.info('%s：初始化tcp_stats表' % tags)
+    insert_sql = "insert into tcp_stats_his select * from tcp_stats where tags = '%s'" % tags
+    tools.mysql_exec(insert_sql, '')
+    delete_sql = "delete from tcp_stats where tags = '%s'" % tags
+    tools.mysql_exec(delete_sql, '')
+    tcp_stats = web_check.tcp_check(ip,port)
+    res = tcp_stats['res']
+    sta = tcp_stats['sta']
+    tim = tcp_stats['tim']
+    insert_sql = 'insert into tcp_stats(tags,ip,port,res,sta,tim) values(%s,%s,%s,%s,%s,%s)'
+    value = (tags,ip,port,res,sta,tim)
+    tools.mysql_exec(insert_sql,value)
+
+
+
 if __name__ =='__main__':
     while True:
         # 读取配置文件，采集周期
@@ -1199,7 +1222,9 @@ if __name__ =='__main__':
         linux_clr_list = ['os_info','os_filesystem']
         oracle_clr_list = ['oracle_tbs','oracle_db','oracle_db_event','oracle_tmp_tbs','oracle_undo_tbs','oracle_db_rate']
         mysql_clr_list =  ['mysql_db','mysql_db_rate','mysql_repl']
-        url_clr_list = ['mysql_db']
+        url_clr_list = ['web_url_stats']
+        tcp_clr_list = ['tcp_stats']
+
         for table in linux_clr_list:
             # 清空无效监控数据
             my_log.logger.info('清除%s表无效监控数据' %table)
@@ -1224,6 +1249,22 @@ if __name__ =='__main__':
             delete_sql = "delete from %s where tags not in (select tags from tab_mysql_servers)" %table
             tools.mysql_exec(delete_sql, '')
 
+        for table in url_clr_list:
+            # 清空无效监控数据
+            my_log.logger.info('清除%s表无效监控数据' %table)
+            insert_sql = "insert into %s_his select * from %s where tags not in (select tags from tab_url_conf)" %(table,table)
+            tools.mysql_exec(insert_sql, '')
+            delete_sql = "delete from %s where tags not in (select tags from tab_url_conf)" %table
+            tools.mysql_exec(delete_sql, '')
+
+        for table in tcp_clr_list:
+            # 清空无效监控数据
+            my_log.logger.info('清除%s表无效监控数据' %table)
+            insert_sql = "insert into %s_his select * from %s where tags not in (select tags from tab_tcp_conf)" %(table,table)
+            tools.mysql_exec(insert_sql, '')
+            delete_sql = "delete from %s where tags not in (select tags from tab_tcp_conf)" %table
+            tools.mysql_exec(delete_sql, '')
+
 
         # 采集设备
         linux_servers = tools.mysql_query('select tags,host,host_name,user,password from tab_linux_servers')
@@ -1233,6 +1274,8 @@ if __name__ =='__main__':
             'select tags,host,port,user,password,user_os,password_os from tab_mysql_servers')
         url_list = tools.mysql_query(
             'select tags,url from tab_url_conf')
+        tcp_list = tools.mysql_query(
+            'select tags,ip,port from tab_tcp_conf')
 
         p_pool = []
         if linux_servers:
@@ -1264,6 +1307,12 @@ if __name__ =='__main__':
                 url.start()
                 my_log.logger.info('%s 开始采集web信息' %url_list[i][0])
                 p_pool.append(url)
+        if tcp_list:
+            for i in xrange(len(tcp_list)):
+                tcp = Process(target=check_tcp, args=(tcp_list[i][0], tcp_list[i][1],tcp_list[i][2]))
+                tcp.start()
+                my_log.logger.info('%s 开始采集tcp信息' %tcp_list[i][0])
+                p_pool.append(tcp)
 
         for each_server in p_pool:
             each_server.join()

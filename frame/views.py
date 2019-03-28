@@ -23,13 +23,11 @@ import frame.models as models_frame
 import linux_mon.models as models_linux
 import oracle_mon.models as models_oracle
 import mysql_mon.models as models_mysql
-import check_alarm.check_mysql as check_msql
 
 import easy_check as easy_check
 import log_collect as collect
 import easy_start as start
 import tasks as task
-import log_parse as logparser
 
 import commands
 
@@ -1117,85 +1115,6 @@ def mysql_install(request):
         return render_to_response('mysql_mon/mysql_install.html', )
 
 
-@login_required(login_url='/login')
-def sql_exec(request):
-    # 告警
-    messageinfo_list = models_frame.TabAlarmInfo.objects.all()
-
-    sql_list = models_frame.SqlList.objects.all()
-    paginator_sql = Paginator(sql_list, 5)
-    page_sql = request.GET.get('page_sql')
-    try:
-        sqls = paginator_sql.page(page_sql)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        sqls = paginator_sql.page(1)
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        sqls = paginator_sql.page(paginator_sql.num_pages)
-    now = tools.now()
-    log_type = 'Oracle执行sql脚本'
-    if request.method == 'POST':
-        local_dir = os.getcwd()
-        if request.POST.has_key('go_start'):
-            tools.my_log(log_type, '开始执行sql脚本！', '')
-            task.oracle_exec_sql.delay()
-            messages.add_message(request,messages.INFO,'正在执行')
-        elif request.POST.has_key('reset'):
-            cmd = 'rm %s/frame/sqlscripts/*.sql' %local_dir
-            status, result = commands.getstatusoutput(cmd)
-            models_frame.SqlList.objects.filter().delete()
-        else:
-            logout(request)
-            return HttpResponseRedirect('/login/')
-
-    if messageinfo_list:
-        msg_num = len(messageinfo_list)
-        msg_last = models_frame.TabAlarmInfo.objects.latest('id')
-        msg_last_content = msg_last.alarm_content
-        tim_last = (datetime.datetime.now() - msg_last.alarm_time).seconds / 60
-    else:
-        msg_num = 0
-        msg_last_content = ''
-        tim_last = ''
-    return render(request, 'oracle_mon/sql_exec.html',
-                  {'messageinfo_list': messageinfo_list, 'sqls': sqls, 'log_type': log_type,
-                               'msg_num': msg_num, 'now': now,
-                               'msg_last_content': msg_last_content, 'tim_last': tim_last})
-
-
-
-@login_required(login_url='/login')
-def upload_file(request):
-    local_dir = os.getcwd()
-    log_type = 'Oracle执行sql脚本'
-    tools.mysql_exec("delete from many_logs where log_type = 'Oracle执行sql脚本'", '')
-    if request.method == "POST":    # 请求方法为POST时，进行处理
-        files = request.FILES.getlist('myfile')
-        for f in files:
-            destination = open(os.path.join("%s/frame/sqlscripts" %local_dir, f.name),
-                               'wb+')  # 打开特定的文件进行二进制的写操作
-            for chunk in f.chunks():  # 分块写入文件
-                destination.write(chunk)
-            destination.close()
-        # 执行sql脚本列表
-        cmd = 'ls %s/frame/sqlscripts/*.sql' %local_dir
-        status, result = commands.getstatusoutput(cmd)
-        sql_list = result.split('\n')
-        tools.my_log(log_type, '上传脚本成功！', '')
-        # 将脚本信息写进数据库
-        for sql in sql_list:
-            sqlfile = file(sql, 'a+')
-            sqlfile.write('exit')
-            sqlfile.close()
-            sql_name = sql.split('/')[-1]
-            sql_no = sql_name.split('_')[0]
-            db_name = sql_name.split('_')[1]
-            models_frame.SqlList.objects.create(sql_no=sql_no, sql_info=sql,sql_name=sql_name,db_name=db_name,result='未执行',result_color='')
-        tools.my_log(log_type, '脚本初始化完成！', '')
-        return HttpResponseRedirect('/sql_exec/')
-
-
 def my_task(request):
     # 告警
     messageinfo_list = models_frame.TabAlarmInfo.objects.all()
@@ -1853,4 +1772,26 @@ def show_web_stats(request):
         tim_last = ''
     return render_to_response('frame/show_web_stats.html',
                               {'web_url_list': web_url_list, 'messageinfo_list': messageinfo_list, 'msg_num': msg_num,
+                               'msg_last_content': msg_last_content, 'tim_last': tim_last})
+
+
+def show_tcp_stats(request):
+    messageinfo_list = models_frame.TabAlarmInfo.objects.all()
+    tcp_list = models_frame.TcpStats.objects.order_by("res")
+
+    if request.method == 'POST':
+        logout(request)
+        return HttpResponseRedirect('/login/')
+
+    if messageinfo_list:
+        msg_num = len(messageinfo_list)
+        msg_last = models_frame.TabAlarmInfo.objects.latest('id')
+        msg_last_content = msg_last.alarm_content
+        tim_last = (datetime.datetime.now() - msg_last.alarm_time).seconds / 60
+    else:
+        msg_num = 0
+        msg_last_content = ''
+        tim_last = ''
+    return render_to_response('frame/show_tcp_stats.html',
+                              {'tcp_list': tcp_list, 'messageinfo_list': messageinfo_list, 'msg_num': msg_num,
                                'msg_last_content': msg_last_content, 'tim_last': tim_last})
