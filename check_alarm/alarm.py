@@ -139,7 +139,7 @@ def alarm():
             host_name = str(line[2].encode("utf-8"))
             swap_used = float(line[3])
             swap_free = float(line[4])
-            swap_used_pct = float(swap_used /(swap_used+swap_free)/2)*100
+            swap_used_pct = float(swap_used /(swap_used+swap_free)/2)*100 if swap_used+swap_free<>0 else 0
             url = host_ip + '/' + host_name
             is_alarm = tools.mysql_query("select mem from tab_linux_servers where tags = '%s'" % tags)
             if is_alarm[0][0] == '1':
