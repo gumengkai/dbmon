@@ -79,6 +79,7 @@ user/passwd
 4. 安装rabbitmq
 
 用于celery任务管理
+yum install epel-release
 [root@aliyun dbmon]# yum install erlang
 [root@aliyun dbmon]# yum install rabbitmq-server
 [root@aliyun dbmon]# service rabbitmq-server start
