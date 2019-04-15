@@ -17,7 +17,11 @@ vi /usr/bin/yum
 #!/usr/bin/python.old
 wget https://bootstrap.pypa.io/get-pip.py
 python get-pip.py
-pip install -r 
+下载dbmon最新代码安装依赖包
+cd /opt
+git clone https://github.com/gumengkai/dbmon.git
+cd dbmon/
+pip install -r requirements.txt
  
 2.安装mysql5.7
 rpm -Uvh http://dev.mysql.com/get/mysql-community-release-el6-5.noarch.rpm
