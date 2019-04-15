@@ -11,11 +11,18 @@ service mysqld start
 service mysqld stop
 进入安全模式修改root口令
 /usr/bin/mysqld_safe --skip-grant-tables &
+回车
 mysql -uroot -p
->use mysql;
-update user set authentication_string=password('xxx') where user='root';
+直接回车
+mysql>use mysql;
+mysql>update user set authentication_string=password('输入新密码') where user='root';
+或者
+mysql>UPDATE user SET password=PASSWORD('输入新密码') WHERE user='root';
+mysql>FLUSH PRIVILEGES;
 
-service mysqld start
+xxx替换成自己个密
+mysql>quit
+service mysqld restart
 
 2. 安装python2.7
 yum groupinstall -y 'development tools'
@@ -45,17 +52,20 @@ pip install -r requirements.txt
 
 3.同步数据库，建用户
 创建数据库导入sql
-create database db_monitor default character set utf8;
 
 cd setup/mysql/
 mysql -uroot -p
+输入设置的密码
+create database db_monitor default character set utf8;
+
 >use db_monitor
 >source dbmon.sql
 >source initdata.sql
-
+>quit
 (监控Oracle时在被监控库、监控用户下执行)：setup/oracle/procedure.sql & setup/oracle/table.sql
 
 修改数据库连接配置
+cd /opt/dbmon/
 vi config/db_monitor.conf
 vi dbmon/settings.py 
 
