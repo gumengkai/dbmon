@@ -69,6 +69,8 @@ cd /opt/dbmon/
 vi config/db_monitor.conf
 vi dbmon/settings.py 
 
+pip install django-ckeditor
+pip install markdown
 暂时没有做用户/角色体系，可以先通过django自带的admin页面来管理
 [root@aliyun dbmon]# python manage.py migrate
 [root@aliyun dbmon]# python manage.py createsuperuser
