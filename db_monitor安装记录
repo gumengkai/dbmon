@@ -1,4 +1,23 @@
-﻿1. 安装python2.7
+1.安装mysql5.7
+rpm -Uvh http://dev.mysql.com/get/mysql-community-release-el6-5.noarch.rpm
+yum install yum-utils -y
+yum-config-manager --disable mysql56-community
+yum-config-manager --enable mysql57-community-dmr
+yum -y install mysql-community-server
+yum -y install MySQL-python    
+yum -y install mysql-devel 
+初始化数据
+service mysqld start
+service mysqld stop
+进入安全模式修改root口令
+/usr/bin/mysqld_safe --skip-grant-tables &
+mysql -uroot -p
+>use mysql;
+update user set authentication_string=password('xxx') where user='root';
+
+service mysqld start
+
+2. 安装python2.7
 yum groupinstall -y 'development tools'
 yum install -y zlib-devel bzip2-devel openssl-devel xz-libs wget
 wget https://www.python.org/ftp/python/2.7.13/Python-2.7.13.tgz
@@ -23,25 +42,9 @@ git clone https://github.com/gumengkai/dbmon.git
 cd dbmon/
 pip install -r requirements.txt
  
-2.安装mysql5.7
-rpm -Uvh http://dev.mysql.com/get/mysql-community-release-el6-5.noarch.rpm
-yum install yum-utils -y
-yum-config-manager --disable mysql56-community
-yum-config-manager --enable mysql57-community-dmr
-yum -y install mysql-community-server
-yum -y install MySQL-python    
-yum -y install mysql-devel 
-初始化数据
-service mysqld start
-service mysqld stop
-进入安全模式修改root口令
-/usr/bin/mysqld_safe --skip-grant-tables &
-mysql -uroot -p
->use mysql;
-update user set authentication_string=password('xxx') where user='root';
 
-service mysqld start
-#创建数据库导入sql
+3.同步数据库，建用户
+创建数据库导入sql
 create database db_monitor default character set utf8;
 
 cd setup/mysql/
@@ -56,7 +59,6 @@ mysql -uroot -p
 vi config/db_monitor.conf
 vi dbmon/settings.py 
 
-3.同步数据库，建用户
 暂时没有做用户/角色体系，可以先通过django自带的admin页面来管理
 [root@aliyun dbmon]# python manage.py migrate
 [root@aliyun dbmon]# python manage.py createsuperuser
