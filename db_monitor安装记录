@@ -90,7 +90,7 @@ rabbitmq-server.
 pip install requests
 pip install delegator
 [root@aliyun check_alarm]# python main_check.py
-如果有下列提示，就需要修改一下字段类型
+如果有下列提示，请查看tab_alarm_conf表是否中文乱码，重新导入一下数据
 Traceback (most recent call last):
   File "main_check.py", line 1320, in <module>
     alarm.alarm()
