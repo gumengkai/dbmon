@@ -20,7 +20,6 @@ mysql>update user set authentication_string=password('输入新密码') where us
 mysql>UPDATE user SET password=PASSWORD('输入新密码') WHERE user='root';
 mysql>FLUSH PRIVILEGES;
 
-xxx替换成自己个密
 mysql>quit
 service mysqld restart
 
@@ -88,7 +87,17 @@ rabbitmq-server.
 
 5. 启动
 --数据采集
+pip install requests
+pip install delegator
 [root@aliyun check_alarm]# python main_check.py
+如果有下列提示，就需要修改一下字段类型
+Traceback (most recent call last):
+  File "main_check.py", line 1320, in <module>
+    alarm.alarm()
+  File "/opt/dbmon/check_alarm/alarm.py", line 73, in alarm
+    pct_alarm = cpu_conf[0][1]
+TypeError: 'int' object has no attribute '__getitem__'
+
 --django
 [root@aliyun dbmon]# python manage.py runserver 0.0.0.0:8000
 浏览器访问
