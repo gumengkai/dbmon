@@ -57,10 +57,10 @@ mysql -uroot -p
 输入设置的密码
 create database db_monitor default character set utf8;
 
->use db_monitor
->source dbmon.sql
->source initdata.sql
->quit
+mysql>use db_monitor
+mysql>source dbmon.sql
+mysql>source initdata.sql
+mysql>quit
 (监控Oracle时在被监控库、监控用户下执行)：setup/oracle/procedure.sql & setup/oracle/table.sql
 
 修改数据库连接配置
@@ -101,7 +101,7 @@ TypeError: 'int' object has no attribute '__getitem__'
 --django
 [root@aliyun dbmon]# python manage.py runserver 0.0.0.0:8000
 浏览器访问
-http://127.0.0.1:8005/login
+http://127.0.0.1:8000/login
 如果提示缺少markdown2 安装 pip install markdown2
 
 --webssh
@@ -120,3 +120,6 @@ sudo sh -c "echo /opt/oracle/instantclient_12_2 > /etc/ld.so.conf.d/oracle-insta
 sudo ldconfig
 
 参考 https://oracle.github.io/odpi/doc/installation.html#linux
+
+7.创建诊断报告保存目录 
+mkdir -p /opt/dbmon/templates/oracle_report/
