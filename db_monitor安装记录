@@ -1,3 +1,8 @@
+操作系统版本：Centos 6.10
+[root@localhost ~]# cat /etc/redhat-release 
+CentOS release 6.10 (Final)
+[root@localhost ~]# 
+
 1.安装mysql5.7
 rpm -Uvh http://dev.mysql.com/get/mysql-community-release-el6-5.noarch.rpm
 yum install yum-utils -y
