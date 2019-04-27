@@ -480,7 +480,9 @@ def alarm():
         for line in index_stat:
             tags = str(line[0].encode("utf-8"))
             url = str(line[1].encode("utf-8")) + ':' + str(line[2]) + '/' + str(line[3].encode("utf-8"))
+            print tags
             is_alarm = tools.mysql_query("select invalid_index from tab_oracle_servers where tags = '%s'" % tags)
+            print is_alarm
             if is_alarm[0][0] == '1':
                 owner = str(line[4])
                 index_name = str(line[5])

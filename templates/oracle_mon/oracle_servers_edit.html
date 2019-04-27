@@ -32,6 +32,17 @@
                   </div>
                 </div>
                   <div class="form-group">
+                      <label for="inputEmail3" class="col-sm-2 control-label">版本</label>
+                  <div class="col-sm-10">
+                      <select class="form-control select2" style="width: 100%;" name="version">
+                        <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                      <option selected="selected">{{ oracle_server_edit.version }}</option>
+                          <option>11g</option>
+                          <option>12c</option>
+                      </select>
+                  </div>
+                </div>
+                  <div class="form-group">
                   <label for="inputEmail3" class="col-sm-2 control-label">服务名</label>
                   <div class="col-sm-10">
                     <input type="text" class="form-control" name="service_name" value={{ oracle_server_edit.service_name }}>
@@ -47,6 +58,24 @@
                   <label for="inputPassword3" class="col-sm-2 control-label">数据库监控用户密码</label>
                   <div class="col-sm-10">
                     <input type="password" class="form-control" name="password" value={{ oracle_server_edit.password }}>
+                  </div>
+                </div>
+                  <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-2 control-label">服务名(CDB)</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" name="service_name_cdb" value={{ oracle_server_edit.service_name_cdb }}>
+                  </div>
+                </div>
+                  <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-2 control-label">数据库监控用户(CDB)</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" name="user_cdb" value={{ oracle_server_edit.user_cdb }}>
+                  </div>
+                </div>
+                  <div class="form-group">
+                  <label for="inputPassword3" class="col-sm-2 control-label">数据库监控用户密码(CDB)</label>
+                  <div class="col-sm-10">
+                    <input type="password" class="form-control" name="password_cdb" value={{ oracle_server_edit.password_cdb }}>
                   </div>
                 </div>
                    <div class="form-group">

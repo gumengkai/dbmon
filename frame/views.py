@@ -248,6 +248,9 @@ def oracle_servers_add(request):
             service_name = request.POST.get('service_name', None)
             user = request.POST.get('user', None)
             password = base64.encodestring(request.POST.get('password', None))
+            service_name_cdb = request.POST.get('service_name_cdb', None)
+            user_cdb = request.POST.get('user_cdb', None)
+            password_cdb = base64.encodestring(request.POST.get('password_cdb', None))
             user_os = request.POST.get('user_os', None)
             password_os = base64.encodestring(request.POST.get('password_os', None))
             connect = request.POST.get('connect', None)
@@ -277,7 +280,8 @@ def oracle_servers_add(request):
             oracle_archive = request.POST.get('oracle_archive', None)
             oracle_archive = tools.isno(oracle_archive)
             models_oracle.TabOracleServers.objects.create(tags=tags,host=host, port=port, service_name=service_name,
-                                                   user=user, password=password,
+                                                   user=user, password=password,service_name_cdb=service_name_cdb,
+                                                   user_cdb=user_cdb, password_cdb=password_cdb,
                                                    user_os=user_os, password_os=password_os, connect=connect,
                                                    tbs=tbs,
                                                    adg=adg, temp_tbs=temp_tbs,
@@ -319,6 +323,12 @@ def oracle_servers_edit(request):
             password_os_value =  models_oracle.TabOracleServers.objects.values("password_os").filter(id=rid)[0]
             if  password_os.encode('utf-8') + '\n'  != password_os_value['password_os'].encode('utf-8'):
                 password_os = base64.encodestring(request.POST.get('password_os', None))
+            service_name_cdb = request.POST.get('service_name_cdb', None)
+            user_cdb = request.POST.get('user_cdb', None)
+            password_cdb = request.POST.get('password_cdb', None)
+            password_cdb_value = models_oracle.TabOracleServers.objects.values("password_cdb").filter(id=rid)[0]
+            if password_cdb.encode('utf-8') + '\n' != password_cdb_value['password_cdb'].encode('utf-8'):
+                password_cdb = base64.encodestring(request.POST.get('password_cdb', None))
             connect = request.POST.get('connect', None)
             connect = tools.isno(connect)
             tbs = request.POST.get('tbs', None)
@@ -346,8 +356,8 @@ def oracle_servers_edit(request):
             oracle_archive = request.POST.get('oracle_archive', None)
             oracle_archive = tools.isno(oracle_archive)
             models_oracle.TabOracleServers.objects.filter(id=rid).update(tags=tags,host=host, port=port, service_name=service_name,
-                                                                  user=user, password=password,
-                                                                  user_os=user_os, password_os=password_os,
+                                                                  user=user, password=password,service_name_cdb=service_name_cdb,
+                                                                  user_os=user_os, password_os=password_os,user_cdb=user_cdb,password_cdb=password_cdb,
                                                                   connect=connect,tbs=tbs,temp_tbs=temp_tbs,
                                                                   undo_tbs=undo_tbs, conn=conn, err_info=err_info,
                                                                   invalid_index=invalid_index,

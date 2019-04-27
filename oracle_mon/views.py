@@ -354,7 +354,7 @@ def show_oracle_resource(request):
                       then 'red'
                       else ''
                      end) expiry_color,default_tablespace,temporary_tablespace
-        from dba_users
+        from dba_users order by created desc
         """
     oracle_users = tools.oracle_django_query(user, password, url, sql)
 

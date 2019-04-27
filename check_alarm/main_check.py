@@ -326,17 +326,20 @@ def check_linux(tags,host,host_name,user,password):
             tags, linux_cpu_decute, linux_mem_decute, linux_all_rate, linux_all_decute_reason))
 
 
-def check_oracle(tags,host,port,service_name,user,password,user_os,password_os):
+def check_oracle(tags,host,port,service_name,user,password,user_cdb,password_cdb,service_name_cdb,user_os,password_os,version):
     my_log.logger.info('%s等待2秒待linux主机信息采集完毕' %tags)
     time.sleep(2)
     password = base64.decodestring(password)
     password_os = base64.decodestring(password_os)
+    password_cdb = base64.decodestring(password_cdb)
     url = host + ':' + port + '/' + service_name
+    url_cdb = host + ':' + port + '/' + service_name_cdb if version =='12c' else url
 
     # 连通性检测
     conn = False
     try:
         conn = cx_Oracle.connect(user, password, url)
+        conn_cdb = cx_Oracle.connect(user_cdb, password_cdb, url_cdb) if  version == '12c' else conn
     except Exception, e:
         error_msg = "%s 数据库连接失败：%s" % (tags, unicode(str(e), errors='ignore'))
         db_rate_level = 'red'
@@ -356,7 +359,7 @@ def check_oracle(tags,host,port,service_name,user,password,user_os,password_os):
         insert_sql = "insert into oracle_db_rate(tags,host,port,service_name,db_rate,db_rate_level,db_rate_color,db_rate_reason) select tags,host,port,service_name,'0','danger','red','connected error' from tab_oracle_servers where tags ='%s'" % tags
         tools.mysql_exec(insert_sql, '')
         my_log.logger.info('%s扣分明细，总评分:%s,扣分原因:%s' % (tags, '0', 'connected error'))
-    if conn:
+    if conn and conn_cdb:
         # 表空间监控
         my_log.logger.info('%s：开始获取Oracle数据库表空间监控信息' % tags)
 
@@ -389,7 +392,7 @@ def check_oracle(tags,host,port,service_name,user,password,user_os,password_os):
         instance_info = check_ora.get_instance_info(conn)
         uptime = datetime.now() - instance_info[0][3]
         up_days = uptime.days
-        process = check_ora.check_process(conn)
+        process = check_ora.check_process(conn_cdb)
         asm = check_ora.check_asm(conn)
         archive_used = check_ora.get_archived(conn)
         audit_trail = check_ora.get_para(conn, 'audit_trail')
@@ -419,7 +422,7 @@ def check_oracle(tags,host,port,service_name,user,password,user_os,password_os):
         adg_apl = check_ora.check_adg_apl(conn)
         err_info = check_ora.check_err(conn, host, user_os, password_os)
         # 后台日志入库
-        log_parser.get_oracle_alert(conn, tags, host, user_os, password_os)
+        log_parser.get_oracle_alert(conn, tags, host, user_os, password_os,version)
         db_rate_level = 'green'
         # 连接数评级
         conn_percent = float(process[0][3])
@@ -1219,8 +1222,8 @@ if __name__ =='__main__':
         check_sleep_time = float(conf.get("policy", "check_sleep_time"))
 
         # 清理不在配置表中的无效数据
-        linux_clr_list = ['os_info','os_filesystem']
-        oracle_clr_list = ['oracle_tbs','oracle_db','oracle_db_event','oracle_tmp_tbs','oracle_undo_tbs','oracle_db_rate']
+        linux_clr_list = ['os_info','os_filesystem','linux_rate']
+        oracle_clr_list = ['oracle_tbs','oracle_db','oracle_db_event','oracle_tmp_tbs','oracle_undo_tbs','oracle_db_rate','oracle_invalid_index','oracle_expired_pwd']
         mysql_clr_list =  ['mysql_db','mysql_db_rate','mysql_repl']
         url_clr_list = ['web_url_stats']
         tcp_clr_list = ['tcp_stats']
@@ -1269,7 +1272,7 @@ if __name__ =='__main__':
         # 采集设备
         linux_servers = tools.mysql_query('select tags,host,host_name,user,password from tab_linux_servers')
         oracle_servers = tools.mysql_query(
-            'select tags,host,port,service_name,user,password,user_os,password_os from tab_oracle_servers')
+            'select tags,host,port,service_name,user,password,user_cdb,password_cdb,service_name_cdb,user_os,password_os,version from tab_oracle_servers')
         mysql_servers = tools.mysql_query(
             'select tags,host,port,user,password,user_os,password_os from tab_mysql_servers')
         url_list = tools.mysql_query(
@@ -1289,7 +1292,8 @@ if __name__ =='__main__':
             for i in xrange(len(oracle_servers)):
                 o_server = Process(target=check_oracle, args=(
                     oracle_servers[i][0], oracle_servers[i][1], oracle_servers[i][2], oracle_servers[i][3],
-                    oracle_servers[i][4], oracle_servers[i][5], oracle_servers[i][6],oracle_servers[i][7]))
+                    oracle_servers[i][4], oracle_servers[i][5], oracle_servers[i][6],oracle_servers[i][7],
+                    oracle_servers[i][8],oracle_servers[i][9],oracle_servers[i][10],oracle_servers[i][11]))
                 o_server.start()
                 my_log.logger.info('%s 开始采集oracle数据库信息' %oracle_servers[i][0])
                 p_pool.append(o_server)

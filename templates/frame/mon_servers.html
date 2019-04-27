@@ -102,8 +102,11 @@
                   <th>IP地址</th>
                   <th>端口号</th>
                   <th>服务名</th>
+                  <th>服务名(CDB)</th>
                     <th>监控用户</th>
+                    <th>监控用户(CDB)</th>
                     <th>os用户</th>
+                    <th>版本</th>
                     <th>通断告警</th>
                     <th>tbs告警</th>
                     <th>adg告警</th>
@@ -128,8 +131,11 @@
                  <td>{{ oracle_server.host}} </td>
                  <td>{{ oracle_server.port}} </td>
                  <td>{{ oracle_server.service_name}} </td>
+                 <td>{{ oracle_server.service_name_cdb}} </td>
                  <td>{{ oracle_server.user}} </td>
+                 <td>{{ oracle_server.user_cdb}} </td>
                  <td>{{ oracle_server.user_os}} </td>
+                 <td>{{ oracle_server.version}} </td>
                  <td>
                      <div class="checkbox"><label>
                  <input type="checkbox"  value="1" name="check_box" {% if oracle_server.connect == '1' %} checked {% endif %} disabled>

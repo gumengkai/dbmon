@@ -363,7 +363,7 @@ def save_oracle_alert_log(tags,host,log_meta):
                 log_meta = []
 
 
-def parse_oracle_alert_logs(tags,host,log_stream):
+def parse_oracle_alert_logs(tags,host,log_stream,version):
     """Wed Mar 02 14:00:30 2016"""
     # datetime.strptime(dt, '%a %b %d %H:%M:%S %Y')
     log_buffer = []
@@ -373,7 +373,11 @@ def parse_oracle_alert_logs(tags,host,log_stream):
     for log_line, log_pos in log_stream:
         try:
             log_line_strip = log_line.strip()
-            log_time = datetime.strptime(log_line_strip, '%a %b %d %H:%M:%S %Y')
+            if version == '12c':
+                log_time = datetime.strptime(log_line_strip, '%Y-%m-%dT%H:%M:%S.%f+08:00')
+            else:
+                log_time = datetime.strptime(log_line_strip, '%a %b %d %H:%M:%S %Y')
+
             match_time = True
 
         except ValueError:
@@ -518,7 +522,7 @@ def parse_mysql_alert_logs(tags,host,log_stream):
     return log_pos
 
 
-def get_oracle_alert(conn,tags,host,user,password):
+def get_oracle_alert(conn,tags,host,user,password,version):
     # 取后台日志路径
     cur = conn.cursor()
     diag_trace_sql = "select value from v$diag_info where name = 'Diag Trace'"
@@ -536,7 +540,7 @@ def get_oracle_alert(conn,tags,host,user,password):
     # 清空原日志数据
     sql = "delete from alert_log where tags='%s'  and server_type='Oracle' " %tags
     tools.mysql_exec(sql,'')
-    parse_oracle_alert_logs(tags,host,oracle_alert_stream(log))
+    parse_oracle_alert_logs(tags,host,oracle_alert_stream(log),version)
 
 def get_mysql_alert(conn,tags,host,user,password):
     # 取后台日志路径
