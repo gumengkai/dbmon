@@ -1,9 +1,39 @@
-﻿1. 安装python2.7
+操作系统版本：Centos 6.10
+[root@localhost ~]# cat /etc/redhat-release 
+CentOS release 6.10 (Final)
+[root@localhost ~]# 
+
+1.安装mysql5.7
+rpm -Uvh http://dev.mysql.com/get/mysql-community-release-el6-5.noarch.rpm
+yum install yum-utils -y
+yum-config-manager --disable mysql56-community
+yum-config-manager --enable mysql57-community-dmr
+yum -y install mysql-community-server
+yum -y install MySQL-python    
+yum -y install mysql-devel 
+初始化数据
+service mysqld start
+service mysqld stop
+进入安全模式修改root口令
+/usr/bin/mysqld_safe --skip-grant-tables &
+回车
+mysql -uroot -p
+直接回车
+mysql>use mysql;
+mysql>update user set authentication_string=password('输入新密码') where user='root';
+或者
+mysql>UPDATE user SET password=PASSWORD('输入新密码') WHERE user='root';
+mysql>FLUSH PRIVILEGES;
+
+mysql>quit
+service mysqld restart
+
+2. 安装python2.7
+yum groupinstall -y 'development tools'
+yum install -y zlib-devel bzip2-devel openssl-devel xz-libs wget
 wget https://www.python.org/ftp/python/2.7.13/Python-2.7.13.tgz
 tar zxf Python-2.7.13.tgz
 cd Python-2.7.13
-yum groupinstall -y 'development tools'
-yum install -y zlib-devel bzip2-devel openssl-devel xz-libs wget
 ./configure
 make all
 make install
@@ -17,42 +47,34 @@ vi /usr/bin/yum
 #!/usr/bin/python.old
 wget https://bootstrap.pypa.io/get-pip.py
 python get-pip.py
-pip install -r 
+下载dbmon最新代码安装依赖包
+cd /opt
+git clone https://github.com/gumengkai/dbmon.git
+cd dbmon/
+pip install -r requirements.txt
  
-2.安装mysql5.7
-rpm -Uvh http://dev.mysql.com/get/mysql-community-release-el6-5.noarch.rpm
-yum install yum-utils -y
-yum-config-manager --disable mysql56-community
-yum-config-manager --enable mysql57-community-dmr
-yum -y install mysql-community-server
-yum -y install MySQL-python    
-yum -y install mysql-devel 
-初始化数据
-service mysqld start
-service mysqld stop
-进入安全模式修改root口令
-/usr/bin/mysqld_safe --skip-grant-tables &
-mysql -uroot -p
->use mysql;
-update user set authentication_string=password('xxx') where user='root';
 
-service mysqld start
-#创建数据库导入sql
-create database db_monitor default character set utf8;
+3.同步数据库，建用户
+创建数据库导入sql
 
 cd setup/mysql/
 mysql -uroot -p
->use db_monitor
->source dbmon.sql
->source initdata.sql
+输入设置的密码
+create database db_monitor default character set utf8;
 
+mysql>use db_monitor
+mysql>source dbmon.sql
+mysql>source initdata.sql
+mysql>quit
 (监控Oracle时在被监控库、监控用户下执行)：setup/oracle/procedure.sql & setup/oracle/table.sql
 
 修改数据库连接配置
+cd /opt/dbmon/
 vi config/db_monitor.conf
 vi dbmon/settings.py 
 
-3.同步数据库，建用户
+pip install django-ckeditor
+pip install markdown
 暂时没有做用户/角色体系，可以先通过django自带的admin页面来管理
 [root@aliyun dbmon]# python manage.py migrate
 [root@aliyun dbmon]# python manage.py createsuperuser
@@ -61,6 +83,7 @@ user/passwd
 4. 安装rabbitmq
 
 用于celery任务管理
+yum install epel-release
 [root@aliyun dbmon]# yum install erlang
 [root@aliyun dbmon]# yum install rabbitmq-server
 [root@aliyun dbmon]# service rabbitmq-server start
@@ -69,11 +92,21 @@ rabbitmq-server.
 
 5. 启动
 --数据采集
+pip install requests
+pip install delegator
 [root@aliyun check_alarm]# python main_check.py
+如果有下列提示，请查看tab_alarm_conf表是否中文乱码，重新导入一下数据
+Traceback (most recent call last):
+  File "main_check.py", line 1320, in <module>
+    alarm.alarm()
+  File "/opt/dbmon/check_alarm/alarm.py", line 73, in alarm
+    pct_alarm = cpu_conf[0][1]
+TypeError: 'int' object has no attribute '__getitem__'
+
 --django
 [root@aliyun dbmon]# python manage.py runserver 0.0.0.0:8000
 浏览器访问
-http://127.0.0.1:8005/login
+http://127.0.0.1:8000/login
 如果提示缺少markdown2 安装 pip install markdown2
 
 --webssh
@@ -92,3 +125,6 @@ sudo sh -c "echo /opt/oracle/instantclient_12_2 > /etc/ld.so.conf.d/oracle-insta
 sudo ldconfig
 
 参考 https://oracle.github.io/odpi/doc/installation.html#linux
+
+7.创建诊断报告保存目录 
+mkdir -p /opt/dbmon/templates/oracle_report/
