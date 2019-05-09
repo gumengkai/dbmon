@@ -394,7 +394,7 @@ def check_oracle(tags,host,port,service_name,user,password,user_cdb,password_cdb
         up_days = uptime.days
         process = check_ora.check_process(conn_cdb)
         asm = check_ora.check_asm(conn)
-        # archive_used = check_ora.get_archived(conn)
+        archive_used = check_ora.get_archived(conn)
         audit_trail = check_ora.get_para(conn, 'audit_trail')
         is_rac = check_ora.get_para(conn, 'cluster_database')
         flashback_on = dbnameinfo[0][6]
