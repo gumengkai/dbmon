@@ -394,7 +394,7 @@ def check_oracle(tags,host,port,service_name,user,password,user_cdb,password_cdb
         up_days = uptime.days
         process = check_ora.check_process(conn_cdb)
         asm = check_ora.check_asm(conn)
-        archive_used = check_ora.get_archived(conn)
+        # archive_used = check_ora.get_archived(conn)
         audit_trail = check_ora.get_para(conn, 'audit_trail')
         is_rac = check_ora.get_para(conn, 'cluster_database')
         flashback_on = dbnameinfo[0][6]
@@ -412,10 +412,9 @@ def check_oracle(tags,host,port,service_name,user,password,user_cdb,password_cdb
         oracle_time = oracle_data['time']
         oracle_sess = oracle_data['sess']
         oracle_wait = oracle_data['wait']
-
         if not archive_used:
-            archive_used = [('None'), 0]
-            archive_rate_level = 'None'
+            archive_used = [(None,)]
+            archive_rate_level = ''
         else:
             archive_rate_level = tools.get_rate_level(archive_used[0][0])
         adg_trs = check_ora.check_adg_trs(conn)
