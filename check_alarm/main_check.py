@@ -28,7 +28,7 @@ import ConfigParser
 import os
 
 
-def check_linux(tags,host,host_name,user,password):
+def check_linux(tags,host,host_name,user,password,ssh_port):
     # 密钥解密
     password = base64.decodestring(password)
     my_log.logger.info('%s：开始获取系统监控信息' % tags)
@@ -38,7 +38,7 @@ def check_linux(tags,host,host_name,user,password):
         # 初始化ssh连接
         ssh_client = paramiko.SSHClient()
         ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        ssh_client.connect(host, 22, user, password)
+        ssh_client.connect(host, ssh_port, user, password)
         conn = True
     except Exception, e:
         error_msg = "%s 目标主机连接失败：%s" % (tags, str(e))
@@ -211,7 +211,7 @@ def check_linux(tags,host,host_name,user,password):
         tcp_listen = tcp_stat['listen']
         # cpu使用率评级
         cpu_rate_level = tools.get_rate_level(float(cpu_used))
-        mem_used = check_os.os_get_mem(host, user, password)
+        mem_used = check_os.os_get_mem(host, ssh_port, user, password)
         # 内存使用率评级
         mem_rate_level = tools.get_rate_level(float(mem_used))
         # 主机状态评级
@@ -248,7 +248,7 @@ def check_linux(tags,host,host_name,user,password):
 
         my_log.logger.info('%s：开始获取文件系统监控信息' % tags)
 
-        file_sys = check_os.os_get_disk(host, user, password)
+        file_sys = check_os.os_get_disk(host,ssh_port, user, password)
 
         # 归档os_filesystem_his历史数据
         my_log.logger.info('%s：初始化os_filesystem表' % tags)
@@ -326,7 +326,7 @@ def check_linux(tags,host,host_name,user,password):
             tags, linux_cpu_decute, linux_mem_decute, linux_all_rate, linux_all_decute_reason))
 
 
-def check_oracle(tags,host,port,service_name,user,password,user_cdb,password_cdb,service_name_cdb,user_os,password_os,version):
+def check_oracle(tags,host,port,service_name,user,password,user_cdb,password_cdb,service_name_cdb,user_os,password_os,ssh_port_os,version):
     my_log.logger.info('%s等待2秒待linux主机信息采集完毕' %tags)
     time.sleep(2)
     password = base64.decodestring(password)
@@ -395,6 +395,7 @@ def check_oracle(tags,host,port,service_name,user,password,user_cdb,password_cdb
         process = check_ora.check_process(conn_cdb)
         asm = check_ora.check_asm(conn)
         archive_used = check_ora.get_archived(conn)
+        # archive_used = None
         audit_trail = check_ora.get_para(conn, 'audit_trail')
         is_rac = check_ora.get_para(conn, 'cluster_database')
         flashback_on = dbnameinfo[0][6]
@@ -413,15 +414,16 @@ def check_oracle(tags,host,port,service_name,user,password,user_cdb,password_cdb
         oracle_sess = oracle_data['sess']
         oracle_wait = oracle_data['wait']
         if not archive_used:
-            archive_used = [(None,)]
-            archive_rate_level = ''
+            archive_used_pct=''
+            archive_rate_level=''
         else:
+            archive_used_pct = archive_used[0][0]
             archive_rate_level = tools.get_rate_level(archive_used[0][0])
         adg_trs = check_ora.check_adg_trs(conn)
         adg_apl = check_ora.check_adg_apl(conn)
-        err_info = check_ora.check_err(conn, host, user_os, password_os)
+        err_info = check_ora.check_err(conn, host, user_os, password_os,ssh_port_os)
         # 后台日志入库
-        log_parser.get_oracle_alert(conn, tags, host, user_os, password_os,version)
+        log_parser.get_oracle_alert(conn, tags, host, user_os, password_os,ssh_port_os,version)
         db_rate_level = 'green'
         # 连接数评级
         conn_percent = float(process[0][3])
@@ -476,7 +478,7 @@ def check_oracle(tags,host,port,service_name,user,password,user_cdb,password_cdb
         value = (
             tags, host, port, service_name, dbnameinfo[0][5], dbnameinfo[0][0], instance_info[0][4], dbnameinfo[0][1],
             dbnameinfo[0][2], up_days, audit_trail[0][0], dbnameinfo[0][3],
-            dbnameinfo[0][4], is_rac[0][0], flashback_on, archive_used[0][0], archive_rate_level,
+            dbnameinfo[0][4], is_rac[0][0], flashback_on, archive_used_pct, archive_rate_level,
             instance_info[0][0],
             instance_info[0][1],
             instance_info[0][2], process[0][2], process[0][1], process[0][3], conn_rate_level, adg_transport_lag,
@@ -637,6 +639,7 @@ def check_oracle(tags,host,port,service_name,user,password,user_cdb,password_cdb
         # 归档使用率扣分
         archive_stat = tools.mysql_query(
             "select archive_used from oracle_db where archive_used is not null and tags = '%s'" % tags)
+        print archive_stat
         if archive_stat == 0:
             my_log.logger.warning('%s：归档未采集到数据' % tags)
             db_archive_decute = 0
@@ -1269,9 +1272,9 @@ if __name__ =='__main__':
 
 
         # 采集设备
-        linux_servers = tools.mysql_query('select tags,host,host_name,user,password from tab_linux_servers')
+        linux_servers = tools.mysql_query('select tags,host,host_name,user,password,ssh_port from tab_linux_servers')
         oracle_servers = tools.mysql_query(
-            'select tags,host,port,service_name,user,password,user_cdb,password_cdb,service_name_cdb,user_os,password_os,version from tab_oracle_servers')
+            'select tags,host,port,service_name,user,password,user_cdb,password_cdb,service_name_cdb,user_os,password_os,ssh_port_os,version from tab_oracle_servers')
         mysql_servers = tools.mysql_query(
             'select tags,host,port,user,password,user_os,password_os from tab_mysql_servers')
         url_list = tools.mysql_query(
@@ -1283,7 +1286,7 @@ if __name__ =='__main__':
         if linux_servers:
             for i in xrange(len(linux_servers)):
                 l_server = Process(target=check_linux, args=(
-                    linux_servers[i][0], linux_servers[i][1], linux_servers[i][2], linux_servers[i][3],linux_servers[i][4]))
+                    linux_servers[i][0], linux_servers[i][1], linux_servers[i][2], linux_servers[i][3],linux_servers[i][4],linux_servers[i][5]))
                 l_server.start()
                 my_log.logger.info('%s 开始采集Linux主机信息' %linux_servers[i][0])
                 p_pool.append(l_server)
@@ -1292,7 +1295,7 @@ if __name__ =='__main__':
                 o_server = Process(target=check_oracle, args=(
                     oracle_servers[i][0], oracle_servers[i][1], oracle_servers[i][2], oracle_servers[i][3],
                     oracle_servers[i][4], oracle_servers[i][5], oracle_servers[i][6],oracle_servers[i][7],
-                    oracle_servers[i][8],oracle_servers[i][9],oracle_servers[i][10],oracle_servers[i][11]))
+                    oracle_servers[i][8],oracle_servers[i][9],oracle_servers[i][10],oracle_servers[i][11],oracle_servers[i][12]))
                 o_server.start()
                 my_log.logger.info('%s 开始采集oracle数据库信息' %oracle_servers[i][0])
                 p_pool.append(o_server)

@@ -1072,19 +1072,21 @@ def oracle_switchover(request):
         else:
             p_tags = primary_tags
             s_tags = standby_tags
-        p_sql = "select host,port,service_name,user,password,user_os,password_os from tab_oracle_servers where tags= '%s' " % p_tags
+        p_sql = "select host,port,service_name,user,password,user_os,password_os,ssh_port_os from tab_oracle_servers where tags= '%s' " % p_tags
         p_ssh = tools.mysql_query(p_sql)
         p_host = p_ssh[0][0]
         p_user = p_ssh[0][5]
         p_password = p_ssh[0][6]
         p_password = base64.decodestring(p_password)
-        s_sql = "select host,port,service_name,user,password,user_os,password_os from tab_oracle_servers where tags= '%s' " % s_tags
+        p_ssh_port = p_ssh[0][7]
+        s_sql = "select host,port,service_name,user,password,user_os,password_os,ssh_port_os from tab_oracle_servers where tags= '%s' " % s_tags
         s_ssh = tools.mysql_query(s_sql)
         s_host = s_ssh[0][0]
         s_user = s_ssh[0][5]
         s_password = s_ssh[0][6]
         s_password = base64.decodestring(s_password)
-        task.oracle_switchover.delay(p_tags,p_host,p_user,p_password,s_tags,s_host,s_user,s_password)
+        s_ssh_port = s_ssh[0][7]
+        task.oracle_switchover.delay(p_tags,p_host,p_user,p_password,p_ssh_port,s_tags,s_host,s_user,s_password,s_ssh_port)
         messages.add_message(request,messages.INFO,'正在切换')
 
 
@@ -1355,7 +1357,7 @@ def oracle_rpt(request):
         elif request.POST.has_key('commit'):
             begin_snap = request.POST.get('begin_snap', None)
             end_snap = request.POST.get('end_snap', None)
-            task.get_report.delay(tagsdefault,host,user,password,user_os,password_os,service_name,url,report_type,begin_snap,end_snap)
+            task.get_report.delay(tagsdefault,user,password,url,report_type,begin_snap,end_snap)
             messages.add_message(request, messages.SUCCESS, '正在生成')
 
         elif request.POST.has_key('commit_event'):
@@ -1483,7 +1485,7 @@ def oracle_rpt_ash(request):
         elif request.POST.has_key('commit'):
             begin_snap = request.POST.get('ashstartTime', None)
             end_snap = request.POST.get('ashendTime', None)
-            task.get_report.delay(tagsdefault,host,user,password,user_os,password_os,service_name,url,report_type,begin_snap,end_snap)
+            task.get_report.delay(tagsdefault,user,password,url,report_type,begin_snap,end_snap)
             messages.add_message(request, messages.SUCCESS, '正在生成')
 
         elif request.POST.has_key('commit_event'):
@@ -1887,20 +1889,24 @@ def oracle_ctl(request):
     message_info = request.GET.get('message_info')
 
     if oper_type:
-        sql = '''select user,password from tab_linux_servers where host='%s' ''' % host
+        sql = '''select host,user_os,password_os,ssh_port_os,version from tab_oracle_servers where tags='%s' ''' % tags
         oracle = tools.mysql_query(sql)
-        user = oracle[0][0]
-        password = oracle[0][1]
+        host = oracle[0][0]
+        user = oracle[0][1]
+        password = oracle[0][2]
         password = base64.decodestring(password)
+        ssh_port = oracle[0][3]
+        version = oracle[0][4]
+
         if oper_type == 'startup':
-            task.oracle_startup.delay(tags,host, user, password)
+            task.oracle_startup.delay(tags,host, user, password,ssh_port,version)
             messages.add_message(request,messages.INFO,'正在启动' )
 
         elif oper_type == 'shutdown':
-            task.oracle_shutdown.delay(tags,host, user, password)
+            task.oracle_shutdown.delay(tags,host, user, password,ssh_port,version)
             messages.add_message(request,messages.INFO,'正在关闭')
         else:
-            task.oracle_restart.delay(tags, host, user, password)
+            task.oracle_restart.delay(tags, host, user, password,ssh_port,version)
             message_info = '正在重启'
             messages.add_message(request,messages.INFO,'正在重启')
 

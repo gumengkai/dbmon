@@ -62,10 +62,10 @@ if __name__ == '__main__':
     print os_get_info('192.168.48.10','root','oracle')
 
 # 获取内存使用率
-def os_get_mem(host,user,password):
+def os_get_mem(host,ssh_port,user,password):
     ssh_client = paramiko.SSHClient()
     ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh_client.connect(host, 22, user, password)
+    ssh_client.connect(host, ssh_port, user, password)
     std_in, std_out, std_err = ssh_client.exec_command('cat /proc/meminfo')
 
     stdout = std_out.read().decode()
@@ -93,10 +93,10 @@ def os_get_mem(host,user,password):
 
 
 # 获取文件系统使用率
-def os_get_disk(host,user,password):
+def os_get_disk(host,ssh_port,user,password):
     ssh_client = paramiko.SSHClient()
     ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh_client.connect(host, 22, user, password)
+    ssh_client.connect(host, ssh_port, user, password)
     std_in, std_out, std_err = ssh_client.exec_command('df -h')
 
     stdout = std_out.read().decode()

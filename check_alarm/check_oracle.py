@@ -211,7 +211,7 @@ def get_para(conn,para):
     return cur.fetchall()
 
 # 获取后台日志异常信息
-def check_err(conn,host,user,password):
+def check_err(conn,host,user,password,ssh_port):
     cur = conn.cursor()
     diag_trace_sql = "select value from v$diag_info where name = 'Diag Trace'"
     cur.execute(diag_trace_sql)
@@ -220,7 +220,7 @@ def check_err(conn,host,user,password):
 
     ssh_client = paramiko.SSHClient()
     ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh_client.connect(host, 22, user, password)
+    ssh_client.connect(host, ssh_port, user, password)
     cmd = 'tail -300 %s/alert_*.log |grep -A 3 ORA-' %diag_trace_dir
     std_in, std_out, std_err = ssh_client.exec_command(cmd)
     stdout = std_out.read().decode('gbk')

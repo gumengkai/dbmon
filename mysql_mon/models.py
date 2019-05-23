@@ -263,6 +263,7 @@ class TabMysqlServers(models.Model):
     password = models.CharField(max_length=255)
     user_os = models.CharField(max_length=255)
     password_os = models.CharField(max_length=255)
+    ssh_port_os = models.IntegerField()
     connect = models.CharField(max_length=255, blank=True, null=True)
     repl = models.CharField(max_length=255, blank=True, null=True)
     conn = models.CharField(max_length=255, blank=True, null=True)

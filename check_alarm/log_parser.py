@@ -522,7 +522,7 @@ def parse_mysql_alert_logs(tags,host,log_stream):
     return log_pos
 
 
-def get_oracle_alert(conn,tags,host,user,password,version):
+def get_oracle_alert(conn,tags,host,user,password,ssh_port,version):
     # 取后台日志路径
     cur = conn.cursor()
     diag_trace_sql = "select value from v$diag_info where name = 'Diag Trace'"
@@ -532,7 +532,7 @@ def get_oracle_alert(conn,tags,host,user,password,version):
     # 建立ssh连接，抓取后台日志
     ssh_client = paramiko.SSHClient()
     ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh_client.connect(host, 22, user, password)
+    ssh_client.connect(host, ssh_port, user, password)
     command = 'tail -300 %s/alert_*.log' %diag_trace_dir
     std_in, std_out, std_err = ssh_client.exec_command(command)
     fd = std_out

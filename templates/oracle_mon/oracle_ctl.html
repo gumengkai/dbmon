@@ -56,19 +56,6 @@
                  {% endfor %}
               </table>
             </div>
-            <div class="box-footer clearfix">
-           <span class="step-links">
-        {% if oracle_ctls.has_previous %}
-            <a href="?page_oracle_ctl={{ oracle_ctls.previous_page_number }}">上一页</a>
-        {% endif %}
-        <span class="current">
-            当前页{{ oracle_ctls.number }} 共计{{ oracle_ctls.paginator.num_pages }}
-        </span>
-        {% if oracle_ctls.has_next %}
-            <a href="?page_oracle_ctl={{ oracle_ctls.next_page_number }}">下一页</a>
-        {% endif %}
-           </span>
-         </div>
       </div>
       </div>
 {% endblock %}

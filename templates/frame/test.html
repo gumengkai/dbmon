@@ -18,11 +18,18 @@
     </script>
 </head>
 <body>
-<p>base document</p>
+<p id="demo">base document</p>
+<button type="button" onclick="myfunctiion()">click here</button>
 </body>
+
 <script>
-    document.write("<h1>this is a heading</h1>")
-    document.write("<p>this is a content</p>")
+    document.write("<h1>this is a heading</h1>");
+    document.write("<p>this is a content</p>");
+
+function  myfunctiion() {
+    x=document.getElementById('demo');
+    x.innerHTML='helo'
+}
 
 </script>
 </html>

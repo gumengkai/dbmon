@@ -366,6 +366,7 @@ class TabOracleServers(models.Model):
     password = models.CharField(max_length=255)
     user_os = models.CharField(max_length=255)
     password_os = models.CharField(max_length=255)
+    ssh_port_os = models.IntegerField()
     user_cdb = models.CharField(max_length=255)
     password_cdb = models.CharField(max_length=255)
     version = models.CharField(max_length=255)

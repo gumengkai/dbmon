@@ -169,6 +169,7 @@ class TabLinuxServers(models.Model):
     host_name = models.CharField(max_length=255)
     user = models.CharField(max_length=255)
     password = models.CharField(max_length=255)
+    ssh_port = models.IntegerField()
     connect = models.CharField(max_length=255)
     cpu = models.CharField(max_length=255)
     mem = models.CharField(max_length=255)

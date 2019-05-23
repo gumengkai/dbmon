@@ -181,6 +181,7 @@ def linux_servers_edit(request):
             host = request.POST.get('host', None)
             user = request.POST.get('user', None)
             password = base64.encodestring(request.POST.get('password', None))
+            ssh_port = request.POST.get('ssh_port', None)
             connect = request.POST.get('connect', None)
             connect = tools.isno(connect)
             cpu = request.POST.get('cpu', None)
@@ -192,7 +193,7 @@ def linux_servers_edit(request):
             disk = request.POST.get('disk', None)
             disk = tools.isno(disk)
             models_linux.TabLinuxServers.objects.filter(id=rid).update(tags=tags,host_name=host_name, host=host, user=user,
-                                                                 password=password,
+                                                                 password=password,ssh_port=ssh_port,
                                                                  connect=connect,
                                                                  cpu=cpu, mem=mem,swap=swap,disk=disk)
             status = 1
@@ -212,6 +213,7 @@ def linux_servers_add(request):
             host = request.POST.get('host', None)
             user = request.POST.get('user', None)
             password = base64.encodestring(request.POST.get('password', None))
+            ssh_port = request.POST.get('ssh_port', None)
             connect = request.POST.get('connect', None)
             connect = tools.isno(connect)
             cpu = request.POST.get('cpu', None)
@@ -222,7 +224,7 @@ def linux_servers_add(request):
             swap = tools.isno(swap)
             disk = request.POST.get('disk', None)
             disk = tools.isno(disk)
-            models_linux.TabLinuxServers.objects.create(tags=tags,host_name=host_name, host=host, user=user, password=password,
+            models_linux.TabLinuxServers.objects.create(tags=tags,host_name=host_name, host=host, user=user, password=password,ssh_port=ssh_port,
                                                   connect=connect, cpu=cpu, mem=mem, swap=swap,disk=disk )
             status = 1
         elif request.POST.has_key('logout'):
@@ -253,6 +255,7 @@ def oracle_servers_add(request):
             password_cdb = base64.encodestring(request.POST.get('password_cdb', None))
             user_os = request.POST.get('user_os', None)
             password_os = base64.encodestring(request.POST.get('password_os', None))
+            ssh_port_os = request.POST.get('ssh_port_os', None)
             connect = request.POST.get('connect', None)
             connect = tools.isno(connect)
             tbs = request.POST.get('tbs', None)
@@ -282,7 +285,7 @@ def oracle_servers_add(request):
             models_oracle.TabOracleServers.objects.create(tags=tags,host=host, port=port, service_name=service_name,
                                                    user=user, password=password,service_name_cdb=service_name_cdb,
                                                    user_cdb=user_cdb, password_cdb=password_cdb,
-                                                   user_os=user_os, password_os=password_os, connect=connect,
+                                                   user_os=user_os, password_os=password_os, ssh_port_os=ssh_port_os,connect=connect,
                                                    tbs=tbs,
                                                    adg=adg, temp_tbs=temp_tbs,
                                                    undo_tbs=undo_tbs,
@@ -323,6 +326,7 @@ def oracle_servers_edit(request):
             password_os_value =  models_oracle.TabOracleServers.objects.values("password_os").filter(id=rid)[0]
             if  password_os.encode('utf-8') + '\n'  != password_os_value['password_os'].encode('utf-8'):
                 password_os = base64.encodestring(request.POST.get('password_os', None))
+            ssh_port_os = request.POST.get('ssh_port_os', None)
             service_name_cdb = request.POST.get('service_name_cdb', None)
             user_cdb = request.POST.get('user_cdb', None)
             password_cdb = request.POST.get('password_cdb', None)
@@ -357,7 +361,8 @@ def oracle_servers_edit(request):
             oracle_archive = tools.isno(oracle_archive)
             models_oracle.TabOracleServers.objects.filter(id=rid).update(tags=tags,host=host, port=port, service_name=service_name,
                                                                   user=user, password=password,service_name_cdb=service_name_cdb,
-                                                                  user_os=user_os, password_os=password_os,user_cdb=user_cdb,password_cdb=password_cdb,
+                                                                  user_os=user_os, password_os=password_os,ssh_port_os=ssh_port_os,
+                                                                         user_cdb=user_cdb,password_cdb=password_cdb,
                                                                   connect=connect,tbs=tbs,temp_tbs=temp_tbs,
                                                                   undo_tbs=undo_tbs, conn=conn, err_info=err_info,
                                                                   invalid_index=invalid_index,
@@ -382,6 +387,7 @@ def mysql_servers_add(request):
             password = base64.encodestring(request.POST.get('password', None))
             user_os = request.POST.get('user_os', None)
             password_os = base64.encodestring(request.POST.get('password_os', None))
+            ssh_port_os = request.POST.get('ssh_port_os', None)
             connect = request.POST.get('connect', None)
             connect = tools.isno(connect)
             repl = request.POST.get('repl', None)
@@ -392,7 +398,8 @@ def mysql_servers_add(request):
             err_info = tools.isno(err_info)
             models_mysql.TabMysqlServers.objects.create(host=host, port=port, tags=tags,
                                                    user=user, password=password,
-                                                   user_os=user_os, password_os=password_os, connect=connect,
+                                                   user_os=user_os, password_os=password_os,
+                                                   ssh_port_os=ssh_port_os,connect=connect,
                                                    repl=repl,conn=conn,  err_info=err_info,)
             status = 1
         elif request.POST.has_key('logout'):
@@ -427,6 +434,7 @@ def mysql_servers_edit(request):
             password_os_value = models_mysql.TabMysqlServers.objects.values("password_os").filter(id=rid)[0]
             if password_os.encode('utf-8') + '\n' != password_os_value['password_os'].encode('utf-8'):
                 password_os = base64.encodestring(request.POST.get('password_os', None))
+            ssh_port_os = request.POST.get('ssh_port_os', None)
             connect = request.POST.get('connect', None)
             connect = tools.isno(connect)
             repl = request.POST.get('repl', None)
@@ -437,7 +445,7 @@ def mysql_servers_edit(request):
             err_info = tools.isno(err_info)
             models_mysql.TabMysqlServers.objects.filter(id=rid).update(tags=tags,host=host, port=port,
                                                                   user=user, password=password,
-                                                                  user_os=user_os, password_os=password_os,
+                                                                  user_os=user_os, password_os=password_os,ssh_port_os=ssh_port_os,
                                                                   connect=connect,
                                                                   repl=repl,
                                                                   conn=conn, err_info=err_info)
@@ -1101,11 +1109,12 @@ def mysql_install(request):
             host = request.POST.get('host', None)
             password = request.POST.get('password', None)
             linux_version = request.POST.get('linux_version', None)
+            ssh_port = request.POST.get('ssh_port', None)
             mysql_version = request.POST.get('oracle_version', None)
             mysql_base = request.POST.get('mysql_base', None)
             data_path = request.POST.get('data_path', None)
             port = request.POST.get('port', None)
-            task.mysql_install.delay(host,'root',password,data_path,mysql_base,port)
+            task.mysql_install.delay(host,'root',password,ssh_port,data_path,mysql_base,port)
             log_type = 'MySQL部署'
             return HttpResponseRedirect('/log_info?log_type=%s' % log_type)
 

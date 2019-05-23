@@ -33,6 +33,7 @@
                   <th>IP地址</th>
                   <th>主机名</th>
                   <th>监控用户名</th>
+                  <th>SSH端口</th>
                   <th>主机通断告警</th>
                     <th>CPU使用率告警</th>
                     <th>内存使用率告警</th>
@@ -49,6 +50,7 @@
                  <td>{{ linux_server.host}} </td>
                  <td>{{ linux_server.host_name}} </td>
                  <td>{{ linux_server.user}} </td>
+                 <td>{{ linux_server.ssh_port}} </td>
                  <td><div class="checkbox"><label>
                  <input type="checkbox"  value="1" name="check_box" {% if linux_server.connect == '1' %} checked {% endif %} disabled>
                  </label> </div></td>
@@ -106,6 +108,7 @@
                     <th>监控用户</th>
                     <th>监控用户(CDB)</th>
                     <th>os用户</th>
+                    <th>SSH端口</th>
                     <th>版本</th>
                     <th>通断告警</th>
                     <th>tbs告警</th>
@@ -135,6 +138,7 @@
                  <td>{{ oracle_server.user}} </td>
                  <td>{{ oracle_server.user_cdb}} </td>
                  <td>{{ oracle_server.user_os}} </td>
+                 <td>{{ oracle_server.ssh_port_os}} </td>
                  <td>{{ oracle_server.version}} </td>
                  <td>
                      <div class="checkbox"><label>
@@ -249,6 +253,7 @@
                   <th>端口号</th>
                     <th>监控用户</th>
                     <th>os用户</th>
+                    <th>SSH端口</th>
                     <th>通断告警</th>
                     <th>复制延迟告警</th>
                     <th>连接数告警</th>
@@ -265,6 +270,7 @@
                  <td>{{ mysql_server.port}}</td>
                  <td>{{ mysql_server.user}}</td>
                  <td>{{ mysql_server.user_os}} </td>
+                 <td>{{ mysql_server.ssh_port_os}} </td>
                  <td>
                      <div class="checkbox"><label>
                  <input type="checkbox"  value="1" name="check_box" {% if mysql_server.connect == '1' %} checked {% endif %} disabled>
