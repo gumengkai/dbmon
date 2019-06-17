@@ -255,7 +255,7 @@ def alarm():
         "select alarm_name,jdg_value from tab_alarm_conf where server_type='Oracle' and alarm_name='Oracle数据库归档使用率告警'")
     alarm_name = 'Oracle数据库归档使用率告警'
     pct_alarm = archive_conf[0][1]
-    archive_stat = tools.mysql_query("select tags,host,port,service_name,archive_used from oracle_db where archive_used is not null")
+    archive_stat = tools.mysql_query("select tags,host,port,service_name,archive_used from oracle_db where length(archive_used)>0 ")
     if archive_stat == 0:
         my_log.logger.warning('未采集到数据：%s' % alarm_name)
     else:
@@ -480,9 +480,7 @@ def alarm():
         for line in index_stat:
             tags = str(line[0].encode("utf-8"))
             url = str(line[1].encode("utf-8")) + ':' + str(line[2]) + '/' + str(line[3].encode("utf-8"))
-            print tags
             is_alarm = tools.mysql_query("select invalid_index from tab_oracle_servers where tags = '%s'" % tags)
-            print is_alarm
             if is_alarm[0][0] == '1':
                 owner = str(line[4])
                 index_name = str(line[5])

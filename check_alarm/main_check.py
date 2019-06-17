@@ -337,6 +337,7 @@ def check_oracle(tags,host,port,service_name,user,password,user_cdb,password_cdb
 
     # 连通性检测
     conn = False
+    conn_cdb = False
     try:
         conn = cx_Oracle.connect(user, password, url)
         conn_cdb = cx_Oracle.connect(user_cdb, password_cdb, url_cdb) if  version == '12c' else conn
@@ -638,9 +639,8 @@ def check_oracle(tags,host,port,service_name,user,password,user_cdb,password_cdb
 
         # 归档使用率扣分
         archive_stat = tools.mysql_query(
-            "select archive_used from oracle_db where archive_used is not null and tags = '%s'" % tags)
-        print archive_stat
-        if archive_stat == 0:
+            "select archive_used from oracle_db where length(archive_used) >0 and tags = '%s'" % tags)
+        if archive_stat == 0 or not archive_stat:
             my_log.logger.warning('%s：归档未采集到数据' % tags)
             db_archive_decute = 0
             db_archive_decute_reason = ''

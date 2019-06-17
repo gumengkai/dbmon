@@ -5,7 +5,7 @@ import os
 import datetime
 
 
-def mysql_fullbackup(host,user,password,user_os,password_os,mysql_path,bakdir):
+def mysql_fullbackup(host,user,password,user_os,password_os,ssh_port_os,mysql_path,bakdir):
     # 上传脚本
     # 删除旧的备份脚本
     date = datetime.datetime.now().strftime('%Y%m%d%H')
@@ -14,7 +14,7 @@ def mysql_fullbackup(host,user,password,user_os,password_os,mysql_path,bakdir):
 
     cmd = mysqldump + ' |gzip > ' + bak_file
 
-    tools.exec_command(host,user_os,password_os,cmd)
+    tools.exec_command(host,user_os,password_os,ssh_port_os,cmd)
 
 
 if __name__ == '__main__':

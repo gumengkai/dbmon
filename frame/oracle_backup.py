@@ -15,7 +15,6 @@ def oracle_fullbackup(host,user,password,ssh_port,bakdir,sid,backup_retain_day,a
     local_file = os.getcwd() + '/frame/oracle_tools/oracle_backup_db.sh'
     remote_path = '%s/oracle_backup_db.sh' %bakdir
     tools.sftp_upload_file(host, user, password,ssh_port,remote_path, local_file)
-
     local_file = os.getcwd() + '/frame/oracle_tools/oracle_backup_arch.sh'
     remote_path = '%s/oracle_backup_arch.sh' %bakdir
     tools.sftp_upload_file(host, user, password,ssh_port,remote_path, local_file)

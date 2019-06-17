@@ -20,9 +20,9 @@ port_mysql = conf.get("target_mysql","port")
 dbname = conf.get("target_mysql","dbname")
 
 # 上传文件
-def sftp_upload_file(host,user,password,server_path, local_path):
+def sftp_upload_file(host,user,password,ssh_port,server_path, local_path):
     try:
-        t = paramiko.Transport((host, 22))
+        t = paramiko.Transport((host, ssh_port))
         t.connect(username=user, password=password)
         sftp = paramiko.SFTPClient.from_transport(t)
         sftp.put(local_path, server_path)
@@ -185,12 +185,12 @@ def end_task(task_id,result,state):
 
 
 # 执行命令,
-def exec_command(host,user,password,command):
+def exec_command(host,user,password,ssh_port,command):
     list = []
     try:
         ssh_client = paramiko.SSHClient()
         ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        ssh_client.connect(host, 22, user, password)
+        ssh_client.connect(host, ssh_port, user, password)
         std_in, std_out, std_err = ssh_client.exec_command(command)
         for line in std_out:
             list.append(line.strip("\n"))
@@ -202,11 +202,11 @@ def exec_command(host,user,password,command):
 
 def task_model(task_model):
     if task_model == unicode('Oracle诊断报告', 'utf-8'):
-        task = 'frame.tasks.get_report'
+        task = 'oracle_mon.tasks.get_report'
     elif task_model == unicode('Oracle全量备份', 'utf-8'):
-        task = 'frame.tasks.oracle_fullbackup'
+        task = 'oracle_mon.tasks.oracle_fullbackup'
     elif task_model == unicode('Mysql全量备份', 'utf-8'):
-        task = 'frame.tasks.mysql_fullbackup'
+        task = 'mysql_mon.tasks.mysql_fullbackup'
     return task
 
 

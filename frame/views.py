@@ -247,6 +247,7 @@ def oracle_servers_add(request):
             tags = request.POST.get('tags', None)
             host = request.POST.get('host', None)
             port = request.POST.get('port', None)
+            version = request.POST.get('version', None)
             service_name = request.POST.get('service_name', None)
             user = request.POST.get('user', None)
             password = base64.encodestring(request.POST.get('password', None))
@@ -282,7 +283,7 @@ def oracle_servers_add(request):
             oracle_pga = tools.isno(oracle_pga)
             oracle_archive = request.POST.get('oracle_archive', None)
             oracle_archive = tools.isno(oracle_archive)
-            models_oracle.TabOracleServers.objects.create(tags=tags,host=host, port=port, service_name=service_name,
+            models_oracle.TabOracleServers.objects.create(tags=tags,host=host, port=port, version=version,service_name=service_name,
                                                    user=user, password=password,service_name_cdb=service_name_cdb,
                                                    user_cdb=user_cdb, password_cdb=password_cdb,
                                                    user_os=user_os, password_os=password_os, ssh_port_os=ssh_port_os,connect=connect,
@@ -315,6 +316,7 @@ def oracle_servers_edit(request):
             tags = request.POST.get('tags', None)
             host = request.POST.get('host', None)
             port = request.POST.get('port', None)
+            version = request.POST.get('version', None)
             service_name = request.POST.get('service_name', None)
             user = request.POST.get('user', None)
             password = request.POST.get('password', None)
@@ -359,7 +361,7 @@ def oracle_servers_edit(request):
             oracle_pga = tools.isno(oracle_pga)
             oracle_archive = request.POST.get('oracle_archive', None)
             oracle_archive = tools.isno(oracle_archive)
-            models_oracle.TabOracleServers.objects.filter(id=rid).update(tags=tags,host=host, port=port, service_name=service_name,
+            models_oracle.TabOracleServers.objects.filter(id=rid).update(tags=tags,host=host, port=port, version=version,service_name=service_name,
                                                                   user=user, password=password,service_name_cdb=service_name_cdb,
                                                                   user_os=user_os, password_os=password_os,ssh_port_os=ssh_port_os,
                                                                          user_cdb=user_cdb,password_cdb=password_cdb,
@@ -1264,7 +1266,7 @@ def scheduler_add(request):
 
             if type == unicode('Oracle数据库', 'utf-8'):
                 # 获取oracle用户名密码等信息
-                sql = "select host,port,service_name,user,password,user_os,password_os from tab_oracle_servers where tags= '%s' " % tags
+                sql = "select host,port,service_name_cdb,user,password,user_os,password_os,ssh_port_os from tab_oracle_servers where tags= '%s' " % tags
                 oracle = tools.mysql_query(sql)
                 host = oracle[0][0]
                 port = oracle[0][1]
@@ -1275,9 +1277,10 @@ def scheduler_add(request):
                 user_os = oracle[0][5]
                 password_os = oracle[0][6]
                 password_os = base64.decodestring(password_os)
+                ssh_port_os = oracle[0][7]
                 url = host + ':' + port + '/' + service_name
             elif type == unicode('MySQL数据库', 'utf-8'):
-                sql = "select host,user,password,user_os,password_os from tab_mysql_servers where tags= '%s' " % tags
+                sql = "select host,user,password,user_os,password_os,ssh_port_os from tab_mysql_servers where tags= '%s' " % tags
                 mysql = tools.mysql_query(sql)
                 host = mysql[0][0]
                 user = mysql[0][1]
@@ -1286,13 +1289,15 @@ def scheduler_add(request):
                 user_os = mysql[0][3]
                 password_os = mysql[0][4]
                 password_os = base64.decodestring(password_os)
+                ssh_port_os = mysql[0][5]
             else:
-                sql = "select host,user,password from tab_linux_servers where tags= '%s' " % tags
+                sql = "select host,user,password,ssh_port from tab_linux_servers where tags= '%s' " % tags
                 linux = tools.mysql_query(sql)
                 host = linux[0][0]
                 user_os = linux[0][1]
                 password_os = linux[0][2]
                 password_os = base64.decodestring(password_os)
+                ssh_port_os = linux[0][3]
 
             # 通用参数
             kwargs_d['tags'] = tags
@@ -1307,6 +1312,7 @@ def scheduler_add(request):
                 kwargs_d['service_name'] = service_name
             if url:
                 kwargs_d['url'] = url
+            kwargs_d['ssh_port_os'] = ssh_port_os
 
             # 自定义参数
             if para_name:
@@ -1378,6 +1384,7 @@ def scheduler_edit(request):
         twargs_d.pop('password')
     twargs_d.pop('user_os')
     twargs_d.pop('password_os')
+    twargs_d.pop('ssh_port_os')
     if 'service_name' in twargs_d:
         twargs_d.pop('service_name')
     if 'url' in twargs_d:
@@ -1415,7 +1422,7 @@ def scheduler_edit(request):
 
             if type == unicode('Oracle数据库', 'utf-8'):
                 # 获取oracle用户名密码等信息
-                sql = "select host,port,service_name,user,password,user_os,password_os from tab_oracle_servers where tags= '%s' " % tags
+                sql = "select host,port,service_name_cdb,user,password,user_os,password_os,ssh_port_os from tab_oracle_servers where tags= '%s' " % tags
                 oracle = tools.mysql_query(sql)
                 host = oracle[0][0]
                 port = oracle[0][1]
@@ -1426,9 +1433,10 @@ def scheduler_edit(request):
                 user_os = oracle[0][5]
                 password_os = oracle[0][6]
                 password_os = base64.decodestring(password_os)
+                ssh_port_os = oracle[0][7]
                 url = host + ':' + port + '/' + service_name
             elif type == unicode('MySQL数据库', 'utf-8'):
-                sql = "select host,user,password,user_os,password_os from tab_mysql_servers where tags= '%s' " % tags
+                sql = "select host,user,password,user_os,password_os,ssh_port_os from tab_mysql_servers where tags= '%s' " % tags
                 mysql = tools.mysql_query(sql)
                 host = mysql[0][0]
                 user = mysql[0][1]
@@ -1437,13 +1445,15 @@ def scheduler_edit(request):
                 user_os = mysql[0][3]
                 password_os = mysql[0][4]
                 password_os = base64.decodestring(password_os)
+                ssh_port_os = mysql[0][5]
             else:
-                sql = "select host,user,password from tab_linux_servers where tags= '%s' " % tags
+                sql = "select host,user,password,ssh_port from tab_linux_servers where tags= '%s' " % tags
                 linux = tools.mysql_query(sql)
                 host = linux[0][0]
                 user_os = linux[0][1]
                 password_os = linux[0][2]
                 password_os = base64.decodestring(password_os)
+                ssh_port_os = linux[0][3]
 
             # 通用参数
             kwargs_d['tags'] = tags
@@ -1455,6 +1465,7 @@ def scheduler_edit(request):
                 kwargs_d['password'] = password
             kwargs_d['user_os'] = user_os
             kwargs_d['password_os'] = password_os
+            kwargs_d['ssh_port_os'] = ssh_port_os
             if service_name:
                 kwargs_d['service_name'] = service_name
             if url:
@@ -1511,6 +1522,7 @@ def scheduler_para(request):
         twargs_d.pop('password')
     twargs_d.pop('user_os')
     twargs_d.pop('password_os')
+    twargs_d.pop('ssh_port_os')
     if 'service_name' in twargs_d:
         twargs_d.pop('service_name')
     if 'url' in twargs_d:

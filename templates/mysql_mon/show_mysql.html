@@ -57,21 +57,6 @@
                  {% endfor %}
               </table>
             </div>
-            <div class="box-footer clearfix">
-           <span class="step-links">
-        {% if dbinfos.has_previous %}
-            <a href="?page={{ dbinfos.previous_page_number }}">上一页</a>
-        {% endif %}
-
-        <span class="current">
-            当前页{{ dbinfos.number }} 共计{{ dbinfos.paginator.num_pages }}
-        </span>
-
-        {% if dbinfos.has_next %}
-            <a href="?page={{ dbinfos.next_page_number }}">下一页</a>
-        {% endif %}
-           </span>
-         </div>
             <!-- /.box-body -->
           </div>
           <!-- /.box -->

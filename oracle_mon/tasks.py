@@ -103,13 +103,13 @@ def get_report(tags,user,password,url,report_type,begin_snap,end_snap):
 
 # oracle全量备份
 @shared_task
-def oracle_fullbackup(tags,host,user_os,password_os,ssh_port_os,service_name,url,bakdir,backup_retain_day,arch_keep_days):
+def oracle_fullbackup(tags,host,user,password,user_os,password_os,ssh_port_os,service_name,url,bakdir,backup_retain_day,arch_keep_days):
     oper_type = 'Oracle全量备份'
     server_type = 'Oracle'
     task_id = uuid.uuid1()
     task_name = '%s:oracle_fullbak' %tags
     args = 'tags：' + tags + '，'  + 'host：' + host + ', ' + 'user：' + user_os\
-         + '，' +  'password：' + password_os + '，' +  'ssh_port：' + ssh_port_os + '，' + 'bakdir：' + bakdir + '，'\
+         + '，' +  'password：' + password_os + '，' +  'ssh_port：' + str(ssh_port_os) + '，' + 'bakdir：' + bakdir + '，'\
            + 'sid：' + service_name +'，' + 'backup_retain_day：' + backup_retain_day + ', ' + \
            'arch_keep_days：' + arch_keep_days
     tools.begin_task(task_id,oper_type,server_type,tags,task_name,args)
