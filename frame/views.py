@@ -402,7 +402,7 @@ def mysql_servers_add(request):
                                                    user=user, password=password,
                                                    user_os=user_os, password_os=password_os,
                                                    ssh_port_os=ssh_port_os,connect=connect,
-                                                   repl=repl,conn=conn,  err_info=err_info,)
+                                                   repl=repl,conn=conn, err_info=err_info,)
             status = 1
         elif request.POST.has_key('logout'):
             logout(request)
@@ -783,7 +783,6 @@ def check_err(request):
 @login_required(login_url='/login')
 def checklist_del(request):
     check_tag = request.GET.get('check_tag')
-    print check_tag
     models_frame.CheckList.objects.filter(check_tag=check_tag).delete()
     return HttpResponseRedirect('/my_check/')
 
