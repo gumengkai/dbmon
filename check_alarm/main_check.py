@@ -20,12 +20,14 @@ import tools as tools
 import alarm as alarm
 import my_log as my_log
 from oracle_stat import  Oraclestat
+from redis_stat import Redisstat
 import web_check
 reload(sys)
 sys.setdefaultencoding('utf-8')
 # 配置文件
 import ConfigParser
 import os
+import redis
 
 
 def check_linux(tags,host,host_name,user,password,ssh_port):
@@ -1181,6 +1183,51 @@ def check_mysql(tags, host,port,user,password,user_os,password_os):
         my_log.logger.info('%s扣分明细，连接数扣分:%s，cpu使用率扣分:%s，内存使用率扣分:%s，总评分:%s,扣分原因:%s' % (
             tags, db_conn_decute, db_cpu_decute, db_mem_decute, db_all_rate, db_all_decute_reason))
 
+def check_redis(tags, host,port):
+    # 连通性检测
+    conn = False
+    try:
+        conn = redis.StrictRedis(host=host,port=port)
+    except Exception, e:
+        error_msg = "%s redis连接失败：%s" % (tags, unicode(str(e), errors='ignore'))
+        redis_rate_level = 'red'
+        my_log.logger.error(error_msg)
+        my_log.logger.info('%s：初始化redis表' % tags)
+        insert_sql = "insert into redis_his select * from redis where tags = '%s'" % tags
+        tools.mysql_exec(insert_sql, '')
+        delete_sql = "delete from redis where tags = '%s'" % tags
+        tools.mysql_exec(delete_sql, '')
+        error_sql = "insert into redis(host,port,tags,mon_status,rate_level) values(%s,%s,%s,%s,%s)"
+        value = (host, port, tags, 'connected error', redis_rate_level)
+        tools.mysql_exec(error_sql, value)
+        # 更新数据库打分信息
+        my_log.logger.info('%s :开始更新redis评分信息' % tags)
+        delete_sql = "delete from redis_rate where tags= '%s'" % tags
+        tools.mysql_exec(delete_sql, '')
+        insert_sql = "insert into redis_rate(host,port,tags,db_rate,db_rate_level,db_rate_color,db_rate_reason) select host,port,tags,'0','danger','red','connected error' from redis_server where tags ='%s'" % tags
+        tools.mysql_exec(insert_sql, '')
+        my_log.logger.info('%s扣分明细，总评分:%s,扣分原因:%s' % (tags, '0', 'conected error'))
+    if conn:
+        my_log.logger.info('%s：开始获取redis监控信息' % tags)
+        redis_stats = Redisstat(conn)
+        redis_data = redis_stats.get_redis_stat()
+        redis_info = redis_data['info']
+
+        # 归档历史数据
+        my_log.logger.info('%s：初始化redis表' % tags)
+        insert_sql = "insert into redis_his select * from redis where tags = '%s'" % tags
+        tools.mysql_exec(insert_sql, '')
+        delete_sql = "delete from redis where tags = '%s' " % tags
+        tools.mysql_exec(delete_sql, '')
+
+        insert_sql = "insert into redis(tags,host,port,version,updays,redis_mode,slaves,connection_clients,role,used_memory,mem_fragmentation_ratio,mon_status,rate_level) " \
+                     "values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+        values = (
+            tags,host,port,redis_info['version'],redis_info['up_days'],redis_info['redis_mode'],redis_info['slaves'],redis_info['connection_clients'],redis_info['role'],
+            redis_info['mem_used'],round(redis_info['mem_used_rss']/redis_info['mem_used'],2),'connected','green'
+        )
+        tools.mysql_exec(insert_sql,values)
+
 
 def check_web(tags, url):
     # 初始化表
@@ -1227,6 +1274,7 @@ if __name__ =='__main__':
         linux_clr_list = ['os_info','os_filesystem','linux_rate']
         oracle_clr_list = ['oracle_tbs','oracle_db','oracle_db_event','oracle_tmp_tbs','oracle_undo_tbs','oracle_db_rate','oracle_invalid_index','oracle_expired_pwd']
         mysql_clr_list =  ['mysql_db','mysql_db_rate','mysql_repl']
+        redis_clr_list = ['redis']
         url_clr_list = ['web_url_stats']
         tcp_clr_list = ['tcp_stats']
 
@@ -1254,6 +1302,14 @@ if __name__ =='__main__':
             delete_sql = "delete from %s where tags not in (select tags from tab_mysql_servers)" %table
             tools.mysql_exec(delete_sql, '')
 
+        for table in redis_clr_list:
+            # 清空无效监控数据
+            my_log.logger.info('清除%s表无效监控数据' %table)
+            insert_sql = "insert into %s_his select * from %s where tags not in (select tags from redis_conf)" %(table,table)
+            tools.mysql_exec(insert_sql, '')
+            delete_sql = "delete from %s where tags not in (select tags from redis_conf)" %table
+            tools.mysql_exec(delete_sql, '')
+
         for table in url_clr_list:
             # 清空无效监控数据
             my_log.logger.info('清除%s表无效监控数据' %table)
@@ -1277,6 +1333,8 @@ if __name__ =='__main__':
             'select tags,host,port,service_name,user,password,user_cdb,password_cdb,service_name_cdb,user_os,password_os,ssh_port_os,version from tab_oracle_servers')
         mysql_servers = tools.mysql_query(
             'select tags,host,port,user,password,user_os,password_os from tab_mysql_servers')
+        redis_list = tools.mysql_query(
+            'select tags,host,port from redis_conf')
         url_list = tools.mysql_query(
             'select tags,url from tab_url_conf')
         tcp_list = tools.mysql_query(
@@ -1307,6 +1365,13 @@ if __name__ =='__main__':
                 m_server.start()
                 my_log.logger.info('%s 开始采集mysql数据库信息' %mysql_servers[i][0])
                 p_pool.append(m_server)
+        if redis_list:
+            for redis in redis_list:
+                redis_check = Process(target=check_redis, args=(
+                    redis[0],redis[1],redis[2] ))
+                redis_check.start()
+                my_log.logger.info('%s 开始采集redis信息' %redis[0])
+                p_pool.append(redis_check)
         if url_list:
             for i in xrange(len(url_list)):
                 url = Process(target=check_web, args=(url_list[i][0], url_list[i][1]))

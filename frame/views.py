@@ -795,7 +795,7 @@ def page_inter_error(request):
 def download(request):
     select_form = request.GET.get('select_form')
     file_tag = request.GET.get('file_tag')
-    file_path = os.getcwd() + '\check_result' + '\\'
+    file_path = os.path.dirname(os.getcwd()) + '/dbmon/check_result/'
     if select_form == 'excel':
         if not file_tag:
             file = file_path + 'oracheck.xls'

@@ -3,11 +3,14 @@
 
 
 from django.conf.urls import patterns, include, url
+
 # 导入对应app的views文件
 from frame import views as frame
 from linux_mon import views as linux_mon
 from oracle_mon import views as oracle_mon
 from mysql_mon import views as mysql_mon
+from redis_mon import views as redis_mon
+
 from dba_blog import views as dba_blog
 
 from login import views as login
@@ -127,6 +130,8 @@ urlpatterns = patterns('',
     (r'^article_delete/', dba_blog.article_delete),
     (r'^show_web_stats/', frame.show_web_stats),
     (r'^show_tcp_stats/', frame.show_tcp_stats),
+    (r'^show_redis/', redis_mon.show_redis),
+
                        )
 
 handler404 = frame.page_not_found

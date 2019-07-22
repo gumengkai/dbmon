@@ -18,7 +18,7 @@ from xlutils.copy import copy
 
 def ora_check(tags_l,begin_time,end_time,file_name,file_tag):
     # 写excel
-    file_path = os.getcwd() + '/check_result/'
+    file_path = os.path.dirname(os.getcwd()) + '/dbmon/check_result/'
     template = 'oracheck.xls'
     rb = xlrd.open_workbook(file_path+template, formatting_info=True)
     wb = copy(rb)
@@ -231,7 +231,7 @@ def ora_check(tags_l,begin_time,end_time,file_name,file_tag):
         ws.write(row, 32, unicode('否', 'utf-8'))
         ws.write(row, 33, unicode('无', 'utf-8'))
 
-        check_path = os.getcwd() + '\check_result' + '\\'
+        check_path = os.path.dirname(os.getcwd()) + '/dbmon/check_result/'
         wb.save(check_path + file_name)
         print >> check_txt, '-------%s巡检异常-------' % tags
         print >> check_txt, errinfo

@@ -1,0 +1,59 @@
+{% extends 'base/base_site.html' %}
+{% block content_header %}
+        <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Redis概览
+      </h1>
+        </h1>
+        <ol class="breadcrumb">
+        <li><a href="/begin"><i class="fa fa-dashboard"></i>首页</a></li>
+        <li><a href="#">Redis</a></li>
+        <li class="active">概览</li>
+      </ol>
+    </section>
+{% endblock %}
+{% block content %}
+    <div class="box box-solid">
+            <div class="box-body" style="overflow: auto">
+              <table id="table1" class="table table-bordered table-hover" style="overflow: auto">
+                <thead>
+                <tr>
+                  <th>ID</th>
+                    <th>标签</th>
+                  <th>IP地址</th>
+                  <th>端口</th>
+                  <th>版本</th>
+                    <th>运行天数</th>
+                    <th>应用类型</th>
+                    <th>从节点数</th>
+                    <th>连接数</th>
+                    <th>角色</th>
+                    <th>内存使用(MB)</th>
+                    <th>碎片率</th>
+                    <th>状态</th>
+                </tr>
+                </thead>
+                {% for redis in redis_list %}
+                 <tr>
+                 <td>{{ forloop.counter }} </td>
+                     <td>{{ redis.tags}} </td>
+                 <td>{{ redis.host}} </td>
+                 <td>{{ redis.port}} </td>
+                 <td>{{ redis.version}} </td>
+                 <td>{{ redis.updays}}天 </td>
+                   <td>{{ redis.redis_mode}} </td>
+                   <td>{{ redis.slaves}} </td>
+                   <td>{{ redis.connection_clients}} </td>
+                     <td>{{ redis.role}} </td>
+                     <td>{{ redis.used_memory}} </td>
+                     <td><span class="badge bg-{% if redis.mem_fragmentation_ratio < 10  %}green{% else %}red{% endif %}">{{ redis.mem_fragmentation_ratio }}</span></td>
+                 <td><span class="badge bg-{{ redis.rate_level }}">{{ redis.mon_status }}</span></td>
+                 </tr>
+                 {% endfor %}
+              </table>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+{% endblock %}

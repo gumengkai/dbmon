@@ -43,6 +43,7 @@ INSTALLED_APPS = (
     'linux_mon',
     'oracle_mon',
     'mysql_mon',
+    'redis_mon',
     'dba_blog',
     'djcelery',
     'ckeditor'

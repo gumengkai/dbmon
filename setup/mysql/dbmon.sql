@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2019-05-23 17:05:33
+Date: 2019-07-22 17:14:07
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -53,7 +53,7 @@ CREATE TABLE `alert_log` (
   `log_content` text,
   `chk_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1174847 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1795824 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for bak_conf
@@ -126,7 +126,7 @@ CREATE TABLE `check_info` (
   `begin_time` varchar(255) DEFAULT NULL,
   `end_time` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=455 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=488 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for check_list
@@ -141,7 +141,7 @@ CREATE TABLE `check_list` (
   `end_time` varchar(255) DEFAULT NULL,
   `chk_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=170 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=191 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for easy_start_conf
@@ -228,7 +228,7 @@ CREATE TABLE `linux_io_stat` (
   `stime` float DEFAULT NULL,
   `chk_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=174371 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=246039 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for linux_io_stat_his
@@ -258,7 +258,7 @@ CREATE TABLE `linux_io_stat_his` (
   `stime` float DEFAULT NULL,
   `chk_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=174369 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=246037 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for linux_net
@@ -272,7 +272,7 @@ CREATE TABLE `linux_net` (
   `send` float DEFAULT NULL,
   `check_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=408813 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=581638 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for linux_net_his
@@ -286,7 +286,7 @@ CREATE TABLE `linux_net_his` (
   `send` float DEFAULT NULL,
   `check_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=408808 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=581633 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for linux_rate
@@ -304,7 +304,7 @@ CREATE TABLE `linux_rate` (
   `linux_rate_reason` varchar(255) DEFAULT NULL,
   `rate_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1220034 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=99165 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for linux_rate_his
@@ -322,7 +322,7 @@ CREATE TABLE `linux_rate_his` (
   `linux_rate_reason` varchar(255) DEFAULT NULL,
   `rate_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1215208 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1224794 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for log_collect_conf
@@ -350,7 +350,7 @@ CREATE TABLE `many_logs` (
   `err_info` text,
   `log_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=402 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=424 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for my_scripts
@@ -383,7 +383,7 @@ CREATE TABLE `my_task` (
   `runtime` float DEFAULT NULL,
   `state` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=317 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=405 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for mysql_big_table
@@ -399,7 +399,7 @@ CREATE TABLE `mysql_big_table` (
   `table_comment` varchar(255) DEFAULT NULL,
   `chk_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=581414 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=942307 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for mysql_big_table_his
@@ -415,7 +415,7 @@ CREATE TABLE `mysql_big_table_his` (
   `table_comment` varchar(255) DEFAULT NULL,
   `chk_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=581402 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=942283 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for mysql_db
@@ -496,7 +496,7 @@ CREATE TABLE `mysql_db` (
   `rate_level` varchar(255) NOT NULL,
   `chk_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7890 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=39500 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for mysql_db_his
@@ -599,7 +599,7 @@ CREATE TABLE `mysql_db_rate` (
   `db_rate_reason` varchar(255) NOT NULL,
   `rate_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7890 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=39500 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for mysql_db_rate_his
@@ -651,7 +651,7 @@ CREATE TABLE `mysql_repl` (
   `master_binlog_space` varchar(255) DEFAULT NULL,
   `chk_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7890 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=37020 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for mysql_repl_his
@@ -705,7 +705,7 @@ CREATE TABLE `mysql_slowquery` (
   `thread_id` varchar(255) DEFAULT NULL,
   `chk_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=131269 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=183895 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for oracle_backup_info
@@ -724,7 +724,7 @@ CREATE TABLE `oracle_backup_info` (
   `BACKUP_TYPE` varchar(255) DEFAULT NULL,
   `STATUS` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for oracle_backup_piece
@@ -747,7 +747,7 @@ CREATE TABLE `oracle_backup_piece` (
   `TAG` varchar(255) DEFAULT NULL,
   `PATH` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for oracle_bak_job
@@ -838,7 +838,7 @@ CREATE TABLE `oracle_db` (
   `rate_level` varchar(255) NOT NULL,
   `chk_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7904 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=60561 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for oracle_db_event
@@ -855,7 +855,7 @@ CREATE TABLE `oracle_db_event` (
   `event_cnt` varchar(255) NOT NULL,
   `chk_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=154110 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=747441 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for oracle_db_event_his
@@ -872,7 +872,7 @@ CREATE TABLE `oracle_db_event_his` (
   `event_cnt` varchar(255) NOT NULL,
   `chk_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3255108 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=747419 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for oracle_db_his
@@ -948,7 +948,7 @@ CREATE TABLE `oracle_db_his` (
   `chk_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `chk_time` (`chk_time`)
-) ENGINE=InnoDB AUTO_INCREMENT=7903 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=60559 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for oracle_db_rate
@@ -976,7 +976,7 @@ CREATE TABLE `oracle_db_rate` (
   `db_rate_reason` varchar(255) DEFAULT NULL,
   `rate_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7892 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=60546 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for oracle_db_rate_his
@@ -1093,7 +1093,7 @@ CREATE TABLE `oracle_lock` (
   `type` varchar(255) NOT NULL,
   `chk_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for oracle_logmnr
@@ -1166,7 +1166,7 @@ CREATE TABLE `oracle_tbs` (
   `rate_level` varchar(255) NOT NULL,
   `chk_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1559694 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1639164 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for oracle_tbs_his
@@ -1189,7 +1189,7 @@ CREATE TABLE `oracle_tbs_his` (
   `rate_level` varchar(255) NOT NULL,
   `chk_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1559691 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1639161 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for oracle_tmp_tbs
@@ -1208,7 +1208,7 @@ CREATE TABLE `oracle_tmp_tbs` (
   `rate_level` varchar(255) NOT NULL,
   `chk_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7454 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=35999 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for oracle_tmp_tbs_his
@@ -1246,7 +1246,7 @@ CREATE TABLE `oracle_undo_tbs` (
   `rate_level` varchar(255) NOT NULL,
   `chk_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7465 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=36035 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for oracle_undo_tbs_his
@@ -1284,7 +1284,7 @@ CREATE TABLE `os_filesystem` (
   `disk_rate_level` varchar(255) NOT NULL,
   `chk_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=611351 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=68331 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for os_filesystem_his
@@ -1303,7 +1303,7 @@ CREATE TABLE `os_filesystem_his` (
   `disk_rate_level` varchar(255) NOT NULL,
   `chk_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=611349 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=616111 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for os_info
@@ -1369,7 +1369,7 @@ CREATE TABLE `os_info` (
   `rate_level` varchar(255) NOT NULL,
   `chk_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1006236 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=99172 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for os_info_his
@@ -1440,6 +1440,108 @@ CREATE TABLE `os_info_his` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
+-- Table structure for redis
+-- ----------------------------
+DROP TABLE IF EXISTS `redis`;
+CREATE TABLE `redis` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `host` varchar(255) NOT NULL,
+  `port` int(11) NOT NULL,
+  `tags` varchar(255) NOT NULL,
+  `version` varchar(255) DEFAULT NULL,
+  `updays` int(11) DEFAULT NULL,
+  `redis_mode` varchar(255) DEFAULT NULL,
+  `slaves` int(11) DEFAULT NULL,
+  `connection_clients` int(11) DEFAULT NULL,
+  `role` varchar(255) DEFAULT NULL,
+  `used_memory` float DEFAULT NULL,
+  `mem_fragmentation_ratio` double DEFAULT NULL,
+  `mon_status` varchar(255) DEFAULT NULL,
+  `rate_level` varchar(255) DEFAULT NULL,
+  `chk_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10479 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for redis_conf
+-- ----------------------------
+DROP TABLE IF EXISTS `redis_conf`;
+CREATE TABLE `redis_conf` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `tags` varchar(255) NOT NULL,
+  `host` varchar(255) NOT NULL,
+  `port` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for redis_his
+-- ----------------------------
+DROP TABLE IF EXISTS `redis_his`;
+CREATE TABLE `redis_his` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `host` varchar(255) NOT NULL,
+  `port` int(11) NOT NULL,
+  `tags` varchar(255) NOT NULL,
+  `version` varchar(255) DEFAULT NULL,
+  `updays` int(11) DEFAULT NULL,
+  `redis_mode` varchar(255) DEFAULT NULL,
+  `slaves` int(11) DEFAULT NULL,
+  `connection_clients` int(11) DEFAULT NULL,
+  `role` varchar(255) DEFAULT NULL,
+  `used_memory` float DEFAULT NULL,
+  `mem_fragmentation_ratio` double DEFAULT NULL,
+  `mon_status` varchar(255) DEFAULT NULL,
+  `rate_level` varchar(255) DEFAULT NULL,
+  `chk_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10473 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for redis_rate
+-- ----------------------------
+DROP TABLE IF EXISTS `redis_rate`;
+CREATE TABLE `redis_rate` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `host` varchar(255) NOT NULL,
+  `port` varchar(255) NOT NULL,
+  `tags` varchar(255) NOT NULL,
+  `rate` int(11) NOT NULL,
+  `rate_level` varchar(255) NOT NULL,
+  `rate_detail` varchar(255) NOT NULL,
+  `rate_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for redis_rate_his
+-- ----------------------------
+DROP TABLE IF EXISTS `redis_rate_his`;
+CREATE TABLE `redis_rate_his` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `host` varchar(255) NOT NULL,
+  `port` varchar(255) NOT NULL,
+  `tags` varchar(255) NOT NULL,
+  `rate` int(11) NOT NULL,
+  `rate_level` varchar(255) NOT NULL,
+  `rate_detail` varchar(255) NOT NULL,
+  `rate_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for redis_server
+-- ----------------------------
+DROP TABLE IF EXISTS `redis_server`;
+CREATE TABLE `redis_server` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `tags` varchar(255) DEFAULT NULL,
+  `host` varchar(255) DEFAULT NULL,
+  `port` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
 -- Table structure for sql_list
 -- ----------------------------
 DROP TABLE IF EXISTS `sql_list`;
@@ -1482,7 +1584,7 @@ CREATE TABLE `tab_alarm_email_info` (
   `email_content` text NOT NULL,
   `alarm_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for tab_alarm_info
@@ -1498,7 +1600,7 @@ CREATE TABLE `tab_alarm_info` (
   `alarm_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `idx_alarm_info_1` (`alarm_time`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=2466866 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2648138 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for tab_alarm_info_his
@@ -1514,7 +1616,7 @@ CREATE TABLE `tab_alarm_info_his` (
   `alarm_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `idx_alarm_info_his_1` (`alarm_time`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=2466863 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2648128 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for tab_linux_servers
@@ -1534,7 +1636,7 @@ CREATE TABLE `tab_linux_servers` (
   `swap` varchar(255) DEFAULT NULL,
   `disk` varchar(255) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for tab_mysql_servers
@@ -1555,7 +1657,7 @@ CREATE TABLE `tab_mysql_servers` (
   `conn` varchar(255) DEFAULT NULL,
   `err_info` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for tab_oracle_servers
@@ -1590,7 +1692,7 @@ CREATE TABLE `tab_oracle_servers` (
   `pga` varchar(255) DEFAULT NULL,
   `archive` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for tab_tcp_conf
@@ -1629,7 +1731,7 @@ CREATE TABLE `tcp_stats` (
   `tim` float DEFAULT NULL,
   `chk_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7590 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=36527 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for tcp_stats_his
@@ -1645,7 +1747,7 @@ CREATE TABLE `tcp_stats_his` (
   `tim` float(255,0) DEFAULT NULL,
   `chk_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=29923 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=36526 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for web_url_stats
@@ -1661,7 +1763,7 @@ CREATE TABLE `web_url_stats` (
   `tim` float DEFAULT NULL,
   `chk_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7571 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=26148 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for web_url_stats_his
