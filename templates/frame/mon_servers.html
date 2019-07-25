@@ -19,11 +19,11 @@
               <li class="active"><a href="#linux" data-toggle="tab" aria-expanded="false">linux主机</a></li>
               <li class=""><a href="#oracle" data-toggle="tab" aria-expanded="false">Oracle数据库</a></li>
               <li class=""><a href="#mysql" data-toggle="tab" aria-expanded="true">MySQL数据库</a></li>
+               <li class=""><a href="#redis" data-toggle="tab" aria-expanded="true">Redis</a></li>
                 </ul>
 
    <div class="tab-content">
       <div class="active tab-pane" id="linux">
-        <div class="box box-solid">
             <div class="box-body" style="overflow: auto">
               <table id="linux_servers" class="table table-bordered table-hover">
                 <thead>
@@ -90,11 +90,8 @@
                  </a>
               </div>
          </div>
-        </div>
-          <!-- /.box -->
    </div>
      <div class="tab-pane" id="oracle">
-          <div class="box box-solid">
             <div class="box-body" style="overflow: auto">
               <table id="oracle_servers" class="table table-bordered table-hover">
                 <thead>
@@ -238,8 +235,6 @@
                  </a>
               </div>
          </div>
-          </div>
-          <!-- /.box -->
        </div>
 
    <div class="tab-pane" id="mysql">
@@ -321,7 +316,65 @@
          </div>
           </div>
           <!-- /.box -->
-
+   <div class="tab-pane" id="redis">
+            <div class="box-body" style="overflow: auto">
+              <table id="redis_servers" class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>标签</th>
+                    <th>IP地址</th>
+                  <th>端口号</th>
+                    <th>通断告警</th>
+                    <th>内存使用率告警</th>
+                    <th>编辑</th>
+                    <th>删除</th>
+                </tr>
+                </thead>
+                {% for redis_mon in redis_mon_list %}
+                 <tr>
+                 <td>{{ forloop.counter }}</td>
+                 <td>{{ redis_mon.tags}}</td>
+                 <td>{{ redis_mon.host}}</td>
+                 <td>{{ redis_mon.port}}</td>
+                 <td>
+                     <div class="checkbox"><label>
+                 <input type="checkbox"  value="1" name="check_box" {% if redis_mon.connect == '1' %} checked {% endif %} disabled>
+                    </label>
+                     </div>
+                 </td>
+                 <td>
+                     <div class="checkbox"><label>
+                 <input type="checkbox"  value="1" name="check_box" {% if redis_mon.mem == '1' %} checked {% endif %} disabled>
+                    </label>
+                     </div>
+                 </td>
+             <td>
+              <div class="box-tools pull-right">
+                <a href="#">
+            <button type="button" class="btn btn-xs btn-primary" onclick="return pop_redis(this.value)" value="{{ redis_mon.id }}">编辑</button></a>
+              </div>
+                 </td>
+                 <td>
+              <div class="box-tools pull-right">
+                <a href="/redis_mon_conf_del?id={{ redis_mon.id }}">
+            <button type="button" class="btn btn-xs btn-danger" onclick="javascript:return del();">删除</button></a>
+              </div>
+                 </td>
+                 </tr>
+                 {% endfor %}
+              </table>
+            </div>
+            <!-- /.box-body -->
+           <div class="box-footer clearfix">
+            <div class="pull-right">
+                 <a href="#">
+            <button type="button" class="btn btn-primary btn-block btn-flat" onclick="return pop_redis_add()">新增</button>
+                 </a>
+              </div>
+         </div>
+          </div>
+          <!-- /.box -->
          </div>
        </div>
       </div>
@@ -503,6 +556,64 @@ function pop_mysql_add(){
   });
 }
 
+function pop_redis(n){
+    layer.open({
+    type: 2,
+    title: '编辑redis配置',
+    closeBtn: 1,
+    area: ['700px', '550px'],
+    shadeClose: true, //点击遮罩关闭
+    content: ['/redis_mon_conf_edit?id='+n,],
+    end:function(){
+            var handle_status = $("#handle_status").val();
+            if ( handle_status == '1' ) {
+                layer.msg('保存成功！',{
+                    icon: 1,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                },function(){
+                    history.go(0);
+                });
+            } else if ( handle_status == '2' ) {
+                layer.msg('添加失败！',{
+                    icon: 2,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                },function(){
+                    history.go(0);
+                });
+            }
+        }
+  });
+}
+
+function pop_redis_add(){
+    layer.open({
+    type: 2,
+    title: '添加redis监控',
+    closeBtn: 1,
+    area: ['700px', '550px'],
+    shadeClose: true, //点击遮罩关闭
+    content: ['/redis_mon_conf_add',],
+    end:function(){
+            var handle_status = $("#handle_status").val();
+            if ( handle_status == '1' ) {
+                layer.msg('添加成功！',{
+                    icon: 1,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                },function(){
+                    history.go(0);
+                });
+            } else if ( handle_status == '2' ) {
+                layer.msg('添加失败！',{
+                    icon: 2,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                },function(){
+                    history.go(0);
+                });
+            }
+        }
+  });
+}
+
 $('#linux_servers').DataTable({
 		 autoWidth:false,////不开启自动宽度，用bootstrap的自适应去调整
          'lengthChange': true,
@@ -561,6 +672,35 @@ $('#linux_servers').DataTable({
 
 	})
     $('#mysql_servers').DataTable({
+		autoWidth:false,////不开启自动宽度，用bootstrap的自适应去调整
+        'lengthChange': true,
+        'info'        : true,
+		"lengthMenu": [10, 20, 50],//表格行数选择框内数目 显示2条,4条,20条,50条
+		"displayLength": 10,//默认的显示行数 (也就是每页显示几条数据)
+	    "language": {//自定义语言提示
+	    	"processing": "处理中...",
+	        "lengthMenu": "显示 _MENU_ 项结果",
+	        "zeroRecords": "没有找到相应的结果",
+	        "info": "第 _START_ 至 _END_ 行，共 _TOTAL_ 行",
+	        "infoEmpty": "第 0 至 0 项结果，共 0 项",
+	        "infoFiltered": "(由 _MAX_ 项结果过滤)",
+	        "infoPostFix": "",
+	        "url": "",
+	        "thousands": "'",
+	        "emptyTable": "表中数据为空",
+	        "loadingRecords": "载入中...",
+	        "infoThousands": ",",
+	        "paginate": {
+	            "first": "首页",
+	            "previous": "上页",
+	            "next": "下页",
+	            "last": "末页"
+	        }
+	    }
+
+
+	});
+    $('#redis_servers').DataTable({
 		autoWidth:false,////不开启自动宽度，用bootstrap的自适应去调整
         'lengthChange': true,
         'info'        : true,

@@ -1210,8 +1210,17 @@ def check_redis(tags, host,port):
     if conn:
         my_log.logger.info('%s：开始获取redis监控信息' % tags)
         redis_stats = Redisstat(conn)
-        redis_data = redis_stats.get_redis_stat()
+        redis_data = redis_stats.get_redis_data()
         redis_info = redis_data['info']
+        redis_stat = redis_data['stat']
+        redis_mon_conf = redis_data['config']
+
+        max_memory = float(redis_mon_conf['maxmemory'])
+        if max_memory == 0:
+            used_memory_pct = 0
+        else:
+            used_memory_pct = round(float(redis_info['used_memory'])/max_memory,2)
+
 
         # 归档历史数据
         my_log.logger.info('%s：初始化redis表' % tags)
@@ -1220,11 +1229,13 @@ def check_redis(tags, host,port):
         delete_sql = "delete from redis where tags = '%s' " % tags
         tools.mysql_exec(delete_sql, '')
 
-        insert_sql = "insert into redis(tags,host,port,version,updays,redis_mode,slaves,connection_clients,role,used_memory,mem_fragmentation_ratio,mon_status,rate_level) " \
-                     "values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+        insert_sql = "insert into redis(tags,host,port,version,updays,redis_mode,slaves,connection_clients,role,used_memory,mem_fragmentation_ratio,total_keys,max_memory,used_memory_pct,misses,hits,mon_status,rate_level) " \
+                     "values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
         values = (
-            tags,host,port,redis_info['version'],redis_info['up_days'],redis_info['redis_mode'],redis_info['slaves'],redis_info['connection_clients'],redis_info['role'],
-            redis_info['mem_used'],round(redis_info['mem_used_rss']/redis_info['mem_used'],2),'connected','green'
+            tags,host,port,redis_info['redis_version'],redis_info['uptime_in_days'],redis_info['redis_mode'],redis_info['connected_slaves'],redis_info['connected_clients'],redis_info['role'],
+            round(redis_info['used_memory']/1024/1024,2),round(redis_info['used_memory_rss']/redis_info['used_memory'],2),redis_stat['total_keys'],round(max_memory/1024/1024,2),used_memory_pct,
+            redis_info['keyspace_hits'],redis_info['keyspace_misses'],
+            'connected','green'
         )
         tools.mysql_exec(insert_sql,values)
 
@@ -1305,9 +1316,9 @@ if __name__ =='__main__':
         for table in redis_clr_list:
             # 清空无效监控数据
             my_log.logger.info('清除%s表无效监控数据' %table)
-            insert_sql = "insert into %s_his select * from %s where tags not in (select tags from redis_conf)" %(table,table)
+            insert_sql = "insert into %s_his select * from %s where tags not in (select tags from redis_mon_conf)" %(table,table)
             tools.mysql_exec(insert_sql, '')
-            delete_sql = "delete from %s where tags not in (select tags from redis_conf)" %table
+            delete_sql = "delete from %s where tags not in (select tags from redis_mon_conf)" %table
             tools.mysql_exec(delete_sql, '')
 
         for table in url_clr_list:
@@ -1334,7 +1345,7 @@ if __name__ =='__main__':
         mysql_servers = tools.mysql_query(
             'select tags,host,port,user,password,user_os,password_os from tab_mysql_servers')
         redis_list = tools.mysql_query(
-            'select tags,host,port from redis_conf')
+            'select tags,host,port from redis_mon_conf')
         url_list = tools.mysql_query(
             'select tags,url from tab_url_conf')
         tcp_list = tools.mysql_query(

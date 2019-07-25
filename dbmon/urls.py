@@ -131,6 +131,9 @@ urlpatterns = patterns('',
     (r'^show_web_stats/', frame.show_web_stats),
     (r'^show_tcp_stats/', frame.show_tcp_stats),
     (r'^show_redis/', redis_mon.show_redis),
+    (r'^redis_mon_conf_add/', redis_mon.redis_mon_conf_add),
+    (r'^redis_mon_conf_edit$', redis_mon.redis_mon_conf_edit),
+    (r'^redis_mon_conf_del$', redis_mon.redis_mon_conf_del),
 
                        )
 

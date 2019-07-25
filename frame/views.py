@@ -23,6 +23,8 @@ import frame.models as models_frame
 import linux_mon.models as models_linux
 import oracle_mon.models as models_oracle
 import mysql_mon.models as models_mysql
+import redis_mon.models as models_redis
+
 
 import easy_check as easy_check
 import log_collect as collect
@@ -105,6 +107,8 @@ def mon_servers(request):
     oracle_servers_list = models_oracle.TabOracleServers.objects.all()
     # Mysql监控设备
     mysql_servers_list = models_mysql.TabMysqlServers.objects.all()
+    # Mysql监控设备
+    redis_mon_list = models_redis.RedisMonConf.objects.all()
 
     if request.method == 'POST':
         logout(request)
@@ -121,7 +125,8 @@ def mon_servers(request):
         tim_last = ''
     return render_to_response('frame/mon_servers.html',
                               {'linux_servers_list': linux_servers_list, 'oracle_servers_list': oracle_servers_list,
-                               'mysql_servers_list': mysql_servers_list, 'messageinfo_list': messageinfo_list, 'msg_num': msg_num,
+                               'mysql_servers_list': mysql_servers_list, 'redis_mon_list': redis_mon_list,
+                               'messageinfo_list': messageinfo_list, 'msg_num': msg_num,
                                'msg_last_content': msg_last_content, 'tim_last': tim_last})
 
 
@@ -1825,3 +1830,5 @@ def show_tcp_stats(request):
     return render_to_response('frame/show_tcp_stats.html',
                               {'tcp_list': tcp_list, 'messageinfo_list': messageinfo_list, 'msg_num': msg_num,
                                'msg_last_content': msg_last_content, 'tim_last': tim_last})
+
+

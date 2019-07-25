@@ -27,9 +27,11 @@
                     <th>运行天数</th>
                     <th>应用类型</th>
                     <th>从节点数</th>
+                    <th>对象数</th>
                     <th>连接数</th>
                     <th>角色</th>
-                    <th>内存使用(MB)</th>
+                    <th>最大内存配置(MB)</th>
+                    <th>内存使用率</th>
                     <th>碎片率</th>
                     <th>状态</th>
                 </tr>
@@ -42,12 +44,14 @@
                  <td>{{ redis.port}} </td>
                  <td>{{ redis.version}} </td>
                  <td>{{ redis.updays}}天 </td>
-                   <td>{{ redis.redis_mode}} </td>
-                   <td>{{ redis.slaves}} </td>
-                   <td>{{ redis.connection_clients}} </td>
-                     <td>{{ redis.role}} </td>
-                     <td>{{ redis.used_memory}} </td>
-                     <td><span class="badge bg-{% if redis.mem_fragmentation_ratio < 10  %}green{% else %}red{% endif %}">{{ redis.mem_fragmentation_ratio }}</span></td>
+                 <td>{{ redis.redis_mode}} </td>
+                 <td>{{ redis.slaves}} </td>
+                 <td>{{ redis.total_keys}} </td>
+                 <td>{{ redis.connection_clients}} </td>
+                 <td>{{ redis.role}} </td>
+                 <td>{{ redis.max_memory}} </td>
+                 <td><span class="badge bg-{% if redis.used_memory_pct < 60  %}green{% elif redis.used_memory_pct >= 60 and redis.used_memory_pct < 80%}yellow{% else %}red{% endif %}">{{ redis.used_memory_pct }}</span></td>
+                  <td><span class="badge bg-{% if redis.mem_fragmentation_ratio < 10  %}green{% else %}red{% endif %}">{{ redis.mem_fragmentation_ratio }}</span></td>
                  <td><span class="badge bg-{{ redis.rate_level }}">{{ redis.mon_status }}</span></td>
                  </tr>
                  {% endfor %}
