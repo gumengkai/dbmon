@@ -422,6 +422,9 @@ def check_oracle(tags,host,port,service_name,user,password,user_cdb,password_cdb
         else:
             archive_used_pct = archive_used[0][0]
             archive_rate_level = tools.get_rate_level(archive_used[0][0])
+        # PGA使用率
+        oracle_pga = check_ora.check_pga(conn)
+        pga_target_size,pga_used_size,pga_used_pct = oracle_pga[0]
         adg_trs = check_ora.check_adg_trs(conn)
         adg_apl = check_ora.check_adg_apl(conn)
         err_info = check_ora.check_err(conn, host, user_os, password_os,ssh_port_os)
@@ -472,20 +475,22 @@ def check_oracle(tags,host,port,service_name,user,password,user_cdb,password_cdb
             adg_apply_lag = ''
 
         insert_db_sql = "insert into oracle_db(tags,host,port,service_name,dbid,dbname,version,db_unique_name,database_role,uptime,audit_trail," \
-                        "open_mode,log_mode,is_rac,flashback_on,archive_used,archive_rate_level,inst_id,instance_name,host_name,max_process,current_process,percent_process,conn_rate_level,adg_" \
+                        "open_mode,log_mode,is_rac,flashback_on,archive_used,archive_rate_level,inst_id,instance_name,host_name,max_process,current_process,percent_process,conn_rate_level," \
+                        "pga_target_size,pga_used_size,pga_used_pct,adg_" \
                         "transport_lag,adg_apply_lag,adg_transport_value,adg_transport_rate_level,adg_apply_value,adg_apply_rate_level,mon_status,err_info,sga_size,pga_size,mem_pct,qps,tps," \
                         "exec_count,user_commits,gets,logr,phyr,phyw,blockchange,redo,parse,hardparse,netin,netout,io,total_sess,act_sess,act_trans,blocked_sess,dbtime,dbcpu,log_para_wait,log_sync_wait,log_sync_cnt," \
                         "scat_wait,scat_read_cnt,seq_wait,seq_read_cnt,row_lock_cnt,rate_level)" \
                         " values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s," \
-                        "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+                        "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
         value = (
             tags, host, port, service_name, dbnameinfo[0][5], dbnameinfo[0][0], instance_info[0][4], dbnameinfo[0][1],
             dbnameinfo[0][2], up_days, audit_trail[0][0], dbnameinfo[0][3],
             dbnameinfo[0][4], is_rac[0][0], flashback_on, archive_used_pct, archive_rate_level,
             instance_info[0][0],
             instance_info[0][1],
-            instance_info[0][2], process[0][2], process[0][1], process[0][3], conn_rate_level, adg_transport_lag,
-            adg_apply_lag,
+            instance_info[0][2], process[0][2], process[0][1], process[0][3], conn_rate_level,
+            pga_target_size,pga_used_size,pga_used_pct,
+            adg_transport_lag,adg_apply_lag,
             transport_value, transport_rate_level, apply_value, apply_rate_level, 'connected', err_info, sga_size,
             pga_size, mem_pct,
             oracle_stat['qps'], oracle_stat['tps'], oracle_stat['execute count'], oracle_stat['user commits'],
@@ -1185,9 +1190,10 @@ def check_mysql(tags, host,port,user,password,user_os,password_os):
 
 def check_redis(tags, host,port):
     # 连通性检测
-    conn = False
+    conn = redis.StrictRedis(host=host, port=port)
+    info = False
     try:
-        conn = redis.StrictRedis(host=host,port=port)
+        info = conn.info()
     except Exception, e:
         error_msg = "%s redis连接失败：%s" % (tags, unicode(str(e), errors='ignore'))
         redis_rate_level = 'red'
@@ -1200,14 +1206,8 @@ def check_redis(tags, host,port):
         error_sql = "insert into redis(host,port,tags,mon_status,rate_level) values(%s,%s,%s,%s,%s)"
         value = (host, port, tags, 'connected error', redis_rate_level)
         tools.mysql_exec(error_sql, value)
-        # 更新数据库打分信息
-        my_log.logger.info('%s :开始更新redis评分信息' % tags)
-        delete_sql = "delete from redis_rate where tags= '%s'" % tags
-        tools.mysql_exec(delete_sql, '')
-        insert_sql = "insert into redis_rate(host,port,tags,db_rate,db_rate_level,db_rate_color,db_rate_reason) select host,port,tags,'0','danger','red','connected error' from redis_server where tags ='%s'" % tags
-        tools.mysql_exec(insert_sql, '')
         my_log.logger.info('%s扣分明细，总评分:%s,扣分原因:%s' % (tags, '0', 'conected error'))
-    if conn:
+    if info:
         my_log.logger.info('%s：开始获取redis监控信息' % tags)
         redis_stats = Redisstat(conn)
         redis_data = redis_stats.get_redis_data()
@@ -1220,7 +1220,6 @@ def check_redis(tags, host,port):
             used_memory_pct = 0
         else:
             used_memory_pct = round(float(redis_info['used_memory'])/max_memory,2)
-
 
         # 归档历史数据
         my_log.logger.info('%s：初始化redis表' % tags)
@@ -1399,7 +1398,7 @@ if __name__ =='__main__':
         for each_server in p_pool:
             each_server.join()
         # 告警
-        alarm.alarm()
+        alarm.check_alarm()
 
         my_log.logger.info('%s 秒后开始下一次轮询' %check_sleep_time)
         time.sleep(check_sleep_time)

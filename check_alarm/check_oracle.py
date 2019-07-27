@@ -115,6 +115,18 @@ def check_process(conn):
     cur.execute(process_sql)
     return cur.fetchall()
 
+# 获取PGA使用率
+def check_pga(conn):
+    cur = conn.cursor()
+    pga_sql = '''select round(b.value / 1024 / 1024, 1) pga_target,
+       round(a.pga_used_mb, 1),
+       round(a.pga_used_mb / (b.value / 1024 / 1024), 1) * 100  pga_used_pct
+  from (select sum(PGA_ALLOC_MEM) / 1024 / 1024 pga_used_mb from v$process) a,
+       v$parameter b
+ where b.name = 'pga_aggregate_target' '''
+    cur.execute(pga_sql)
+    return cur.fetchall()
+
 # 获取asm存储信息
 def check_asm(conn):
     cur = conn.cursor()
@@ -301,6 +313,7 @@ def oracle_time(conn):
     cur = conn.cursor()
     cur.execute(sql)
     return cur.fetchall()
+
 
 
 

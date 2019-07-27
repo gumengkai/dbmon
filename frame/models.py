@@ -25,6 +25,8 @@ class TabAlarmConf(models.Model):
     judge = models.CharField(max_length=255, blank=True, null=True)
     jdg_value = models.FloatField()
     jdg_des = models.CharField(max_length=255, blank=True, null=True)
+    select_sql = models.TextField()
+    jdg_sql = models.TextField()
 
     class Meta:
         managed = False

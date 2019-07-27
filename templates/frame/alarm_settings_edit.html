@@ -42,6 +42,18 @@
                     <input type="text" class="form-control" name="jdg_des" value={{ alarm_setting_edit.jdg_des }}>
                   </div>
                 </div>
+                  <div class="form-group">
+              <label for="inputEmail3" class="col-sm-2 control-label">告警查询SQL配置</label>
+              <div class="col-sm-8">
+               <textarea name="select_sql" rows="2" cols="40" class="form-control">{{ alarm_setting_edit.select_sql }}</textarea>
+              </div>
+             </div>
+                       <div class="form-group">
+              <label for="inputEmail3" class="col-sm-2 control-label">告警判断SQL配置</label>
+              <div class="col-sm-8">
+               <textarea name="jdg_sql" rows="6" cols="40" class="form-control">{{ alarm_setting_edit.jdg_sql }}</textarea>
+              </div>
+             </div>
                      <!-- /.box-body -->
               <div class="box-footer">
                 <button type="submit" class="btn btn-info pull-right" name="commit">更新</button>
