@@ -13,7 +13,6 @@ import send_email as mail
 
 conf = ConfigParser.ConfigParser()
 
-
 # 间隔固定时间再次发送邮件告警
 def is_send_email(alarm_name,tags,url,email_header,alarm_content):
     conf_path = os.path.dirname(os.getcwd())

@@ -50,8 +50,8 @@
                  <td>{{ redis.connection_clients}} </td>
                  <td>{{ redis.role}} </td>
                  <td>{{ redis.max_memory}} </td>
-                 <td><span class="badge bg-{% if redis.used_memory_pct < 60  %}green{% elif redis.used_memory_pct >= 60 and redis.used_memory_pct < 80%}yellow{% else %}red{% endif %}">{{ redis.used_memory_pct }}</span></td>
-                  <td><span class="badge bg-{% if redis.mem_fragmentation_ratio < 10  %}green{% else %}red{% endif %}">{{ redis.mem_fragmentation_ratio }}</span></td>
+                 <td><span class="badge bg-{% if redis.used_memory_pct < 60 and redis.used_memory_pct %}green{% elif redis.used_memory_pct >= 60 and redis.used_memory_pct < 80 %}yellow{% elif redis.used_memory_pct >= 80 %}red{% else %}None{% endif %}">{{ redis.used_memory_pct }}%</span></td>
+                 <td><span class="badge bg-{% if redis.mem_fragmentation_ratio < 60 and redis.mem_fragmentation_ratio %}green{% elif redis.mem_fragmentation_ratio >= 60 and redis.mem_fragmentation_ratio < 80 %}yellow{% elif redis.mem_fragmentation_ratio >= 80 %}red{% else %}None{% endif %}">{{ redis.mem_fragmentation_ratio }}%</span></td>
                  <td><span class="badge bg-{{ redis.rate_level }}">{{ redis.mon_status }}</span></td>
                  </tr>
                  {% endfor %}

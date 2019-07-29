@@ -55,7 +55,7 @@
                  <td><span class="badge bg-{{ dbinfo.archive_rate_level }}">{{ dbinfo.archive_used }}%</span></td>
                  <td> {{ dbinfo.max_process}}</td>
                  <td><span class="badge bg-{{ dbinfo.conn_rate_level }}">{{ dbinfo.percent_process }}%</span></td>
-                 <td><span class="badge bg-{% if dbinfo.pga_used_pct < 100  %}green{% elif dbinfo.pga_used_pct >= 100 and dbinfo.pga_used_pct < 300 %}yellow{% else %}red{% endif %}">{{ dbinfo.pga_used_pct }}%</span></td>
+                 <td><span class="badge bg-{% if dbinfo.pga_used_pct < 100 and dbinfo.pga_used_pct %}green{% elif dbinfo.pga_used_pct >= 100 and dbinfo.pga_used_pct < 300 %}yellow{% elif dbinfo.pga_used_pct >= 200 %}red{% else %}None{% endif %}">{{ dbinfo.pga_used_pct }}%</span></td>
                  <td>{{ dbinfo.qps}} </td>
                  <td>{{ dbinfo.tps}} </td>
                  <td><span class="badge bg-{{ dbinfo.adg_transport_rate_level }}">{{ dbinfo.adg_transport_lag }}</span></td>
