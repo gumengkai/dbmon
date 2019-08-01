@@ -52,21 +52,21 @@ def check_alarm():
         # 判断目标表是否采集到告警数据
         select_res = tools.mysql_query(select_sql)
         if select_res[0][0] == 0:
-            print "%s未采集到数据" % alarm_name
+            my_log.logger.info("%s未采集到数据" % alarm_name)
         else:
             #  采集数据阈值检查
             is_judge_sql = ' tags in (select tags from %s where %s =1)' %(conf_table,conf_col)
             jdg_sql = jdg_sql_conf % (jdg_value,is_judge_sql) if jdg_value else jdg_sql_conf % is_judge_sql
             check_res = tools.mysql_query(jdg_sql)
             if check_res == 0:
-                print "%s:正常" % alarm_name
+                my_log.logger.info("%s:正常" % alarm_name)
             else:
                 for each in check_res:
                     tags,alarm_url,alarm_content = each
                     alarm_title = tags + ':' + alarm_name
                     alarm_sql = 'insert into tab_alarm_info(tags,url,alarm_type,alarm_header,alarm_content) value(%s,%s,%s,%s,%s)'
                     value = (tags, alarm_url, alarm_name, alarm_title, alarm_content)
-                    print alarm_content
+                    my_log.logger.warning(alarm_content)
                     tools.mysql_exec(alarm_sql, value)
                     # 发送告警邮件
                     is_send_email(alarm_name, tags, alarm_url, alarm_title, alarm_content)

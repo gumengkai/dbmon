@@ -27,7 +27,7 @@ sys.setdefaultencoding('utf-8')
 # 配置文件
 import ConfigParser
 import os
-import redis
+import redis as Rds
 
 
 def check_linux(tags,host,host_name,user,password,ssh_port):
@@ -1190,9 +1190,9 @@ def check_mysql(tags, host,port,user,password,user_os,password_os):
 
 def check_redis(tags, host,port):
     # 连通性检测
-    conn = redis.StrictRedis(host=host, port=port)
     info = False
     try:
+        conn = Rds.StrictRedis(host=host, port=port)
         info = conn.info()
     except Exception, e:
         error_msg = "%s redis连接失败：%s" % (tags, unicode(str(e), errors='ignore'))
