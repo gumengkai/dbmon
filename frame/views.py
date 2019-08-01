@@ -166,7 +166,6 @@ def alarm_settings_edit(request):
             jdg_des = request.POST.get('jdg_des', None)
             select_sql = request.POST.get('select_sql', None)
             jdg_sql = request.POST.get('jdg_sql', None)
-
             models_frame.TabAlarmConf.objects.filter(id=rid).update(judge = judge,jdg_value = jdg_value,
                                                                     jdg_des = jdg_des,select_sql=select_sql,jdg_sql=jdg_sql)
             status = 1

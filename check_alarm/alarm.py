@@ -43,10 +43,10 @@ def check_alarm():
     delete_sql = "delete from tab_alarm_info"
     tools.mysql_exec(delete_sql, '')
     check_list = tools.mysql_query(
-        "select alarm_name,jdg_value,select_sql,jdg_sql from tab_alarm_conf where jdg_sql is not null ")
+        "select alarm_name,jdg_value,select_sql,jdg_sql,conf_table,conf_col from tab_alarm_conf where jdg_sql is not null ")
     for each_check in check_list:
         # 取告警名称和阈值
-        alarm_name, jdg_value, select_sql, jdg_sql_conf = each_check
+        alarm_name, jdg_value, select_sql, jdg_sql_conf,conf_table,conf_col = each_check
         alarm_name = alarm_name.encode('utf-8')
         my_log.logger.info("开始巡检：%s" %alarm_name)
         # 判断目标表是否采集到告警数据
@@ -55,7 +55,8 @@ def check_alarm():
             print "%s未采集到数据" % alarm_name
         else:
             #  采集数据阈值检查
-            jdg_sql = jdg_sql_conf % jdg_value if jdg_value else jdg_sql_conf
+            is_judge_sql = ' tags in (select tags from %s where %s =1)' %(conf_table,conf_col)
+            jdg_sql = jdg_sql_conf % (jdg_value,is_judge_sql) if jdg_value else jdg_sql_conf % is_judge_sql
             check_res = tools.mysql_query(jdg_sql)
             if check_res == 0:
                 print "%s:正常" % alarm_name
