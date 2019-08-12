@@ -1,0 +1,1888 @@
+<html lang="en"><head><title>AWR Report for DB: ORCL, Inst: orcl, Snaps: 551-557</title>
+<style type="text/css">
+body.awr {font:bold 10pt Arial,Helvetica,Geneva,sans-serif;color:black; background:White;}
+pre.awr  {font:8pt Courier;color:black; background:White;}
+h1.awr   {font:bold 20pt Arial,Helvetica,Geneva,sans-serif;color:#336699;background-color:White;border-bottom:1px solid #cccc99;margin-top:0pt; margin-bottom:0pt;padding:0px 0px 0px 0px;}
+h2.awr   {font:bold 18pt Arial,Helvetica,Geneva,sans-serif;color:#336699;background-color:White;margin-top:4pt; margin-bottom:0pt;}
+h3.awr {font:bold 16pt Arial,Helvetica,Geneva,sans-serif;color:#336699;background-color:White;margin-top:4pt; margin-bottom:0pt;}
+li.awr {font: 8pt Arial,Helvetica,Geneva,sans-serif; color:black; background:White;}
+th.awrnobg {font:bold 8pt Arial,Helvetica,Geneva,sans-serif; color:black; background:White;padding-left:4px; padding-right:4px;padding-bottom:2px}
+th.awrbg {font:bold 8pt Arial,Helvetica,Geneva,sans-serif; color:White; background:#0066CC;padding-left:4px; padding-right:4px;padding-bottom:2px}
+td.awrnc {font:8pt Arial,Helvetica,Geneva,sans-serif;color:black;background:White;vertical-align:top;}
+td.awrc    {font:8pt Arial,Helvetica,Geneva,sans-serif;color:black;background:#FFFFCC; vertical-align:top;}
+td.awrnclb {font:8pt Arial,Helvetica,Geneva,sans-serif;color:black;background:White;vertical-align:top;border-left: thin solid black;}
+td.awrncbb {font:8pt Arial,Helvetica,Geneva,sans-serif;color:black;background:White;vertical-align:top;border-left: thin solid black;border-right: thin solid black;}
+td.awrncrb {font:8pt Arial,Helvetica,Geneva,sans-serif;color:black;background:White;vertical-align:top;border-right: thin solid black;}
+td.awrcrb    {font:8pt Arial,Helvetica,Geneva,sans-serif;color:black;background:#FFFFCC; vertical-align:top;border-right: thin solid black;}
+td.awrclb    {font:8pt Arial,Helvetica,Geneva,sans-serif;color:black;background:#FFFFCC; vertical-align:top;border-left: thin solid black;}
+td.awrcbb    {font:8pt Arial,Helvetica,Geneva,sans-serif;color:black;background:#FFFFCC; vertical-align:top;border-left: thin solid black;border-right: thin solid black;}
+a.awr {font:bold 8pt Arial,Helvetica,sans-serif;color:#663300; vertical-align:top;margin-top:0pt; margin-bottom:0pt;}
+td.awrnct {font:8pt Arial,Helvetica,Geneva,sans-serif;border-top: thin solid black;color:black;background:White;vertical-align:top;}
+td.awrct   {font:8pt Arial,Helvetica,Geneva,sans-serif;border-top: thin solid black;color:black;background:#FFFFCC; vertical-align:top;}
+td.awrnclbt  {font:8pt Arial,Helvetica,Geneva,sans-serif;color:black;background:White;vertical-align:top;border-top: thin solid black;border-left: thin solid black;}
+td.awrncbbt  {font:8pt Arial,Helvetica,Geneva,sans-serif;color:black;background:White;vertical-align:top;border-left: thin solid black;border-right: thin solid black;border-top: thin solid black;}
+td.awrncrbt {font:8pt Arial,Helvetica,Geneva,sans-serif;color:black;background:White;vertical-align:top;border-top: thin solid black;border-right: thin solid black;}
+td.awrcrbt     {font:8pt Arial,Helvetica,Geneva,sans-serif;color:black;background:#FFFFCC; vertical-align:top;border-top: thin solid black;border-right: thin solid black;}
+td.awrclbt     {font:8pt Arial,Helvetica,Geneva,sans-serif;color:black;background:#FFFFCC; vertical-align:top;border-top: thin solid black;border-left: thin solid black;}
+td.awrcbbt   {font:8pt Arial,Helvetica,Geneva,sans-serif;color:black;background:#FFFFCC; vertical-align:top;border-top: thin solid black;border-left: thin solid black;border-right: thin solid black;}
+table.tdiff {  border_collapse: collapse; }
+table.tscl {width: 600;}
+table.tscl tbody, table.tscl thead { display: block; }
+table.tscl thead tr th {height: 12px;line-height: 12px;}
+table.tscl tbody { height: 100px;overflow-y: auto; overflow-x: hidden;}
+table.tscl tbody td, thead th {width: 200;}
+.hidden   {position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden;}
+.pad   {margin-left:17px;}
+.doublepad {margin-left:34px;}
+</style></head><body class="awr">
+<h1 class="awr">
+WORKLOAD REPOSITORY PDB report (root snapshots)
+</h1>
+<p />
+<table border="0" width="600" class="tdiff" summary="This table displays database instance information">
+<tr><th class="awrbg" scope="col">DB Name</th><th class="awrbg" scope="col">DB Id</th><th class="awrbg" scope="col">Unique Name</th><th class="awrbg" scope="col">Role</th><th class="awrbg" scope="col">Edition</th><th class="awrbg" scope="col">Release</th><th class="awrbg" scope="col">RAC</th><th class="awrbg" scope="col">CDB</th></tr>
+<tr><td scope="row" class='awrnc'>ORCL</td><td align="right" class='awrnc'>1532525098</td><td class='awrnc'>orcl</td><td class='awrnc'>PRIMARY</td><td class='awrnc'>EE</td><td class='awrnc'>12.2.0.1.0</td><td class='awrnc'>NO</td><td class='awrnc'>YES</td></tr>
+</table>
+<p />
+<p />
+<table border="0" class="tdiff" summary="This table displays database instance information">
+<tr><th class="awrbg" scope="col">Instance</th><th class="awrbg" scope="col">Inst Num</th><th class="awrbg" scope="col">Startup Time</th></tr>
+<tr><td scope="row" class='awrnc'>orcl</td><td align="right" class='awrnc'>1</td><td class='awrnc'>23-5月 -19 00:05</td></tr>
+</table>
+<p />
+<p />
+<table border="0" class="tscl" summary="This table displays pdb instance information">
+<thead><tr><th class="awrbg" scope="col">Container DB Id</th><th class="awrbg" scope="col">Container Name</th><th class="awrbg" scope="col">Open Time</th></tr></thead>
+<tr><td align="right" scope="row" class='awrnc'>980899240</td><td align="center" class='awrnc'>PDB1</td><td align="center" class='awrnc'>23-5月 -19 00:05</td></tr>
+</table>
+<p />
+<p />
+<table border="0" width="600" class="tdiff" summary="This table displays host information">
+<tr><th class="awrbg" scope="col">Host Name</th><th class="awrbg" scope="col">Platform</th><th class="awrbg" scope="col">CPUs</th><th class="awrbg" scope="col">Cores</th><th class="awrbg" scope="col">Sockets</th><th class="awrbg" scope="col">Memory (GB)</th></tr>
+<tr><td scope="row" class='awrnc'>orcl</td><td class='awrnc'>Linux x86 64-bit</td><td align="right" class='awrnc'>   1</td><td align="right" class='awrnc'>&#160;</td><td align="right" class='awrnc'>&#160;</td><td align="right" class='awrnc'>    1.82</td></tr>
+</table>
+<p />
+<table border="0" width="600" class="tdiff" summary="This table displays snapshot information">
+<tr><th class="awrnobg" scope="col"></th><th class="awrbg" scope="col">Snap Id</th><th class="awrbg" scope="col">Snap Time</th><th class="awrbg" scope="col">Sessions</th><th class="awrbg" scope="col">Cursors/Session</th></tr>
+<tr><td scope="row" class='awrnc'>Begin Snap:</td><td align="right" class='awrnc'>551</td><td align="center" class='awrnc'>23-5月 -19 00:22:36</td><td align="right" class='awrnc'>0</td><td align="right" class='awrnc'>       .0</td></tr>
+<tr><td scope="row" class='awrc'>End Snap:</td><td align="right" class='awrc'>557</td><td align="center" class='awrc'>23-5月 -19 06:00:31</td><td align="right" class='awrc'>0</td><td align="right" class='awrc'>       .0</td></tr>
+<tr><td scope="row" class='awrnc'>Elapsed:</td><td class='awrnc'>&#160;</td><td align="center" class='awrnc'>             337.92 (mins)</td><td class='awrnc'>&#160;</td><td class='awrnc'>&#160;</td><td class='awrnc'>&#160;</td></tr>
+<tr><td scope="row" class='awrc'>DB Time:</td><td class='awrc'>&#160;</td><td align="center" class='awrc'>               1.68 (mins)</td><td class='awrc'>&#160;</td><td class='awrc'>&#160;</td><td class='awrc'>&#160;</td></tr>
+</table>
+<p />
+<h3 class="awr"><a class="awr" name="99999"></a>Report Summary</h3>
+<p />Load Profile<p />
+<table border="0" width="600" class="tdiff" summary="This table displays load profile">
+<tr><th class="awrnobg" scope="col"></th><th class="awrbg" scope="col">Per Second</th><th class="awrbg" scope="col">Per Transaction</th><th class="awrbg" scope="col">Per Exec</th><th class="awrbg" scope="col">Per Call</th></tr>
+<tr><td scope="row" class='awrc'>DB Time(s):</td><td align="right" class='awrc'>               0.0</td><td align="right" class='awrc'>               0.6</td><td align="right" class='awrc'>      0.00</td><td align="right" class='awrc'>      0.02</td></tr>
+<tr><td scope="row" class='awrnc'>DB CPU(s):</td><td align="right" class='awrnc'>               0.0</td><td align="right" class='awrnc'>               0.5</td><td align="right" class='awrnc'>      0.00</td><td align="right" class='awrnc'>      0.01</td></tr>
+<tr><td scope="row" class='awrc'>Background CPU(s):</td><td align="right" class='awrc'>               0.0</td><td align="right" class='awrc'>               0.0</td><td align="right" class='awrc'>      0.00</td><td align="right" class='awrc'>      0.00</td></tr>
+<tr><td scope="row" class='awrnc'>Redo size (bytes):</td><td align="right" class='awrnc'>               9.2</td><td align="right" class='awrnc'>           1,145.5</td><td class='awrnc'>&#160;</td><td class='awrnc'>&#160;</td></tr>
+<tr><td scope="row" class='awrc'>Logical read (blocks):</td><td align="right" class='awrc'>              36.6</td><td align="right" class='awrc'>           4,553.6</td><td class='awrc'>&#160;</td><td class='awrc'>&#160;</td></tr>
+<tr><td scope="row" class='awrnc'>Block changes:</td><td align="right" class='awrnc'>               0.1</td><td align="right" class='awrnc'>               6.8</td><td class='awrnc'>&#160;</td><td class='awrnc'>&#160;</td></tr>
+<tr><td scope="row" class='awrc'>Physical read (blocks):</td><td align="right" class='awrc'>               0.1</td><td align="right" class='awrc'>               6.8</td><td class='awrc'>&#160;</td><td class='awrc'>&#160;</td></tr>
+<tr><td scope="row" class='awrnc'>Physical write (blocks):</td><td align="right" class='awrnc'>               0.0</td><td align="right" class='awrnc'>               0.0</td><td class='awrnc'>&#160;</td><td class='awrnc'>&#160;</td></tr>
+<tr><td scope="row" class='awrc'>Read IO requests:</td><td align="right" class='awrc'>               0.0</td><td align="right" class='awrc'>               5.5</td><td class='awrc'>&#160;</td><td class='awrc'>&#160;</td></tr>
+<tr><td scope="row" class='awrnc'>Write IO requests:</td><td align="right" class='awrnc'>               0.0</td><td align="right" class='awrnc'>               0.0</td><td class='awrnc'>&#160;</td><td class='awrnc'>&#160;</td></tr>
+<tr><td scope="row" class='awrc'>Read IO (MB):</td><td align="right" class='awrc'>               0.0</td><td align="right" class='awrc'>               0.1</td><td class='awrc'>&#160;</td><td class='awrc'>&#160;</td></tr>
+<tr><td scope="row" class='awrnc'>Write IO (MB):</td><td align="right" class='awrnc'>               0.0</td><td align="right" class='awrnc'>               0.0</td><td class='awrnc'>&#160;</td><td class='awrnc'>&#160;</td></tr>
+<tr><td scope="row" class='awrc'>IM scan rows:</td><td align="right" class='awrc'>               0.0</td><td align="right" class='awrc'>               0.0</td><td class='awrc'>&#160;</td><td class='awrc'>&#160;</td></tr>
+<tr><td scope="row" class='awrnc'>Session Logical Read IM:</td><td align="right" class='awrnc'>               0.0</td><td align="right" class='awrnc'>               0.0</td><td class='awrnc'>&#160;</td><td class='awrnc'>&#160;</td></tr>
+<tr><td scope="row" class='awrc'>User calls:</td><td align="right" class='awrc'>               0.3</td><td align="right" class='awrc'>              40.3</td><td class='awrc'>&#160;</td><td class='awrc'>&#160;</td></tr>
+<tr><td scope="row" class='awrnc'>Parses (SQL):</td><td align="right" class='awrnc'>               1.2</td><td align="right" class='awrnc'>             150.3</td><td class='awrnc'>&#160;</td><td class='awrnc'>&#160;</td></tr>
+<tr><td scope="row" class='awrc'>Hard parses (SQL):</td><td align="right" class='awrc'>               0.3</td><td align="right" class='awrc'>              42.7</td><td class='awrc'>&#160;</td><td class='awrc'>&#160;</td></tr>
+<tr><td scope="row" class='awrnc'>SQL Work Area (MB):</td><td align="right" class='awrnc'>               0.6</td><td align="right" class='awrnc'>              73.7</td><td class='awrnc'>&#160;</td><td class='awrnc'>&#160;</td></tr>
+<tr><td scope="row" class='awrc'>Logons:</td><td align="right" class='awrc'>               0.0</td><td align="right" class='awrc'>               1.1</td><td class='awrc'>&#160;</td><td class='awrc'>&#160;</td></tr>
+<tr><td scope="row" class='awrnc'>Executes (SQL):</td><td align="right" class='awrnc'>               6.7</td><td align="right" class='awrnc'>             827.3</td><td class='awrnc'>&#160;</td><td class='awrnc'>&#160;</td></tr>
+<tr><td scope="row" class='awrc'>Rollbacks:</td><td align="right" class='awrc'>               0.0</td><td align="right" class='awrc'>               0.9</td><td class='awrc'>&#160;</td><td class='awrc'>&#160;</td></tr>
+<tr><td scope="row" class='awrnc'>Transactions:</td><td align="right" class='awrnc'>               0.0</td><td class='awrnc'>&#160;</td><td class='awrnc'>&#160;</td><td class='awrnc'>&#160;</td></tr>
+</table>
+<p />Top 10 Foreground Events by Total Wait Time<p />
+<ul>
+</ul>
+<table border="0" width="600" class="tdiff" summary="This table displays top 10 wait events by total wait time"><tr><th class="awrbg" scope="col">Event</th><th class="awrbg" scope="col">Waits</th><th class="awrbg" scope="col">Total Wait Time (sec)</th><th class="awrbg" scope="col">Avg Wait</th><th class="awrbg" scope="col">% DB time</th><th class="awrbg" scope="col">Wait Class</th></tr>
+<tr><td scope="row" class='awrc'>DB CPU</td><td align="right" class='awrc'>&#160;</td><td align="right" class='awrc'>83.2</td><td align="right" class='awrc'>&#160;</td><td align="right" class='awrc'>82.5</td><td class='awrc'>&#160;</td></tr>
+<tr><td scope="row" class='awrnc'>db file sequential read</td><td align="right" class='awrnc'>2,402</td><td align="right" class='awrnc'>12.2</td><td align="right" class='awrnc'>5.07ms</td><td align="right" class='awrnc'>12.1</td><td class='awrnc'>User I/O</td></tr>
+<tr><td scope="row" class='awrc'>resmgr:cpu quantum</td><td align="right" class='awrc'>88</td><td align="right" class='awrc'>6.2</td><td align="right" class='awrc'>70.65ms</td><td align="right" class='awrc'>6.2</td><td class='awrc'>Scheduler</td></tr>
+<tr><td scope="row" class='awrnc'>db file scattered read</td><td align="right" class='awrnc'>871</td><td align="right" class='awrnc'>6.1</td><td align="right" class='awrnc'>6.96ms</td><td align="right" class='awrnc'>6.0</td><td class='awrnc'>User I/O</td></tr>
+<tr><td scope="row" class='awrc'>log file sync</td><td align="right" class='awrc'>43</td><td align="right" class='awrc'>1.5</td><td align="right" class='awrc'>35.66ms</td><td align="right" class='awrc'>1.5</td><td class='awrc'>Commit</td></tr>
+<tr><td scope="row" class='awrnc'>PGA memory operation</td><td align="right" class='awrnc'>50,656</td><td align="right" class='awrnc'>.6</td><td align="right" class='awrnc'>12.29us</td><td align="right" class='awrnc'>.6</td><td class='awrnc'>Other</td></tr>
+<tr><td scope="row" class='awrc'>ADR block file read</td><td align="right" class='awrc'>7</td><td align="right" class='awrc'>.6</td><td align="right" class='awrc'>88.03ms</td><td align="right" class='awrc'>.6</td><td class='awrc'>Other</td></tr>
+<tr><td scope="row" class='awrnc'>CSS initialization</td><td align="right" class='awrnc'>148</td><td align="right" class='awrnc'>.6</td><td align="right" class='awrnc'>3.76ms</td><td align="right" class='awrnc'>.6</td><td class='awrnc'>Other</td></tr>
+<tr><td scope="row" class='awrc'>resmgr:internal state change</td><td align="right" class='awrc'>1</td><td align="right" class='awrc'>.1</td><td align="right" class='awrc'>101.61ms</td><td align="right" class='awrc'>.1</td><td class='awrc'>Concurrency</td></tr>
+<tr><td scope="row" class='awrnc'>control file sequential read</td><td align="right" class='awrnc'>25,314</td><td align="right" class='awrnc'>.1</td><td align="right" class='awrnc'>3.76us</td><td align="right" class='awrnc'>.1</td><td class='awrnc'>System I/O</td></tr>
+</table><p />
+<p />Wait Classes by Total Wait Time<p />
+<ul>
+</ul>
+<table border="0" width="600" class="tdiff" summary="This table displays wait class statistics ordered by total wait time"><tr><th class="awrbg" scope="col">Wait Class</th><th class="awrbg" scope="col">Waits</th><th class="awrbg" scope="col">Total Wait Time (sec)</th><th class="awrbg" scope="col">Avg Wait Time</th><th class="awrbg" scope="col">% DB time</th><th class="awrbg" scope="col">Avg Active Sessions</th></tr>
+<tr><td scope="row" class='awrc'>DB CPU</td><td align="right" class='awrc'>&#160;</td><td align="right" class='awrc'>83</td><td align="right" class='awrc'>&#160;</td><td align="right" class='awrc'>82.5</td><td align="right" class='awrc'>0.0</td></tr>
+<tr><td scope="row" class='awrnc'>User I/O</td><td align="right" class='awrnc'>4,688</td><td align="right" class='awrnc'>20</td><td align="right" class='awrnc'>4.28ms</td><td align="right" class='awrnc'>19.9</td><td align="right" class='awrnc'>0.0</td></tr>
+<tr><td scope="row" class='awrc'>Scheduler</td><td align="right" class='awrc'>105</td><td align="right" class='awrc'>8</td><td align="right" class='awrc'>74.22ms</td><td align="right" class='awrc'>7.7</td><td align="right" class='awrc'>0.0</td></tr>
+<tr><td scope="row" class='awrnc'>System I/O</td><td align="right" class='awrnc'>28,858</td><td align="right" class='awrnc'>4</td><td align="right" class='awrnc'>137.48us</td><td align="right" class='awrnc'>3.9</td><td align="right" class='awrnc'>0.0</td></tr>
+<tr><td scope="row" class='awrc'>Other</td><td align="right" class='awrc'>53,568</td><td align="right" class='awrc'>2</td><td align="right" class='awrc'>35.09us</td><td align="right" class='awrc'>1.9</td><td align="right" class='awrc'>0.0</td></tr>
+<tr><td scope="row" class='awrnc'>Commit</td><td align="right" class='awrnc'>43</td><td align="right" class='awrnc'>2</td><td align="right" class='awrnc'>35.66ms</td><td align="right" class='awrnc'>1.5</td><td align="right" class='awrnc'>0.0</td></tr>
+<tr><td scope="row" class='awrc'>Concurrency</td><td align="right" class='awrc'>32</td><td align="right" class='awrc'>0</td><td align="right" class='awrc'>9.05ms</td><td align="right" class='awrc'>.3</td><td align="right" class='awrc'>0.0</td></tr>
+<tr><td scope="row" class='awrnc'>Network</td><td align="right" class='awrnc'>5,772</td><td align="right" class='awrnc'>0</td><td align="right" class='awrnc'>1.62us</td><td align="right" class='awrnc'>.0</td><td align="right" class='awrnc'>0.0</td></tr>
+<tr><td scope="row" class='awrc'>Application</td><td align="right" class='awrc'>1</td><td align="right" class='awrc'>0</td><td align="right" class='awrc'>2.11ms</td><td align="right" class='awrc'>.0</td><td align="right" class='awrc'>0.0</td></tr>
+</table><p />
+<p />IO Profile<p />
+<table border="0" width="600" class="tdiff" summary="This table displays IO profile">
+<tr><th class="awrnobg" scope="col"></th><th class="awrbg" scope="col">Read+Write Per Second</th><th class="awrbg" scope="col">Read per Second</th><th class="awrbg" scope="col">Write Per Second</th></tr>
+<tr><td scope="row" class='awrc'>Total Requests:</td><td align="right" class='awrc'>               1.3</td><td align="right" class='awrc'>               1.3</td><td align="right" class='awrc'>               0.0</td></tr>
+<tr><td scope="row" class='awrnc'>Database Requests:</td><td align="right" class='awrnc'>               0.0</td><td align="right" class='awrnc'>               0.0</td><td align="right" class='awrnc'>               0.0</td></tr>
+<tr><td scope="row" class='awrc'>Optimized Requests:</td><td align="right" class='awrc'>               0.0</td><td align="right" class='awrc'>               0.0</td><td align="right" class='awrc'>               0.0</td></tr>
+<tr><td scope="row" class='awrnc'>Redo Requests:</td><td align="right" class='awrnc'>&#160;</td><td align="right" class='awrnc'>&#160;</td><td align="right" class='awrnc'>&#160;</td></tr>
+<tr><td scope="row" class='awrc'>Total (MB):</td><td align="right" class='awrc'>               0.0</td><td align="right" class='awrc'>               0.0</td><td align="right" class='awrc'>               0.0</td></tr>
+<tr><td scope="row" class='awrnc'>Database (MB):</td><td align="right" class='awrnc'>               0.0</td><td align="right" class='awrnc'>               0.0</td><td align="right" class='awrnc'>               0.0</td></tr>
+<tr><td scope="row" class='awrc'>Optimized Total (MB):</td><td align="right" class='awrc'>               0.0</td><td align="right" class='awrc'>               0.0</td><td align="right" class='awrc'>               0.0</td></tr>
+<tr><td scope="row" class='awrnc'>Redo (MB):</td><td align="right" class='awrnc'>&#160;</td><td align="right" class='awrnc'>&#160;</td><td align="right" class='awrnc'>&#160;</td></tr>
+<tr><td scope="row" class='awrc'>Database (blocks):</td><td align="right" class='awrc'>               0.1</td><td align="right" class='awrc'>               0.1</td><td align="right" class='awrc'>               0.0</td></tr>
+<tr><td scope="row" class='awrnc'>Via Buffer Cache (blocks):</td><td align="right" class='awrnc'>               0.1</td><td align="right" class='awrnc'>               0.1</td><td align="right" class='awrnc'>               0.0</td></tr>
+<tr><td scope="row" class='awrc'>Direct (blocks):</td><td align="right" class='awrc'>               0.0</td><td align="right" class='awrc'>               0.0</td><td align="right" class='awrc'>               0.0</td></tr>
+</table>
+<a class="awr" name="top"></a>
+<h2 class="awr">
+Main Report
+</h2>
+<ul>
+<li class="awr"><a class="awr" href="#99999">Report Summary</a></li>
+<li class="awr"><a class="awr" href="#21">Wait Events Statistics</a></li>
+<li class="awr"><a class="awr" href="#22">SQL Statistics</a></li>
+<li class="awr"><a class="awr" href="#23">Instance Activity Statistics</a></li>
+<li class="awr"><a class="awr" href="#24">IO Stats</a></li>
+<li class="awr"><a class="awr" href="#2300">Wait Statistics</a></li>
+<li class="awr"><a class="awr" href="#28">Undo Statistics</a></li>
+<li class="awr"><a class="awr" href="#36">init.ora Parameters</a></li>
+<li class="awr"><a class="awr" href="#42">Active Session History (ASH) Report</a></li>
+<li class="awr"><a class="awr" href="#99995">ADDM Reports</a></li>
+</ul>
+<br /><a class="awr" href="#top">Back to Top</a><p />
+<p />
+<a class="awr" name="21"></a>
+<h2 class="awr">
+Wait Events Statistics
+</h2>
+<ul>
+<li class="awr"><a class="awr" href="#1500">Time Model Statistics</a></li>
+<li class="awr"><a class="awr" href="#210">Foreground Wait Class</a></li>
+<li class="awr"><a class="awr" href="#100">Foreground Wait Events</a></li>
+<li class="awr"><a class="awr" href="#5800">Service Statistics</a></li>
+<li class="awr"><a class="awr" href="#5820">Service Wait Class Stats</a></li>
+</ul>
+<a class="awr" href="#top">Back to Top</a><p />
+<a class="awr" name="1500"></a>
+<h3 class="awr">Time Model Statistics</h3>
+<ul>
+<li class="awr">DB Time represents total time in user calls</li>
+<li class="awr">DB CPU represents CPU time of foreground processes</li>
+<li class="awr">Total CPU Time represents foreground and background processes</li>
+<li class="awr">Statistics including the word "background" measure background process
+   time, therefore do not contribute to the DB time statistic</li>
+<li class="awr">Ordered by % of DB time in descending order, followed by Statistic Name</li>
+</ul>
+<table border="0" class="tdiff" summary="This table displays different time model statistics. For each statistic, time and % of DB time are displayed"><tr><th class="awrbg" scope="col">Statistic Name</th><th class="awrbg" scope="col">Time (s)</th><th class="awrbg" scope="col">% of  DB Time</th><th class="awrbg" scope="col">% of Total CPU Time</th></tr>
+<tr><td scope="row" class='awrc'>DB CPU</td><td align="right" class='awrc'>83.16</td><td align="right" class='awrc'>82.46</td><td align="right" class='awrc'>100.00</td></tr>
+<tr><td scope="row" class='awrnc'>parse time elapsed</td><td align="right" class='awrnc'>82.24</td><td align="right" class='awrnc'>81.54</td><td align="right" class='awrnc'>&#160;</td></tr>
+<tr><td scope="row" class='awrc'>hard parse elapsed time</td><td align="right" class='awrc'>81.41</td><td align="right" class='awrc'>80.72</td><td align="right" class='awrc'>&#160;</td></tr>
+<tr><td scope="row" class='awrnc'>sql execute elapsed time</td><td align="right" class='awrnc'>34.15</td><td align="right" class='awrnc'>33.86</td><td align="right" class='awrnc'>&#160;</td></tr>
+<tr><td scope="row" class='awrc'>connection management call elapsed time</td><td align="right" class='awrc'>7.16</td><td align="right" class='awrc'>7.10</td><td align="right" class='awrc'>&#160;</td></tr>
+<tr><td scope="row" class='awrnc'>PL/SQL execution elapsed time</td><td align="right" class='awrnc'>2.10</td><td align="right" class='awrnc'>2.08</td><td align="right" class='awrnc'>&#160;</td></tr>
+<tr><td scope="row" class='awrc'>hard parse (sharing criteria) elapsed time</td><td align="right" class='awrc'>1.48</td><td align="right" class='awrc'>1.46</td><td align="right" class='awrc'>&#160;</td></tr>
+<tr><td scope="row" class='awrnc'>PL/SQL compilation elapsed time</td><td align="right" class='awrnc'>1.47</td><td align="right" class='awrnc'>1.46</td><td align="right" class='awrnc'>&#160;</td></tr>
+<tr><td scope="row" class='awrc'>repeated bind elapsed time</td><td align="right" class='awrc'>0.06</td><td align="right" class='awrc'>0.06</td><td align="right" class='awrc'>&#160;</td></tr>
+<tr><td scope="row" class='awrnc'>DB time</td><td align="right" class='awrnc'>100.85</td><td align="right" class='awrnc'>&#160;</td><td align="right" class='awrnc'>&#160;</td></tr>
+<tr><td scope="row" class='awrc'>total CPU time</td><td align="right" class='awrc'>83.16</td><td align="right" class='awrc'>&#160;</td><td align="right" class='awrc'>&#160;</td></tr>
+</table><p />
+<hr align="left" width="20%" /><p />
+<a class="awr" href="#21">Back to Wait Events Statistics</a>
+<br /><a class="awr" href="#top">Back to Top</a><p />
+<a class="awr" name="210"></a>
+<h3 class="awr">Foreground Wait Class</h3>
+<ul>
+<li class="awr"> s  - second, ms - millisecond, us - microsecond, ns - nanosecond </li>
+<li class="awr"> ordered by wait time desc, waits desc </li>
+<li class="awr"> %Timeouts: value of 0 indicates value was &lt; .5%.  Value of null is truly 0</li>
+<li class="awr">Captured Time accounts for        110.4%  of Total DB time         100.85 (s)</li>
+<li class="awr">Total FG Wait Time:                28.17 (s)  DB CPU time:          83.16 (s)</li>
+</ul>
+<table border="0" class="tdiff" summary="This table displays foreground wait class statistics"><tr><th class="awrbg" scope="col">Wait Class</th><th class="awrbg" scope="col">Waits</th><th class="awrbg" scope="col">%Time -outs</th><th class="awrbg" scope="col">Total Wait Time (s)</th><th class="awrbg" scope="col">Avg wait</th><th class="awrbg" scope="col">%DB time</th></tr>
+<tr><td scope="row" class='awrc'>DB CPU</td><td align="right" class='awrc'>&#160;</td><td align="right" class='awrc'>&#160;</td><td align="right" class='awrc'>83</td><td align="right" class='awrc'>&#160;</td><td align="right" class='awrc'>82.46</td></tr>
+<tr><td scope="row" class='awrnc'>User I/O</td><td align="right" class='awrnc'>4,178</td><td align="right" class='awrnc'>0</td><td align="right" class='awrnc'>18</td><td align="right" class='awrnc'>4.39ms</td><td align="right" class='awrnc'>18.18</td></tr>
+<tr><td scope="row" class='awrc'>Scheduler</td><td align="right" class='awrc'>88</td><td align="right" class='awrc'>0</td><td align="right" class='awrc'>6</td><td align="right" class='awrc'>70.65ms</td><td align="right" class='awrc'>6.16</td></tr>
+<tr><td scope="row" class='awrnc'>Other</td><td align="right" class='awrnc'>51,131</td><td align="right" class='awrnc'>0</td><td align="right" class='awrnc'>2</td><td align="right" class='awrnc'>36.01us</td><td align="right" class='awrnc'>1.83</td></tr>
+<tr><td scope="row" class='awrc'>Commit</td><td align="right" class='awrc'>43</td><td align="right" class='awrc'>0</td><td align="right" class='awrc'>2</td><td align="right" class='awrc'>35.66ms</td><td align="right" class='awrc'>1.52</td></tr>
+<tr><td scope="row" class='awrnc'>Concurrency</td><td align="right" class='awrnc'>19</td><td align="right" class='awrnc'>5</td><td align="right" class='awrnc'>0</td><td align="right" class='awrnc'>6.83ms</td><td align="right" class='awrnc'>0.13</td></tr>
+<tr><td scope="row" class='awrc'>System I/O</td><td align="right" class='awrc'>25,314</td><td align="right" class='awrc'>0</td><td align="right" class='awrc'>0</td><td align="right" class='awrc'>3.76us</td><td align="right" class='awrc'>0.09</td></tr>
+<tr><td scope="row" class='awrnc'>Network</td><td align="right" class='awrnc'>5,476</td><td align="right" class='awrnc'>0</td><td align="right" class='awrnc'>0</td><td align="right" class='awrnc'>1.65us</td><td align="right" class='awrnc'>0.01</td></tr>
+<tr><td scope="row" class='awrc'>Application</td><td align="right" class='awrc'>1</td><td align="right" class='awrc'>0</td><td align="right" class='awrc'>0</td><td align="right" class='awrc'>2.11ms</td><td align="right" class='awrc'>0.00</td></tr>
+</table><p />
+<hr align="left" width="20%" /><p />
+<a class="awr" href="#21">Back to Wait Events Statistics</a>
+<br /><a class="awr" href="#top">Back to Top</a><p />
+<a class="awr" name="100"></a>
+<h3 class="awr">Foreground Wait Events</h3>
+<ul>
+<li class="awr"> s  - second, ms - millisecond, us - microsecond, ns - nanosecond </li>
+<li class="awr"> Only events with Total Wait Time (s) &gt;= .001 are shown </li>
+<li class="awr"> ordered by wait time desc, waits desc (idle events last) </li>
+<li class="awr"> %Timeouts: value of 0 indicates value was &lt; .5%.  Value of null is truly 0</li>
+</ul>
+<table border="0" class="tdiff" summary="This table displays Foreground Wait Events and their wait statistics"><tr><th class="awrbg" scope="col">Event</th><th class="awrbg" scope="col">Waits</th><th class="awrbg" scope="col">%Time -outs</th><th class="awrbg" scope="col">Total Wait Time (s)</th><th class="awrbg" scope="col">Avg wait</th><th class="awrbg" scope="col">Waits /txn</th><th class="awrbg" scope="col">% DB time</th></tr>
+<tr><td scope="row" class='awrc'>db file sequential read</td><td align="right" class='awrc'>2,402</td><td align="right" class='awrc'>&#160;</td><td align="right" class='awrc'>12</td><td align="right" class='awrc'>5.07ms</td><td align="right" class='awrc'>14.74</td><td align="right" class='awrc'>12.08</td></tr>
+<tr><td scope="row" class='awrnc'>resmgr:cpu quantum</td><td align="right" class='awrnc'>88</td><td align="right" class='awrnc'>&#160;</td><td align="right" class='awrnc'>6</td><td align="right" class='awrnc'>70.65ms</td><td align="right" class='awrnc'>0.54</td><td align="right" class='awrnc'>6.16</td></tr>
+<tr><td scope="row" class='awrc'>db file scattered read</td><td align="right" class='awrc'>871</td><td align="right" class='awrc'>&#160;</td><td align="right" class='awrc'>6</td><td align="right" class='awrc'>6.96ms</td><td align="right" class='awrc'>5.34</td><td align="right" class='awrc'>6.01</td></tr>
+<tr><td scope="row" class='awrnc'>log file sync</td><td align="right" class='awrnc'>43</td><td align="right" class='awrnc'>&#160;</td><td align="right" class='awrnc'>2</td><td align="right" class='awrnc'>35.66ms</td><td align="right" class='awrnc'>0.26</td><td align="right" class='awrnc'>1.52</td></tr>
+<tr><td scope="row" class='awrc'>PGA memory operation</td><td align="right" class='awrc'>50,656</td><td align="right" class='awrc'>&#160;</td><td align="right" class='awrc'>1</td><td align="right" class='awrc'>12.29us</td><td align="right" class='awrc'>310.77</td><td align="right" class='awrc'>0.62</td></tr>
+<tr><td scope="row" class='awrnc'>ADR block file read</td><td align="right" class='awrnc'>7</td><td align="right" class='awrnc'>&#160;</td><td align="right" class='awrnc'>1</td><td align="right" class='awrnc'>88.03ms</td><td align="right" class='awrnc'>0.04</td><td align="right" class='awrnc'>0.61</td></tr>
+<tr><td scope="row" class='awrc'>CSS initialization</td><td align="right" class='awrc'>148</td><td align="right" class='awrc'>&#160;</td><td align="right" class='awrc'>1</td><td align="right" class='awrc'>3.76ms</td><td align="right" class='awrc'>0.91</td><td align="right" class='awrc'>0.55</td></tr>
+<tr><td scope="row" class='awrnc'>resmgr:internal state change</td><td align="right" class='awrnc'>1</td><td align="right" class='awrnc'>100</td><td align="right" class='awrnc'>0</td><td align="right" class='awrnc'>101.61ms</td><td align="right" class='awrnc'>0.01</td><td align="right" class='awrnc'>0.10</td></tr>
+<tr><td scope="row" class='awrc'>control file sequential read</td><td align="right" class='awrc'>25,314</td><td align="right" class='awrc'>&#160;</td><td align="right" class='awrc'>0</td><td align="right" class='awrc'>3.76us</td><td align="right" class='awrc'>155.30</td><td align="right" class='awrc'>0.09</td></tr>
+<tr><td scope="row" class='awrnc'>ASM file metadata operation</td><td align="right" class='awrnc'>148</td><td align="right" class='awrnc'>&#160;</td><td align="right" class='awrnc'>0</td><td align="right" class='awrnc'>241.35us</td><td align="right" class='awrnc'>0.91</td><td align="right" class='awrnc'>0.04</td></tr>
+<tr><td scope="row" class='awrc'>Disk file operations I/O</td><td align="right" class='awrc'>901</td><td align="right" class='awrc'>&#160;</td><td align="right" class='awrc'>0</td><td align="right" class='awrc'>35.62us</td><td align="right" class='awrc'>5.53</td><td align="right" class='awrc'>0.03</td></tr>
+<tr><td scope="row" class='awrnc'>local write wait</td><td align="right" class='awrnc'>3</td><td align="right" class='awrnc'>&#160;</td><td align="right" class='awrnc'>0</td><td align="right" class='awrnc'>10.58ms</td><td align="right" class='awrnc'>0.02</td><td align="right" class='awrnc'>0.03</td></tr>
+<tr><td scope="row" class='awrc'>read by other session</td><td align="right" class='awrc'>1</td><td align="right" class='awrc'>&#160;</td><td align="right" class='awrc'>0</td><td align="right" class='awrc'>27.30ms</td><td align="right" class='awrc'>0.01</td><td align="right" class='awrc'>0.03</td></tr>
+<tr><td scope="row" class='awrnc'>latch: shared pool</td><td align="right" class='awrnc'>15</td><td align="right" class='awrnc'>&#160;</td><td align="right" class='awrnc'>0</td><td align="right" class='awrnc'>1.41ms</td><td align="right" class='awrnc'>0.09</td><td align="right" class='awrnc'>0.02</td></tr>
+<tr><td scope="row" class='awrc'>SQL*Net message to client</td><td align="right" class='awrc'>5,476</td><td align="right" class='awrc'>&#160;</td><td align="right" class='awrc'>0</td><td align="right" class='awrc'>1.65us</td><td align="right" class='awrc'>33.60</td><td align="right" class='awrc'>0.01</td></tr>
+<tr><td scope="row" class='awrnc'>reliable message</td><td align="right" class='awrnc'>2</td><td align="right" class='awrnc'>&#160;</td><td align="right" class='awrnc'>0</td><td align="right" class='awrnc'>4.28ms</td><td align="right" class='awrnc'>0.01</td><td align="right" class='awrnc'>0.01</td></tr>
+<tr><td scope="row" class='awrc'>library cache load lock</td><td align="right" class='awrc'>1</td><td align="right" class='awrc'>&#160;</td><td align="right" class='awrc'>0</td><td align="right" class='awrc'>4.00ms</td><td align="right" class='awrc'>0.01</td><td align="right" class='awrc'>0.00</td></tr>
+<tr><td scope="row" class='awrnc'>row cache mutex</td><td align="right" class='awrnc'>2</td><td align="right" class='awrnc'>&#160;</td><td align="right" class='awrnc'>0</td><td align="right" class='awrnc'>1.45ms</td><td align="right" class='awrnc'>0.01</td><td align="right" class='awrnc'>0.00</td></tr>
+<tr><td scope="row" class='awrc'>enq: RO - fast object reuse</td><td align="right" class='awrc'>1</td><td align="right" class='awrc'>&#160;</td><td align="right" class='awrc'>0</td><td align="right" class='awrc'>2.11ms</td><td align="right" class='awrc'>0.01</td><td align="right" class='awrc'>0.00</td></tr>
+<tr><td scope="row" class='awrnc'>asynch descriptor resize</td><td align="right" class='awrnc'>155</td><td align="right" class='awrnc'>100</td><td align="right" class='awrnc'>0</td><td align="right" class='awrnc'>7.66us</td><td align="right" class='awrnc'>0.95</td><td align="right" class='awrnc'>0.00</td></tr>
+<tr><td scope="row" class='awrc'>SQL*Net message from client</td><td align="right" class='awrc'>5,476</td><td align="right" class='awrc'>&#160;</td><td align="right" class='awrc'>485</td><td align="right" class='awrc'>88.63ms</td><td align="right" class='awrc'>33.60</td><td align="right" class='awrc'>&#160;</td></tr>
+<tr><td scope="row" class='awrnc'>PL/SQL lock timer</td><td align="right" class='awrnc'>1</td><td align="right" class='awrnc'>100</td><td align="right" class='awrnc'>1</td><td align="right" class='awrnc'>1000.47ms</td><td align="right" class='awrnc'>0.01</td><td align="right" class='awrnc'>&#160;</td></tr>
+</table><p />
+<hr align="left" width="20%" /><p />
+<a class="awr" href="#21">Back to Wait Events Statistics</a>
+<br /><a class="awr" href="#top">Back to Top</a><p />
+<a class="awr" name="5800"></a>
+<h3 class="awr">Service Statistics</h3>
+<ul>
+<li class="awr"> ordered by DB Time</li>
+</ul>
+<table border="0" class="tdiff" summary="This table displays service statistics. It displays service names and corresponding DB time, DB CPU, Physical reads, logical reads."><tr><th class="awrbg" scope="col">Service Name</th><th class="awrbg" scope="col">DB Time (s)</th><th class="awrbg" scope="col">DB CPU (s)</th><th class="awrbg" scope="col">Physical Reads (K)</th><th class="awrbg" scope="col">Logical Reads (K)</th></tr>
+<tr><td scope="row" class='awrc'>pdb1</td><td align="right" class='awrc'>85</td><td align="right" class='awrc'>80</td><td align="right" class='awrc'>0</td><td align="right" class='awrc'>592</td></tr>
+</table><p />
+<hr align="left" width="20%" /><p />
+<a class="awr" href="#21">Back to Wait Events Statistics</a>
+<br /><a class="awr" href="#top">Back to Top</a><p />
+<a class="awr" name="5820"></a>
+<h3 class="awr">Service Wait Class Stats</h3>
+<ul>
+<li class="awr"> Wait Class info for services in the Service Statistics section.  </li>
+<li class="awr"> Total Waits and Time Waited displayed for the following wait     classes:  User I/O, Concurrency, Administrative, Network </li>
+<li class="awr"> Time Waited (Wt Time) in seconds</li>
+</ul>
+<table border="0" class="tdiff" summary="This table displays service wait class statistics. It displays user I/O total wait, user I/O wait time, concurrency total wait, concurrency wait time, etc."><tr><th class="awrbg" scope="col">Service Name</th><th class="awrbg" scope="col">User I/O Total Wts</th><th class="awrbg" scope="col">User I/O Wt Time</th><th class="awrbg" scope="col">Concurcy Total Wts</th><th class="awrbg" scope="col">Concurcy Wt Time</th><th class="awrbg" scope="col">Admin Total Wts</th><th class="awrbg" scope="col">Admin Wt Time</th><th class="awrbg" scope="col">Network Total Wts</th><th class="awrbg" scope="col">Network Wt Time</th></tr>
+<tr><td scope="row" class='awrc'>pdb1</td>
+<td align="right" class='awrc'>1276</td><td align="right" class='awrc'>0</td><td align="right" class='awrc'>3</td><td align="right" class='awrc'>0</td><td align="right" class='awrc'>0</td><td align="right" class='awrc'>0</td><td align="right" class='awrc'>5476</td><td align="right" class='awrc'>0</td></tr>
+</table><p />
+<hr align="left" width="20%" /><p />
+<a class="awr" href="#21">Back to Wait Events Statistics</a>
+<br /><a class="awr" href="#top">Back to Top</a><p />
+<p />
+<a class="awr" name="22"></a>
+<h2 class="awr">
+SQL Statistics
+</h2>
+<ul>
+<li class="awr"><a class="awr" href="#400">SQL ordered by Elapsed Time</a></li>
+<li class="awr"><a class="awr" href="#500">SQL ordered by CPU Time</a></li>
+<li class="awr"><a class="awr" href="#550">SQL ordered by User I/O Wait Time</a></li>
+<li class="awr"><a class="awr" href="#600">SQL ordered by Gets</a></li>
+<li class="awr"><a class="awr" href="#700">SQL ordered by Reads</a></li>
+<li class="awr"><a class="awr" href="#740">SQL ordered by Physical Reads (UnOptimized)</a></li>
+<li class="awr"><a class="awr" href="#800">SQL ordered by Executions</a></li>
+<li class="awr"><a class="awr" href="#900">SQL ordered by Parse Calls</a></li>
+<li class="awr"><a class="awr" href="#1000">SQL ordered by Sharable Memory</a></li>
+<li class="awr"><a class="awr" href="#1100">SQL ordered by Version Count</a></li>
+<li class="awr"><a class="awr" href="#99997">Complete List of SQL Text</a></li>
+</ul>
+<a class="awr" href="#top">Back to Top</a><p />
+<a class="awr" name="400"></a>
+<h3 class="awr">SQL ordered by Elapsed Time</h3>
+<ul>
+<li class="awr"> Resources reported for PL/SQL code includes the resources used by all SQL     statements called by the code. </li>
+<li class="awr"> % Total DB Time is the Elapsed Time of the SQL statement divided     into the Total Database Time multiplied by 100 </li>
+<li class="awr"> %Total - Elapsed Time  as a percentage of Total DB time </li>
+<li class="awr"> %CPU   - CPU Time      as a percentage of Elapsed Time </li>
+<li class="awr"> %IO    - User I/O Time as a percentage of Elapsed Time</li>
+<li class="awr">Captured SQL account for   27.9% of Total DB Time (s):             101</li>
+<li class="awr">Captured PL/SQL account for   31.3% of Total DB Time (s):             101</li>
+</ul>
+<table border="0" class="tdiff" summary="This table displays top SQL by elapsed time"><tr><th class="awrbg" scope="col">Elapsed  Time (s)</th><th class="awrbg" scope="col">Executions </th><th class="awrbg" scope="col">Elapsed Time per Exec (s) </th><th class="awrbg" scope="col">%Total</th><th class="awrbg" scope="col">%CPU</th><th class="awrbg" scope="col">%IO</th><th class="awrbg" scope="col">   SQL Id</th><th class="awrbg" scope="col">SQL Module</th><th class="awrbg" scope="col">PDB Name</th><th class="awrbg" scope="col">SQL Text</th></tr>
+<tr><td align="right" class='awrc'>30.48</td><td align="right" class='awrc'>0</td><td align="right" class='awrc'>&#160;</td><td align="right" class='awrc'>30.22</td><td align="right" class='awrc'>38.51</td><td align="right" class='awrc'>45.60</td><td scope="row" class='awrc'><a class="awr" href="#b6usrg82hwsa3">b6usrg82hwsa3</a></td>
+<td class='awrc'>
+DBMS_SCHEDULER
+</td>
+<td class='awrc'>
+PDB1
+</td>
+<td class='awrc'>call dbms_stats.gather_databas...</td></tr>
+<tr><td align="right" class='awrnc'>8.25</td><td align="right" class='awrnc'>49</td><td align="right" class='awrnc'>0.17</td><td align="right" class='awrnc'>8.18</td><td align="right" class='awrnc'>97.77</td><td align="right" class='awrnc'>0.58</td><td scope="row" class='awrnc'><a class="awr" href="#5q09cmavhyq2y">5q09cmavhyq2y</a></td>
+<td class='awrnc'>
+python.exe
+</td>
+<td class='awrnc'>
+PDB1
+</td>
+<td class='awrnc'>select owner, index_name, '' p...</td></tr>
+<tr><td align="right" class='awrc'>2.46</td><td align="right" class='awrc'>14,085</td><td align="right" class='awrc'>0.00</td><td align="right" class='awrc'>2.44</td><td align="right" class='awrc'>36.36</td><td align="right" class='awrc'>44.54</td><td scope="row" class='awrc'><a class="awr" href="#2sxqgx5hx76qr">2sxqgx5hx76qr</a></td>
+<td class='awrc'>&#160;
+</td>
+<td class='awrc'>
+PDB1
+</td>
+<td class='awrc'>select /*+ rule */ bucket, end...</td></tr>
+<tr><td align="right" class='awrnc'>2.29</td><td align="right" class='awrnc'>90</td><td align="right" class='awrnc'>0.03</td><td align="right" class='awrnc'>2.27</td><td align="right" class='awrnc'>83.47</td><td align="right" class='awrnc'>0.00</td><td scope="row" class='awrnc'><a class="awr" href="#7sf71q3d7jv00">7sf71q3d7jv00</a></td>
+<td class='awrnc'>
+python.exe
+</td>
+<td class='awrnc'>
+PDB1
+</td>
+<td class='awrnc'> select percent_space_used fro...</td></tr>
+<tr><td align="right" class='awrc'>2.21</td><td align="right" class='awrc'>70</td><td align="right" class='awrc'>0.03</td><td align="right" class='awrc'>2.19</td><td align="right" class='awrc'>91.54</td><td align="right" class='awrc'>1.59</td><td scope="row" class='awrc'><a class="awr" href="#ap4y2u336u3bj">ap4y2u336u3bj</a></td>
+<td class='awrc'>
+python.exe
+</td>
+<td class='awrc'>
+PDB1
+</td>
+<td class='awrc'>SELECT DECODE(request, 0, 'Hol...</td></tr>
+<tr><td align="right" class='awrnc'>1.29</td><td align="right" class='awrnc'>2,028</td><td align="right" class='awrnc'>0.00</td><td align="right" class='awrnc'>1.28</td><td align="right" class='awrnc'>60.05</td><td align="right" class='awrnc'>18.75</td><td scope="row" class='awrnc'><a class="awr" href="#121ffmrc95v7g">121ffmrc95v7g</a></td>
+<td class='awrnc'>&#160;
+</td>
+<td class='awrnc'>
+PDB1
+</td>
+<td class='awrnc'>select i.obj#, i.ts#, i.file#,...</td></tr>
+<tr><td align="right" class='awrc'>1.28</td><td align="right" class='awrc'>1,403</td><td align="right" class='awrc'>0.00</td><td align="right" class='awrc'>1.27</td><td align="right" class='awrc'>21.23</td><td align="right" class='awrc'>74.05</td><td scope="row" class='awrc'><a class="awr" href="#3un99a0zwp4vd">3un99a0zwp4vd</a></td>
+<td class='awrc'>&#160;
+</td>
+<td class='awrc'>
+PDB1
+</td>
+<td class='awrc'>select owner#, name, namespace...</td></tr>
+<tr><td align="right" class='awrnc'>1.23</td><td align="right" class='awrnc'>28,531</td><td align="right" class='awrnc'>0.00</td><td align="right" class='awrnc'>1.22</td><td align="right" class='awrnc'>48.80</td><td align="right" class='awrnc'>43.26</td><td scope="row" class='awrnc'><a class="awr" href="#0sbbcuruzd66f">0sbbcuruzd66f</a></td>
+<td class='awrnc'>&#160;
+</td>
+<td class='awrnc'>
+PDB1
+</td>
+<td class='awrnc'>select /*+ rule */ bucket_cnt,...</td></tr>
+<tr><td align="right" class='awrc'>0.85</td><td align="right" class='awrc'>59</td><td align="right" class='awrc'>0.01</td><td align="right" class='awrc'>0.84</td><td align="right" class='awrc'>79.48</td><td align="right" class='awrc'>0.45</td><td scope="row" class='awrc'><a class="awr" href="#08ms8uqtcptg5">08ms8uqtcptg5</a></td>
+<td class='awrc'>
+python.exe
+</td>
+<td class='awrc'>
+PDB1
+</td>
+<td class='awrc'>SELECT DF.TABLESPACE_NAME, COU...</td></tr>
+<tr><td align="right" class='awrnc'>0.79</td><td align="right" class='awrnc'>1,403</td><td align="right" class='awrnc'>0.00</td><td align="right" class='awrnc'>0.78</td><td align="right" class='awrnc'>14.56</td><td align="right" class='awrnc'>79.59</td><td scope="row" class='awrnc'><a class="awr" href="#8swypbbr0m372">8swypbbr0m372</a></td>
+<td class='awrnc'>&#160;
+</td>
+<td class='awrnc'>
+PDB1
+</td>
+<td class='awrnc'>select order#, columns, types ...</td></tr>
+</table><p />
+<hr align="left" width="20%" /><p />
+<a class="awr" href="#22">Back to SQL Statistics</a>
+<br /><a class="awr" href="#top">Back to Top</a><p />
+<a class="awr" name="500"></a>
+<h3 class="awr">SQL ordered by CPU Time</h3>
+<ul>
+<li class="awr"> Resources reported for PL/SQL code includes the resources used by all SQL     statements called by the code. </li>
+<li class="awr"> %Total - CPU Time      as a percentage of Total DB CPU </li>
+<li class="awr"> %CPU   - CPU Time      as a percentage of Elapsed Time </li>
+<li class="awr"> %IO    - User I/O Time as a percentage of Elapsed Time</li>
+<li class="awr">Captured SQL account for   24.9% of Total CPU Time (s):              83</li>
+<li class="awr">Captured PL/SQL account for   15.0% of Total CPU Time (s):              83</li>
+</ul>
+<table border="0" class="tdiff" summary="This table displays top SQL by CPU time"><tr><th class="awrbg" scope="col">CPU    Time (s)</th><th class="awrbg" scope="col">Executions </th><th class="awrbg" scope="col">CPU per  Exec (s)</th><th class="awrbg" scope="col">%Total</th><th class="awrbg" scope="col">Elapsed  Time (s)</th><th class="awrbg" scope="col">%CPU</th><th class="awrbg" scope="col">%IO</th><th class="awrbg" scope="col">   SQL Id</th><th class="awrbg" scope="col">SQL Module</th><th class="awrbg" scope="col">PDB Name</th><th class="awrbg" scope="col">SQL Text</th></tr>
+<tr><td align="right" class='awrc'>11.74</td><td align="right" class='awrc'>0</td><td align="right" class='awrc'>&#160;</td><td align="right" class='awrc'>14.12</td><td align="right" class='awrc'>30.48</td><td align="right" class='awrc'>38.51</td><td align="right" class='awrc'>45.60</td><td scope="row" class='awrc'><a class="awr" href="#b6usrg82hwsa3">b6usrg82hwsa3</a></td>
+<td class='awrc'>
+DBMS_SCHEDULER
+</td>
+<td class='awrc'>
+PDB1
+</td>
+<td class='awrc'>call dbms_stats.gather_databas...</td></tr>
+<tr><td align="right" class='awrnc'>8.07</td><td align="right" class='awrnc'>49</td><td align="right" class='awrnc'>0.16</td><td align="right" class='awrnc'>9.70</td><td align="right" class='awrnc'>8.25</td><td align="right" class='awrnc'>97.77</td><td align="right" class='awrnc'>0.58</td><td scope="row" class='awrnc'><a class="awr" href="#5q09cmavhyq2y">5q09cmavhyq2y</a></td>
+<td class='awrnc'>
+python.exe
+</td>
+<td class='awrnc'>
+PDB1
+</td>
+<td class='awrnc'>select owner, index_name, '' p...</td></tr>
+<tr><td align="right" class='awrc'>2.02</td><td align="right" class='awrc'>70</td><td align="right" class='awrc'>0.03</td><td align="right" class='awrc'>2.43</td><td align="right" class='awrc'>2.21</td><td align="right" class='awrc'>91.54</td><td align="right" class='awrc'>1.59</td><td scope="row" class='awrc'><a class="awr" href="#ap4y2u336u3bj">ap4y2u336u3bj</a></td>
+<td class='awrc'>
+python.exe
+</td>
+<td class='awrc'>
+PDB1
+</td>
+<td class='awrc'>SELECT DECODE(request, 0, 'Hol...</td></tr>
+<tr><td align="right" class='awrnc'>1.91</td><td align="right" class='awrnc'>90</td><td align="right" class='awrnc'>0.02</td><td align="right" class='awrnc'>2.30</td><td align="right" class='awrnc'>2.29</td><td align="right" class='awrnc'>83.47</td><td align="right" class='awrnc'>0.00</td><td scope="row" class='awrnc'><a class="awr" href="#7sf71q3d7jv00">7sf71q3d7jv00</a></td>
+<td class='awrnc'>
+python.exe
+</td>
+<td class='awrnc'>
+PDB1
+</td>
+<td class='awrnc'> select percent_space_used fro...</td></tr>
+<tr><td align="right" class='awrc'>0.89</td><td align="right" class='awrc'>14,085</td><td align="right" class='awrc'>0.00</td><td align="right" class='awrc'>1.08</td><td align="right" class='awrc'>2.46</td><td align="right" class='awrc'>36.36</td><td align="right" class='awrc'>44.54</td><td scope="row" class='awrc'><a class="awr" href="#2sxqgx5hx76qr">2sxqgx5hx76qr</a></td>
+<td class='awrc'>&#160;
+</td>
+<td class='awrc'>
+PDB1
+</td>
+<td class='awrc'>select /*+ rule */ bucket, end...</td></tr>
+<tr><td align="right" class='awrnc'>0.77</td><td align="right" class='awrnc'>2,028</td><td align="right" class='awrnc'>0.00</td><td align="right" class='awrnc'>0.93</td><td align="right" class='awrnc'>1.29</td><td align="right" class='awrnc'>60.05</td><td align="right" class='awrnc'>18.75</td><td scope="row" class='awrnc'><a class="awr" href="#121ffmrc95v7g">121ffmrc95v7g</a></td>
+<td class='awrnc'>&#160;
+</td>
+<td class='awrnc'>
+PDB1
+</td>
+<td class='awrnc'>select i.obj#, i.ts#, i.file#,...</td></tr>
+<tr><td align="right" class='awrc'>0.68</td><td align="right" class='awrc'>59</td><td align="right" class='awrc'>0.01</td><td align="right" class='awrc'>0.81</td><td align="right" class='awrc'>0.85</td><td align="right" class='awrc'>79.48</td><td align="right" class='awrc'>0.45</td><td scope="row" class='awrc'><a class="awr" href="#08ms8uqtcptg5">08ms8uqtcptg5</a></td>
+<td class='awrc'>
+python.exe
+</td>
+<td class='awrc'>
+PDB1
+</td>
+<td class='awrc'>SELECT DF.TABLESPACE_NAME, COU...</td></tr>
+<tr><td align="right" class='awrnc'>0.67</td><td align="right" class='awrnc'>11</td><td align="right" class='awrnc'>0.06</td><td align="right" class='awrnc'>0.81</td><td align="right" class='awrnc'>0.70</td><td align="right" class='awrnc'>95.93</td><td align="right" class='awrnc'>1.08</td><td scope="row" class='awrnc'><a class="awr" href="#5pj6mtazkhmdd">5pj6mtazkhmdd</a></td>
+<td class='awrnc'>&#160;
+</td>
+<td class='awrnc'>
+PDB1
+</td>
+<td class='awrnc'>BEGIN /* KSXM:FLUSH DML_MON */...</td></tr>
+<tr><td align="right" class='awrc'>0.60</td><td align="right" class='awrc'>28,531</td><td align="right" class='awrc'>0.00</td><td align="right" class='awrc'>0.72</td><td align="right" class='awrc'>1.23</td><td align="right" class='awrc'>48.80</td><td align="right" class='awrc'>43.26</td><td scope="row" class='awrc'><a class="awr" href="#0sbbcuruzd66f">0sbbcuruzd66f</a></td>
+<td class='awrc'>&#160;
+</td>
+<td class='awrc'>
+PDB1
+</td>
+<td class='awrc'>select /*+ rule */ bucket_cnt,...</td></tr>
+<tr><td align="right" class='awrnc'>0.52</td><td align="right" class='awrnc'>70</td><td align="right" class='awrnc'>0.01</td><td align="right" class='awrnc'>0.63</td><td align="right" class='awrnc'>0.59</td><td align="right" class='awrnc'>88.77</td><td align="right" class='awrnc'>3.06</td><td scope="row" class='awrnc'><a class="awr" href="#9gvqwa5g74w0x">9gvqwa5g74w0x</a></td>
+<td class='awrnc'>
+python.exe
+</td>
+<td class='awrnc'>
+PDB1
+</td>
+<td class='awrnc'> select username, trunc(expiry...</td></tr>
+</table><p />
+<hr align="left" width="20%" /><p />
+<a class="awr" href="#22">Back to SQL Statistics</a>
+<br /><a class="awr" href="#top">Back to Top</a><p />
+<a class="awr" name="550"></a>
+<h3 class="awr">SQL ordered by User I/O Wait Time</h3>
+<ul>
+<li class="awr"> Resources reported for PL/SQL code includes the resources used by all SQL     statements called by the code. </li>
+<li class="awr"> %Total - User I/O Time as a percentage of Total User I/O Wait time </li>
+<li class="awr"> %CPU   - CPU Time      as a percentage of Elapsed Time </li>
+<li class="awr"> %IO    - User I/O Time as a percentage of Elapsed Time</li>
+<li class="awr">Captured SQL account for   20.9% of Total User I/O Wait Time (s):              20</li>
+<li class="awr">Captured PL/SQL account for   69.7% of Total User I/O Wait Time (s):              20</li>
+</ul>
+<table border="0" class="tdiff" summary="This table displays top SQL by user I/O time"><tr><th class="awrbg" scope="col">User I/O Time (s)</th><th class="awrbg" scope="col">Executions </th><th class="awrbg" scope="col">UIO per  Exec (s)</th><th class="awrbg" scope="col">%Total</th><th class="awrbg" scope="col">Elapsed  Time (s)</th><th class="awrbg" scope="col">%CPU</th><th class="awrbg" scope="col">%IO</th><th class="awrbg" scope="col">   SQL Id</th><th class="awrbg" scope="col">SQL Module</th><th class="awrbg" scope="col">PDB Name</th><th class="awrbg" scope="col">SQL Text</th></tr>
+<tr><td align="right" class='awrc'>13.90</td><td align="right" class='awrc'>0</td><td align="right" class='awrc'>&#160;</td><td align="right" class='awrc'>69.27</td><td align="right" class='awrc'>30.48</td><td align="right" class='awrc'>38.51</td><td align="right" class='awrc'>45.60</td><td scope="row" class='awrc'><a class="awr" href="#b6usrg82hwsa3">b6usrg82hwsa3</a></td>
+<td class='awrc'>
+DBMS_SCHEDULER
+</td>
+<td class='awrc'>
+PDB1
+</td>
+<td class='awrc'>call dbms_stats.gather_databas...</td></tr>
+<tr><td align="right" class='awrnc'>1.10</td><td align="right" class='awrnc'>14,085</td><td align="right" class='awrnc'>0.00</td><td align="right" class='awrnc'>5.46</td><td align="right" class='awrnc'>2.46</td><td align="right" class='awrnc'>36.36</td><td align="right" class='awrnc'>44.54</td><td scope="row" class='awrnc'><a class="awr" href="#2sxqgx5hx76qr">2sxqgx5hx76qr</a></td>
+<td class='awrnc'>&#160;
+</td>
+<td class='awrnc'>
+PDB1
+</td>
+<td class='awrnc'>select /*+ rule */ bucket, end...</td></tr>
+<tr><td align="right" class='awrc'>0.95</td><td align="right" class='awrc'>1,403</td><td align="right" class='awrc'>0.00</td><td align="right" class='awrc'>4.71</td><td align="right" class='awrc'>1.28</td><td align="right" class='awrc'>21.23</td><td align="right" class='awrc'>74.05</td><td scope="row" class='awrc'><a class="awr" href="#3un99a0zwp4vd">3un99a0zwp4vd</a></td>
+<td class='awrc'>&#160;
+</td>
+<td class='awrc'>
+PDB1
+</td>
+<td class='awrc'>select owner#, name, namespace...</td></tr>
+<tr><td align="right" class='awrnc'>0.63</td><td align="right" class='awrnc'>1,403</td><td align="right" class='awrnc'>0.00</td><td align="right" class='awrnc'>3.13</td><td align="right" class='awrnc'>0.79</td><td align="right" class='awrnc'>14.56</td><td align="right" class='awrnc'>79.59</td><td scope="row" class='awrnc'><a class="awr" href="#8swypbbr0m372">8swypbbr0m372</a></td>
+<td class='awrnc'>&#160;
+</td>
+<td class='awrnc'>
+PDB1
+</td>
+<td class='awrnc'>select order#, columns, types ...</td></tr>
+<tr><td align="right" class='awrc'>0.53</td><td align="right" class='awrc'>28,531</td><td align="right" class='awrc'>0.00</td><td align="right" class='awrc'>2.65</td><td align="right" class='awrc'>1.23</td><td align="right" class='awrc'>48.80</td><td align="right" class='awrc'>43.26</td><td scope="row" class='awrc'><a class="awr" href="#0sbbcuruzd66f">0sbbcuruzd66f</a></td>
+<td class='awrc'>&#160;
+</td>
+<td class='awrc'>
+PDB1
+</td>
+<td class='awrc'>select /*+ rule */ bucket_cnt,...</td></tr>
+<tr><td align="right" class='awrnc'>0.51</td><td align="right" class='awrnc'>2,999</td><td align="right" class='awrnc'>0.00</td><td align="right" class='awrnc'>2.57</td><td align="right" class='awrnc'>0.74</td><td align="right" class='awrnc'>27.44</td><td align="right" class='awrnc'>69.92</td><td scope="row" class='awrnc'><a class="awr" href="#acmvv4fhdc9zh">acmvv4fhdc9zh</a></td>
+<td class='awrnc'>&#160;
+</td>
+<td class='awrnc'>
+PDB1
+</td>
+<td class='awrnc'>select obj#, type#, ctime, mti...</td></tr>
+<tr><td align="right" class='awrc'>0.24</td><td align="right" class='awrc'>2,028</td><td align="right" class='awrc'>0.00</td><td align="right" class='awrc'>1.21</td><td align="right" class='awrc'>1.29</td><td align="right" class='awrc'>60.05</td><td align="right" class='awrc'>18.75</td><td scope="row" class='awrc'><a class="awr" href="#121ffmrc95v7g">121ffmrc95v7g</a></td>
+<td class='awrc'>&#160;
+</td>
+<td class='awrc'>
+PDB1
+</td>
+<td class='awrc'>select i.obj#, i.ts#, i.file#,...</td></tr>
+<tr><td align="right" class='awrnc'>0.08</td><td align="right" class='awrnc'>4</td><td align="right" class='awrnc'>0.02</td><td align="right" class='awrnc'>0.41</td><td align="right" class='awrnc'>0.34</td><td align="right" class='awrnc'>12.40</td><td align="right" class='awrnc'>24.07</td><td scope="row" class='awrnc'><a class="awr" href="#ct6c4h224pxgz">ct6c4h224pxgz</a></td>
+<td class='awrnc'>
+DBMS_SCHEDULER
+</td>
+<td class='awrnc'>
+PDB1
+</td>
+<td class='awrnc'>BEGIN BEGIN IF (sys.is_vpd_ena...</td></tr>
+<tr><td align="right" class='awrc'>0.07</td><td align="right" class='awrc'>8</td><td align="right" class='awrc'>0.01</td><td align="right" class='awrc'>0.34</td><td align="right" class='awrc'>0.31</td><td align="right" class='awrc'>9.59</td><td align="right" class='awrc'>21.62</td><td scope="row" class='awrc'><a class="awr" href="#86kwhy1f0bttn">86kwhy1f0bttn</a></td>
+<td class='awrc'>
+DBMS_SCHEDULER
+</td>
+<td class='awrc'>
+PDB1
+</td>
+<td class='awrc'>SELECT /*+ ALL_ROWS */ COUNT(*...</td></tr>
+<tr><td align="right" class='awrnc'>0.05</td><td align="right" class='awrnc'>49</td><td align="right" class='awrnc'>0.00</td><td align="right" class='awrnc'>0.24</td><td align="right" class='awrnc'>8.25</td><td align="right" class='awrnc'>97.77</td><td align="right" class='awrnc'>0.58</td><td scope="row" class='awrnc'><a class="awr" href="#5q09cmavhyq2y">5q09cmavhyq2y</a></td>
+<td class='awrnc'>
+python.exe
+</td>
+<td class='awrnc'>
+PDB1
+</td>
+<td class='awrnc'>select owner, index_name, '' p...</td></tr>
+</table><p />
+<hr align="left" width="20%" /><p />
+<a class="awr" href="#22">Back to SQL Statistics</a>
+<br /><a class="awr" href="#top">Back to Top</a><p />
+<a class="awr" name="600"></a>
+<h3 class="awr">SQL ordered by Gets</h3>
+<ul>
+<li class="awr"> Resources reported for PL/SQL code includes the resources used by all SQL     statements called by the code. </li>
+<li class="awr"> %Total - Buffer Gets   as a percentage of Total Buffer Gets </li>
+<li class="awr"> %CPU   - CPU Time      as a percentage of Elapsed Time </li>
+<li class="awr"> %IO    - User I/O Time as a percentage of Elapsed Time</li>
+<li class="awr">Total Buffer Gets:         742,229</li>
+<li class="awr">Captured SQL account for   69.5% of Total</li>
+</ul>
+<table border="0" class="tdiff" summary="This table displays top SQL by buffer gets"><tr><th class="awrbg" scope="col">Buffer Gets </th><th class="awrbg" scope="col">Executions</th><th class="awrbg" scope="col">Gets     per Exec  </th><th class="awrbg" scope="col">%Total</th><th class="awrbg" scope="col">Elapsed  Time (s)</th><th class="awrbg" scope="col"> %CPU</th><th class="awrbg" scope="col">  %IO</th><th class="awrbg" scope="col">   SQL Id</th><th class="awrbg" scope="col">SQL Module</th><th class="awrbg" scope="col">PDB Name</th><th class="awrbg" scope="col">SQL Text</th></tr>
+<tr><td align="right" class='awrc'>205,799</td><td align="right" class='awrc'>0</td><td align="right" class='awrc'>&#160;</td><td align="right" class='awrc'>27.73</td><td align="right" class='awrc'>30.48</td><td class='awrc'>38.5</td><td class='awrc'>45.6</td><td scope="row" class='awrc'><a class="awr" href="#b6usrg82hwsa3">b6usrg82hwsa3</a></td>
+<td class='awrc'>
+DBMS_SCHEDULER
+</td>
+<td class='awrc'>
+PDB1
+</td>
+<td class='awrc'>call dbms_stats.gather_databas...</td></tr>
+<tr><td align="right" class='awrnc'>85,071</td><td align="right" class='awrnc'>28,531</td><td align="right" class='awrnc'>2.98</td><td align="right" class='awrnc'>11.46</td><td align="right" class='awrnc'>1.23</td><td class='awrnc'>48.8</td><td class='awrnc'>43.3</td><td scope="row" class='awrnc'><a class="awr" href="#0sbbcuruzd66f">0sbbcuruzd66f</a></td>
+<td class='awrnc'>&#160;
+</td>
+<td class='awrnc'>
+PDB1
+</td>
+<td class='awrnc'>select /*+ rule */ bucket_cnt,...</td></tr>
+<tr><td align="right" class='awrc'>84,910</td><td align="right" class='awrc'>49</td><td align="right" class='awrc'>1,732.86</td><td align="right" class='awrc'>11.44</td><td align="right" class='awrc'>8.25</td><td class='awrc'>97.8</td><td class='awrc'>.6</td><td scope="row" class='awrc'><a class="awr" href="#5q09cmavhyq2y">5q09cmavhyq2y</a></td>
+<td class='awrc'>
+python.exe
+</td>
+<td class='awrc'>
+PDB1
+</td>
+<td class='awrc'>select owner, index_name, '' p...</td></tr>
+<tr><td align="right" class='awrnc'>46,948</td><td align="right" class='awrnc'>14,085</td><td align="right" class='awrnc'>3.33</td><td align="right" class='awrnc'>6.33</td><td align="right" class='awrnc'>2.46</td><td class='awrnc'>36.4</td><td class='awrnc'>44.5</td><td scope="row" class='awrnc'><a class="awr" href="#2sxqgx5hx76qr">2sxqgx5hx76qr</a></td>
+<td class='awrnc'>&#160;
+</td>
+<td class='awrnc'>
+PDB1
+</td>
+<td class='awrnc'>select /*+ rule */ bucket, end...</td></tr>
+<tr><td align="right" class='awrc'>37,272</td><td align="right" class='awrc'>17,905</td><td align="right" class='awrc'>2.08</td><td align="right" class='awrc'>5.02</td><td align="right" class='awrc'>0.26</td><td class='awrc'>77.9</td><td class='awrc'>0</td><td scope="row" class='awrc'><a class="awr" href="#87gaftwrm2h68">87gaftwrm2h68</a></td>
+<td class='awrc'>&#160;
+</td>
+<td class='awrc'>
+PDB1
+</td>
+<td class='awrc'>select o.owner#, o.name, o.nam...</td></tr>
+<tr><td align="right" class='awrnc'>35,479</td><td align="right" class='awrnc'>3,683</td><td align="right" class='awrnc'>9.63</td><td align="right" class='awrnc'>4.78</td><td align="right" class='awrnc'>0.30</td><td class='awrnc'>76.1</td><td class='awrnc'>0</td><td scope="row" class='awrnc'><a class="awr" href="#04kug40zbu4dm">04kug40zbu4dm</a></td>
+<td class='awrnc'>&#160;
+</td>
+<td class='awrnc'>
+PDB1
+</td>
+<td class='awrnc'>select policy#, action# from a...</td></tr>
+<tr><td align="right" class='awrc'>35,249</td><td align="right" class='awrc'>2</td><td align="right" class='awrc'>17,624.50</td><td align="right" class='awrc'>4.75</td><td align="right" class='awrc'>0.30</td><td class='awrc'>100.5</td><td class='awrc'>0</td><td scope="row" class='awrc'><a class="awr" href="#8f9r8kr5cs6h9">8f9r8kr5cs6h9</a></td>
+<td class='awrc'>&#160;
+</td>
+<td class='awrc'>
+PDB1
+</td>
+<td class='awrc'>SELECT /*+ NO_STATEMENT_QUEUIN...</td></tr>
+<tr><td align="right" class='awrnc'>19,274</td><td align="right" class='awrnc'>1,403</td><td align="right" class='awrnc'>13.74</td><td align="right" class='awrnc'>2.60</td><td align="right" class='awrnc'>1.28</td><td class='awrnc'>21.2</td><td class='awrnc'>74</td><td scope="row" class='awrnc'><a class="awr" href="#3un99a0zwp4vd">3un99a0zwp4vd</a></td>
+<td class='awrnc'>&#160;
+</td>
+<td class='awrnc'>
+PDB1
+</td>
+<td class='awrnc'>select owner#, name, namespace...</td></tr>
+<tr><td align="right" class='awrc'>17,921</td><td align="right" class='awrc'>2,028</td><td align="right" class='awrc'>8.84</td><td align="right" class='awrc'>2.41</td><td align="right" class='awrc'>1.29</td><td class='awrc'>60.1</td><td class='awrc'>18.8</td><td scope="row" class='awrc'><a class="awr" href="#121ffmrc95v7g">121ffmrc95v7g</a></td>
+<td class='awrc'>&#160;
+</td>
+<td class='awrc'>
+PDB1
+</td>
+<td class='awrc'>select i.obj#, i.ts#, i.file#,...</td></tr>
+<tr><td align="right" class='awrnc'>17,467</td><td align="right" class='awrnc'>11</td><td align="right" class='awrnc'>1,587.91</td><td align="right" class='awrnc'>2.35</td><td align="right" class='awrnc'>0.70</td><td class='awrnc'>95.9</td><td class='awrnc'>1.1</td><td scope="row" class='awrnc'><a class="awr" href="#5pj6mtazkhmdd">5pj6mtazkhmdd</a></td>
+<td class='awrnc'>&#160;
+</td>
+<td class='awrnc'>
+PDB1
+</td>
+<td class='awrnc'>BEGIN /* KSXM:FLUSH DML_MON */...</td></tr>
+<tr><td align="right" class='awrc'>15,181</td><td align="right" class='awrc'>90</td><td align="right" class='awrc'>168.68</td><td align="right" class='awrc'>2.05</td><td align="right" class='awrc'>2.29</td><td class='awrc'>83.5</td><td class='awrc'>0</td><td scope="row" class='awrc'><a class="awr" href="#7sf71q3d7jv00">7sf71q3d7jv00</a></td>
+<td class='awrc'>
+python.exe
+</td>
+<td class='awrc'>
+PDB1
+</td>
+<td class='awrc'> select percent_space_used fro...</td></tr>
+<tr><td align="right" class='awrnc'>13,719</td><td align="right" class='awrnc'>2,999</td><td align="right" class='awrnc'>4.57</td><td align="right" class='awrnc'>1.85</td><td align="right" class='awrnc'>0.74</td><td class='awrnc'>27.4</td><td class='awrnc'>69.9</td><td scope="row" class='awrnc'><a class="awr" href="#acmvv4fhdc9zh">acmvv4fhdc9zh</a></td>
+<td class='awrnc'>&#160;
+</td>
+<td class='awrnc'>
+PDB1
+</td>
+<td class='awrnc'>select obj#, type#, ctime, mti...</td></tr>
+<tr><td align="right" class='awrc'>12,632</td><td align="right" class='awrc'>1,403</td><td align="right" class='awrc'>9.00</td><td align="right" class='awrc'>1.70</td><td align="right" class='awrc'>0.79</td><td class='awrc'>14.6</td><td class='awrc'>79.6</td><td scope="row" class='awrc'><a class="awr" href="#8swypbbr0m372">8swypbbr0m372</a></td>
+<td class='awrc'>&#160;
+</td>
+<td class='awrc'>
+PDB1
+</td>
+<td class='awrc'>select order#, columns, types ...</td></tr>
+<tr><td align="right" class='awrnc'>11,441</td><td align="right" class='awrnc'>848</td><td align="right" class='awrnc'>13.49</td><td align="right" class='awrnc'>1.54</td><td align="right" class='awrnc'>0.14</td><td class='awrnc'>59.7</td><td class='awrnc'>0</td><td scope="row" class='awrnc'><a class="awr" href="#5u7g54s63p4ts">5u7g54s63p4ts</a></td>
+<td class='awrnc'>&#160;
+</td>
+<td class='awrnc'>
+PDB1
+</td>
+<td class='awrnc'>select toid from type$ where p...</td></tr>
+<tr><td align="right" class='awrc'>11,439</td><td align="right" class='awrc'>2,542</td><td align="right" class='awrc'>4.50</td><td align="right" class='awrc'>1.54</td><td align="right" class='awrc'>0.51</td><td class='awrc'>80.9</td><td class='awrc'>2</td><td scope="row" class='awrc'><a class="awr" href="#9t4vxdppkv534">9t4vxdppkv534</a></td>
+<td class='awrc'>&#160;
+</td>
+<td class='awrc'>
+PDB1
+</td>
+<td class='awrc'>select name, intcol#, segcol#,...</td></tr>
+<tr><td align="right" class='awrnc'>11,310</td><td align="right" class='awrnc'>3</td><td align="right" class='awrnc'>3,770.00</td><td align="right" class='awrnc'>1.52</td><td align="right" class='awrnc'>0.30</td><td class='awrnc'>86.6</td><td class='awrnc'>0</td><td scope="row" class='awrnc'><a class="awr" href="#b13g21mgg8y98">b13g21mgg8y98</a></td>
+<td class='awrnc'>&#160;
+</td>
+<td class='awrnc'>
+PDB1
+</td>
+<td class='awrnc'>insert /* KSXM:TAKE_SNPSHOT */...</td></tr>
+<tr><td align="right" class='awrc'>8,460</td><td align="right" class='awrc'>59</td><td align="right" class='awrc'>143.39</td><td align="right" class='awrc'>1.14</td><td align="right" class='awrc'>0.85</td><td class='awrc'>79.5</td><td class='awrc'>.5</td><td scope="row" class='awrc'><a class="awr" href="#08ms8uqtcptg5">08ms8uqtcptg5</a></td>
+<td class='awrc'>
+python.exe
+</td>
+<td class='awrc'>
+PDB1
+</td>
+<td class='awrc'>SELECT DF.TABLESPACE_NAME, COU...</td></tr>
+<tr><td align="right" class='awrnc'>8,375</td><td align="right" class='awrnc'>2,266</td><td align="right" class='awrnc'>3.70</td><td align="right" class='awrnc'>1.13</td><td align="right" class='awrnc'>0.28</td><td class='awrnc'>72.9</td><td class='awrnc'>.1</td><td scope="row" class='awrnc'><a class="awr" href="#aaz3bayav0jwj">aaz3bayav0jwj</a></td>
+<td class='awrnc'>&#160;
+</td>
+<td class='awrnc'>
+PDB1
+</td>
+<td class='awrnc'>update /* KSXM:FLUSH COL */ sy...</td></tr>
+</table><p />
+<hr align="left" width="20%" /><p />
+<a class="awr" href="#22">Back to SQL Statistics</a>
+<br /><a class="awr" href="#top">Back to Top</a><p />
+<a class="awr" name="700"></a>
+<h3 class="awr">SQL ordered by Reads</h3>
+<ul>
+<li class="awr"> %Total - Physical Reads as a percentage of Total Disk Reads </li>
+<li class="awr"> %CPU   - CPU Time      as a percentage of Elapsed Time </li>
+<li class="awr"> %IO    - User I/O Time as a percentage of Elapsed Time</li>
+<li class="awr">Total Disk Reads:           1,105</li>
+<li class="awr">Captured SQL account for   51.9% of Total</li>
+</ul>
+<table border="0" class="tdiff" summary="This table displays top SQL by physical reads"><tr><th class="awrbg" scope="col">Physical Reads</th><th class="awrbg" scope="col">Executions</th><th class="awrbg" scope="col">Reads     per Exec  </th><th class="awrbg" scope="col">%Total</th><th class="awrbg" scope="col">Elapsed  Time (s)</th><th class="awrbg" scope="col">%CPU</th><th class="awrbg" scope="col">%IO</th><th class="awrbg" scope="col">   SQL Id</th><th class="awrbg" scope="col">SQL Module</th><th class="awrbg" scope="col">PDB Name</th><th class="awrbg" scope="col">SQL Text</th></tr>
+<tr><td align="right" class='awrc'>12,243</td><td align="right" class='awrc'>0</td><td align="right" class='awrc'>&#160;</td><td align="right" class='awrc'>1107.96</td><td align="right" class='awrc'>30.48</td><td align="right" class='awrc'>38.51</td><td align="right" class='awrc'>45.60</td><td scope="row" class='awrc'><a class="awr" href="#b6usrg82hwsa3">b6usrg82hwsa3</a></td>
+<td class='awrc'>
+DBMS_SCHEDULER
+</td>
+<td class='awrc'>
+PDB1
+</td>
+<td class='awrc'>call dbms_stats.gather_databas...</td></tr>
+<tr><td align="right" class='awrnc'>176</td><td align="right" class='awrnc'>14,085</td><td align="right" class='awrnc'>0.01</td><td align="right" class='awrnc'>15.93</td><td align="right" class='awrnc'>2.46</td><td align="right" class='awrnc'>36.36</td><td align="right" class='awrnc'>44.54</td><td scope="row" class='awrnc'><a class="awr" href="#2sxqgx5hx76qr">2sxqgx5hx76qr</a></td>
+<td class='awrnc'>&#160;
+</td>
+<td class='awrnc'>
+PDB1
+</td>
+<td class='awrnc'>select /*+ rule */ bucket, end...</td></tr>
+<tr><td align="right" class='awrc'>132</td><td align="right" class='awrc'>1,403</td><td align="right" class='awrc'>0.09</td><td align="right" class='awrc'>11.95</td><td align="right" class='awrc'>1.28</td><td align="right" class='awrc'>21.23</td><td align="right" class='awrc'>74.05</td><td scope="row" class='awrc'><a class="awr" href="#3un99a0zwp4vd">3un99a0zwp4vd</a></td>
+<td class='awrc'>&#160;
+</td>
+<td class='awrc'>
+PDB1
+</td>
+<td class='awrc'>select owner#, name, namespace...</td></tr>
+<tr><td align="right" class='awrnc'>69</td><td align="right" class='awrnc'>1,403</td><td align="right" class='awrnc'>0.05</td><td align="right" class='awrnc'>6.24</td><td align="right" class='awrnc'>0.79</td><td align="right" class='awrnc'>14.56</td><td align="right" class='awrnc'>79.59</td><td scope="row" class='awrnc'><a class="awr" href="#8swypbbr0m372">8swypbbr0m372</a></td>
+<td class='awrnc'>&#160;
+</td>
+<td class='awrnc'>
+PDB1
+</td>
+<td class='awrnc'>select order#, columns, types ...</td></tr>
+<tr><td align="right" class='awrc'>55</td><td align="right" class='awrc'>28,531</td><td align="right" class='awrc'>0.00</td><td align="right" class='awrc'>4.98</td><td align="right" class='awrc'>1.23</td><td align="right" class='awrc'>48.80</td><td align="right" class='awrc'>43.26</td><td scope="row" class='awrc'><a class="awr" href="#0sbbcuruzd66f">0sbbcuruzd66f</a></td>
+<td class='awrc'>&#160;
+</td>
+<td class='awrc'>
+PDB1
+</td>
+<td class='awrc'>select /*+ rule */ bucket_cnt,...</td></tr>
+<tr><td align="right" class='awrnc'>44</td><td align="right" class='awrnc'>2,999</td><td align="right" class='awrnc'>0.01</td><td align="right" class='awrnc'>3.98</td><td align="right" class='awrnc'>0.74</td><td align="right" class='awrnc'>27.44</td><td align="right" class='awrnc'>69.92</td><td scope="row" class='awrnc'><a class="awr" href="#acmvv4fhdc9zh">acmvv4fhdc9zh</a></td>
+<td class='awrnc'>&#160;
+</td>
+<td class='awrnc'>
+PDB1
+</td>
+<td class='awrnc'>select obj#, type#, ctime, mti...</td></tr>
+<tr><td align="right" class='awrc'>23</td><td align="right" class='awrc'>49</td><td align="right" class='awrc'>0.47</td><td align="right" class='awrc'>2.08</td><td align="right" class='awrc'>8.25</td><td align="right" class='awrc'>97.77</td><td align="right" class='awrc'>0.58</td><td scope="row" class='awrc'><a class="awr" href="#5q09cmavhyq2y">5q09cmavhyq2y</a></td>
+<td class='awrc'>
+python.exe
+</td>
+<td class='awrc'>
+PDB1
+</td>
+<td class='awrc'>select owner, index_name, '' p...</td></tr>
+<tr><td align="right" class='awrnc'>17</td><td align="right" class='awrnc'>2,028</td><td align="right" class='awrnc'>0.01</td><td align="right" class='awrnc'>1.54</td><td align="right" class='awrnc'>1.29</td><td align="right" class='awrnc'>60.05</td><td align="right" class='awrnc'>18.75</td><td scope="row" class='awrnc'><a class="awr" href="#121ffmrc95v7g">121ffmrc95v7g</a></td>
+<td class='awrnc'>&#160;
+</td>
+<td class='awrnc'>
+PDB1
+</td>
+<td class='awrnc'>select i.obj#, i.ts#, i.file#,...</td></tr>
+<tr><td align="right" class='awrc'>17</td><td align="right" class='awrc'>70</td><td align="right" class='awrc'>0.24</td><td align="right" class='awrc'>1.54</td><td align="right" class='awrc'>2.21</td><td align="right" class='awrc'>91.54</td><td align="right" class='awrc'>1.59</td><td scope="row" class='awrc'><a class="awr" href="#ap4y2u336u3bj">ap4y2u336u3bj</a></td>
+<td class='awrc'>
+python.exe
+</td>
+<td class='awrc'>
+PDB1
+</td>
+<td class='awrc'>SELECT DECODE(request, 0, 'Hol...</td></tr>
+<tr><td align="right" class='awrnc'>16</td><td align="right" class='awrnc'>70</td><td align="right" class='awrnc'>0.23</td><td align="right" class='awrnc'>1.45</td><td align="right" class='awrnc'>0.59</td><td align="right" class='awrnc'>88.77</td><td align="right" class='awrnc'>3.06</td><td scope="row" class='awrnc'><a class="awr" href="#9gvqwa5g74w0x">9gvqwa5g74w0x</a></td>
+<td class='awrnc'>
+python.exe
+</td>
+<td class='awrnc'>
+PDB1
+</td>
+<td class='awrnc'> select username, trunc(expiry...</td></tr>
+</table><p />
+<hr align="left" width="20%" /><p />
+<a class="awr" href="#22">Back to SQL Statistics</a>
+<br /><a class="awr" href="#top">Back to Top</a><p />
+<a class="awr" name="740"></a>
+<h3 class="awr">SQL ordered by Physical Reads (UnOptimized)</h3>
+<ul>
+<li class="awr"> UnOptimized Read Reqs = Physical Read Reqs -       (Optimized Read Reqs - Cell Flash Cache Read Hits for Controlfile) </li>
+<li class="awr"> %Opt   - Optimized Reads as percentage of SQL Read Requests </li>
+<li class="awr"> %Total - UnOptimized Read Reqs as a percentage of Total UnOptimized Read Reqs</li>
+<li class="awr">Total Physical Read Requests:             894</li>
+<li class="awr">Captured SQL account for  903.8% of Total</li>
+<li class="awr">Total UnOptimized Read Requests:             894</li>
+<li class="awr">Captured SQL account for  903.8% of Total</li>
+<li class="awr">Total Optimized Read Requests:               1</li>
+<li class="awr">Captured SQL account for    0.0% of Total</li>
+</ul>
+<table border="0" class="tdiff" summary="This table displays top SQL by unoptimized read requests"><tr><th class="awrbg" scope="col">UnOptimized Read Reqs</th><th class="awrbg" scope="col">Physical  Read Reqs</th><th class="awrbg" scope="col">Executions</th><th class="awrbg" scope="col">UnOptimized Reqs per Exec</th><th class="awrbg" scope="col">%Opt</th><th class="awrbg" scope="col">%Total</th><th class="awrbg" scope="col">   SQL Id</th><th class="awrbg" scope="col">SQL Module</th><th class="awrbg" scope="col">PDB Name</th><th class="awrbg" scope="col">SQL Text</th></tr>
+<tr><td align="right" class='awrc'>5,040</td><td align="right" class='awrc'>5,040</td><td align="right" class='awrc'>90</td><td align="right" class='awrc'>56.00</td><td align="right" class='awrc'>0.00</td><td align="right" class='awrc'>563.76</td><td scope="row" class='awrc'><a class="awr" href="#7sf71q3d7jv00">7sf71q3d7jv00</a></td>
+<td class='awrc'>
+python.exe
+</td>
+<td class='awrc'>
+PDB1
+</td>
+<td class='awrc'> select percent_space_used fro...</td></tr>
+<tr><td align="right" class='awrnc'>2,441</td><td align="right" class='awrnc'>2,441</td><td align="right" class='awrnc'>0</td><td align="right" class='awrnc'>&#160;</td><td align="right" class='awrnc'>0.00</td><td align="right" class='awrnc'>273.04</td><td scope="row" class='awrnc'><a class="awr" href="#b6usrg82hwsa3">b6usrg82hwsa3</a></td>
+<td class='awrnc'>
+DBMS_SCHEDULER
+</td>
+<td class='awrnc'>
+PDB1
+</td>
+<td class='awrnc'>call dbms_stats.gather_databas...</td></tr>
+<tr><td align="right" class='awrc'>1,827</td><td align="right" class='awrc'>1,827</td><td align="right" class='awrc'>44</td><td align="right" class='awrc'>41.52</td><td align="right" class='awrc'>0.00</td><td align="right" class='awrc'>204.36</td><td scope="row" class='awrc'><a class="awr" href="#5v11s62zkwxd8">5v11s62zkwxd8</a></td>
+<td class='awrc'>
+python.exe
+</td>
+<td class='awrc'>
+PDB1
+</td>
+<td class='awrc'>SELECT A.tablespace_name table...</td></tr>
+<tr><td align="right" class='awrnc'>456</td><td align="right" class='awrnc'>456</td><td align="right" class='awrnc'>59</td><td align="right" class='awrnc'>7.73</td><td align="right" class='awrnc'>0.00</td><td align="right" class='awrnc'>51.01</td><td scope="row" class='awrnc'><a class="awr" href="#08ms8uqtcptg5">08ms8uqtcptg5</a></td>
+<td class='awrnc'>
+python.exe
+</td>
+<td class='awrnc'>
+PDB1
+</td>
+<td class='awrnc'>SELECT DF.TABLESPACE_NAME, COU...</td></tr>
+<tr><td align="right" class='awrc'>240</td><td align="right" class='awrc'>240</td><td align="right" class='awrc'>45</td><td align="right" class='awrc'>5.33</td><td align="right" class='awrc'>0.00</td><td align="right" class='awrc'>26.85</td><td scope="row" class='awrc'><a class="awr" href="#c8030hbby2110">c8030hbby2110</a></td>
+<td class='awrc'>
+python.exe
+</td>
+<td class='awrc'>
+PDB1
+</td>
+<td class='awrc'>select b.tablespace_name, nvl(...</td></tr>
+<tr><td align="right" class='awrnc'>176</td><td align="right" class='awrnc'>176</td><td align="right" class='awrnc'>14,085</td><td align="right" class='awrnc'>0.01</td><td align="right" class='awrnc'>0.00</td><td align="right" class='awrnc'>19.69</td><td scope="row" class='awrnc'><a class="awr" href="#2sxqgx5hx76qr">2sxqgx5hx76qr</a></td>
+<td class='awrnc'>&#160;
+</td>
+<td class='awrnc'>
+PDB1
+</td>
+<td class='awrnc'>select /*+ rule */ bucket, end...</td></tr>
+<tr><td align="right" class='awrc'>132</td><td align="right" class='awrc'>132</td><td align="right" class='awrc'>1,403</td><td align="right" class='awrc'>0.09</td><td align="right" class='awrc'>0.00</td><td align="right" class='awrc'>14.77</td><td scope="row" class='awrc'><a class="awr" href="#3un99a0zwp4vd">3un99a0zwp4vd</a></td>
+<td class='awrc'>&#160;
+</td>
+<td class='awrc'>
+PDB1
+</td>
+<td class='awrc'>select owner#, name, namespace...</td></tr>
+<tr><td align="right" class='awrnc'>69</td><td align="right" class='awrnc'>69</td><td align="right" class='awrnc'>1,403</td><td align="right" class='awrnc'>0.05</td><td align="right" class='awrnc'>0.00</td><td align="right" class='awrnc'>7.72</td><td scope="row" class='awrnc'><a class="awr" href="#8swypbbr0m372">8swypbbr0m372</a></td>
+<td class='awrnc'>&#160;
+</td>
+<td class='awrnc'>
+PDB1
+</td>
+<td class='awrnc'>select order#, columns, types ...</td></tr>
+<tr><td align="right" class='awrc'>38</td><td align="right" class='awrc'>38</td><td align="right" class='awrc'>28,531</td><td align="right" class='awrc'>0.00</td><td align="right" class='awrc'>0.00</td><td align="right" class='awrc'>4.25</td><td scope="row" class='awrc'><a class="awr" href="#0sbbcuruzd66f">0sbbcuruzd66f</a></td>
+<td class='awrc'>&#160;
+</td>
+<td class='awrc'>
+PDB1
+</td>
+<td class='awrc'>select /*+ rule */ bucket_cnt,...</td></tr>
+<tr><td align="right" class='awrnc'>23</td><td align="right" class='awrnc'>23</td><td align="right" class='awrnc'>49</td><td align="right" class='awrnc'>0.47</td><td align="right" class='awrnc'>0.00</td><td align="right" class='awrnc'>2.57</td><td scope="row" class='awrnc'><a class="awr" href="#5q09cmavhyq2y">5q09cmavhyq2y</a></td>
+<td class='awrnc'>
+python.exe
+</td>
+<td class='awrnc'>
+PDB1
+</td>
+<td class='awrnc'>select owner, index_name, '' p...</td></tr>
+<tr><td align="right" class='awrc'>17</td><td align="right" class='awrc'>17</td><td align="right" class='awrc'>70</td><td align="right" class='awrc'>0.24</td><td align="right" class='awrc'>0.00</td><td align="right" class='awrc'>1.90</td><td scope="row" class='awrc'><a class="awr" href="#ap4y2u336u3bj">ap4y2u336u3bj</a></td>
+<td class='awrc'>
+python.exe
+</td>
+<td class='awrc'>
+PDB1
+</td>
+<td class='awrc'>SELECT DECODE(request, 0, 'Hol...</td></tr>
+<tr><td align="right" class='awrnc'>16</td><td align="right" class='awrnc'>16</td><td align="right" class='awrnc'>70</td><td align="right" class='awrnc'>0.23</td><td align="right" class='awrnc'>0.00</td><td align="right" class='awrnc'>1.79</td><td scope="row" class='awrnc'><a class="awr" href="#9gvqwa5g74w0x">9gvqwa5g74w0x</a></td>
+<td class='awrnc'>
+python.exe
+</td>
+<td class='awrnc'>
+PDB1
+</td>
+<td class='awrnc'> select username, trunc(expiry...</td></tr>
+<tr><td align="right" class='awrc'>14</td><td align="right" class='awrc'>14</td><td align="right" class='awrc'>2,028</td><td align="right" class='awrc'>0.01</td><td align="right" class='awrc'>0.00</td><td align="right" class='awrc'>1.57</td><td scope="row" class='awrc'><a class="awr" href="#121ffmrc95v7g">121ffmrc95v7g</a></td>
+<td class='awrc'>&#160;
+</td>
+<td class='awrc'>
+PDB1
+</td>
+<td class='awrc'>select i.obj#, i.ts#, i.file#,...</td></tr>
+<tr><td align="right" class='awrnc'>11</td><td align="right" class='awrnc'>11</td><td align="right" class='awrnc'>4</td><td align="right" class='awrnc'>2.75</td><td align="right" class='awrnc'>0.00</td><td align="right" class='awrnc'>1.23</td><td scope="row" class='awrnc'><a class="awr" href="#ct6c4h224pxgz">ct6c4h224pxgz</a></td>
+<td class='awrnc'>
+DBMS_SCHEDULER
+</td>
+<td class='awrnc'>
+PDB1
+</td>
+<td class='awrnc'>BEGIN BEGIN IF (sys.is_vpd_ena...</td></tr>
+<tr><td align="right" class='awrc'>9</td><td align="right" class='awrc'>9</td><td align="right" class='awrc'>29</td><td align="right" class='awrc'>0.31</td><td align="right" class='awrc'>0.00</td><td align="right" class='awrc'>1.01</td><td scope="row" class='awrc'><a class="awr" href="#5wxyshspv54v4">5wxyshspv54v4</a></td>
+<td class='awrc'>&#160;
+</td>
+<td class='awrc'>
+PDB1
+</td>
+<td class='awrc'>select tc.type#, tc.intcol#, t...</td></tr>
+</table><p />
+<hr align="left" width="20%" /><p />
+<a class="awr" href="#22">Back to SQL Statistics</a>
+<br /><a class="awr" href="#top">Back to Top</a><p />
+<a class="awr" name="800"></a>
+<h3 class="awr">SQL ordered by Executions</h3>
+<ul>
+<li class="awr"> %CPU   - CPU Time      as a percentage of Elapsed Time </li>
+<li class="awr"> %IO    - User I/O Time as a percentage of Elapsed Time</li>
+<li class="awr">Total Executions:         134,857</li>
+<li class="awr">Captured SQL account for   63.6% of Total</li>
+</ul>
+<table border="0" class="tdiff" summary="This table displays top SQL by number of executions"><tr><th class="awrbg" scope="col">Executions </th><th class="awrbg" scope="col">Rows Processed</th><th class="awrbg" scope="col">Rows per Exec</th><th class="awrbg" scope="col">Elapsed  Time (s)</th><th class="awrbg" scope="col"> %CPU</th><th class="awrbg" scope="col">  %IO</th><th class="awrbg" scope="col">   SQL Id</th><th class="awrbg" scope="col">SQL Module</th><th class="awrbg" scope="col">PDB Name</th><th class="awrbg" scope="col">SQL Text</th></tr>
+<tr><td align="right" class='awrc'>28,531</td><td align="right" class='awrc'>27,971</td><td align="right" class='awrc'>0.98</td><td align="right" class='awrc'>1.23</td><td class='awrc'>48.8</td><td class='awrc'>43.3</td><td scope="row" class='awrc'><a class="awr" href="#0sbbcuruzd66f">0sbbcuruzd66f</a></td>
+<td class='awrc'>&#160;
+</td>
+<td class='awrc'>
+PDB1
+</td>
+<td class='awrc'>select /*+ rule */ bucket_cnt,...</td></tr>
+<tr><td align="right" class='awrnc'>17,905</td><td align="right" class='awrnc'>1,404</td><td align="right" class='awrnc'>0.08</td><td align="right" class='awrnc'>0.26</td><td class='awrnc'>77.9</td><td class='awrnc'>0</td><td scope="row" class='awrnc'><a class="awr" href="#87gaftwrm2h68">87gaftwrm2h68</a></td>
+<td class='awrnc'>&#160;
+</td>
+<td class='awrnc'>
+PDB1
+</td>
+<td class='awrnc'>select o.owner#, o.name, o.nam...</td></tr>
+<tr><td align="right" class='awrc'>14,085</td><td align="right" class='awrc'>220,638</td><td align="right" class='awrc'>15.66</td><td align="right" class='awrc'>2.46</td><td class='awrc'>36.4</td><td class='awrc'>44.5</td><td scope="row" class='awrc'><a class="awr" href="#2sxqgx5hx76qr">2sxqgx5hx76qr</a></td>
+<td class='awrc'>&#160;
+</td>
+<td class='awrc'>
+PDB1
+</td>
+<td class='awrc'>select /*+ rule */ bucket, end...</td></tr>
+<tr><td align="right" class='awrnc'>3,683</td><td align="right" class='awrnc'>0</td><td align="right" class='awrnc'>0.00</td><td align="right" class='awrnc'>0.30</td><td class='awrnc'>76.1</td><td class='awrnc'>0</td><td scope="row" class='awrnc'><a class="awr" href="#04kug40zbu4dm">04kug40zbu4dm</a></td>
+<td class='awrnc'>&#160;
+</td>
+<td class='awrnc'>
+PDB1
+</td>
+<td class='awrnc'>select policy#, action# from a...</td></tr>
+<tr><td align="right" class='awrc'>2,999</td><td align="right" class='awrc'>2,905</td><td align="right" class='awrc'>0.97</td><td align="right" class='awrc'>0.74</td><td class='awrc'>27.4</td><td class='awrc'>69.9</td><td scope="row" class='awrc'><a class="awr" href="#acmvv4fhdc9zh">acmvv4fhdc9zh</a></td>
+<td class='awrc'>&#160;
+</td>
+<td class='awrc'>
+PDB1
+</td>
+<td class='awrc'>select obj#, type#, ctime, mti...</td></tr>
+<tr><td align="right" class='awrnc'>2,542</td><td align="right" class='awrnc'>36,857</td><td align="right" class='awrnc'>14.50</td><td align="right" class='awrnc'>0.51</td><td class='awrnc'>80.9</td><td class='awrnc'>2</td><td scope="row" class='awrnc'><a class="awr" href="#9t4vxdppkv534">9t4vxdppkv534</a></td>
+<td class='awrnc'>&#160;
+</td>
+<td class='awrnc'>
+PDB1
+</td>
+<td class='awrnc'>select name, intcol#, segcol#,...</td></tr>
+<tr><td align="right" class='awrc'>2,266</td><td align="right" class='awrc'>2,266</td><td align="right" class='awrc'>1.00</td><td align="right" class='awrc'>0.28</td><td class='awrc'>72.9</td><td class='awrc'>.1</td><td scope="row" class='awrc'><a class="awr" href="#aaz3bayav0jwj">aaz3bayav0jwj</a></td>
+<td class='awrc'>&#160;
+</td>
+<td class='awrc'>
+PDB1
+</td>
+<td class='awrc'>update /* KSXM:FLUSH COL */ sy...</td></tr>
+<tr><td align="right" class='awrnc'>2,028</td><td align="right" class='awrnc'>2,834</td><td align="right" class='awrnc'>1.40</td><td align="right" class='awrnc'>1.29</td><td class='awrnc'>60.1</td><td class='awrnc'>18.8</td><td scope="row" class='awrnc'><a class="awr" href="#121ffmrc95v7g">121ffmrc95v7g</a></td>
+<td class='awrnc'>&#160;
+</td>
+<td class='awrnc'>
+PDB1
+</td>
+<td class='awrnc'>select i.obj#, i.ts#, i.file#,...</td></tr>
+<tr><td align="right" class='awrc'>1,893</td><td align="right" class='awrc'>895</td><td align="right" class='awrc'>0.47</td><td align="right" class='awrc'>0.09</td><td class='awrc'>88.2</td><td class='awrc'>0</td><td scope="row" class='awrc'><a class="awr" href="#asvzxj61dc5vs">asvzxj61dc5vs</a></td>
+<td class='awrc'>&#160;
+</td>
+<td class='awrc'>
+PDB1
+</td>
+<td class='awrc'>select timestamp, flags from f...</td></tr>
+<tr><td align="right" class='awrnc'>1,403</td><td align="right" class='awrnc'>6,048</td><td align="right" class='awrnc'>4.31</td><td align="right" class='awrnc'>1.28</td><td class='awrnc'>21.2</td><td class='awrnc'>74</td><td scope="row" class='awrnc'><a class="awr" href="#3un99a0zwp4vd">3un99a0zwp4vd</a></td>
+<td class='awrnc'>&#160;
+</td>
+<td class='awrnc'>
+PDB1
+</td>
+<td class='awrnc'>select owner#, name, namespace...</td></tr>
+<tr><td align="right" class='awrc'>1,403</td><td align="right" class='awrc'>4,449</td><td align="right" class='awrc'>3.17</td><td align="right" class='awrc'>0.79</td><td class='awrc'>14.6</td><td class='awrc'>79.6</td><td scope="row" class='awrc'><a class="awr" href="#8swypbbr0m372">8swypbbr0m372</a></td>
+<td class='awrc'>&#160;
+</td>
+<td class='awrc'>
+PDB1
+</td>
+<td class='awrc'>select order#, columns, types ...</td></tr>
+</table><p />
+<hr align="left" width="20%" /><p />
+<a class="awr" href="#22">Back to SQL Statistics</a>
+<br /><a class="awr" href="#top">Back to Top</a><p />
+<a class="awr" name="900"></a>
+<h3 class="awr">SQL ordered by Parse Calls</h3>
+<ul>
+<li class="awr">Total Parse Calls:          24,503</li>
+<li class="awr">Captured SQL account for   42.1% of Total</li>
+</ul>
+<table border="0" class="tdiff" summary="This table displays top SQL by number of parse calls"><tr><th class="awrbg" scope="col">Parse Calls</th><th class="awrbg" scope="col">Executions </th><th class="awrbg" scope="col">% Total Parses</th><th class="awrbg" scope="col">   SQL Id</th><th class="awrbg" scope="col">SQL Module</th><th class="awrbg" scope="col">PDB Name</th><th class="awrbg" scope="col">SQL Text</th></tr>
+<tr><td align="right" class='awrc'>1,893</td><td align="right" class='awrc'>1,893</td><td align="right" class='awrc'>7.73</td><td scope="row" class='awrc'><a class="awr" href="#asvzxj61dc5vs">asvzxj61dc5vs</a></td>
+<td class='awrc'>&#160;
+</td>
+<td class='awrc'>
+PDB1
+</td>
+<td class='awrc'>select timestamp, flags from f...</td></tr>
+<tr><td align="right" class='awrnc'>1,403</td><td align="right" class='awrnc'>1,403</td><td align="right" class='awrnc'>5.73</td><td scope="row" class='awrnc'><a class="awr" href="#3un99a0zwp4vd">3un99a0zwp4vd</a></td>
+<td class='awrnc'>&#160;
+</td>
+<td class='awrnc'>
+PDB1
+</td>
+<td class='awrnc'>select owner#, name, namespace...</td></tr>
+<tr><td align="right" class='awrc'>1,403</td><td align="right" class='awrc'>1,403</td><td align="right" class='awrc'>5.73</td><td scope="row" class='awrc'><a class="awr" href="#8swypbbr0m372">8swypbbr0m372</a></td>
+<td class='awrc'>&#160;
+</td>
+<td class='awrc'>
+PDB1
+</td>
+<td class='awrc'>select order#, columns, types ...</td></tr>
+<tr><td align="right" class='awrnc'>848</td><td align="right" class='awrnc'>848</td><td align="right" class='awrnc'>3.46</td><td scope="row" class='awrnc'><a class="awr" href="#5u7g54s63p4ts">5u7g54s63p4ts</a></td>
+<td class='awrnc'>&#160;
+</td>
+<td class='awrnc'>
+PDB1
+</td>
+<td class='awrnc'>select toid from type$ where p...</td></tr>
+<tr><td align="right" class='awrc'>817</td><td align="right" class='awrc'>2,266</td><td align="right" class='awrc'>3.33</td><td scope="row" class='awrc'><a class="awr" href="#aaz3bayav0jwj">aaz3bayav0jwj</a></td>
+<td class='awrc'>&#160;
+</td>
+<td class='awrc'>
+PDB1
+</td>
+<td class='awrc'>update /* KSXM:FLUSH COL */ sy...</td></tr>
+<tr><td align="right" class='awrnc'>656</td><td align="right" class='awrnc'>656</td><td align="right" class='awrnc'>2.68</td><td scope="row" class='awrnc'><a class="awr" href="#6qz82dptj0qr7">6qz82dptj0qr7</a></td>
+<td class='awrnc'>&#160;
+</td>
+<td class='awrnc'>
+PDB1
+</td>
+<td class='awrnc'>select l.col#, l.intcol#, l.lo...</td></tr>
+<tr><td align="right" class='awrc'>600</td><td align="right" class='awrc'>600</td><td align="right" class='awrc'>2.45</td><td scope="row" class='awrc'><a class="awr" href="#f3yqgm464ygss">f3yqgm464ygss</a></td>
+<td class='awrc'>&#160;
+</td>
+<td class='awrc'>
+PDB1
+</td>
+<td class='awrc'>SELECT /*+ NO_STATEMENT_QUEUIN...</td></tr>
+<tr><td align="right" class='awrnc'>476</td><td align="right" class='awrnc'>476</td><td align="right" class='awrnc'>1.94</td><td scope="row" class='awrnc'><a class="awr" href="#afx304d90ps3z">afx304d90ps3z</a></td>
+<td class='awrnc'>&#160;
+</td>
+<td class='awrnc'>
+PDB1
+</td>
+<td class='awrnc'>select rowcnt, blkcnt, empcnt,...</td></tr>
+<tr><td align="right" class='awrc'>334</td><td align="right" class='awrc'>334</td><td align="right" class='awrc'>1.36</td><td scope="row" class='awrc'><a class="awr" href="#gjaap3w3qbf8c">gjaap3w3qbf8c</a></td>
+<td class='awrc'>&#160;
+</td>
+<td class='awrc'>
+PDB1
+</td>
+<td class='awrc'>select count(*) from ilmobj$ w...</td></tr>
+<tr><td align="right" class='awrnc'>143</td><td align="right" class='awrnc'>143</td><td align="right" class='awrnc'>0.58</td><td scope="row" class='awrnc'><a class="awr" href="#gngtvs38t0060">gngtvs38t0060</a></td>
+<td class='awrnc'>&#160;
+</td>
+<td class='awrnc'>
+PDB1
+</td>
+<td class='awrnc'>SELECT /*+ CONNECT_BY_FILTERIN...</td></tr>
+</table><p />
+<hr align="left" width="20%" /><p />
+<a class="awr" href="#22">Back to SQL Statistics</a>
+<br /><a class="awr" href="#top">Back to Top</a><p />
+<a class="awr" name="1000"></a>
+<h3 class="awr">SQL ordered by Sharable Memory</h3>
+<p />
+                  No data exists for this section of the report.
+<p />
+<a class="awr" href="#22">Back to SQL Statistics</a>
+<br /><a class="awr" href="#top">Back to Top</a><p />
+<a class="awr" name="1100"></a>
+<h3 class="awr">SQL ordered by Version Count</h3>
+<p />
+                  No data exists for this section of the report.
+<p />
+<a class="awr" href="#22">Back to SQL Statistics</a>
+<br /><a class="awr" href="#top">Back to Top</a><p />
+<a class="awr" name="99997"></a>
+<p />
+<h3 class="awr">Complete List of SQL Text</h3><p />
+<table border="0" class="tdiff" summary="This table displays the text of the SQL statements which have been
+      referred to in the report">
+<tr><th class="awrbg" scope="col">SQL Id</th><th class="awrbg" scope="col">SQL Text</th></tr>
+<tr><td scope="row" class='awrc'><a class="awr" name="04kug40zbu4dm"></a>04kug40zbu4dm</td><td class='awrc'>select policy#,  action# from aud_object_opt$ where object# = :1 and type = 2</td></tr>
+<tr><td scope="row" class='awrnc'><a class="awr" name="08ms8uqtcptg5"></a>08ms8uqtcptg5</td><td class='awrnc'>SELECT DF.TABLESPACE_NAME, 
+       COUNT(*) DATAFILE_COUNT, 
+       ROUND(SUM(DF.BYTES) / 1048576 / 1024,  2) SIZE_GB, 
+       ROUND(SUM(FREE.BYTES) / 1048576 / 1024,  2) FREE_GB, 
+       ROUND(SUM(DF.BYTES) / 1048576 / 1024 -
+             SUM(FREE.BYTES) / 1048576 / 1024, 
+             2) USED_GB, 
+       ROUND(MAX(FREE.MAXBYTES) / 1048576 / 1024,  2) MAXFREE, 
+       100 - ROUND(100.0 * SUM(FREE.BYTES) / SUM(DF.BYTES),  2) PCT_USED, 
+       ROUND(100.0 * SUM(FREE.BYTES) / SUM(DF.BYTES),  2) PCT_FREE
+  FROM DBA_DATA_FILES DF, 
+       (SELECT TABLESPACE_NAME, 
+               FILE_ID, 
+               SUM(BYTES) BYTES, 
+               MAX(BYTES) MAXBYTES
+          FROM DBA_FREE_SPACE
+         WHERE BYTES &gt; 1024 * 1024
+         GROUP BY TABLESPACE_NAME,  FILE_ID) FREE
+ WHERE DF.TABLESPACE_NAME = FREE.TABLESPACE_NAME(+) AND DF.TABLESPACE_NAME NOT LIKE 'UNDO%'
+   AND DF.FILE_ID = FREE.FILE_ID(+)
+ GROUP BY DF.TABLESPACE_NAME
+ ORDER BY 8</td></tr>
+<tr><td scope="row" class='awrc'><a class="awr" name="0sbbcuruzd66f"></a>0sbbcuruzd66f</td><td class='awrc'>select /*+ rule */ bucket_cnt,  row_cnt,  cache_cnt,  null_cnt,  timestamp#,  sample_size,  minimum,  maximum,  distcnt,  lowval,  hival,  density,  col#,  spare1,  spare2,  avgcln,  minimum_enc,  maximum_enc from hist_head$ where obj#=:1 and intcol#=:2</td></tr>
+<tr><td scope="row" class='awrnc'><a class="awr" name="121ffmrc95v7g"></a>121ffmrc95v7g</td><td class='awrnc'>select i.obj#, i.ts#, i.file#, i.block#, i.intcols, i.type#, i.flags, i.property, i.pctfree$, i.initrans, i.maxtrans, i.blevel, i.leafcnt, i.distkey, i.lblkkey, i.dblkkey, i.clufac, i.cols, i.analyzetime, i.samplesize, i.dataobj#, nvl(i.degree, 1), nvl(i.instances, 1), i.rowcnt, mod(i.pctthres$, 256), i.indmethod#, i.trunccnt, nvl(c.unicols, 0), nvl(c.deferrable#+c.valid#, 0), nvl(i.spare1, i.intcols), i.spare4, i.spare2, i.spare6, decode(i.pctthres$, null, null, mod(trunc(i.pctthres$/256), 256)), nvl(i.evaledition#, 1), nvl(i.unusablebefore#, 0), nvl(i.unusablebeginning#, 0),  ist.cachedblk, ist.cachehit, ist.logicalread from ind$ i,  ind_stats$ ist,  (select enabled,  min(intcols) unicols, min(to_number(bitand(defer, 1))) deferrable#, min(to_number(bitand(defer, 4))) valid# from cdef$ where obj#=:1 and enabled &gt; 1 group by enabled) c where i.obj#=c.enabled(+) and i.obj# = ist.obj#(+) and i.bo#=:1 order by i.obj#</td></tr>
+<tr><td scope="row" class='awrc'><a class="awr" name="2sxqgx5hx76qr"></a>2sxqgx5hx76qr</td><td class='awrc'>select /*+ rule */ bucket,  endpoint,  col#,  epvalue,  epvalue_raw,  ep_repeat_count,  endpoint_enc from histgrm$ where obj#=:1 and intcol#=:2 and row#=:3 order by bucket</td></tr>
+<tr><td scope="row" class='awrnc'><a class="awr" name="3un99a0zwp4vd"></a>3un99a0zwp4vd</td><td class='awrnc'>select owner#, name, namespace, remoteowner, linkname, p_timestamp, p_obj#,  nvl(property, 0), subname, type#, flags, d_attrs from dependency$ d,  obj$ o where d_obj#=:1 and p_obj#=obj#(+) order by order#</td></tr>
+<tr><td scope="row" class='awrc'><a class="awr" name="5pj6mtazkhmdd"></a>5pj6mtazkhmdd</td><td class='awrc'>BEGIN /* KSXM:FLUSH DML_MON */    dbms_stats_internal.gather_scan_rate_by_mmon;  END;</td></tr>
+<tr><td scope="row" class='awrnc'><a class="awr" name="5q09cmavhyq2y"></a>5q09cmavhyq2y</td><td class='awrnc'>select owner,  index_name,  '' partition_name,  status
+  from dba_indexes
+ where status not in ('VALID',  'N/A')
+union all
+select i.owner,  i.index_name,  p.partition_name,  p.status
+  from dba_ind_partitions p,  dba_indexes i
+ where p.index_name = i.index_name
+   and p.index_owner = i.owner
+   and p.status != 'USABLE'
+union all
+select i.owner,  i.index_name,  s.subpartition_name,  s.status
+  from dba_ind_subpartitions s,  dba_indexes i
+ where s.index_name = i.index_name
+   and s.index_name = i.index_name
+   and s.status != 'USABLE' </td></tr>
+<tr><td scope="row" class='awrc'><a class="awr" name="5u7g54s63p4ts"></a>5u7g54s63p4ts</td><td class='awrc'>select toid from type$ where package_obj#=:1 and typ_name=:2</td></tr>
+<tr><td scope="row" class='awrnc'><a class="awr" name="5v11s62zkwxd8"></a>5v11s62zkwxd8</td><td class='awrnc'>SELECT A.tablespace_name tablespace, 
+       D.mb_total, 
+       SUM(A.used_blocks * D.block_size) / 1024 / 1024 mb_used, 
+       trunc(100*SUM(A.used_blocks * D.block_size) / 1024 / 1024/D.mb_total) used_PCT
+  FROM v$sort_segment A, 
+       (SELECT B.name,  C.block_size,  SUM(C.bytes) / 1024 / 1024 mb_total
+          FROM v$tablespace B,  v$tempfile C
+         WHERE B.ts# = C.ts#
+         GROUP BY B.name,  C.block_size) D
+ WHERE A.tablespace_name = D.name
+ GROUP by A.tablespace_name,  D.mb_total</td></tr>
+<tr><td scope="row" class='awrc'><a class="awr" name="5wxyshspv54v4"></a>5wxyshspv54v4</td><td class='awrc'>select tc.type#, tc.intcol#, tc.position#, c.type#,  c.length, c.scale, c.precision#, c.charsetid, c.charsetform,  decode(bitand(c.property, 8388608), 8388608,  c.spare3,  0) from triggercol$ tc, col$ c,  trigger$ tr where tc.obj#=:1 and tc.intcol#=c.intcol# and tr.obj# = tc.obj# and (bitand(tr.property, 32) != 32 or bitand(tc.type#, 20) = 20) and (   c.obj#=:2 and (bitand(tc.type#,  1024) = :3 or tc.type# = 0)      or c.obj#=:4 and bitand(tc.type#,  1024) = :5      or c.obj#=:6 and tc.type# = 0 and tc.position# = 0) union select type#, intcol#, position#, 69, 0, 0, 0, 0, 0, 0 from triggercol$ where obj#=:7 and intcol#=1001 union select tc.type#, tc.intcol#, tc.position#, 121, 0, 0, 0, 0, 0, 0 from triggercol$ tc, trigger$ tr where tr.obj# = tc.obj# and bitand(tr.property, 32) = 32 and tc.obj# = :8 and bitand(tc.type#, 20) != 20</td></tr>
+<tr><td scope="row" class='awrnc'><a class="awr" name="6qz82dptj0qr7"></a>6qz82dptj0qr7</td><td class='awrnc'>select l.col#,  l.intcol#,  l.lobj#,  l.ind#,  l.ts#,  l.file#,  l.block#,  l.chunk,  l.pctversion$,  l.flags,  l.property,  l.retention,  l.freepools from lob$ l where l.obj# = :1 order by l.intcol# asc</td></tr>
+<tr><td scope="row" class='awrc'><a class="awr" name="7sf71q3d7jv00"></a>7sf71q3d7jv00</td><td class='awrc'> select percent_space_used from v$flash_recovery_area_usage a where a.file_type='ARCHIVED LOG' </td></tr>
+<tr><td scope="row" class='awrnc'><a class="awr" name="86kwhy1f0bttn"></a>86kwhy1f0bttn</td><td class='awrnc'>SELECT /*+ ALL_ROWS */ COUNT(*) FROM DBA_POLICIES V WHERE V.OBJECT_OWNER = :B3 AND V.OBJECT_NAME = :B2 AND (V.POLICY_NAME LIKE '%xdbrls%' OR V.POLICY_NAME LIKE '%$xd_%') AND V.FUNCTION = :B1 </td></tr>
+<tr><td scope="row" class='awrc'><a class="awr" name="87gaftwrm2h68"></a>87gaftwrm2h68</td><td class='awrc'>select o.owner#, o.name, o.namespace, o.remoteowner, o.linkname, o.subname from obj$ o where o.obj#=:1</td></tr>
+<tr><td scope="row" class='awrnc'><a class="awr" name="8f9r8kr5cs6h9"></a>8f9r8kr5cs6h9</td><td class='awrnc'>SELECT /*+ NO_STATEMENT_QUEUING RESULT_CACHE (SYSOBJ=TRUE) */ OWNER, OBJECT_NAME, OBJECT_ID, OBJECT_TYPE FROM &quot;SYS&quot;.&quot;DBA_OBJECTS&quot; &quot;DBA_OBJECTS&quot; WHERE 1=1</td></tr>
+<tr><td scope="row" class='awrc'><a class="awr" name="8swypbbr0m372"></a>8swypbbr0m372</td><td class='awrc'>select order#, columns, types from access$ where d_obj#=:1</td></tr>
+<tr><td scope="row" class='awrnc'><a class="awr" name="9gvqwa5g74w0x"></a>9gvqwa5g74w0x</td><td class='awrnc'> select username,  trunc(expiry_date - sysdate) result_number
+  from dba_users
+ where expiry_date is not null
+   and account_status = 'OPEN'
+   and expiry_date - sysdate &lt;  7
+   and username not in ('SYS')
+ </td></tr>
+<tr><td scope="row" class='awrc'><a class="awr" name="9t4vxdppkv534"></a>9t4vxdppkv534</td><td class='awrc'>select name, intcol#, segcol#, type#, length, nvl(precision#, 0), decode(type#, 2, nvl(scale, -127/*MAXSB1MINAL*/), 178, scale, 179, scale, 180, scale, 181, scale, 182, scale, 183, scale, 231, scale, 0), null$, fixedstorage, nvl(deflength, 0), default$, rowid, col#, property,  nvl(charsetid, 0), nvl(charsetform, 0), spare1, spare2, nvl(spare3, 0),  nvl(evaledition#, 1), nvl(unusablebefore#, 0), nvl(unusablebeginning#, 0),  case when (type# in (1, 8, 9, 96, 112)) then nvl(collid,  16382) else 0 end case,  nvl(collintcol#, 0),  nvl(acdrrescol#,  0),  nvl(spare7,  0) from col$ where obj#=:1 order by intcol#</td></tr>
+<tr><td scope="row" class='awrnc'><a class="awr" name="aaz3bayav0jwj"></a>aaz3bayav0jwj</td><td class='awrnc'>update /* KSXM:FLUSH COL */ sys.col_usage$ set                  equality_preds    = equality_preds    + decode(bitand(:flag, 1), 0, 0, 1),    equijoin_preds    = equijoin_preds    + decode(bitand(:flag, 2), 0, 0, 1),    nonequijoin_preds = nonequijoin_preds + decode(bitand(:flag, 4), 0, 0, 1),    range_preds       = range_preds       + decode(bitand(:flag, 8), 0, 0, 1),    like_preds        = like_preds        + decode(bitand(:flag, 16), 0, 0, 1),    null_preds        = null_preds        + decode(bitand(:flag, 32), 0, 0, 1),    flags             = :flag,     timestamp = :time where obj# = :objn and intcol# = :coln</td></tr>
+<tr><td scope="row" class='awrc'><a class="awr" name="acmvv4fhdc9zh"></a>acmvv4fhdc9zh</td><td class='awrc'>select obj#, type#, ctime, mtime, stime,  status,  dataobj#,  flags,  oid$,  spare1,  spare2,  spare3,  signature,  spare7,  spare8,  spare9,  nvl(dflcollid,  16382),  creappid,  creverid,  modappid,  modverid,  crepatchid,  modpatchid from obj$ where owner#=:1 and name=:2 and namespace=:3 and remoteowner is null and linkname is null and subname is null</td></tr>
+<tr><td scope="row" class='awrnc'><a class="awr" name="afx304d90ps3z"></a>afx304d90ps3z</td><td class='awrnc'>select rowcnt,  blkcnt,  empcnt,  avgspc,  chncnt,  avgrln,  analyzetime,  samplesize,  avgspc_flb,  flbcnt,  flags from tab_stats$ where obj#=:1</td></tr>
+<tr><td scope="row" class='awrc'><a class="awr" name="ap4y2u336u3bj"></a>ap4y2u336u3bj</td><td class='awrc'>SELECT DECODE(request,  0,  'Holder: ',  'Waiter: ') || SID sess, 
+       decode(lmode, 
+              0, 
+              'none', 
+              1, 
+              'null', 
+              2, 
+              'row share', 
+              3, 
+              'row exclusive', 
+              4, 
+              'share', 
+              5, 
+              'share row exclusive', 
+              6, 
+              'exclusive') lmode, 
+       ctime, 
+       inst_id, 
+       id1, 
+       id2, 
+       lmode, 
+       request, 
+       TYPE, 
+       sid session_id
+  FROM gV$LOCK
+ WHERE (id1,  id2,  TYPE) IN
+       (SELECT id1,  id2,  TYPE FROM gV$LOCK WHERE request &gt; 0)
+ ORDER BY id1,  request</td></tr>
+<tr><td scope="row" class='awrnc'><a class="awr" name="asvzxj61dc5vs"></a>asvzxj61dc5vs</td><td class='awrnc'>select timestamp,  flags from fixed_obj$ where obj#=:1</td></tr>
+<tr><td scope="row" class='awrc'><a class="awr" name="b13g21mgg8y98"></a>b13g21mgg8y98</td><td class='awrc'>
+insert /* KSXM:TAKE_SNPSHOT */ into sys.optstat_snapshot$ (obj#,  inserts,  updates,  deletes,  timestamp,  flags) (select m.obj#,  m.inserts,  m.updates,  m.deletes,  systimestamp,   dbms_stats_advisor.compute_volatile_flag(    m.obj#,  m.flags,  :flags,  m.inserts,  m.updates,  m.deletes,     s.inserts,  s.updates,  s.deletes,  null,     nvl(to_number(p.valchar),  :global_stale_pcnt),  s.gather) flags from sys.mon_mods_all$ m,  (select si.obj#,  max(si.inserts) inserts,  max(si.updates) updates,     max(si.deletes) deletes,  decode(bitand(max(si.flags),  :gather_flag),  0,                                'NO_GATHER',  'GATHER') gather,     max(si.timestamp) timestamp  from sys.optstat_snapshot$ si,   (select obj#,  max(timestamp) ts from sys.optstat_snapshot$   group by obj#) sm  where si.obj# = sm.obj# and si.timestamp = sm.ts  group by si.obj#) s,  sys.optstat_user_prefs$ p where m.obj# = s.obj#(+)  and m.obj# = p.obj#(+) and pname(+) = 'STALE_PERCENT'  and dbms_stats_advisor.check_
+mmon_policy_violation(rownum,  6,  2) = 0) </td></tr>
+<tr><td scope="row" class='awrnc'><a class="awr" name="b6usrg82hwsa3"></a>b6usrg82hwsa3</td><td class='awrnc'>call dbms_stats.gather_database_stats_job_proc (  )</td></tr>
+<tr><td scope="row" class='awrc'><a class="awr" name="c8030hbby2110"></a>c8030hbby2110</td><td class='awrc'>select  b.tablespace_name, 
+       nvl(used_undo,  0) &quot;USED_UNDO(M)&quot;, 
+       total_undo &quot;Total_undo(M)&quot;, 
+       trunc(nvl(used_undo,  0) / total_undo * 100,  2) used_PCT
+  from (select nvl(sum(bytes / 1024 / 1024),  0) used_undo,  tablespace_name
+          from dba_undo_extents
+         where status in ('ACTIVE',  'UNEXPIRED')
+           and tablespace_name in
+               (select value from v$parameter where name = 'undo_tablespace')
+         group by tablespace_name) a, 
+       (select tablespace_name,  sum(bytes / 1024 / 1024) total_undo
+          from dba_data_files
+         where tablespace_name in
+               (select upper(value) from v$parameter where name = 'undo_tablespace')
+         group by tablespace_name) b
+ where a.tablespace_name(+) = b.tablespace_name</td></tr>
+<tr><td scope="row" class='awrnc'><a class="awr" name="ct6c4h224pxgz"></a>ct6c4h224pxgz</td><td class='awrnc'>BEGIN
+  BEGIN
+    IF (sys.is_vpd_enabled(sys.dictionary_obj_owner,  sys.dictionary_obj_name,  xdb.DBMS_XDBZ.IS_ENABLED_CONTENTS)) THEN
+      xdb.XDB_PITRIG_PKG.pitrig_truncate(sys.dictionary_obj_owner,  sys.dictionary_obj_name);
+    ELSIF (sys.is_vpd_enabled(sys.dictionary_obj_owner,  sys.dictionary_obj_name,  xdb.DBMS_XDBZ.IS_ENABLED_RESMETADATA)) THEN
+      xdb.XDB_PITRIG_PKG.pitrig_dropmetadata(sys.dictionary_obj_owner,  sys.dictionary_obj_name);
+    END IF;
+  EXCEPTION
+    WHEN OTHERS THEN
+     null;
+  END;
+END;</td></tr>
+<tr><td scope="row" class='awrc'><a class="awr" name="f3yqgm464ygss"></a>f3yqgm464ygss</td><td class='awrc'>SELECT /*+ NO_STATEMENT_QUEUING RESULT_CACHE (SYSOBJ=FALSE) */ JOB, LAST_DATE, THIS_DATE, NEXT_DATE, FIELD1 FROM &quot;SYS&quot;.&quot;JOB$_REDUCED&quot; &quot;JOB$_REDUCED&quot; WHERE 1=1</td></tr>
+<tr><td scope="row" class='awrnc'><a class="awr" name="gjaap3w3qbf8c"></a>gjaap3w3qbf8c</td><td class='awrnc'>select count(*) from ilmobj$ where rownum = 1</td></tr>
+<tr><td scope="row" class='awrc'><a class="awr" name="gngtvs38t0060"></a>gngtvs38t0060</td><td class='awrc'>SELECT /*+ CONNECT_BY_FILTERING */ s.privilege# FROM sys.sysauth$ s        CONNECT BY s.grantee# = PRIOR s.privilege#                                 AND (s.privilege# &gt; 0 OR s.privilege# = -352)                              START WITH (s.privilege# &gt; 0 OR s.privilege# = -352) AND s.grantee# IN     (SELECT c1.privilege# FROM sys.codeauth$ c1 WHERE c1.obj# = :1)            UNION                                                                      SELECT c2.privilege# FROM sys.codeauth$ c2 WHERE c2.obj# = :2              ORDER BY 1 ASC</td></tr>
+</table>
+<p />
+<a class="awr" href="#22">Back to SQL Statistics</a>
+<br /><a class="awr" href="#top">Back to Top</a><p />
+<p />
+<a class="awr" name="23"></a>
+<h2 class="awr">
+Instance Activity Statistics
+</h2>
+<ul>
+<li class="awr"><a class="awr" href="#1200">Key Instance Activity Stats</a></li>
+<li class="awr"><a class="awr" href="#1250">Instance Activity Stats</a></li>
+<li class="awr"><a class="awr" href="#1300">Instance Activity Stats - Absolute Values</a></li>
+</ul>
+<a class="awr" href="#top">Back to Top</a><p />
+<a class="awr" name="1200"></a>
+<h3 class="awr">Key Instance Activity Stats</h3>
+<ul>
+<li class="awr"> Ordered by statistic name</li>
+</ul>
+<table border="0" class="tdiff" summary="This table displays Key Instance activity statistics. For each instance, activity total, activity per second, and activity per transaction are displayed"><tr><th class="awrbg" scope="col">Statistic</th><th class="awrbg" scope="col">Total</th><th class="awrbg" scope="col">per Second</th><th class="awrbg" scope="col">per Trans</th></tr>
+<tr><td scope="row" class='awrc'>db block changes</td><td align="right" class='awrc'>1,114</td><td align="right" class='awrc'>0.05</td><td align="right" class='awrc'>6.83</td></tr>
+<tr><td scope="row" class='awrnc'>execute count</td><td align="right" class='awrnc'>134,857</td><td align="right" class='awrnc'>6.65</td><td align="right" class='awrnc'>827.34</td></tr>
+<tr><td scope="row" class='awrc'>logons cumulative</td><td align="right" class='awrc'>172</td><td align="right" class='awrc'>0.01</td><td align="right" class='awrc'>1.06</td></tr>
+<tr><td scope="row" class='awrnc'>opened cursors cumulative</td><td align="right" class='awrnc'>112,320</td><td align="right" class='awrnc'>5.54</td><td align="right" class='awrnc'>689.08</td></tr>
+<tr><td scope="row" class='awrc'>parse count (total)</td><td align="right" class='awrc'>24,503</td><td align="right" class='awrc'>1.21</td><td align="right" class='awrc'>150.33</td></tr>
+<tr><td scope="row" class='awrnc'>parse time elapsed</td><td align="right" class='awrnc'>9,463</td><td align="right" class='awrnc'>0.47</td><td align="right" class='awrnc'>58.06</td></tr>
+<tr><td scope="row" class='awrc'>physical reads</td><td align="right" class='awrc'>1,105</td><td align="right" class='awrc'>0.05</td><td align="right" class='awrc'>6.78</td></tr>
+<tr><td scope="row" class='awrnc'>redo size</td><td align="right" class='awrnc'>186,708</td><td align="right" class='awrnc'>9.21</td><td align="right" class='awrnc'>1,145.45</td></tr>
+<tr><td scope="row" class='awrc'>session cursor cache hits</td><td align="right" class='awrc'>127,296</td><td align="right" class='awrc'>6.28</td><td align="right" class='awrc'>780.96</td></tr>
+<tr><td scope="row" class='awrnc'>session logical reads</td><td align="right" class='awrnc'>742,229</td><td align="right" class='awrnc'>36.61</td><td align="right" class='awrnc'>4,553.55</td></tr>
+<tr><td scope="row" class='awrc'>user calls</td><td align="right" class='awrc'>6,560</td><td align="right" class='awrc'>0.32</td><td align="right" class='awrc'>40.25</td></tr>
+<tr><td scope="row" class='awrnc'>user rollbacks</td><td align="right" class='awrnc'>148</td><td align="right" class='awrnc'>0.01</td><td align="right" class='awrnc'>0.91</td></tr>
+<tr><td scope="row" class='awrc'>workarea executions - optimal</td><td align="right" class='awrc'>17,424</td><td align="right" class='awrc'>0.86</td><td align="right" class='awrc'>106.90</td></tr>
+</table><p />
+<hr align="left" width="20%" /><p />
+<a class="awr" href="#23">Back to Instance Activity Statistics</a>
+<br /><a class="awr" href="#top">Back to Top</a><p />
+<a class="awr" name="1250"></a>
+<h3 class="awr">Instance Activity Stats</h3>
+<ul>
+<li class="awr"> Ordered by statistic name</li>
+</ul>
+<table border="0" class="tdiff" summary="This table displays Instance activity statistics. For each instance, activity total, activity per second, and activity per transaction are displayed"><tr><th class="awrbg" scope="col">Statistic</th><th class="awrbg" scope="col">Total</th><th class="awrbg" scope="col">per Second</th><th class="awrbg" scope="col">per Trans</th></tr>
+<tr><td scope="row" class='awrc'>Batched IO (bound) vector count</td><td align="right" class='awrc'>0</td><td align="right" class='awrc'>0.00</td><td align="right" class='awrc'>0.00</td></tr>
+<tr><td scope="row" class='awrnc'>Batched IO block miss count</td><td align="right" class='awrnc'>0</td><td align="right" class='awrnc'>0.00</td><td align="right" class='awrnc'>0.00</td></tr>
+<tr><td scope="row" class='awrc'>Batched IO buffer defrag count</td><td align="right" class='awrc'>0</td><td align="right" class='awrc'>0.00</td><td align="right" class='awrc'>0.00</td></tr>
+<tr><td scope="row" class='awrnc'>Batched IO double miss count</td><td align="right" class='awrnc'>0</td><td align="right" class='awrnc'>0.00</td><td align="right" class='awrnc'>0.00</td></tr>
+<tr><td scope="row" class='awrc'>Batched IO same unit count</td><td align="right" class='awrc'>0</td><td align="right" class='awrc'>0.00</td><td align="right" class='awrc'>0.00</td></tr>
+<tr><td scope="row" class='awrnc'>Batched IO single block count</td><td align="right" class='awrnc'>0</td><td align="right" class='awrnc'>0.00</td><td align="right" class='awrnc'>0.00</td></tr>
+<tr><td scope="row" class='awrc'>Batched IO vector block count</td><td align="right" class='awrc'>0</td><td align="right" class='awrc'>0.00</td><td align="right" class='awrc'>0.00</td></tr>
+<tr><td scope="row" class='awrnc'>Batched IO vector read count</td><td align="right" class='awrnc'>0</td><td align="right" class='awrnc'>0.00</td><td align="right" class='awrnc'>0.00</td></tr>
+<tr><td scope="row" class='awrc'>CCursor + sql area evicted</td><td align="right" class='awrc'>3,786</td><td align="right" class='awrc'>0.19</td><td align="right" class='awrc'>23.23</td></tr>
+<tr><td scope="row" class='awrnc'>CPU used by this session</td><td align="right" class='awrnc'>7,960</td><td align="right" class='awrnc'>0.39</td><td align="right" class='awrnc'>48.83</td></tr>
+<tr><td scope="row" class='awrc'>CPU used when call started</td><td align="right" class='awrc'>7,490</td><td align="right" class='awrc'>0.37</td><td align="right" class='awrc'>45.95</td></tr>
+<tr><td scope="row" class='awrnc'>HSC Heap Segment Block Changes</td><td align="right" class='awrnc'>242</td><td align="right" class='awrnc'>0.01</td><td align="right" class='awrnc'>1.48</td></tr>
+<tr><td scope="row" class='awrc'>Heap Segment Array Updates</td><td align="right" class='awrc'>148</td><td align="right" class='awrc'>0.01</td><td align="right" class='awrc'>0.91</td></tr>
+<tr><td scope="row" class='awrnc'>Requests to/from client</td><td align="right" class='awrnc'>5,476</td><td align="right" class='awrnc'>0.27</td><td align="right" class='awrnc'>33.60</td></tr>
+<tr><td scope="row" class='awrc'>SQL*Net roundtrips to/from client</td><td align="right" class='awrc'>5,476</td><td align="right" class='awrc'>0.27</td><td align="right" class='awrc'>33.60</td></tr>
+<tr><td scope="row" class='awrnc'>blocks cleaned out using minact</td><td align="right" class='awrnc'>192</td><td align="right" class='awrnc'>0.01</td><td align="right" class='awrnc'>1.18</td></tr>
+<tr><td scope="row" class='awrc'>buffer is not pinned count</td><td align="right" class='awrc'>394,169</td><td align="right" class='awrc'>19.44</td><td align="right" class='awrc'>2,418.21</td></tr>
+<tr><td scope="row" class='awrnc'>buffer is pinned count</td><td align="right" class='awrnc'>240,945</td><td align="right" class='awrnc'>11.88</td><td align="right" class='awrnc'>1,478.19</td></tr>
+<tr><td scope="row" class='awrc'>bytes received via SQL*Net from client</td><td align="right" class='awrc'>1,741,424</td><td align="right" class='awrc'>85.89</td><td align="right" class='awrc'>10,683.58</td></tr>
+<tr><td scope="row" class='awrnc'>bytes sent via SQL*Net to client</td><td align="right" class='awrnc'>2,434,984</td><td align="right" class='awrnc'>120.10</td><td align="right" class='awrnc'>14,938.55</td></tr>
+<tr><td scope="row" class='awrc'>calls to get snapshot scn: kcmgss</td><td align="right" class='awrc'>128,198</td><td align="right" class='awrc'>6.32</td><td align="right" class='awrc'>786.49</td></tr>
+<tr><td scope="row" class='awrnc'>calls to kcmgas</td><td align="right" class='awrnc'>396</td><td align="right" class='awrnc'>0.02</td><td align="right" class='awrnc'>2.43</td></tr>
+<tr><td scope="row" class='awrc'>calls to kcmgcs</td><td align="right" class='awrc'>30,230</td><td align="right" class='awrc'>1.49</td><td align="right" class='awrc'>185.46</td></tr>
+<tr><td scope="row" class='awrnc'>cell physical IO interconnect bytes</td><td align="right" class='awrnc'>427,433,984</td><td align="right" class='awrnc'>21,081.54</td><td align="right" class='awrnc'>2,622,294.38</td></tr>
+<tr><td scope="row" class='awrc'>cleanout - number of ktugct calls</td><td align="right" class='awrc'>3</td><td align="right" class='awrc'>0.00</td><td align="right" class='awrc'>0.02</td></tr>
+<tr><td scope="row" class='awrnc'>cleanouts only - consistent read gets</td><td align="right" class='awrnc'>3</td><td align="right" class='awrnc'>0.00</td><td align="right" class='awrnc'>0.02</td></tr>
+<tr><td scope="row" class='awrc'>cluster key scan block gets</td><td align="right" class='awrc'>31,725</td><td align="right" class='awrc'>1.56</td><td align="right" class='awrc'>194.63</td></tr>
+<tr><td scope="row" class='awrnc'>cluster key scans</td><td align="right" class='awrnc'>22,703</td><td align="right" class='awrnc'>1.12</td><td align="right" class='awrnc'>139.28</td></tr>
+<tr><td scope="row" class='awrc'>commit cleanouts</td><td align="right" class='awrc'>269</td><td align="right" class='awrc'>0.01</td><td align="right" class='awrc'>1.65</td></tr>
+<tr><td scope="row" class='awrnc'>commit cleanouts successfully completed</td><td align="right" class='awrnc'>267</td><td align="right" class='awrnc'>0.01</td><td align="right" class='awrnc'>1.64</td></tr>
+<tr><td scope="row" class='awrc'>commit txn count during cleanout</td><td align="right" class='awrc'>3</td><td align="right" class='awrc'>0.00</td><td align="right" class='awrc'>0.02</td></tr>
+<tr><td scope="row" class='awrnc'>consistent gets</td><td align="right" class='awrnc'>739,476</td><td align="right" class='awrnc'>36.47</td><td align="right" class='awrnc'>4,536.66</td></tr>
+<tr><td scope="row" class='awrc'>consistent gets examination</td><td align="right" class='awrc'>143,812</td><td align="right" class='awrc'>7.09</td><td align="right" class='awrc'>882.28</td></tr>
+<tr><td scope="row" class='awrnc'>consistent gets examination (fastpath)</td><td align="right" class='awrnc'>143,676</td><td align="right" class='awrnc'>7.09</td><td align="right" class='awrnc'>881.45</td></tr>
+<tr><td scope="row" class='awrc'>consistent gets from cache</td><td align="right" class='awrc'>739,476</td><td align="right" class='awrc'>36.47</td><td align="right" class='awrc'>4,536.66</td></tr>
+<tr><td scope="row" class='awrnc'>consistent gets pin</td><td align="right" class='awrnc'>595,664</td><td align="right" class='awrnc'>29.38</td><td align="right" class='awrnc'>3,654.38</td></tr>
+<tr><td scope="row" class='awrc'>consistent gets pin (fastpath)</td><td align="right" class='awrc'>594,929</td><td align="right" class='awrc'>29.34</td><td align="right" class='awrc'>3,649.87</td></tr>
+<tr><td scope="row" class='awrnc'>cursor authentications</td><td align="right" class='awrnc'>1,597</td><td align="right" class='awrnc'>0.08</td><td align="right" class='awrnc'>9.80</td></tr>
+<tr><td scope="row" class='awrc'>cursor reload failures</td><td align="right" class='awrc'>35</td><td align="right" class='awrc'>0.00</td><td align="right" class='awrc'>0.21</td></tr>
+<tr><td scope="row" class='awrnc'>db block changes</td><td align="right" class='awrnc'>1,114</td><td align="right" class='awrnc'>0.05</td><td align="right" class='awrnc'>6.83</td></tr>
+<tr><td scope="row" class='awrc'>db block gets</td><td align="right" class='awrc'>2,753</td><td align="right" class='awrc'>0.14</td><td align="right" class='awrc'>16.89</td></tr>
+<tr><td scope="row" class='awrnc'>db block gets from cache</td><td align="right" class='awrnc'>2,753</td><td align="right" class='awrnc'>0.14</td><td align="right" class='awrnc'>16.89</td></tr>
+<tr><td scope="row" class='awrc'>db block gets from cache (fastpath)</td><td align="right" class='awrc'>2,555</td><td align="right" class='awrc'>0.13</td><td align="right" class='awrc'>15.67</td></tr>
+<tr><td scope="row" class='awrnc'>deferred (CURRENT) block cleanout applications</td><td align="right" class='awrnc'>207</td><td align="right" class='awrnc'>0.01</td><td align="right" class='awrnc'>1.27</td></tr>
+<tr><td scope="row" class='awrc'>enqueue releases</td><td align="right" class='awrc'>12,192</td><td align="right" class='awrc'>0.60</td><td align="right" class='awrc'>74.80</td></tr>
+<tr><td scope="row" class='awrnc'>enqueue requests</td><td align="right" class='awrnc'>12,218</td><td align="right" class='awrnc'>0.60</td><td align="right" class='awrnc'>74.96</td></tr>
+<tr><td scope="row" class='awrc'>execute count</td><td align="right" class='awrc'>134,857</td><td align="right" class='awrc'>6.65</td><td align="right" class='awrc'>827.34</td></tr>
+<tr><td scope="row" class='awrnc'>file io service time</td><td align="right" class='awrnc'>1,304</td><td align="right" class='awrnc'>0.06</td><td align="right" class='awrnc'>8.00</td></tr>
+<tr><td scope="row" class='awrc'>free buffer inspected</td><td align="right" class='awrc'>5</td><td align="right" class='awrc'>0.00</td><td align="right" class='awrc'>0.03</td></tr>
+<tr><td scope="row" class='awrnc'>free buffer requested</td><td align="right" class='awrnc'>1,278</td><td align="right" class='awrnc'>0.06</td><td align="right" class='awrnc'>7.84</td></tr>
+<tr><td scope="row" class='awrc'>immediate (CR) block cleanout applications</td><td align="right" class='awrc'>3</td><td align="right" class='awrc'>0.00</td><td align="right" class='awrc'>0.02</td></tr>
+<tr><td scope="row" class='awrnc'>index fetch by key</td><td align="right" class='awrnc'>42,190</td><td align="right" class='awrnc'>2.08</td><td align="right" class='awrnc'>258.83</td></tr>
+<tr><td scope="row" class='awrc'>index scans kdiixs1</td><td align="right" class='awrc'>71,422</td><td align="right" class='awrc'>3.52</td><td align="right" class='awrc'>438.17</td></tr>
+<tr><td scope="row" class='awrnc'>logical read bytes from cache</td><td align="right" class='awrnc'>6,080,339,968</td><td align="right" class='awrnc'>299,889.48</td><td align="right" class='awrnc'>37,302,699.19</td></tr>
+<tr><td scope="row" class='awrc'>logons cumulative</td><td align="right" class='awrc'>172</td><td align="right" class='awrc'>0.01</td><td align="right" class='awrc'>1.06</td></tr>
+<tr><td scope="row" class='awrnc'>messages sent</td><td align="right" class='awrnc'>242</td><td align="right" class='awrnc'>0.01</td><td align="right" class='awrnc'>1.48</td></tr>
+<tr><td scope="row" class='awrc'>no work - consistent read gets</td><td align="right" class='awrc'>562,949</td><td align="right" class='awrc'>27.77</td><td align="right" class='awrc'>3,453.67</td></tr>
+<tr><td scope="row" class='awrnc'>non-idle wait count</td><td align="right" class='awrnc'>83,403</td><td align="right" class='awrnc'>4.11</td><td align="right" class='awrnc'>511.67</td></tr>
+<tr><td scope="row" class='awrc'>opened cursors cumulative</td><td align="right" class='awrc'>112,320</td><td align="right" class='awrc'>5.54</td><td align="right" class='awrc'>689.08</td></tr>
+<tr><td scope="row" class='awrnc'>parse count (hard)</td><td align="right" class='awrnc'>6,956</td><td align="right" class='awrnc'>0.34</td><td align="right" class='awrnc'>42.67</td></tr>
+<tr><td scope="row" class='awrc'>parse count (total)</td><td align="right" class='awrc'>24,503</td><td align="right" class='awrc'>1.21</td><td align="right" class='awrc'>150.33</td></tr>
+<tr><td scope="row" class='awrnc'>parse time cpu</td><td align="right" class='awrnc'>8,336</td><td align="right" class='awrnc'>0.41</td><td align="right" class='awrnc'>51.14</td></tr>
+<tr><td scope="row" class='awrc'>parse time elapsed</td><td align="right" class='awrc'>9,463</td><td align="right" class='awrc'>0.47</td><td align="right" class='awrc'>58.06</td></tr>
+<tr><td scope="row" class='awrnc'>physical read IO requests</td><td align="right" class='awrnc'>894</td><td align="right" class='awrnc'>0.04</td><td align="right" class='awrnc'>5.48</td></tr>
+<tr><td scope="row" class='awrc'>physical read bytes</td><td align="right" class='awrc'>9,052,160</td><td align="right" class='awrc'>446.46</td><td align="right" class='awrc'>55,534.72</td></tr>
+<tr><td scope="row" class='awrnc'>physical read total IO requests</td><td align="right" class='awrnc'>26,652</td><td align="right" class='awrnc'>1.31</td><td align="right" class='awrnc'>163.51</td></tr>
+<tr><td scope="row" class='awrc'>physical read total bytes</td><td align="right" class='awrc'>427,433,984</td><td align="right" class='awrc'>21,081.54</td><td align="right" class='awrc'>2,622,294.38</td></tr>
+<tr><td scope="row" class='awrnc'>physical reads</td><td align="right" class='awrnc'>1,105</td><td align="right" class='awrnc'>0.05</td><td align="right" class='awrnc'>6.78</td></tr>
+<tr><td scope="row" class='awrc'>physical reads cache</td><td align="right" class='awrc'>1,105</td><td align="right" class='awrc'>0.05</td><td align="right" class='awrc'>6.78</td></tr>
+<tr><td scope="row" class='awrnc'>physical reads cache prefetch</td><td align="right" class='awrnc'>211</td><td align="right" class='awrnc'>0.01</td><td align="right" class='awrnc'>1.29</td></tr>
+<tr><td scope="row" class='awrc'>recursive calls</td><td align="right" class='awrc'>362,970</td><td align="right" class='awrc'>17.90</td><td align="right" class='awrc'>2,226.81</td></tr>
+<tr><td scope="row" class='awrnc'>recursive cpu usage</td><td align="right" class='awrnc'>7,079</td><td align="right" class='awrnc'>0.35</td><td align="right" class='awrnc'>43.43</td></tr>
+<tr><td scope="row" class='awrc'>redo entries</td><td align="right" class='awrc'>546</td><td align="right" class='awrc'>0.03</td><td align="right" class='awrc'>3.35</td></tr>
+<tr><td scope="row" class='awrnc'>redo size</td><td align="right" class='awrnc'>186,708</td><td align="right" class='awrnc'>9.21</td><td align="right" class='awrnc'>1,145.45</td></tr>
+<tr><td scope="row" class='awrc'>redo synch time</td><td align="right" class='awrc'>152</td><td align="right" class='awrc'>0.01</td><td align="right" class='awrc'>0.93</td></tr>
+<tr><td scope="row" class='awrnc'>redo synch time (usec)</td><td align="right" class='awrnc'>1,535,863</td><td align="right" class='awrnc'>75.75</td><td align="right" class='awrnc'>9,422.47</td></tr>
+<tr><td scope="row" class='awrc'>redo synch time overhead (usec)</td><td align="right" class='awrc'>591,738</td><td align="right" class='awrc'>29.19</td><td align="right" class='awrc'>3,630.29</td></tr>
+<tr><td scope="row" class='awrnc'>redo synch time overhead count (  2ms)</td><td align="right" class='awrnc'>110</td><td align="right" class='awrnc'>0.01</td><td align="right" class='awrnc'>0.67</td></tr>
+<tr><td scope="row" class='awrc'>redo synch time overhead count ( 32ms)</td><td align="right" class='awrc'>26</td><td align="right" class='awrc'>0.00</td><td align="right" class='awrc'>0.16</td></tr>
+<tr><td scope="row" class='awrnc'>redo synch time overhead count (128ms)</td><td align="right" class='awrnc'>0</td><td align="right" class='awrnc'>0.00</td><td align="right" class='awrnc'>0.00</td></tr>
+<tr><td scope="row" class='awrc'>redo synch writes</td><td align="right" class='awrc'>148</td><td align="right" class='awrc'>0.01</td><td align="right" class='awrc'>0.91</td></tr>
+<tr><td scope="row" class='awrnc'>redo write info find</td><td align="right" class='awrnc'>148</td><td align="right" class='awrnc'>0.01</td><td align="right" class='awrnc'>0.91</td></tr>
+<tr><td scope="row" class='awrc'>rows fetched via callback</td><td align="right" class='awrc'>9,989</td><td align="right" class='awrc'>0.49</td><td align="right" class='awrc'>61.28</td></tr>
+<tr><td scope="row" class='awrnc'>session cursor cache hits</td><td align="right" class='awrnc'>127,296</td><td align="right" class='awrnc'>6.28</td><td align="right" class='awrnc'>780.96</td></tr>
+<tr><td scope="row" class='awrc'>session logical reads</td><td align="right" class='awrc'>742,229</td><td align="right" class='awrc'>36.61</td><td align="right" class='awrc'>4,553.55</td></tr>
+<tr><td scope="row" class='awrnc'>shared hash latch upgrades - no wait</td><td align="right" class='awrnc'>301</td><td align="right" class='awrnc'>0.01</td><td align="right" class='awrnc'>1.85</td></tr>
+<tr><td scope="row" class='awrc'>sorts (memory)</td><td align="right" class='awrc'>27,923</td><td align="right" class='awrc'>1.38</td><td align="right" class='awrc'>171.31</td></tr>
+<tr><td scope="row" class='awrnc'>sorts (rows)</td><td align="right" class='awrnc'>231,420</td><td align="right" class='awrnc'>11.41</td><td align="right" class='awrnc'>1,419.75</td></tr>
+<tr><td scope="row" class='awrc'>sql area evicted</td><td align="right" class='awrc'>5,289</td><td align="right" class='awrc'>0.26</td><td align="right" class='awrc'>32.45</td></tr>
+<tr><td scope="row" class='awrnc'>switch current caused by our pin</td><td align="right" class='awrnc'>154</td><td align="right" class='awrnc'>0.01</td><td align="right" class='awrnc'>0.94</td></tr>
+<tr><td scope="row" class='awrc'>switch current to new buffer</td><td align="right" class='awrc'>154</td><td align="right" class='awrc'>0.01</td><td align="right" class='awrc'>0.94</td></tr>
+<tr><td scope="row" class='awrnc'>table fetch by rowid</td><td align="right" class='awrnc'>152,117</td><td align="right" class='awrnc'>7.50</td><td align="right" class='awrnc'>933.23</td></tr>
+<tr><td scope="row" class='awrc'>table fetch continued row</td><td align="right" class='awrc'>345</td><td align="right" class='awrc'>0.02</td><td align="right" class='awrc'>2.12</td></tr>
+<tr><td scope="row" class='awrnc'>table scan blocks gotten</td><td align="right" class='awrnc'>382,744</td><td align="right" class='awrnc'>18.88</td><td align="right" class='awrnc'>2,348.12</td></tr>
+<tr><td scope="row" class='awrc'>table scan disk non-IMC rows gotten</td><td align="right" class='awrc'>4,026,774</td><td align="right" class='awrc'>198.61</td><td align="right" class='awrc'>24,704.13</td></tr>
+<tr><td scope="row" class='awrnc'>table scan rows gotten</td><td align="right" class='awrnc'>4,026,774</td><td align="right" class='awrnc'>198.61</td><td align="right" class='awrnc'>24,704.13</td></tr>
+<tr><td scope="row" class='awrc'>table scans (short tables)</td><td align="right" class='awrc'>10,887</td><td align="right" class='awrc'>0.54</td><td align="right" class='awrc'>66.79</td></tr>
+<tr><td scope="row" class='awrnc'>total number of cf enq holders</td><td align="right" class='awrnc'>297</td><td align="right" class='awrnc'>0.01</td><td align="right" class='awrnc'>1.82</td></tr>
+<tr><td scope="row" class='awrc'>undo change vector size</td><td align="right" class='awrc'>49,528</td><td align="right" class='awrc'>2.44</td><td align="right" class='awrc'>303.85</td></tr>
+<tr><td scope="row" class='awrnc'>user calls</td><td align="right" class='awrnc'>6,560</td><td align="right" class='awrnc'>0.32</td><td align="right" class='awrnc'>40.25</td></tr>
+<tr><td scope="row" class='awrc'>user logons cumulative</td><td align="right" class='awrc'>148</td><td align="right" class='awrc'>0.01</td><td align="right" class='awrc'>0.91</td></tr>
+<tr><td scope="row" class='awrnc'>user logouts cumulative</td><td align="right" class='awrnc'>148</td><td align="right" class='awrnc'>0.01</td><td align="right" class='awrnc'>0.91</td></tr>
+<tr><td scope="row" class='awrc'>user rollbacks</td><td align="right" class='awrc'>148</td><td align="right" class='awrc'>0.01</td><td align="right" class='awrc'>0.91</td></tr>
+<tr><td scope="row" class='awrnc'>workarea executions - optimal</td><td align="right" class='awrnc'>17,424</td><td align="right" class='awrnc'>0.86</td><td align="right" class='awrnc'>106.90</td></tr>
+</table><p />
+<hr align="left" width="20%" /><p />
+<a class="awr" href="#23">Back to Instance Activity Statistics</a>
+<br /><a class="awr" href="#top">Back to Top</a><p />
+<a class="awr" name="1300"></a>
+<h3 class="awr">Instance Activity Stats - Absolute Values</h3>
+<ul>
+<li class="awr"> Statistics with absolute values (should not be diffed)</li>
+</ul>
+<table border="0" class="tdiff" summary="This table displays absolute values of instance-related features. For each instance, activity begin value and end value are displayed"><tr><th class="awrbg" scope="col">Statistic</th><th class="awrbg" scope="col">Begin Value</th><th class="awrbg" scope="col">End Value</th></tr>
+<tr><td scope="row" class='awrc'>session cursor cache count</td><td align="right" class='awrc'>245</td><td align="right" class='awrc'>4,471</td></tr>
+<tr><td scope="row" class='awrnc'>session uga memory</td><td align="right" class='awrnc'>519,960</td><td align="right" class='awrnc'>47,965,680</td></tr>
+<tr><td scope="row" class='awrc'>session uga memory max</td><td align="right" class='awrc'>22,145,552</td><td align="right" class='awrc'>687,661,032</td></tr>
+</table><p />
+<hr align="left" width="20%" /><p />
+<a class="awr" href="#23">Back to Instance Activity Statistics</a>
+<br /><a class="awr" href="#top">Back to Top</a><p />
+<p />
+<a class="awr" name="24"></a>
+<h2 class="awr">
+IO Stats
+</h2>
+<ul>
+<li class="awr"><a class="awr" href="#8770">IOStat by Filetype summary</a></li>
+<li class="awr"><a class="awr" href="#1700">Tablespace IO Stats</a></li>
+<li class="awr"><a class="awr" href="#1800">File IO Stats</a></li>
+</ul>
+<a class="awr" href="#top">Back to Top</a><p />
+<a class="awr" name="8770"></a>
+<h3 class="awr">IOStat by Filetype summary</h3>
+<ul>
+<li class="awr"> 'Data' columns suffixed with M,G,T,P are in multiples of 1024     other columns suffixed with K,M,G,T,P are in multiples of 1000 </li>
+<li class="awr"> Small Read and Large Read are average service times </li>
+<li class="awr"> Ordered by (Data Read + Write) desc</li>
+</ul>
+<table border="0" class="tdiff" summary="This table displays IO Statistics for different file types, such as data files, control files, log files and temp files. IO Statistics include amount of reads and writes, requests per second, data per second, wait count and average wait time"><tr><th class="awrbg" scope="col">Filetype Name</th><th class="awrbg" scope="col">Reads: Data</th><th class="awrbg" scope="col">Reqs   per sec</th><th class="awrbg" scope="col">Data   per sec</th><th class="awrbg" scope="col">Writes: Data</th><th class="awrbg" scope="col">Reqs   per sec</th><th class="awrbg" scope="col">Data   per sec</th><th class="awrbg" scope="col">Small Read</th><th class="awrbg" scope="col">Large Read</th></tr>
+<tr><td scope="row" class='awrc'>Data File</td><td align="right" class='awrc'>116M</td><td align="right" class='awrc'>0.16</td><td align="right" class='awrc'>.006M</td><td align="right" class='awrc'>21M</td><td align="right" class='awrc'>0.06</td><td align="right" class='awrc'>.001M</td><td align="right" class='awrc'>5.14ms</td><td align="right" class='awrc'>17.41ms</td></tr>
+<tr><td scope="row" class='awrnc'>Temp File</td><td align="right" class='awrnc'>1M</td><td align="right" class='awrnc'>0.01</td><td align="right" class='awrnc'>0M</td><td align="right" class='awrnc'>0M</td><td align="right" class='awrnc'>0.00</td><td align="right" class='awrnc'>0M</td><td align="right" class='awrnc'>.00ns</td><td align="right" class='awrnc'>&#160;</td></tr>
+<tr><td scope="row" class='awrc'>TOTAL:</td><td align="right" class='awrc'>117M</td><td align="right" class='awrc'>0.17</td><td align="right" class='awrc'>.006M</td><td align="right" class='awrc'>21M</td><td align="right" class='awrc'>0.06</td><td align="right" class='awrc'>.001M</td><td align="right" class='awrc'>4.91ms</td><td align="right" class='awrc'>17.41ms</td></tr>
+</table><p />
+<hr align="left" width="20%" /><p />
+<a class="awr" href="#24">Back to IO Stats</a>
+<br /><a class="awr" href="#top">Back to Top</a><p />
+<a class="awr" name="1700"></a>
+<h3 class="awr">Tablespace IO Stats</h3>
+<p />
+                  No data exists for this section of the report.
+<p />
+<a class="awr" href="#24">Back to IO Stats</a>
+<br /><a class="awr" href="#top">Back to Top</a><p />
+<a class="awr" name="1800"></a>
+<h3 class="awr">File IO Stats</h3>
+<p />
+                  No data exists for this section of the report.
+<p />
+<a class="awr" href="#24">Back to IO Stats</a>
+<br /><a class="awr" href="#top">Back to Top</a><p />
+<p />
+<p />
+<p />
+<a class="awr" name="2300"></a>
+<h3 class="awr">Buffer Wait Statistics</h3>
+<ul>
+<li class="awr"> ordered by wait time desc, waits desc</li>
+</ul>
+<table border="0" class="tdiff" summary="This table displays buffer wait statistics. Statistics include waits, total wait time and average time for each class of buffer wait."><tr><th class="awrbg" scope="col">Class</th><th class="awrbg" scope="col">Waits</th><th class="awrbg" scope="col">Total Wait Time (s)</th><th class="awrbg" scope="col">Avg Time (ms)</th></tr>
+<tr><td scope="row" class='awrc'>data block</td><td align="right" class='awrc'>3</td><td align="right" class='awrc'>0</td><td align="right" class='awrc'>17</td></tr>
+<tr><td scope="row" class='awrnc'>undo header</td><td align="right" class='awrnc'>1</td><td align="right" class='awrnc'>0</td><td align="right" class='awrnc'>0</td></tr>
+</table><p />
+<hr align="left" width="20%" /><p />
+<br /><a class="awr" href="#top">Back to Top</a><p />
+<p />
+<a class="awr" name="28"></a>
+<h2 class="awr">
+Undo Statistics
+</h2>
+<ul>
+<li class="awr"><a class="awr" href="#3300">Undo Segment Summary</a></li>
+<li class="awr"><a class="awr" href="#3400">Undo Segment Stats</a></li>
+</ul>
+<a class="awr" href="#top">Back to Top</a><p />
+<a class="awr" name="3300"></a>
+<h3 class="awr">Undo Segment Summary</h3>
+<p />
+                  No data exists for this section of the report.
+<p />
+<a class="awr" href="#28">Back to Undo Statistics</a>
+<br /><a class="awr" href="#top">Back to Top</a><p />
+<a class="awr" name="3400"></a>
+<h3 class="awr">Undo Segment Stats</h3>
+<p />
+                  No data exists for this section of the report.
+<p />
+<a class="awr" href="#28">Back to Undo Statistics</a>
+<br /><a class="awr" href="#top">Back to Top</a><p />
+<p />
+<p />
+<p />
+<p />
+<p />
+<p />
+<p />
+<p />
+<p />
+<p />
+<a class="awr" name="36"></a>
+<h2 class="awr">
+init.ora Parameters
+</h2>
+<ul>
+<li class="awr"><a class="awr" href="#6800">init.ora Parameters</a></li>
+<li class="awr"><a class="awr" href="#6850">init.ora Multi-Valued Parameters</a></li>
+</ul>
+<a class="awr" href="#top">Back to Top</a><p />
+<a class="awr" name="6800"></a>
+<h3 class="awr">init.ora Parameters</h3>
+<ul>
+</ul>
+<table border="0" class="tdiff" summary="This table displays name and value of init.ora parameters"><tr><th class="awrbg" scope="col">Parameter Name</th><th class="awrbg" scope="col">Begin value</th><th class="awrbg" scope="col">End value (if different)</th><th class="awrbg" scope="col">PDB Name</th></tr>
+<tr><td scope="row" class='awrc'>audit_file_dest</td><td class='awrc'>/u01/app/oracle/admin/orcl/adump</td><td class='awrc'>&#160;&#160;</td>
+<td class='awrc'>&#160;
+</td></tr>
+<tr><td scope="row" class='awrnc'>audit_trail</td><td class='awrnc'>DB</td><td class='awrnc'>&#160;&#160;</td>
+<td class='awrnc'>&#160;
+</td></tr>
+<tr><td scope="row" class='awrc'>compatible</td><td class='awrc'>12.2.0</td><td class='awrc'>&#160;&#160;</td>
+<td class='awrc'>&#160;
+</td></tr>
+<tr><td scope="row" class='awrnc'>connection_brokers</td><td class='awrnc'>((TYPE=DEDICATED)(BROKERS=1)),  ((TYPE=EMON)(BROKERS=1))</td><td class='awrnc'>&#160;&#160;</td>
+<td class='awrnc'>&#160;
+</td></tr>
+<tr><td scope="row" class='awrc'>control_files</td><td class='awrc'>/u01/app/oracle/oradata/orcl/control01.ctl,  /u01/app/oracle/oradata/orcl/control02.ctl</td><td class='awrc'>&#160;&#160;</td>
+<td class='awrc'>&#160;
+</td></tr>
+<tr><td scope="row" class='awrnc'>db_block_size</td><td class='awrnc'>8192</td><td class='awrnc'>&#160;&#160;</td>
+<td class='awrnc'>&#160;
+</td></tr>
+<tr><td scope="row" class='awrc'>db_name</td><td class='awrc'>orcl</td><td class='awrc'>&#160;&#160;</td>
+<td class='awrc'>&#160;
+</td></tr>
+<tr><td scope="row" class='awrnc'>db_recovery_file_dest</td><td class='awrnc'>&#160;&#160;</td><td class='awrnc'>&#160;&#160;</td>
+<td class='awrnc'>&#160;
+</td></tr>
+<tr><td scope="row" class='awrc'>db_recovery_file_dest_size</td><td class='awrc'>209715200</td><td class='awrc'>&#160;&#160;</td>
+<td class='awrc'>&#160;
+</td></tr>
+<tr><td scope="row" class='awrnc'>diagnostic_dest</td><td class='awrnc'>/u01/app/oracle</td><td class='awrnc'>&#160;&#160;</td>
+<td class='awrnc'>&#160;
+</td></tr>
+<tr><td scope="row" class='awrc'>dispatchers</td><td class='awrc'>(PROTOCOL=TCP) (SERVICE=orclXDB)</td><td class='awrc'>&#160;&#160;</td>
+<td class='awrc'>&#160;
+</td></tr>
+<tr><td scope="row" class='awrnc'>enable_pluggable_database</td><td class='awrnc'>TRUE</td><td class='awrnc'>&#160;&#160;</td>
+<td class='awrnc'>&#160;
+</td></tr>
+<tr><td scope="row" class='awrc'>local_listener</td><td class='awrc'>LISTENER_ORCL</td><td class='awrc'>&#160;&#160;</td>
+<td class='awrc'>&#160;
+</td></tr>
+<tr><td scope="row" class='awrnc'>log_archive_dest_1</td><td class='awrnc'>location=/u01/app/oracle/archivelog</td><td class='awrnc'>&#160;&#160;</td>
+<td class='awrnc'>&#160;
+</td></tr>
+<tr><td scope="row" class='awrc'>nls_language</td><td class='awrc'>AMERICAN</td><td class='awrc'>&#160;&#160;</td>
+<td class='awrc'>&#160;
+</td></tr>
+<tr><td scope="row" class='awrnc'>nls_territory</td><td class='awrnc'>AMERICA</td><td class='awrnc'>&#160;&#160;</td>
+<td class='awrnc'>&#160;
+</td></tr>
+<tr><td scope="row" class='awrc'>open_cursors</td><td class='awrc'>300</td><td class='awrc'>&#160;&#160;</td>
+<td class='awrc'>&#160;
+</td></tr>
+<tr><td scope="row" class='awrnc'>pga_aggregate_target</td><td class='awrnc'>195035136</td><td class='awrnc'>&#160;&#160;</td>
+<td class='awrnc'>&#160;
+</td></tr>
+<tr><td scope="row" class='awrc'>plsql_warnings</td><td class='awrc'>DISABLE:ALL</td><td class='awrc'>&#160;&#160;</td>
+<td class='awrc'>&#160;
+</td></tr>
+<tr><td scope="row" class='awrnc'>processes</td><td class='awrnc'>300</td><td class='awrnc'>&#160;&#160;</td>
+<td class='awrnc'>&#160;
+</td></tr>
+<tr><td scope="row" class='awrc'>remote_login_passwordfile</td><td class='awrc'>EXCLUSIVE</td><td class='awrc'>&#160;&#160;</td>
+<td class='awrc'>&#160;
+</td></tr>
+<tr><td scope="row" class='awrnc'>resource_manager_plan</td><td class='awrnc'>SCHEDULER[0x4AC5]:DEFAULT_MAINTENANCE_PLAN</td><td class='awrnc'>&#160;&#160;</td>
+<td class='awrnc'>&#160;
+</td></tr>
+<tr><td scope="row" class='awrc'>resource_manager_plan</td><td class='awrc'>&#160;&#160;</td><td class='awrc'>SCHEDULER[0x4ABF]:DEFAULT_MAINTENANCE_PLAN</td>
+<td class='awrc'>
+PDB1
+</td></tr>
+<tr><td scope="row" class='awrnc'>sga_target</td><td class='awrnc'>0</td><td class='awrnc'>&#160;&#160;</td>
+<td class='awrnc'>
+PDB1
+</td></tr>
+<tr><td scope="row" class='awrc'>sga_target</td><td class='awrc'>587202560</td><td class='awrc'>&#160;&#160;</td>
+<td class='awrc'>&#160;
+</td></tr>
+<tr><td scope="row" class='awrnc'>undo_tablespace</td><td class='awrnc'>UNDOTBS1</td><td class='awrnc'>&#160;&#160;</td>
+<td class='awrnc'>&#160;
+</td></tr>
+<tr><td scope="row" class='awrc'>undo_tablespace</td><td class='awrc'>UNDOTBS1</td><td class='awrc'>&#160;&#160;</td>
+<td class='awrc'>
+PDB1
+</td></tr>
+</table><p />
+<hr align="left" width="20%" /><p />
+<a class="awr" href="#36">Back to init.ora Parameters</a>
+<br /><a class="awr" href="#top">Back to Top</a><p />
+<a class="awr" name="6850"></a>
+<h3 class="awr">init.ora Multi-Valued Parameters</h3>
+<ul>
+<li class="awr"> This section only displays parameters that have more than one value </li>
+<li class="awr">'(NULL)' indicates a missing parameter value </li>
+<li class="awr"> A blank in the 'End Snapshot' indicates the same value as the 'Begin Snapshot'</li>
+</ul>
+<table border="0" class="tdiff" summary="This table displays name and value of multi-valued init.ora parameters"><tr><th class="awrbg" scope="col">Parameter Name</th><th class="awrbg" scope="col">Begin value</th><th class="awrbg" scope="col">End value (if different)</th><th class="awrbg" scope="col">PDB Name</th></tr>
+<tr><td scope="row" class='awrc'>connection_brokers</td><td class='awrc'>((TYPE=DEDICATED)(BROKERS=1))</td><td class='awrc'>&#160;&#160;</td>
+<td class='awrc'>&#160;
+</td></tr>
+<tr><td scope="row" class='awrnc'><div class="hidden">connection_brokers</div></td><td class='awrnc'>((TYPE=EMON)(BROKERS=1))</td><td class='awrnc'>&#160;&#160;</td>
+<td class='awrnc'>&#160;
+</td></tr>
+<tr><td scope="row" class='awrc'>control_files</td><td class='awrc'>/u01/app/oracle/oradata/orcl/control01.ctl</td><td class='awrc'>&#160;&#160;</td>
+<td class='awrc'>&#160;
+</td></tr>
+<tr><td scope="row" class='awrnc'><div class="hidden">control_files</div></td><td class='awrnc'>/u01/app/oracle/oradata/orcl/control02.ctl</td><td class='awrnc'>&#160;&#160;</td>
+<td class='awrnc'>&#160;
+</td></tr>
+</table><p />
+<hr align="left" width="20%" /><p />
+<a class="awr" href="#36">Back to init.ora Parameters</a>
+<br /><a class="awr" href="#top">Back to Top</a><p />
+<p />
+<a class="awr" name="42"></a>
+<h2 class="awr">
+Active Session History (ASH) Report
+</h2>
+<ul>
+<li class="awr"><a class="awr" href="#9990">Top SQL with Top Events</a></li>
+<li class="awr"><a class="awr" href="#9989">Top SQL with Top Row Sources</a></li>
+<li class="awr"><a class="awr" href="#9993">Top Sessions</a></li>
+<li class="awr"><a class="awr" href="#9992">Top Blocking Sessions</a></li>
+<li class="awr"><a class="awr" href="#9991">Top PL/SQL Procedures</a></li>
+<li class="awr"><a class="awr" href="#9988">Top Events</a></li>
+<li class="awr"><a class="awr" href="#9994">Top Event P1/P2/P3 Values</a></li>
+<li class="awr"><a class="awr" href="#9987">Top DB Objects</a></li>
+<li class="awr"><a class="awr" href="#9986">Activity Over Time</a></li>
+</ul>
+<a class="awr" href="#top">Back to Top</a><p />
+<a class="awr" name="9990"></a>
+<h3 class="awr">Top SQL with Top Events</h3>
+<ul>
+<li class="awr"> Top SQL statements by DB Time along with the top events by DB Time      for those SQLs. </li>
+<li class="awr"> % Activity is the percentage of DB Time due to the SQL. </li>
+<li class="awr"> % Event is the percentage of DB Time due to the event that the SQL is     waiting on. </li>
+<li class="awr"> % Row Source is the percentage of DB Time due to the row source for the     SQL waiting on the event. </li>
+<li class="awr"> Executions is the number of executions of the SQL that were sampled in ASH.</li>
+</ul>
+<table border="0" class="tdiff" summary="This table displays the Top SQL by Top Wait Events"><tr><th class="awrbg" scope="col">SQL ID</th><th class="awrbg" scope="col">Plan Hash</th><th class="awrbg" scope="col">Executions</th><th class="awrbg" scope="col">% Activity</th><th class="awrbg" scope="col">Event</th><th class="awrbg" scope="col">% Event</th><th class="awrbg" scope="col">Top Row Source</th><th class="awrbg" scope="col">% Row Source</th><th class="awrbg" scope="col">SQL Text</th><th class="awrbg" scope="col">Container Name</th></tr>
+<tr><td align="right" class='awrc'><a class="awr" href="#g6px76dmjv1jy">g6px76dmjv1jy</a></td><td align="right" class='awrc'>3702721588</td><td align="right" class='awrc'>1</td><td align="right" class='awrc'>30.43</td>
+<td class='awrc'>CPU + Wait for CPU</td><td align="right" class='awrc'>26.09</td><td class='awrc'>FILTER</td><td align="right" class='awrc'>26.09</td>
+<td class='awrc'>select count(*) from wri$_opts...</td><td align="right" class='awrc'>PDB1</td></tr>
+<tr><td align="right" class='awrnc'><div class="hidden">g6px76dmjv1jy</div></td><td align="right" class='awrnc'><div class="hidden">3702721588</div></td><td align="right" class='awrnc'><div class="hidden">1</div></td><td align="right" class='awrnc'><div class="hidden">30.43478260869565217391304347826086956522</div></td>
+<td class='awrnc'>resmgr:cpu quantum</td><td align="right" class='awrnc'>4.35</td><td class='awrnc'>FILTER</td><td align="right" class='awrnc'>4.35</td>
+<td class='awrnc'></td><td align="right" class='awrnc'><div class="hidden">PDB1</div></td></tr>
+<tr><td align="right" class='awrc'><a class="awr" href="#5q09cmavhyq2y">5q09cmavhyq2y</a></td><td align="right" class='awrc'>545072249</td><td align="right" class='awrc'>0</td><td align="right" class='awrc'>8.70</td>
+<td class='awrc'>CPU + Wait for CPU</td><td align="right" class='awrc'>8.70</td><td class='awrc'>** Row Source Not Available **</td><td align="right" class='awrc'>8.70</td>
+<td class='awrc'>select owner, index_name, '' p...</td><td align="right" class='awrc'>PDB1</td></tr>
+<tr><td align="right" class='awrnc'><a class="awr" href="#ap4y2u336u3bj">ap4y2u336u3bj</a></td><td align="right" class='awrnc'>4187227582</td><td align="right" class='awrnc'>1</td><td align="right" class='awrnc'>8.70</td>
+<td class='awrnc'>CPU + Wait for CPU</td><td align="right" class='awrnc'>8.70</td><td class='awrnc'>FIXED TABLE - FULL</td><td align="right" class='awrnc'>4.35</td>
+<td class='awrnc'>SELECT DECODE(request, 0, 'Hol...</td><td align="right" class='awrnc'>PDB1</td></tr>
+<tr><td align="right" class='awrc'><a class="awr" href="#0n0gtbm798u5v">0n0gtbm798u5v</a></td><td align="right" class='awrc'>1218064253</td><td align="right" class='awrc'>0</td><td align="right" class='awrc'>4.35</td>
+<td class='awrc'>CPU + Wait for CPU</td><td align="right" class='awrc'>4.35</td><td class='awrc'>** Row Source Not Available **</td><td align="right" class='awrc'>4.35</td>
+<td class='awrc'>select sum(bytes) from v$sgain...</td><td align="right" class='awrc'>PDB1</td></tr>
+<tr><td align="right" class='awrnc'><a class="awr" href="#2sxqgx5hx76qr">2sxqgx5hx76qr</a></td><td align="right" class='awrnc'>3312420081</td><td align="right" class='awrnc'>1</td><td align="right" class='awrnc'>4.35</td>
+<td class='awrnc'>db file sequential read</td><td align="right" class='awrnc'>4.35</td><td class='awrnc'>TABLE ACCESS - CLUSTER</td><td align="right" class='awrnc'>4.35</td>
+<td class='awrnc'>select /*+ rule */ bucket, end...</td><td align="right" class='awrnc'>PDB1</td></tr>
+</table><p />
+<hr align="left" width="20%" /><p />
+<a class="awr" href="#42">Back to Active Session History (ASH) Report</a>
+<br /><a class="awr" href="#top">Back to Top</a><p />
+<a class="awr" name="9989"></a>
+<h3 class="awr">Top SQL with Top Row Sources</h3>
+<ul>
+<li class="awr"> Top SQL statements by DB Time along with the top row sources by DB Time    for those SQLs. </li>
+<li class="awr"> % Activity is the percentage of DB Time due to the SQL. </li>
+<li class="awr"> % Row Source is the percentage of DB Time spent on the row source by      that SQL. </li>
+<li class="awr"> % Event is the percentage of DB Time spent on the event by the      SQL executing the row source. </li>
+<li class="awr"> Executions is the number of executions of the SQL that were sampled in ASH.</li>
+</ul>
+<table border="0" class="tdiff" summary="This table display the Top SQLs with Top Row Sources"><tr><th class="awrbg" scope="col">SQL ID</th><th class="awrbg" scope="col">Plan Hash</th><th class="awrbg" scope="col">Executions</th><th class="awrbg" scope="col">% Activity</th><th class="awrbg" scope="col">Row Source</th><th class="awrbg" scope="col">% Row Source</th><th class="awrbg" scope="col">Top Event</th><th class="awrbg" scope="col">% Event</th><th class="awrbg" scope="col">SQL Text</th><th class="awrbg" scope="col">Container Name</th></tr>
+<tr><td align="right" class='awrc'><a class="awr" href="#g6px76dmjv1jy">g6px76dmjv1jy</a></td><td align="right" class='awrc'>3702721588</td><td align="right" class='awrc'>1</td><td align="right" class='awrc'>30.43</td>
+<td class='awrc'>FILTER</td><td align="right" class='awrc'>30.43</td><td class='awrc'>CPU + Wait for CPU</td><td align="right" class='awrc'>26.09</td>
+<td class='awrc'>select count(*) from wri$_opts...</td><td align="right" class='awrc'>PDB1</td></tr>
+<tr><td align="right" class='awrnc'><a class="awr" href="#5q09cmavhyq2y">5q09cmavhyq2y</a></td><td align="right" class='awrnc'>545072249</td><td align="right" class='awrnc'>0</td><td align="right" class='awrnc'>8.70</td>
+<td class='awrnc'>** Row Source Not Available **</td><td align="right" class='awrnc'>8.70</td><td class='awrnc'>CPU + Wait for CPU</td><td align="right" class='awrnc'>8.70</td>
+<td class='awrnc'>select owner, index_name, '' p...</td><td align="right" class='awrnc'>PDB1</td></tr>
+<tr><td align="right" class='awrc'><a class="awr" href="#ap4y2u336u3bj">ap4y2u336u3bj</a></td><td align="right" class='awrc'>4187227582</td><td align="right" class='awrc'>1</td><td align="right" class='awrc'>8.70</td>
+<td class='awrc'>FIXED TABLE - FULL</td><td align="right" class='awrc'>4.35</td><td class='awrc'>CPU + Wait for CPU</td><td align="right" class='awrc'>4.35</td>
+<td class='awrc'>SELECT DECODE(request, 0, 'Hol...</td><td align="right" class='awrc'>PDB1</td></tr>
+<tr><td align="right" class='awrnc'><div class="hidden">ap4y2u336u3bj</div></td><td align="right" class='awrnc'><div class="hidden">4187227582</div></td><td align="right" class='awrnc'><div class="hidden">1</div></td><td align="right" class='awrnc'><div class="hidden">8.69565217391304347826086956521739130435</div></td>
+<td class='awrnc'>SELECT STATEMENT</td><td align="right" class='awrnc'>4.35</td><td class='awrnc'>CPU + Wait for CPU</td><td align="right" class='awrnc'>4.35</td>
+<td class='awrnc'></td><td align="right" class='awrnc'><div class="hidden">PDB1</div></td></tr>
+<tr><td align="right" class='awrc'><a class="awr" href="#0n0gtbm798u5v">0n0gtbm798u5v</a></td><td align="right" class='awrc'>1218064253</td><td align="right" class='awrc'>0</td><td align="right" class='awrc'>4.35</td>
+<td class='awrc'>** Row Source Not Available **</td><td align="right" class='awrc'>4.35</td><td class='awrc'>CPU + Wait for CPU</td><td align="right" class='awrc'>4.35</td>
+<td class='awrc'>select sum(bytes) from v$sgain...</td><td align="right" class='awrc'>PDB1</td></tr>
+<tr><td align="right" class='awrnc'><a class="awr" href="#2sxqgx5hx76qr">2sxqgx5hx76qr</a></td><td align="right" class='awrnc'>3312420081</td><td align="right" class='awrnc'>1</td><td align="right" class='awrnc'>4.35</td>
+<td class='awrnc'>TABLE ACCESS - CLUSTER</td><td align="right" class='awrnc'>4.35</td><td class='awrnc'>db file sequential read</td><td align="right" class='awrnc'>4.35</td>
+<td class='awrnc'>select /*+ rule */ bucket, end...</td><td align="right" class='awrnc'>PDB1</td></tr>
+</table><p />
+<hr align="left" width="20%" /><p />
+<a class="awr" href="#42">Back to Active Session History (ASH) Report</a>
+<br /><a class="awr" href="#top">Back to Top</a><p />
+<a class="awr" name="9993"></a>
+<h3 class="awr">Top Sessions</h3>
+<ul>
+<li class="awr"> '# Samples Active' shows the number of ASH samples in which the session        was found waiting for that particular event. The percentage shown       in this column is calculated with respect to wall clock time       and not total database activity. </li>
+<li class="awr"> 'XIDs' shows the number of distinct transaction IDs sampled in ASH        when the session was waiting for that particular event</li>
+</ul>
+<table border="0" class="tdiff" summary="This table displays the top session by wait event"><tr><th class="awrbg" scope="col">Sid, Serial#</th><th class="awrbg" scope="col">% Activity</th><th class="awrbg" scope="col">Event</th><th class="awrbg" scope="col">% Event</th><th class="awrbg" scope="col">User</th><th class="awrbg" scope="col">Program</th><th class="awrbg" scope="col"># Samples Active</th><th class="awrbg" scope="col">XIDs</th></tr>
+<tr><td align="right" scope="row" class='awrc'>63,62674</td><td align="right" class='awrc'>8.70</td><td class='awrc'>CPU + Wait for CPU</td><td align="right" class='awrc'>4.35</td>
+<td class='awrc'>SYS</td><td class='awrc'>oracle@orcl (M001)</td><td align="right" class='awrc'>1/2,028 [  0%]</td><td align="right" class='awrc'>0</td></tr>
+<tr><td align="right" scope="row" class='awrnc'><div class="hidden">63,62674</div></td><td align="right" class='awrnc'><div class="hidden">8.69565217391304347826086956521739130435</div></td><td class='awrnc'>resmgr:cpu quantum</td><td align="right" class='awrnc'>4.35</td>
+<td class='awrnc'><div class="hidden">SYS</div></td><td class='awrnc'><div class="hidden">oracle@orcl (M001)</div></td><td align="right" class='awrnc'>1/2,028 [  0%]</td><td align="right" class='awrnc'>0</td></tr>
+<tr><td align="right" scope="row" class='awrc'>65, 4024</td><td align="right" class='awrc'>8.70</td><td class='awrc'>CPU + Wait for CPU</td><td align="right" class='awrc'>8.70</td>
+<td class='awrc'>SYS</td><td class='awrc'>oracle@orcl (M001)</td><td align="right" class='awrc'>2/2,028 [  0%]</td><td align="right" class='awrc'>0</td></tr>
+<tr><td align="right" scope="row" class='awrnc'>65,23680</td><td align="right" class='awrnc'>8.70</td><td class='awrnc'>CPU + Wait for CPU</td><td align="right" class='awrnc'>8.70</td>
+<td class='awrnc'>SYS</td><td class='awrnc'>oracle@orcl (M001)</td><td align="right" class='awrnc'>2/2,028 [  0%]</td><td align="right" class='awrnc'>0</td></tr>
+<tr><td align="right" scope="row" class='awrc'>74, 1349</td><td align="right" class='awrc'>8.70</td><td class='awrc'>CPU + Wait for CPU</td><td align="right" class='awrc'>4.35</td>
+<td class='awrc'>SYS</td><td class='awrc'>oracle@orcl (J001)</td><td align="right" class='awrc'>1/2,028 [  0%]</td><td align="right" class='awrc'>0</td></tr>
+<tr><td align="right" scope="row" class='awrnc'><div class="hidden">74, 1349</div></td><td align="right" class='awrnc'><div class="hidden">8.69565217391304347826086956521739130435</div></td><td class='awrnc'>db file sequential read</td><td align="right" class='awrnc'>4.35</td>
+<td class='awrnc'><div class="hidden">SYS</div></td><td class='awrnc'><div class="hidden">oracle@orcl (J001)</div></td><td align="right" class='awrnc'>1/2,028 [  0%]</td><td align="right" class='awrnc'>0</td></tr>
+<tr><td align="right" scope="row" class='awrc'>1,43651</td><td align="right" class='awrc'>4.35</td><td class='awrc'>CPU + Wait for CPU</td><td align="right" class='awrc'>4.35</td>
+<td class='awrc'>DBMON</td><td class='awrc'>python.exe</td><td align="right" class='awrc'>1/2,028 [  0%]</td><td align="right" class='awrc'>0</td></tr>
+</table><p />
+<hr align="left" width="20%" /><p />
+<a class="awr" href="#42">Back to Active Session History (ASH) Report</a>
+<br /><a class="awr" href="#top">Back to Top</a><p />
+<a class="awr" name="9992"></a>
+<h3 class="awr">Top Blocking Sessions</h3>
+<ul>
+<li class="awr"> Blocking session activity percentages are calculated with respect to        waits on enqueues, latches and &quot;buffer busy&quot; only  </li>
+<li class="awr"> '% Activity' represents the load on the database caused by        a particular blocking session </li>
+<li class="awr"> '# Samples Active' shows the number of ASH samples in which the        blocking session was found active. </li>
+<li class="awr"> 'XIDs' shows the number of distinct transaction IDs sampled in ASH        when the blocking session was found active.</li>
+</ul>
+<table border="0" class="tdiff" summary="This table displays the top sessions that are blocking other sessions."><tr><th class="awrbg" scope="col">Blocking Sid (Inst)</th><th class="awrbg" scope="col">% Activity</th><th class="awrbg" scope="col">Event Caused</th><th class="awrbg" scope="col">% Event</th><th class="awrbg" scope="col">User</th><th class="awrbg" scope="col">Program</th><th class="awrbg" scope="col"># Samples Active</th><th class="awrbg" scope="col">XIDs</th></tr>
+<tr><td align="right" scope="row" class='awrc'>19,10255(     1)</td><td align="right" class='awrc'>4.35</td><td class='awrc'>log file sync</td><td align="right" class='awrc'>4.35</td>
+<td class='awrc'>** NOT FOUND **</td><td class='awrc'>BLOCKING SESSION NOT FOUND</td><td align="right" class='awrc'>0/2,028 [  0%]</td><td align="right" class='awrc'>&#160;</td></tr>
+</table><p />
+<hr align="left" width="20%" /><p />
+<a class="awr" href="#42">Back to Active Session History (ASH) Report</a>
+<br /><a class="awr" href="#top">Back to Top</a><p />
+<a class="awr" name="9991"></a>
+<h3 class="awr">Top PL/SQL Procedures</h3>
+<ul>
+<li class="awr"> 'PL/SQL entry subprogram' represents the application's top-level        entry-point (procedure, function, trigger, package initialization       or RPC call) into PL/SQL. </li>
+<li class="awr"> 'PL/SQL current subprogram' is the PL/SQL subprogram being executed        at the point of sampling . If the value is 'SQL', it represents        the percentage of time spent executing SQL for the particular        PL/SQL entry subprogram</li>
+</ul>
+<table border="0" class="tdiff" summary="This table displays the Top PL/SQL procedures"><tr><th class="awrbg" scope="col">PL/SQL Entry Subprogram</th><th class="awrbg" scope="col">% Activity</th><th class="awrbg" scope="col">PL/SQL Current Subprogram</th><th class="awrbg" scope="col">% Current</th><th class="awrbg" scope="col">Container Name</th></tr>
+<tr><td scope="row" class='awrc'>UNKNOWN_PLSQL_ID &lt;7292, 41&gt;</td><td align="right" class='awrc'>13.04</td>
+<td class='awrc'>SQL</td><td align="right" class='awrc'>13.04</td>
+<td align="right" class='awrc'>PDB1</td></tr>
+<tr><td scope="row" class='awrnc'>UNKNOWN_PLSQL_ID &lt;12703, 160&gt;</td><td align="right" class='awrnc'>8.70</td>
+<td class='awrnc'>SQL</td><td align="right" class='awrnc'>8.70</td>
+<td align="right" class='awrnc'>PDB1</td></tr>
+<tr><td scope="row" class='awrc'>UNKNOWN_PLSQL_ID &lt;12800, 25&gt;</td><td align="right" class='awrc'>4.35</td>
+<td class='awrc'>SQL</td><td align="right" class='awrc'>4.35</td>
+<td align="right" class='awrc'>PDB1</td></tr>
+<tr><td scope="row" class='awrnc'>SYS.DBMS_UNDO_ADV.UNDO_ADVISOR#2</td><td align="right" class='awrnc'>4.35</td>
+<td class='awrnc'>SQL</td><td align="right" class='awrnc'>4.35</td>
+<td align="right" class='awrnc'>PDB1</td></tr>
+</table><p />
+<hr align="left" width="20%" /><p />
+<a class="awr" href="#42">Back to Active Session History (ASH) Report</a>
+<br /><a class="awr" href="#top">Back to Top</a><p />
+<a class="awr" name="9988"></a>
+<h3 class="awr">Top Events</h3>
+<ul>
+<li class="awr"> Top Events by DB Time </li>
+<li class="awr"> % Activity is the percentage of DB Time due to the event</li>
+</ul>
+<table border="0" class="tdiff" summary="This table shows the top events"><tr><th class="awrbg" scope="col">Event</th><th class="awrbg" scope="col">Event Class</th><th class="awrbg" scope="col">Session Type</th><th class="awrbg" scope="col">% Activity</th><th class="awrbg" scope="col">Avg Active Sessions</th></tr>
+<tr><td scope="row" class='awrc'>CPU + Wait for CPU</td><td class='awrc'>CPU</td><td class='awrc'>FOREGROUND</td>
+<td align="right" class='awrc'>39.13</td><td align="right" class='awrc'>0.00</td></tr>
+<tr><td scope="row" class='awrnc'>CPU + Wait for CPU</td><td class='awrnc'>CPU</td><td class='awrnc'>BACKGROUND</td>
+<td align="right" class='awrnc'>34.78</td><td align="right" class='awrnc'>0.00</td></tr>
+<tr><td scope="row" class='awrc'>db file sequential read</td><td class='awrc'>User I/O</td><td class='awrc'>FOREGROUND</td>
+<td align="right" class='awrc'>8.70</td><td align="right" class='awrc'>0.00</td></tr>
+<tr><td scope="row" class='awrnc'>control file parallel write</td><td class='awrnc'>System I/O</td><td class='awrnc'>BACKGROUND</td>
+<td align="right" class='awrnc'>4.35</td><td align="right" class='awrnc'>0.00</td></tr>
+<tr><td scope="row" class='awrc'>log file sync</td><td class='awrc'>Commit</td><td class='awrc'>FOREGROUND</td>
+<td align="right" class='awrc'><div class="hidden">4.34782608695652173913043478260869565217</div></td><td align="right" class='awrc'>0.00</td></tr>
+</table><p />
+<hr align="left" width="20%" /><p />
+<a class="awr" href="#42">Back to Active Session History (ASH) Report</a>
+<br /><a class="awr" href="#top">Back to Top</a><p />
+<a class="awr" name="9994"></a>
+<h3 class="awr">Top Event P1/P2/P3 Values</h3>
+<ul>
+<li class="awr"> Top Events by DB Time and the top P1/P2/P3 values for those events. </li>
+<li class="awr"> % Event is the percentage of DB Time due to the event  </li>
+<li class="awr"> % Activity is the percentage of DB Time due to the event with the given     P1,P2,P3 Values.</li>
+</ul>
+<table border="0" class="tdiff" summary="This table displays the top event P1/P2/P3 values"><tr><th class="awrbg" scope="col">Event</th><th class="awrbg" scope="col">% Event</th><th class="awrbg" scope="col">P1, P2, P3 Values</th><th class="awrbg" scope="col">% Activity</th><th class="awrbg" scope="col">Parameter 1</th><th class="awrbg" scope="col">Parameter 2</th><th class="awrbg" scope="col">Parameter 3</th></tr>
+<tr><td scope="row" class='awrc'>db file sequential read</td><td align="right" class='awrc'>8.70</td><td align="right" class='awrc'>&quot;9&quot;,&quot;2686&quot;,&quot;1&quot;</td><td align="right" class='awrc'>4.35</td>
+<td class='awrc'>file#</td><td class='awrc'>block#</td><td class='awrc'>blocks</td></tr>
+<tr><td scope="row" class='awrnc'><div class="hidden">db file sequential read</div></td><td align="right" class='awrnc'><div class="hidden">8.69565217391304347826086956521739130435</div></td><td align="right" class='awrnc'>&quot;9&quot;,&quot;31526&quot;,&quot;1&quot;</td><td align="right" class='awrnc'>4.35</td>
+<td class='awrnc'><div class="hidden">file#</div></td><td class='awrnc'><div class="hidden">block#</div></td><td class='awrnc'><div class="hidden">blocks</div></td></tr>
+<tr><td scope="row" class='awrc'>resmgr:cpu quantum</td><td align="right" class='awrc'>8.70</td><td align="right" class='awrc'>&quot;3&quot;,&quot;18980&quot;,&quot;0&quot;</td><td align="right" class='awrc'>4.35</td>
+<td class='awrc'>location</td><td class='awrc'>consumer group id</td><td class='awrc'>&#160;</td></tr>
+<tr><td scope="row" class='awrnc'><div class="hidden">resmgr:cpu quantum</div></td><td align="right" class='awrnc'><div class="hidden">8.69565217391304347826086956521739130435</div></td><td align="right" class='awrnc'>&quot;3&quot;,&quot;18986&quot;,&quot;0&quot;</td><td align="right" class='awrnc'>4.35</td>
+<td class='awrnc'><div class="hidden">location</div></td><td class='awrnc'><div class="hidden">consumer group id</div></td><td class='awrnc'><div class="hidden"> </div></td></tr>
+<tr><td scope="row" class='awrc'>control file parallel write</td><td align="right" class='awrc'>4.35</td><td align="right" class='awrc'>&quot;2&quot;,&quot;1&quot;,&quot;2&quot;</td><td align="right" class='awrc'>4.35</td>
+<td class='awrc'>files</td><td class='awrc'>block#</td><td class='awrc'>requests</td></tr>
+<tr><td scope="row" class='awrnc'>log file sync</td><td align="right" class='awrnc'>4.35</td><td align="right" class='awrnc'>&quot;5557&quot;,&quot;6405866&quot;,&quot;0&quot;</td><td align="right" class='awrnc'>4.35</td>
+<td class='awrnc'>buffer#</td><td class='awrnc'>sync scn</td><td class='awrnc'>NOT DEFINED</td></tr>
+</table><p />
+<hr align="left" width="20%" /><p />
+<a class="awr" href="#42">Back to Active Session History (ASH) Report</a>
+<br /><a class="awr" href="#top">Back to Top</a><p />
+<a class="awr" name="9987"></a>
+<h3 class="awr">Top DB Objects</h3>
+<ul>
+<li class="awr"> Top DB Objects by DB Time with respect to Application, Cluster,     User I/O,  buffer busy waits and In-Memory DB events only. </li>
+<li class="awr"> Tablespace name is not available for reports generated from the root PDB     of a consolidated database.</li>
+</ul>
+<table border="0" class="tdiff" summary="This table shows the Top DB Objects"><tr><th class="awrbg" scope="col">Object ID</th><th class="awrbg" scope="col">% Activity</th><th class="awrbg" scope="col">Event</th><th class="awrbg" scope="col">% Event</th><th class="awrbg" scope="col">Object Name (Type)</th><th class="awrbg" scope="col">Tablespace</th><th class="awrbg" scope="col">Container Name</th></tr>
+<tr><td align="right" scope="row" class='awrc'>763</td><td align="right" class='awrc'>4.35</td><td class='awrc'>db file sequential read</td><td align="right" class='awrc'>4.35</td>
+<td class='awrc'>SYS.KOTTBX$ (TABLE)</td><td class='awrc'>SYSTEM</td>
+<td align="right" class='awrc'>PDB1</td></tr>
+</table><p />
+<hr align="left" width="20%" /><p />
+<a class="awr" href="#42">Back to Active Session History (ASH) Report</a>
+<br /><a class="awr" href="#top">Back to Top</a><p />
+<a class="awr" name="9986"></a>
+<h3 class="awr">Activity Over Time</h3>
+<ul>
+<li class="awr"> Analysis period is divided into smaller time slots as indicated    in the 'Slot Time (Duration)'. </li>
+<li class="awr"> Top 3 events are reported in each of those slots </li>
+<li class="awr"> 'Slot Count' shows the number of ASH samples in that slot </li>
+<li class="awr"> 'Event Count' shows the number of ASH samples waiting for    that event in that slot </li>
+<li class="awr"> '% Event' is 'Event Count' over all ASH samples in the analysis period</li>
+</ul>
+<table border="0" class="tdiff" summary="This table show the activity in ASH over time"><tr><th class="awrbg" scope="col">Slot Time (Duration)</th><th class="awrbg" scope="col">Slot Count</th><th class="awrbg" scope="col">Event</th><th class="awrbg" scope="col">Event Count</th><th class="awrbg" scope="col">% Event</th></tr>
+<tr><td align="right" class='awrc'>00:35:00  (35.0 min)</td><td align="right" class='awrc'>1</td><td class='awrc'>CPU + Wait for CPU</td><td align="right" class='awrc'>1</td><td align="right" class='awrc'>4.35</td></tr>
+<tr><td align="right" class='awrnc'>01:10:00  (35.0 min)</td><td align="right" class='awrnc'>5</td><td class='awrnc'>CPU + Wait for CPU</td><td align="right" class='awrnc'>3</td><td align="right" class='awrnc'>13.04</td></tr>
+<tr><td align="right" class='awrc'><div class="hidden">01:10:00  (35.0 min)</div></td><td align="right" class='awrc'><div class="hidden">5</div></td><td class='awrc'>control file parallel write</td><td align="right" class='awrc'>1</td><td align="right" class='awrc'>4.35</td></tr>
+<tr><td align="right" class='awrnc'><div class="hidden">01:10:00  (35.0 min)</div></td><td align="right" class='awrnc'><div class="hidden">5</div></td><td class='awrnc'>resmgr:cpu quantum</td><td align="right" class='awrnc'>1</td><td align="right" class='awrnc'>4.35</td></tr>
+<tr><td align="right" class='awrc'>01:45:00  (35.0 min)</td><td align="right" class='awrc'>3</td><td class='awrc'>CPU + Wait for CPU</td><td align="right" class='awrc'>3</td><td align="right" class='awrc'>13.04</td></tr>
+<tr><td align="right" class='awrnc'>02:55:00  (35.0 min)</td><td align="right" class='awrnc'>4</td><td class='awrnc'>CPU + Wait for CPU</td><td align="right" class='awrnc'>3</td><td align="right" class='awrnc'>13.04</td></tr>
+<tr><td align="right" class='awrc'><div class="hidden">02:55:00  (35.0 min)</div></td><td align="right" class='awrc'><div class="hidden">4</div></td><td class='awrc'>log file sync</td><td align="right" class='awrc'>1</td><td align="right" class='awrc'>4.35</td></tr>
+<tr><td align="right" class='awrnc'>03:30:00  (35.0 min)</td><td align="right" class='awrnc'>1</td><td class='awrnc'>CPU + Wait for CPU</td><td align="right" class='awrnc'>1</td><td align="right" class='awrnc'>4.35</td></tr>
+<tr><td align="right" class='awrc'>04:05:00  (35.0 min)</td><td align="right" class='awrc'>3</td><td class='awrc'>CPU + Wait for CPU</td><td align="right" class='awrc'>3</td><td align="right" class='awrc'>13.04</td></tr>
+<tr><td align="right" class='awrnc'>04:40:00  (35.0 min)</td><td align="right" class='awrnc'>2</td><td class='awrnc'>CPU + Wait for CPU</td><td align="right" class='awrnc'>2</td><td align="right" class='awrnc'>8.70</td></tr>
+<tr><td align="right" class='awrc'>05:50:00  (10.5 min)</td><td align="right" class='awrc'>4</td><td class='awrc'>db file sequential read</td><td align="right" class='awrc'>2</td><td align="right" class='awrc'>8.70</td></tr>
+<tr><td align="right" class='awrnc'><div class="hidden">05:50:00  (10.5 min)</div></td><td align="right" class='awrnc'><div class="hidden">4</div></td><td class='awrnc'>CPU + Wait for CPU</td><td align="right" class='awrnc'>1</td><td align="right" class='awrnc'>4.35</td></tr>
+<tr><td align="right" class='awrc'><div class="hidden">05:50:00  (10.5 min)</div></td><td align="right" class='awrc'><div class="hidden">4</div></td><td class='awrc'>resmgr:cpu quantum</td><td align="right" class='awrc'>1</td><td align="right" class='awrc'>4.35</td></tr>
+</table><p />
+<hr align="left" width="20%" /><p />
+<a class="awr" href="#42">Back to Active Session History (ASH) Report</a>
+<br /><a class="awr" href="#top">Back to Top</a><p />
+<p />
+<a class="awr" name="99995"></a>
+<br /><a class="awr" href="#top">Back to Top</a><p />
+<p />
+<p />
+<p />
+<p />
+<p />
+<p />
+<p />
+<p />
+<p />
+End of Report
+</body></html>

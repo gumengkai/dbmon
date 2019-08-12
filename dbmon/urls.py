@@ -134,7 +134,8 @@ urlpatterns = patterns('',
     (r'^redis_mon_conf_add/', redis_mon.redis_mon_conf_add),
     (r'^redis_mon_conf_edit$', redis_mon.redis_mon_conf_edit),
     (r'^redis_mon_conf_del$', redis_mon.redis_mon_conf_del),
-
+    (r'^get_mysql_errorlog/', mysql_mon.get_mysql_errorlog),
+    (r'^get_oracle_log/', oracle_mon.get_oracle_log),
                        )
 
 handler404 = frame.page_not_found

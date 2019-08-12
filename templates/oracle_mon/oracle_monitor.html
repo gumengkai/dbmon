@@ -80,6 +80,11 @@
           <!-- /.row -->          <!-- /.row -->
            <!-- /.row -->
           <div class="col-md-4">
+              <div class="panel panel-default pull-right" >
+                  <a href="#"><button type="button" class="btn btn-default" onclick="return pop('{{ oracleinfo.tags }}','{{ oracleinfo.host }}')" >获取实例日志</button>
+                  </a>
+			</h2>
+          </div>
            	<div class="panel panel-default pull-right" >
                <a data-toggle="collapse" href="#oracleconf" target="_blank" class="btn btn-default">配置信息</a>
 			</h2>
@@ -912,5 +917,16 @@ function pop_tmp(m){
 
 </script>
 
-
+<script>
+function pop(m){
+    layer.open({
+    type: 2,
+    title: m,
+    closeBtn: 1,
+    area: ['900px', '600px'],
+    shadeClose: true, //点击遮罩关闭
+    content: ['/get_oracle_log/?tags='+ m]
+  });
+}
+</script>
 {% endblock %}

@@ -63,6 +63,11 @@
           <!-- /.row -->
            <!-- /.row -->
           <div class="col-md-6">
+              <div class="panel panel-default pull-right" >
+                  <a href="#"><button type="button" class="btn btn-default" onclick="return pop('{{ mysqlinfo.tags }}','{{ osinfo.host }}')" >获取实例日志</button>
+                  </a>
+			</h2>
+          </div>
            	<div class="panel panel-default pull-right" >
                <a data-toggle="collapse" href="#linuxconf" target="_blank" class="btn btn-default">配置信息</a>
 			</h2>
@@ -830,5 +835,18 @@ function submitForm_net(){
      myChart_net_grow.setOption(option_net_grow, true);
  },500);
 
+</script>
+
+<script>
+function pop(m){
+    layer.open({
+    type: 2,
+    title: m,
+    closeBtn: 1,
+    area: ['900px', '600px'],
+    shadeClose: true, //点击遮罩关闭
+    content: ['/get_mysql_errorlog/?tags='+ m]
+  });
+}
 </script>
 {% endblock %}

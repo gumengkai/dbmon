@@ -26,6 +26,8 @@ import tasks as task
 from django.contrib import messages
 import os
 import commands
+import paramiko
+import cx_Oracle
 # Create your views here.
 
 
@@ -2038,3 +2040,33 @@ def upload_file(request):
             models_frame.SqlList.objects.create(sql_no=sql_no, sql_info=sql,sql_name=sql_name,db_name=db_name,result='未执行',result_color='')
         tools.my_log(log_type, '脚本初始化完成！', '')
         return HttpResponseRedirect('/sql_exec/')
+
+
+@login_required(login_url='/login')
+def get_oracle_log(request):
+
+    tags = request.GET.get('tags')
+
+    sql = '''select host,port,service_name,user,password,user_os,password_os,ssh_port_os from tab_oracle_servers where tags='%s' ''' % tags
+    oracleinfo = tools.mysql_query(sql)
+    host,port,service_name,user,password,user_os,password_os,ssh_port_os = oracleinfo[0]
+    password = base64.decodestring(password)
+    password_os = base64.decodestring(password_os)
+    # 后台日志参数
+    url = host + ':' + port + '/' + service_name
+    conn =  cx_Oracle.connect(user,password,url)
+    cur = conn.cursor()
+    sql = "select value from v$diag_info where name = 'Diag Trace'"
+    cur.execute(sql)
+    # 后台日志路径
+    log_path, = cur.fetchone()
+    # ssh到主机获取日志内容
+    ssh_client = paramiko.SSHClient()
+    ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    ssh_client.connect(host, ssh_port_os, user_os, password_os)
+    cmd = 'tail -300 %s/alert_*.log' %log_path
+    std_in, std_out, std_err = ssh_client.exec_command(cmd)
+    log = std_out.read()
+
+    return render_to_response('frame/show_log.html',
+                              {'tags':tags,'log':log})

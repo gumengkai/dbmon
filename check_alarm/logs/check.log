@@ -1,0 +1,1647 @@
+2019-08-12 17:58:31,522 - main_check.py[line:1293] - INFO: 清除os_info表无效监控数据
+2019-08-12 17:58:31,595 - main_check.py[line:1293] - INFO: 清除os_filesystem表无效监控数据
+2019-08-12 17:58:31,601 - main_check.py[line:1293] - INFO: 清除linux_rate表无效监控数据
+2019-08-12 17:58:31,611 - main_check.py[line:1301] - INFO: 清除oracle_tbs表无效监控数据
+2019-08-12 17:58:31,621 - main_check.py[line:1301] - INFO: 清除oracle_db表无效监控数据
+2019-08-12 17:58:31,632 - main_check.py[line:1301] - INFO: 清除oracle_db_event表无效监控数据
+2019-08-12 17:58:31,641 - main_check.py[line:1301] - INFO: 清除oracle_tmp_tbs表无效监控数据
+2019-08-12 17:58:31,647 - main_check.py[line:1301] - INFO: 清除oracle_undo_tbs表无效监控数据
+2019-08-12 17:58:31,658 - main_check.py[line:1301] - INFO: 清除oracle_db_rate表无效监控数据
+2019-08-12 17:58:31,671 - main_check.py[line:1301] - INFO: 清除oracle_invalid_index表无效监控数据
+2019-08-12 17:58:31,687 - main_check.py[line:1301] - INFO: 清除oracle_expired_pwd表无效监控数据
+2019-08-12 17:58:31,694 - main_check.py[line:1309] - INFO: 清除mysql_db表无效监控数据
+2019-08-12 17:58:31,706 - main_check.py[line:1309] - INFO: 清除mysql_db_rate表无效监控数据
+2019-08-12 17:58:31,716 - main_check.py[line:1309] - INFO: 清除mysql_repl表无效监控数据
+2019-08-12 17:58:31,729 - main_check.py[line:1317] - INFO: 清除redis表无效监控数据
+2019-08-12 17:58:31,747 - main_check.py[line:1325] - INFO: 清除web_url_stats表无效监控数据
+2019-08-12 17:58:31,759 - main_check.py[line:1333] - INFO: 清除tcp_stats表无效监控数据
+2019-08-12 17:58:31,826 - main_check.py[line:1359] - INFO: orcl 开始采集Linux主机信息
+2019-08-12 17:58:31,832 - main_check.py[line:1359] - INFO: 18c_adg 开始采集Linux主机信息
+2019-08-12 17:58:31,836 - main_check.py[line:1359] - INFO: orcl19c 开始采集Linux主机信息
+2019-08-12 17:58:31,844 - main_check.py[line:1359] - INFO: mysql50 开始采集Linux主机信息
+2019-08-12 17:58:31,848 - main_check.py[line:1359] - INFO: orcl1 开始采集Linux主机信息
+2019-08-12 17:58:31,852 - main_check.py[line:1359] - INFO: dbmon 开始采集Linux主机信息
+2019-08-12 17:58:31,858 - main_check.py[line:1368] - INFO: orcl18c_pdb1 开始采集oracle数据库信息
+2019-08-12 17:58:31,862 - main_check.py[line:1368] - INFO: orcl19c 开始采集oracle数据库信息
+2019-08-12 17:58:31,868 - main_check.py[line:1376] - INFO: mysql50 开始采集mysql数据库信息
+2019-08-12 17:58:31,872 - main_check.py[line:1376] - INFO: mysql501 开始采集mysql数据库信息
+2019-08-12 17:58:31,877 - main_check.py[line:1383] - INFO: Redis-6385 开始采集redis信息
+2019-08-12 17:58:31,881 - main_check.py[line:1383] - INFO: redis-6379 开始采集redis信息
+2019-08-12 17:58:31,887 - main_check.py[line:1383] - INFO: redis-6380 开始采集redis信息
+2019-08-12 17:58:31,892 - main_check.py[line:1383] - INFO: redis-6381 开始采集redis信息
+2019-08-12 17:58:31,897 - main_check.py[line:1383] - INFO: Redis-6382 开始采集redis信息
+2019-08-12 17:58:31,907 - main_check.py[line:1383] - INFO: Redis-6383 开始采集redis信息
+2019-08-12 17:58:31,911 - main_check.py[line:1383] - INFO: Redis-6384 开始采集redis信息
+2019-08-12 17:58:31,917 - main_check.py[line:1383] - INFO: redis-orcl 开始采集redis信息
+2019-08-12 17:58:31,921 - main_check.py[line:1389] - INFO: baidu 开始采集web信息
+2019-08-12 17:58:31,924 - main_check.py[line:1395] - INFO: orcl18c 开始采集tcp信息
+2019-08-12 17:58:35,691 - main_check.py[line:1244] - INFO: baidu：初始化web_url_stats表
+2019-08-12 17:58:35,769 - main_check.py[line:36] - INFO: 18c_adg：开始获取系统监控信息
+2019-08-12 17:58:35,779 - main_check.py[line:36] - INFO: dbmon：开始获取系统监控信息
+2019-08-12 17:58:35,802 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 17:58:36,052 - main_check.py[line:1260] - INFO: orcl18c：初始化tcp_stats表
+2019-08-12 17:58:36,086 - main_check.py[line:781] - INFO: 等待2秒待Linux主机信息采集完毕
+2019-08-12 17:58:36,121 - main_check.py[line:808] - INFO: mysql501：开始获取mysql数据库监控信息
+2019-08-12 17:58:36,121 - main_check.py[line:812] - INFO: mysql501：获取第一次MySQL状态采样
+2019-08-12 17:58:36,131 - main_check.py[line:36] - INFO: orcl19c：开始获取系统监控信息
+2019-08-12 17:58:36,217 - main_check.py[line:36] - INFO: orcl1：开始获取系统监控信息
+2019-08-12 17:58:36,223 - main_check.py[line:332] - INFO: orcl18c_pdb1等待2秒待linux主机信息采集完毕
+2019-08-12 17:58:36,226 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 17:58:36,230 - main_check.py[line:36] - INFO: mysql50：开始获取系统监控信息
+2019-08-12 17:58:36,240 - main_check.py[line:332] - INFO: orcl19c等待2秒待linux主机信息采集完毕
+2019-08-12 17:58:36,240 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 17:58:36,243 - main_check.py[line:36] - INFO: orcl：开始获取系统监控信息
+2019-08-12 17:58:36,243 - main_check.py[line:781] - INFO: 等待2秒待Linux主机信息采集完毕
+2019-08-12 17:58:36,250 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 17:58:36,263 - main_check.py[line:808] - INFO: mysql50：开始获取mysql数据库监控信息
+2019-08-12 17:58:36,265 - main_check.py[line:812] - INFO: mysql50：获取第一次MySQL状态采样
+2019-08-12 17:58:36,936 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 17:58:36,936 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 17:58:36,938 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 17:58:36,950 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 17:58:36,966 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 17:58:36,973 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 17:58:37,125 - main_check.py[line:815] - INFO: mysql501：获取第二次MySQL状态采样
+2019-08-12 17:58:37,198 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 17:58:37,312 - main_check.py[line:815] - INFO: mysql50：获取第二次MySQL状态采样
+2019-08-12 17:58:37,345 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 17:58:37,753 - main_check.py[line:1200] - ERROR: redis-orcl redis连接失败：Error 10061 connecting to 192.168.48.10:6379. .
+2019-08-12 17:58:37,753 - main_check.py[line:1201] - INFO: redis-orcl：初始化redis表
+2019-08-12 17:58:37,799 - main_check.py[line:1209] - INFO: redis-orcl扣分明细，总评分:0,扣分原因:conected error
+2019-08-12 17:58:38,473 - main_check.py[line:367] - INFO: orcl18c_pdb1：开始获取Oracle数据库表空间监控信息
+2019-08-12 17:58:38,684 - main_check.py[line:371] - INFO: orcl18c_pdb1：初始化oracle_tbs表
+2019-08-12 17:58:38,734 - main_check.py[line:387] - INFO: orcl18c_pdb1：获取Oracle数据库表空间使用率(表空间名：SYSTEM 使用率：96.67)
+2019-08-12 17:58:38,743 - main_check.py[line:387] - INFO: orcl18c_pdb1：获取Oracle数据库表空间使用率(表空间名：SYSAUX 使用率：91.36)
+2019-08-12 17:58:38,752 - main_check.py[line:387] - INFO: orcl18c_pdb1：获取Oracle数据库表空间使用率(表空间名：USERS 使用率：27.5)
+2019-08-12 17:58:38,757 - main_check.py[line:391] - INFO: orcl18c_pdb1：开始获取Oracle数据库监控信息
+2019-08-12 17:58:40,233 - main_check.py[line:108] - INFO: dbmon：初始化linux_net表
+2019-08-12 17:58:40,276 - main_check.py[line:119] - INFO: dbmon：获取网卡流量(网卡：eth0 接收：6.32 发送：20.5)
+2019-08-12 17:58:40,282 - main_check.py[line:129] - INFO: dbmon：初始化linux_io_stat表
+2019-08-12 17:58:40,299 - main_check.py[line:160] - INFO: dbmon：获取磁盘IO(磁盘名：sda 读取量：0.0 写入量：0.13)
+2019-08-12 17:58:40,319 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 17:58:40,460 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 17:58:40,604 - main_check.py[line:108] - INFO: orcl：初始化linux_net表
+2019-08-12 17:58:40,640 - main_check.py[line:108] - INFO: orcl1：初始化linux_net表
+2019-08-12 17:58:40,641 - main_check.py[line:119] - INFO: orcl：获取网卡流量(网卡：eth0 接收：19.66 发送：50.17)
+2019-08-12 17:58:40,650 - main_check.py[line:119] - INFO: orcl：获取网卡流量(网卡：pan0 接收：0.0 发送：0.0)
+2019-08-12 17:58:40,657 - main_check.py[line:129] - INFO: orcl：初始化linux_io_stat表
+2019-08-12 17:58:40,686 - main_check.py[line:160] - INFO: orcl：获取磁盘IO(磁盘名：sda 读取量：0.0 写入量：0.27)
+2019-08-12 17:58:40,703 - main_check.py[line:119] - INFO: orcl1：获取网卡流量(网卡：eth0 接收：13.9 发送：42.51)
+2019-08-12 17:58:40,710 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 17:58:40,713 - main_check.py[line:119] - INFO: orcl1：获取网卡流量(网卡：pan0 接收：0.0 发送：0.0)
+2019-08-12 17:58:40,723 - main_check.py[line:129] - INFO: orcl1：初始化linux_io_stat表
+2019-08-12 17:58:40,737 - main_check.py[line:160] - INFO: orcl1：获取磁盘IO(磁盘名：sda 读取量：0.0 写入量：0.24)
+2019-08-12 17:58:40,752 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 17:58:40,855 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 17:58:40,888 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 17:58:41,255 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 17:58:41,296 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 17:58:41,357 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 17:58:41,385 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 17:58:41,398 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+!
+2019-08-12 17:58:41,426 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 17:58:41,433 - main_check.py[line:223] - INFO: orcl：初始化os_info表
+2019-08-12 17:58:41,448 - main_check.py[line:247] - INFO: orcl：获取系统监控数据(CPU：70.49 MEM：33.0)
+2019-08-12 17:58:41,459 - main_check.py[line:251] - INFO: orcl：开始获取文件系统监控信息
+2019-08-12 17:58:41,460 - main_check.py[line:223] - INFO: orcl1：初始化os_info表
+2019-08-12 17:58:41,467 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 17:58:41,470 - main_check.py[line:223] - INFO: dbmon：初始化os_info表
+2019-08-12 17:58:41,487 - main_check.py[line:247] - INFO: orcl1：获取系统监控数据(CPU：70.39 MEM：33.0)
+2019-08-12 17:58:41,492 - main_check.py[line:247] - INFO: dbmon：获取系统监控数据(CPU：21.9 MEM：13.0)
+2019-08-12 17:58:41,497 - main_check.py[line:251] - INFO: orcl1：开始获取文件系统监控信息
+2019-08-12 17:58:41,502 - main_check.py[line:251] - INFO: dbmon：开始获取文件系统监控信息
+2019-08-12 17:58:41,505 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 17:58:41,512 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 17:58:42,111 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 17:58:42,115 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 17:58:42,138 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 17:58:42,147 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 17:58:42,147 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 17:58:42,154 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 17:58:42,174 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 17:58:42,193 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 17:58:42,217 - main_check.py[line:256] - INFO: orcl1：初始化os_filesystem表
+2019-08-12 17:58:42,230 - main_check.py[line:269] - INFO: orcl1：获取文件系统使用率(路径名：/ 使用率：92%)
+2019-08-12 17:58:42,239 - main_check.py[line:256] - INFO: orcl：初始化os_filesystem表
+2019-08-12 17:58:42,239 - main_check.py[line:273] - INFO: orcl1 :开始更新Linux主机评分信息
+2019-08-12 17:58:42,259 - main_check.py[line:269] - INFO: orcl：获取文件系统使用率(路径名：/ 使用率：92%)
+2019-08-12 17:58:42,267 - main_check.py[line:328] - INFO: orcl1扣分明细，cpu使用率扣分:10.49，内存使用率扣分:0，总评分:89.51,扣分原因:CPU使用率：70% 
+
+2019-08-12 17:58:42,269 - main_check.py[line:273] - INFO: orcl :开始更新Linux主机评分信息
+2019-08-12 17:58:42,289 - main_check.py[line:438] - INFO: orcl18c_pdb1：初始化oracle_db表
+2019-08-12 17:58:42,305 - main_check.py[line:328] - INFO: orcl扣分明细，cpu使用率扣分:10.49，内存使用率扣分:0，总评分:89.51,扣分原因:CPU使用率：70% 
+
+2019-08-12 17:58:42,322 - main_check.py[line:506] - INFO: orcl18c_pdb1：获取Oracle数据库监控数据(数据库名：ORCL 数据库角色：PRIMARY 数据库状态：READ WRITE 连接数使用率：18 )
+2019-08-12 17:58:42,322 - main_check.py[line:509] - INFO: orcl18c_pdb1：开始获取Oracle数据库用户密码过期信息
+2019-08-12 17:58:42,385 - main_check.py[line:512] - INFO: orcl18c_pdb1：初始化oracle_expired_pwd表
+2019-08-12 17:58:42,388 - main_check.py[line:521] - INFO: orcl18c_pdb1：开始获取Oracle数据库等待事件信息
+2019-08-12 17:58:42,404 - main_check.py[line:525] - INFO: orcl18c_pdb1：初始化oracle_db_event表
+2019-08-12 17:58:42,470 - main_check.py[line:256] - INFO: dbmon：初始化os_filesystem表
+2019-08-12 17:58:42,490 - main_check.py[line:269] - INFO: dbmon：获取文件系统使用率(路径名：/ 使用率：39%)
+2019-08-12 17:58:42,497 - main_check.py[line:273] - INFO: dbmon :开始更新Linux主机评分信息
+2019-08-12 17:58:42,526 - main_check.py[line:328] - INFO: dbmon扣分明细，cpu使用率扣分:0，内存使用率扣分:0，总评分:100,扣分原因:
+2019-08-12 17:58:42,611 - main_check.py[line:536] - INFO: orcl18c_pdb1：开始获取Oracle数据库锁等待信息
+2019-08-12 17:58:42,762 - main_check.py[line:540] - INFO: orcl18c_pdb1：初始化oracle_Lock表
+2019-08-12 17:58:42,763 - main_check.py[line:550] - INFO: orcl18c_pdb1：开始获取Oracle数据库无效索引信息
+2019-08-12 17:58:44,328 - main_check.py[line:554] - INFO: orcl18c_pdb1：初始化oracle_invalid_index表
+2019-08-12 17:58:44,335 - main_check.py[line:564] - INFO: orcl18c_pdb1：开始获取Oracle数据库临时表空间监控信息
+2019-08-12 17:58:44,375 - main_check.py[line:568] - INFO: orcl18c_pdb1：初始化oracle_tmp_tbs表
+2019-08-12 17:58:44,477 - main_check.py[line:579] - INFO: orcl18c_pdb1：获取Oracle数据库临时表空间使用率(temp表空间名：TEMP 使用率：0)
+2019-08-12 17:58:44,477 - main_check.py[line:582] - INFO: orcl18c_pdb1：开始获取Oracle数据库undo表空间监控信息
+2019-08-12 17:58:44,594 - main_check.py[line:585] - INFO: orcl18c_pdb1：初始化oracle_undo_tbs表
+2019-08-12 17:58:44,628 - main_check.py[line:596] - INFO: orcl18c_pdb1：获取Oracle数据库undo表空间使用率(undo表空间名：UNDOTBS1 使用率：11.74)
+2019-08-12 17:58:44,628 - main_check.py[line:599] - INFO: orcl18c_pdb1 :开始更新Oracle数据库评分信息
+2019-08-12 17:58:44,723 - main_check.py[line:777] - INFO: orcl18c_pdb1扣分明细，连接数扣分:0，归档使用率扣分：, 等待事件扣分：等待事件数量：46 
+, 表空间扣分:0，临时表空间扣分:0,Undo表空间扣分:0,cpu使用率扣分:10.49，内存使用率扣分:0，总评分:89.51,扣分原因:等待事件数量：46 
+CPU使用率：70% 
+
+2019-08-12 17:58:46,982 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 17:58:47,006 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 17:58:47,734 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 17:58:47,756 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 17:58:47,894 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 17:58:47,923 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 17:58:48,226 - main_check.py[line:958] - INFO: mysql501：初始化mysql_big_table表
+2019-08-12 17:58:48,500 - main_check.py[line:978] - INFO: mysql501：初始化mysql_db表
+2019-08-12 17:58:48,523 - main_check.py[line:958] - INFO: mysql50：初始化mysql_big_table表
+2019-08-12 17:58:48,536 - main_check.py[line:1022] - INFO: mysql501：获取Mysql数据库监控数据(IP：192.168.48.50 端口号：3306 连接使用率：0.00 连接状态：connected )
+2019-08-12 17:58:48,539 - main_check.py[line:1110] - INFO: mysql501：初始化mysql_repl表
+2019-08-12 17:58:48,572 - main_check.py[line:1122] - INFO: mysql501：获取Mysql数据库复制数据
+2019-08-12 17:58:48,572 - main_check.py[line:1125] - INFO: mysql501 :开始更新Mysql数据库评分信息
+2019-08-12 17:58:48,614 - main_check.py[line:1189] - INFO: mysql501扣分明细，连接数扣分:0，cpu使用率扣分:0，内存使用率扣分:0，总评分:100,扣分原因:
+2019-08-12 17:58:48,698 - main_check.py[line:978] - INFO: mysql50：初始化mysql_db表
+2019-08-12 17:58:48,726 - main_check.py[line:1022] - INFO: mysql50：获取Mysql数据库监控数据(IP：192.168.48.50 端口号：3306 连接使用率：0.00 连接状态：connected )
+2019-08-12 17:58:48,734 - main_check.py[line:1110] - INFO: mysql50：初始化mysql_repl表
+2019-08-12 17:58:48,765 - main_check.py[line:1122] - INFO: mysql50：获取Mysql数据库复制数据
+2019-08-12 17:58:48,765 - main_check.py[line:1125] - INFO: mysql50 :开始更新Mysql数据库评分信息
+2019-08-12 17:58:48,799 - main_check.py[line:1189] - INFO: mysql50扣分明细，连接数扣分:0，cpu使用率扣分:0，内存使用率扣分:0，总评分:100,扣分原因:
+2019-08-12 17:58:50,338 - main_check.py[line:108] - INFO: mysql50：初始化linux_net表
+2019-08-12 17:58:50,542 - main_check.py[line:119] - INFO: mysql50：获取网卡流量(网卡：eth0 接收：9.54 发送：30.64)
+2019-08-12 17:58:50,588 - main_check.py[line:119] - INFO: mysql50：获取网卡流量(网卡：eth1 接收：0.2 发送：0.0)
+2019-08-12 17:58:50,596 - main_check.py[line:119] - INFO: mysql50：获取网卡流量(网卡：pan0 接收：0.0 发送：0.0)
+2019-08-12 17:58:50,604 - main_check.py[line:129] - INFO: mysql50：初始化linux_io_stat表
+2019-08-12 17:58:50,631 - main_check.py[line:160] - INFO: mysql50：获取磁盘IO(磁盘名：sda 读取量：0.0 写入量：1.22)
+2019-08-12 17:58:50,644 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 17:58:56,769 - main_check.py[line:48] - ERROR: 18c_adg 目标主机连接失败：[Errno 10060] 
+2019-08-12 17:58:56,848 - main_check.py[line:57] - INFO: 18c_adg :开始更新linux主机评分信息
+2019-08-12 17:58:56,868 - main_check.py[line:62] - INFO: 18c_adg扣分明细，总评分:0,扣分原因:connected error
+2019-08-12 17:58:57,145 - main_check.py[line:48] - ERROR: orcl19c 目标主机连接失败：[Errno 10060] 
+2019-08-12 17:58:57,181 - main_check.py[line:57] - INFO: orcl19c :开始更新linux主机评分信息
+2019-08-12 17:58:57,197 - main_check.py[line:62] - INFO: orcl19c扣分明细，总评分:0,扣分原因:connected error
+2019-08-12 17:58:59,641 - main_check.py[line:349] - ERROR: orcl19c 数据库连接失败：ORA-12170: TNS: ӳʱ
+2019-08-12 17:58:59,641 - main_check.py[line:350] - INFO: orcl19c：初始化oracle_db表
+2019-08-12 17:58:59,678 - main_check.py[line:359] - INFO: orcl19c :开始更新数据库评分信息
+2019-08-12 17:58:59,697 - main_check.py[line:364] - INFO: orcl19c扣分明细，总评分:0,扣分原因:connected error
+2019-08-12 17:59:01,124 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 17:59:01,147 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 17:59:01,170 - main_check.py[line:223] - INFO: mysql50：初始化os_info表
+2019-08-12 17:59:01,184 - main_check.py[line:247] - INFO: mysql50：获取系统监控数据(CPU：58.33 MEM：44.0)
+2019-08-12 17:59:01,193 - main_check.py[line:251] - INFO: mysql50：开始获取文件系统监控信息
+2019-08-12 17:59:01,198 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 17:59:11,648 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 17:59:11,674 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 17:59:11,697 - main_check.py[line:256] - INFO: mysql50：初始化os_filesystem表
+2019-08-12 17:59:11,714 - main_check.py[line:269] - INFO: mysql50：获取文件系统使用率(路径名：/ 使用率：82%)
+2019-08-12 17:59:11,723 - main_check.py[line:273] - INFO: mysql50 :开始更新Linux主机评分信息
+2019-08-12 17:59:11,765 - main_check.py[line:328] - INFO: mysql50扣分明细，cpu使用率扣分:0，内存使用率扣分:0，总评分:100,扣分原因:
+2019-08-12 17:59:17,812 - main_check.py[line:1200] - ERROR: redis-6381 redis连接失败：Error 10060 connecting to 192.168.48.60:6381. .
+2019-08-12 17:59:17,812 - main_check.py[line:1201] - INFO: redis-6381：初始化redis表
+2019-08-12 17:59:17,859 - main_check.py[line:1209] - INFO: redis-6381扣分明细，总评分:0,扣分原因:conected error
+2019-08-12 17:59:17,865 - main_check.py[line:1200] - ERROR: redis-6380 redis连接失败：Error 10060 connecting to 192.168.48.60:6380. .
+2019-08-12 17:59:17,865 - main_check.py[line:1201] - INFO: redis-6380：初始化redis表
+2019-08-12 17:59:17,867 - main_check.py[line:1200] - ERROR: Redis-6385 redis连接失败：Error 10060 connecting to 192.168.48.60:6385. .
+2019-08-12 17:59:17,867 - main_check.py[line:1201] - INFO: Redis-6385：初始化redis表
+2019-08-12 17:59:17,907 - main_check.py[line:1209] - INFO: Redis-6385扣分明细，总评分:0,扣分原因:conected error
+2019-08-12 17:59:17,908 - main_check.py[line:1209] - INFO: redis-6380扣分明细，总评分:0,扣分原因:conected error
+2019-08-12 17:59:18,219 - main_check.py[line:1200] - ERROR: redis-6379 redis连接失败：Error 10060 connecting to 192.168.48.60:6379. .
+2019-08-12 17:59:18,219 - main_check.py[line:1200] - ERROR: Redis-6384 redis连接失败：Error 10060 connecting to 192.168.48.60:6384. .
+2019-08-12 17:59:18,219 - main_check.py[line:1201] - INFO: redis-6379：初始化redis表
+2019-08-12 17:59:18,219 - main_check.py[line:1201] - INFO: Redis-6384：初始化redis表
+2019-08-12 17:59:18,220 - main_check.py[line:1200] - ERROR: Redis-6382 redis连接失败：Error 10060 connecting to 192.168.48.60:6382. .
+2019-08-12 17:59:18,220 - main_check.py[line:1201] - INFO: Redis-6382：初始化redis表
+2019-08-12 17:59:18,237 - main_check.py[line:1200] - ERROR: Redis-6383 redis连接失败：Error 10060 connecting to 192.168.48.60:6383. .
+2019-08-12 17:59:18,237 - main_check.py[line:1201] - INFO: Redis-6383：初始化redis表
+2019-08-12 17:59:18,280 - main_check.py[line:1209] - INFO: redis-6379扣分明细，总评分:0,扣分原因:conected error
+2019-08-12 17:59:18,283 - main_check.py[line:1209] - INFO: Redis-6384扣分明细，总评分:0,扣分原因:conected error
+2019-08-12 17:59:18,285 - main_check.py[line:1209] - INFO: Redis-6382扣分明细，总评分:0,扣分原因:conected error
+2019-08-12 17:59:18,315 - main_check.py[line:1209] - INFO: Redis-6383扣分明细，总评分:0,扣分原因:conected error
+2019-08-12 17:59:18,334 - alarm.py[line:40] - INFO: 初始化告警信息表
+2019-08-12 17:59:18,357 - alarm.py[line:51] - INFO: 开始巡检：Oracle数据库通断告警
+2019-08-12 17:59:18,362 - alarm.py[line:69] - WARNING: orcl19c:Oracle数据库通断告警
+ 告警时间：2019-08-12 17:59:03 
+ 数据库url: 192.168.48.60:1521/pdb1
+2019-08-12 17:59:18,374 - alarm.py[line:51] - INFO: 开始巡检：Oracle数据库表空间使用率告警
+2019-08-12 17:59:18,380 - alarm.py[line:69] - WARNING: orcl19c:Oracle数据库表空间使用率告警
+ 告警时间：2019-08-12 17:59:03 
+ 数据库url: 192.168.48.60:1521/pdb1
+ 表空间名：SYSTEM
+ 表空间大小(GB)：0.27
+ 表空间使用率：97.79%
+ 表空间剩余大小(GB)：0.01
+2019-08-12 17:59:18,392 - alarm.py[line:69] - WARNING: orcl19c:Oracle数据库表空间使用率告警
+ 告警时间：2019-08-12 17:59:03 
+ 数据库url: 192.168.48.60:1521/pdb1
+ 表空间名：SYSAUX
+ 表空间大小(GB)：0.36
+ 表空间使用率：93.51%
+ 表空间剩余大小(GB)：0.02
+2019-08-12 17:59:18,404 - alarm.py[line:69] - WARNING: orcl18c_pdb1:Oracle数据库表空间使用率告警
+ 告警时间：2019-08-12 17:59:03 
+ 数据库url: 192.168.48.10:1521/pdb1
+ 表空间名：SYSTEM
+ 表空间大小(GB)：0.26
+ 表空间使用率：96.67%
+ 表空间剩余大小(GB)：0.01
+2019-08-12 17:59:18,413 - alarm.py[line:69] - WARNING: orcl18c_pdb1:Oracle数据库表空间使用率告警
+ 告警时间：2019-08-12 17:59:03 
+ 数据库url: 192.168.48.10:1521/pdb1
+ 表空间名：SYSAUX
+ 表空间大小(GB)：0.65
+ 表空间使用率：91.36%
+ 表空间剩余大小(GB)：0.06
+2019-08-12 17:59:18,440 - alarm.py[line:51] - INFO: 开始巡检：Oracle数据库临时表空间告警
+2019-08-12 17:59:18,451 - alarm.py[line:62] - INFO: Oracle数据库临时表空间告警:正常
+2019-08-12 17:59:18,451 - alarm.py[line:51] - INFO: 开始巡检：Oracle数据库Undo表空间告警
+2019-08-12 17:59:18,463 - alarm.py[line:62] - INFO: Oracle数据库Undo表空间告警:正常
+2019-08-12 17:59:18,463 - alarm.py[line:51] - INFO: 开始巡检：Oracle数据库连接数告警
+2019-08-12 17:59:18,476 - alarm.py[line:62] - INFO: Oracle数据库连接数告警:正常
+2019-08-12 17:59:18,476 - alarm.py[line:51] - INFO: 开始巡检：Oracle数据库adg延迟告警
+2019-08-12 17:59:18,482 - alarm.py[line:62] - INFO: Oracle数据库adg延迟告警:正常
+2019-08-12 17:59:18,482 - alarm.py[line:51] - INFO: 开始巡检：Oracle数据库后台日志告警
+2019-08-12 17:59:18,489 - alarm.py[line:69] - WARNING: orcl18c_pdb1:Oracle数据库后台日志告警
+ 告警时间：2019-08-12 17:59:03 
+ 数据库url: 192.168.48.10:1521/pdb1 
+ 异常信息:
+2019-08-12 17:59:18,500 - alarm.py[line:51] - INFO: 开始巡检：Oracle数据库综合性能告警
+2019-08-12 17:59:18,555 - alarm.py[line:69] - WARNING: orcl18c_pdb1:Oracle数据库综合性能告警
+ 告警时间：2019-08-12 17:59:03 
+ 数据库url: 192.168.48.10:1521/pdb1 
+ 等待事件数量:142
+2019-08-12 17:59:18,569 - alarm.py[line:51] - INFO: 开始巡检：Oracle数据库pga使用率告警
+2019-08-12 17:59:18,575 - alarm.py[line:69] - WARNING: orcl18c_pdb1:Oracle数据库PGA使用率告警
+ 告警时间：2019-08-12 17:59:03 
+ 数据库url: 192.168.48.10:1521/pdb1 
+ PGA使用大小(MB)：292.4
+ PGA使用率：160%
+2019-08-12 17:59:18,585 - alarm.py[line:51] - INFO: 开始巡检：Oracle数据库归档使用率告警
+2019-08-12 17:59:18,592 - alarm.py[line:62] - INFO: Oracle数据库归档使用率告警:正常
+2019-08-12 17:59:18,592 - alarm.py[line:51] - INFO: 开始巡检：Oracle数据库锁异常告警
+2019-08-12 17:59:18,594 - alarm.py[line:55] - INFO: Oracle数据库锁异常告警未采集到数据
+2019-08-12 17:59:18,595 - alarm.py[line:51] - INFO: 开始巡检：Oracle数据库密码过期告警
+2019-08-12 17:59:18,596 - alarm.py[line:55] - INFO: Oracle数据库密码过期告警未采集到数据
+2019-08-12 17:59:18,596 - alarm.py[line:51] - INFO: 开始巡检：Oracle失效索引告警
+2019-08-12 17:59:18,599 - alarm.py[line:55] - INFO: Oracle失效索引告警未采集到数据
+2019-08-12 17:59:18,599 - alarm.py[line:51] - INFO: 开始巡检：Linux主机通断告警
+2019-08-12 17:59:18,605 - alarm.py[line:69] - WARNING: 18c_adg:Linux主机通断告警
+ 告警时间：2019-08-12 17:59:03 
+ 主机IP: 192.168.48.20
+2019-08-12 17:59:18,617 - alarm.py[line:69] - WARNING: orcl19c:Linux主机通断告警
+ 告警时间：2019-08-12 17:59:03 
+ 主机IP: 192.168.48.60
+2019-08-12 17:59:18,638 - alarm.py[line:51] - INFO: 开始巡检：Linux主机CPU使用率告警
+2019-08-12 17:59:18,647 - alarm.py[line:62] - INFO: Linux主机CPU使用率告警:正常
+2019-08-12 17:59:18,648 - alarm.py[line:51] - INFO: 开始巡检：Linux主机内存使用率告警
+2019-08-12 17:59:18,655 - alarm.py[line:62] - INFO: Linux主机内存使用率告警:正常
+2019-08-12 17:59:18,657 - alarm.py[line:51] - INFO: 开始巡检：Linux主机文件系统使用率告警
+2019-08-12 17:59:18,661 - alarm.py[line:62] - INFO: Linux主机文件系统使用率告警:正常
+2019-08-12 17:59:18,661 - alarm.py[line:51] - INFO: 开始巡检：MySQL数据库通断告警
+2019-08-12 17:59:18,670 - alarm.py[line:62] - INFO: MySQL数据库通断告警:正常
+2019-08-12 17:59:18,670 - alarm.py[line:51] - INFO: 开始巡检：Linux主机swap使用率告警
+2019-08-12 17:59:18,676 - alarm.py[line:62] - INFO: Linux主机swap使用率告警:正常
+2019-08-12 17:59:18,677 - alarm.py[line:51] - INFO: 开始巡检：Redis通断告警
+2019-08-12 17:59:18,684 - alarm.py[line:69] - WARNING: redis-6379:Redis通断告警
+ 告警时间：2019-08-12 17:59:03 
+ Redis url: 192.168.48.60:6379
+2019-08-12 17:59:18,691 - alarm.py[line:69] - WARNING: redis-6380:Redis通断告警
+ 告警时间：2019-08-12 17:59:03 
+ Redis url: 192.168.48.60:6380
+2019-08-12 17:59:18,701 - alarm.py[line:69] - WARNING: Redis-6382:Redis通断告警
+ 告警时间：2019-08-12 17:59:03 
+ Redis url: 192.168.48.60:6382
+2019-08-12 17:59:18,711 - alarm.py[line:69] - WARNING: Redis-6383:Redis通断告警
+ 告警时间：2019-08-12 17:59:03 
+ Redis url: 192.168.48.60:6383
+2019-08-12 17:59:18,720 - alarm.py[line:69] - WARNING: Redis-6384:Redis通断告警
+ 告警时间：2019-08-12 17:59:03 
+ Redis url: 192.168.48.60:6384
+2019-08-12 17:59:18,730 - alarm.py[line:69] - WARNING: redis-orcl:Redis通断告警
+ 告警时间：2019-08-12 17:59:03 
+ Redis url: 192.168.48.10:6379
+2019-08-12 17:59:18,740 - alarm.py[line:51] - INFO: 开始巡检：Redis内存使用率告警
+2019-08-12 17:59:18,743 - alarm.py[line:55] - INFO: Redis内存使用率告警未采集到数据
+2019-08-12 17:59:18,743 - main_check.py[line:1403] - INFO: 600.0 秒后开始下一次轮询
+2019-08-12 18:09:18,743 - main_check.py[line:1293] - INFO: 清除os_info表无效监控数据
+2019-08-12 18:09:18,750 - main_check.py[line:1293] - INFO: 清除os_filesystem表无效监控数据
+2019-08-12 18:09:18,756 - main_check.py[line:1293] - INFO: 清除linux_rate表无效监控数据
+2019-08-12 18:09:18,763 - main_check.py[line:1301] - INFO: 清除oracle_tbs表无效监控数据
+2019-08-12 18:09:18,769 - main_check.py[line:1301] - INFO: 清除oracle_db表无效监控数据
+2019-08-12 18:09:18,776 - main_check.py[line:1301] - INFO: 清除oracle_db_event表无效监控数据
+2019-08-12 18:09:18,782 - main_check.py[line:1301] - INFO: 清除oracle_tmp_tbs表无效监控数据
+2019-08-12 18:09:18,789 - main_check.py[line:1301] - INFO: 清除oracle_undo_tbs表无效监控数据
+2019-08-12 18:09:18,796 - main_check.py[line:1301] - INFO: 清除oracle_db_rate表无效监控数据
+2019-08-12 18:09:18,802 - main_check.py[line:1301] - INFO: 清除oracle_invalid_index表无效监控数据
+2019-08-12 18:09:18,809 - main_check.py[line:1301] - INFO: 清除oracle_expired_pwd表无效监控数据
+2019-08-12 18:09:18,815 - main_check.py[line:1309] - INFO: 清除mysql_db表无效监控数据
+2019-08-12 18:09:18,822 - main_check.py[line:1309] - INFO: 清除mysql_db_rate表无效监控数据
+2019-08-12 18:09:18,829 - main_check.py[line:1309] - INFO: 清除mysql_repl表无效监控数据
+2019-08-12 18:09:18,838 - main_check.py[line:1317] - INFO: 清除redis表无效监控数据
+2019-08-12 18:09:18,844 - main_check.py[line:1325] - INFO: 清除web_url_stats表无效监控数据
+2019-08-12 18:09:18,849 - main_check.py[line:1333] - INFO: 清除tcp_stats表无效监控数据
+2019-08-12 18:09:18,881 - main_check.py[line:1359] - INFO: orcl 开始采集Linux主机信息
+2019-08-12 18:09:18,884 - main_check.py[line:1359] - INFO: 18c_adg 开始采集Linux主机信息
+2019-08-12 18:09:18,888 - main_check.py[line:1359] - INFO: orcl19c 开始采集Linux主机信息
+2019-08-12 18:09:18,892 - main_check.py[line:1359] - INFO: mysql50 开始采集Linux主机信息
+2019-08-12 18:09:18,898 - main_check.py[line:1359] - INFO: orcl1 开始采集Linux主机信息
+2019-08-12 18:09:18,903 - main_check.py[line:1359] - INFO: dbmon 开始采集Linux主机信息
+2019-08-12 18:09:18,907 - main_check.py[line:1368] - INFO: orcl18c_pdb1 开始采集oracle数据库信息
+2019-08-12 18:09:18,911 - main_check.py[line:1368] - INFO: orcl19c 开始采集oracle数据库信息
+2019-08-12 18:09:18,914 - main_check.py[line:1376] - INFO: mysql50 开始采集mysql数据库信息
+2019-08-12 18:09:18,918 - main_check.py[line:1376] - INFO: mysql501 开始采集mysql数据库信息
+2019-08-12 18:09:18,947 - main_check.py[line:1383] - INFO: Redis-6385 开始采集redis信息
+2019-08-12 18:09:18,951 - main_check.py[line:1383] - INFO: redis-6379 开始采集redis信息
+2019-08-12 18:09:18,956 - main_check.py[line:1383] - INFO: redis-6380 开始采集redis信息
+2019-08-12 18:09:18,960 - main_check.py[line:1383] - INFO: redis-6381 开始采集redis信息
+2019-08-12 18:09:18,964 - main_check.py[line:1383] - INFO: Redis-6382 开始采集redis信息
+2019-08-12 18:09:18,969 - main_check.py[line:1383] - INFO: Redis-6383 开始采集redis信息
+2019-08-12 18:09:18,973 - main_check.py[line:1383] - INFO: Redis-6384 开始采集redis信息
+2019-08-12 18:09:18,976 - main_check.py[line:1383] - INFO: redis-orcl 开始采集redis信息
+2019-08-12 18:09:18,983 - main_check.py[line:1389] - INFO: baidu 开始采集web信息
+2019-08-12 18:09:18,986 - main_check.py[line:1395] - INFO: orcl18c 开始采集tcp信息
+2019-08-12 18:09:22,345 - main_check.py[line:1244] - INFO: baidu：初始化web_url_stats表
+2019-08-12 18:09:22,346 - main_check.py[line:332] - INFO: orcl19c等待2秒待linux主机信息采集完毕
+2019-08-12 18:09:22,346 - main_check.py[line:1260] - INFO: orcl18c：初始化tcp_stats表
+2019-08-12 18:09:22,348 - main_check.py[line:332] - INFO: orcl18c_pdb1等待2秒待linux主机信息采集完毕
+2019-08-12 18:09:22,348 - main_check.py[line:781] - INFO: 等待2秒待Linux主机信息采集完毕
+2019-08-12 18:09:22,348 - main_check.py[line:36] - INFO: dbmon：开始获取系统监控信息
+2019-08-12 18:09:22,348 - main_check.py[line:781] - INFO: 等待2秒待Linux主机信息采集完毕
+2019-08-12 18:09:22,349 - main_check.py[line:36] - INFO: orcl19c：开始获取系统监控信息
+2019-08-12 18:09:22,351 - main_check.py[line:36] - INFO: 18c_adg：开始获取系统监控信息
+2019-08-12 18:09:22,354 - main_check.py[line:36] - INFO: orcl：开始获取系统监控信息
+
+2019-08-12 18:09:22,358 - main_check.py[line:36] - INFO: mysql50：开始获取系统监控信息
+2019-08-12 18:09:22,365 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:09:22,372 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:09:22,375 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:09:22,375 - main_check.py[line:808] - INFO: mysql50：开始获取mysql数据库监控信息
+2019-08-12 18:09:22,375 - main_check.py[line:812] - INFO: mysql50：获取第一次MySQL状态采样
+2019-08-12 18:09:22,381 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:09:22,390 - main_check.py[line:808] - INFO: mysql501：开始获取mysql数据库监控信息
+2019-08-12 18:09:22,390 - main_check.py[line:812] - INFO: mysql501：获取第一次MySQL状态采样
+2019-08-12 18:09:23,010 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 18:09:23,019 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 18:09:23,023 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 18:09:23,036 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:09:23,066 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:09:23,381 - main_check.py[line:815] - INFO: mysql50：获取第二次MySQL状态采样
+2019-08-12 18:09:23,397 - main_check.py[line:815] - INFO: mysql501：获取第二次MySQL状态采样
+2019-08-12 18:09:23,401 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:09:23,427 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:09:24,355 - main_check.py[line:1200] - ERROR: redis-orcl redis连接失败：Error 10061 connecting to 192.168.48.10:6379. .
+2019-08-12 18:09:24,355 - main_check.py[line:1201] - INFO: redis-orcl：初始化redis表
+2019-08-12 18:09:24,392 - main_check.py[line:1209] - INFO: redis-orcl扣分明细，总评分:0,扣分原因:conected error
+2019-08-12 18:09:24,720 - main_check.py[line:367] - INFO: orcl18c_pdb1：开始获取Oracle数据库表空间监控信息
+2019-08-12 18:09:24,845 - main_check.py[line:371] - INFO: orcl18c_pdb1：初始化oracle_tbs表
+2019-08-12 18:09:24,871 - main_check.py[line:387] - INFO: orcl18c_pdb1：获取Oracle数据库表空间使用率(表空间名：SYSTEM 使用率：96.67)
+2019-08-12 18:09:24,878 - main_check.py[line:387] - INFO: orcl18c_pdb1：获取Oracle数据库表空间使用率(表空间名：SYSAUX 使用率：91.36)
+2019-08-12 18:09:24,888 - main_check.py[line:387] - INFO: orcl18c_pdb1：获取Oracle数据库表空间使用率(表空间名：USERS 使用率：27.5)
+2019-08-12 18:09:24,898 - main_check.py[line:391] - INFO: orcl18c_pdb1：开始获取Oracle数据库监控信息
+2019-08-12 18:09:26,336 - main_check.py[line:108] - INFO: dbmon：初始化linux_net表
+2019-08-12 18:09:26,364 - main_check.py[line:119] - INFO: dbmon：获取网卡流量(网卡：eth0 接收：6.44 发送：21.37)
+2019-08-12 18:09:26,371 - main_check.py[line:129] - INFO: dbmon：初始化linux_io_stat表
+2019-08-12 18:09:26,388 - main_check.py[line:160] - INFO: dbmon：获取磁盘IO(磁盘名：sda 读取量：0.0 写入量：0.13)
+2019-08-12 18:09:26,403 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:09:26,529 - main_check.py[line:108] - INFO: orcl1：初始化linux_net表
+2019-08-12 18:09:26,539 - main_check.py[line:108] - INFO: orcl：初始化linux_net表
+2019-08-12 18:09:26,561 - main_check.py[line:119] - INFO: orcl1：获取网卡流量(网卡：eth0 接收：21.26 发送：53.5)
+2019-08-12 18:09:26,572 - main_check.py[line:119] - INFO: orcl1：获取网卡流量(网卡：pan0 接收：0.0 发送：0.0)
+2019-08-12 18:09:26,578 - main_check.py[line:119] - INFO: orcl：获取网卡流量(网卡：eth0 接收：20.05 发送：49.95)
+2019-08-12 18:09:26,585 - main_check.py[line:129] - INFO: orcl1：初始化linux_io_stat表
+2019-08-12 18:09:26,589 - main_check.py[line:119] - INFO: orcl：获取网卡流量(网卡：pan0 接收：0.0 发送：0.0)
+2019-08-12 18:09:26,601 - main_check.py[line:129] - INFO: orcl：初始化linux_io_stat表
+2019-08-12 18:09:26,601 - main_check.py[line:160] - INFO: orcl1：获取磁盘IO(磁盘名：sda 读取量：0.12 写入量：0.47)
+2019-08-12 18:09:26,621 - main_check.py[line:160] - INFO: orcl：获取磁盘IO(磁盘名：sda 读取量：0.12 写入量：0.47)
+2019-08-12 18:09:26,628 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:09:26,648 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:09:26,657 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:09:26,861 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 18:09:26,894 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:09:27,075 - main_check.py[line:223] - INFO: dbmon：初始化os_info表
+2019-08-12 18:09:27,085 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 18:09:27,089 - main_check.py[line:247] - INFO: dbmon：获取系统监控数据(CPU：18.38 MEM：13.0)
+2019-08-12 18:09:27,094 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 18:09:27,098 - main_check.py[line:251] - INFO: dbmon：开始获取文件系统监控信息
+2019-08-12 18:09:27,108 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:09:27,111 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:09:27,127 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:09:27,138 - main_check.py[line:223] - INFO: orcl：初始化os_info表
+2019-08-12 18:09:27,148 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 18:09:27,155 - main_check.py[line:247] - INFO: orcl：获取系统监控数据(CPU：75.72 MEM：33.0)
+2019-08-12 18:09:27,161 - main_check.py[line:251] - INFO: orcl：开始获取文件系统监控信息
+2019-08-12 18:09:27,173 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:09:27,174 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:09:27,184 - main_check.py[line:223] - INFO: orcl1：初始化os_info表
+2019-08-12 18:09:27,200 - main_check.py[line:247] - INFO: orcl1：获取系统监控数据(CPU：75.14 MEM：33.0)
+2019-08-12 18:09:27,207 - main_check.py[line:251] - INFO: orcl1：开始获取文件系统监控信息
+2019-08-12 18:09:27,221 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:09:27,259 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:09:27,599 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 18:09:27,648 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:09:27,670 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 18:09:27,697 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:09:27,713 - main_check.py[line:256] - INFO: orcl：初始化os_filesystem表
+2019-08-12 18:09:27,716 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 18:09:27,730 - main_check.py[line:269] - INFO: orcl：获取文件系统使用率(路径名：/ 使用率：92%)
+2019-08-12 18:09:27,740 - main_check.py[line:273] - INFO: orcl :开始更新Linux主机评分信息
+2019-08-12 18:09:27,743 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:09:27,744 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 18:09:27,763 - main_check.py[line:256] - INFO: orcl1：初始化os_filesystem表
+2019-08-12 18:09:27,773 - main_check.py[line:328] - INFO: orcl扣分明细，cpu使用率扣分:15.72，内存使用率扣分:0，总评分:84.28,扣分原因:CPU使用率：75% 
+
+2019-08-12 18:09:27,776 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:09:27,782 - main_check.py[line:269] - INFO: orcl1：获取文件系统使用率(路径名：/ 使用率：92%)
+2019-08-12 18:09:27,790 - main_check.py[line:273] - INFO: orcl1 :开始更新Linux主机评分信息
+2019-08-12 18:09:27,822 - main_check.py[line:328] - INFO: orcl1扣分明细，cpu使用率扣分:15.72，内存使用率扣分:0，总评分:84.28,扣分原因:CPU使用率：75% 
+
+2019-08-12 18:09:27,855 - main_check.py[line:438] - INFO: orcl18c_pdb1：初始化oracle_db表
+2019-08-12 18:09:27,884 - main_check.py[line:506] - INFO: orcl18c_pdb1：获取Oracle数据库监控数据(数据库名：ORCL 数据库角色：PRIMARY 数据库状态：READ WRITE 连接数使用率：18 )
+2019-08-12 18:09:27,884 - main_check.py[line:509] - INFO: orcl18c_pdb1：开始获取Oracle数据库用户密码过期信息
+2019-08-12 18:09:27,940 - main_check.py[line:512] - INFO: orcl18c_pdb1：初始化oracle_expired_pwd表
+2019-08-12 18:09:27,941 - main_check.py[line:256] - INFO: dbmon：初始化os_filesystem表
+2019-08-12 18:09:27,944 - main_check.py[line:521] - INFO: orcl18c_pdb1：开始获取Oracle数据库等待事件信息
+2019-08-12 18:09:27,959 - main_check.py[line:269] - INFO: dbmon：获取文件系统使用率(路径名：/ 使用率：39%)
+2019-08-12 18:09:27,959 - main_check.py[line:525] - INFO: orcl18c_pdb1：初始化oracle_db_event表
+2019-08-12 18:09:27,967 - main_check.py[line:273] - INFO: dbmon :开始更新Linux主机评分信息
+2019-08-12 18:09:27,992 - main_check.py[line:328] - INFO: dbmon扣分明细，cpu使用率扣分:0，内存使用率扣分:0，总评分:100,扣分原因:
+2019-08-12 18:09:28,125 - main_check.py[line:536] - INFO: orcl18c_pdb1：开始获取Oracle数据库锁等待信息
+2019-08-12 18:09:28,280 - main_check.py[line:540] - INFO: orcl18c_pdb1：初始化oracle_Lock表
+2019-08-12 18:09:28,283 - main_check.py[line:550] - INFO: orcl18c_pdb1：开始获取Oracle数据库无效索引信息
+2019-08-12 18:09:29,809 - main_check.py[line:554] - INFO: orcl18c_pdb1：初始化oracle_invalid_index表
+2019-08-12 18:09:29,812 - main_check.py[line:564] - INFO: orcl18c_pdb1：开始获取Oracle数据库临时表空间监控信息
+2019-08-12 18:09:29,851 - main_check.py[line:568] - INFO: orcl18c_pdb1：初始化oracle_tmp_tbs表
+2019-08-12 18:09:29,875 - main_check.py[line:579] - INFO: orcl18c_pdb1：获取Oracle数据库临时表空间使用率(temp表空间名：TEMP 使用率：0)
+2019-08-12 18:09:29,875 - main_check.py[line:582] - INFO: orcl18c_pdb1：开始获取Oracle数据库undo表空间监控信息
+2019-08-12 18:09:29,963 - main_check.py[line:585] - INFO: orcl18c_pdb1：初始化oracle_undo_tbs表
+2019-08-12 18:09:29,990 - main_check.py[line:596] - INFO: orcl18c_pdb1：获取Oracle数据库undo表空间使用率(undo表空间名：UNDOTBS1 使用率：11.74)
+2019-08-12 18:09:29,990 - main_check.py[line:599] - INFO: orcl18c_pdb1 :开始更新Oracle数据库评分信息
+2019-08-12 18:09:30,053 - main_check.py[line:668] - WARNING: orcl18c_pdb1：归档未采集到数据
+2019-08-12 18:09:30,079 - main_check.py[line:777] - INFO: orcl18c_pdb1扣分明细，连接数扣分:0，归档使用率扣分：, 等待事件扣分：, 表空间扣分:0，临时表空间扣分:0,Undo表空间扣分:0,cpu使用率扣分:15.72，内存使用率扣分:0，总评分:84.28,扣分原因:CPU使用率：75% 
+
+2019-08-12 18:09:33,045 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 18:09:33,086 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:09:33,913 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 18:09:33,937 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:09:33,946 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 18:09:33,980 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:09:34,352 - main_check.py[line:958] - INFO: mysql50：初始化mysql_big_table表
+2019-08-12 18:09:34,436 - main_check.py[line:958] - INFO: mysql501：初始化mysql_big_table表
+2019-08-12 18:09:34,536 - main_check.py[line:978] - INFO: mysql50：初始化mysql_db表
+2019-08-12 18:09:34,568 - main_check.py[line:1022] - INFO: mysql50：获取Mysql数据库监控数据(IP：192.168.48.50 端口号：3306 连接使用率：0.00 连接状态：connected )
+2019-08-12 18:09:34,578 - main_check.py[line:1110] - INFO: mysql50：初始化mysql_repl表
+2019-08-12 18:09:34,601 - main_check.py[line:978] - INFO: mysql501：初始化mysql_db表
+2019-08-12 18:09:34,601 - main_check.py[line:1122] - INFO: mysql50：获取Mysql数据库复制数据
+2019-08-12 18:09:34,602 - main_check.py[line:1125] - INFO: mysql50 :开始更新Mysql数据库评分信息
+2019-08-12 18:09:34,627 - main_check.py[line:1022] - INFO: mysql501：获取Mysql数据库监控数据(IP：192.168.48.50 端口号：3306 连接使用率：0.00 连接状态：connected )
+2019-08-12 18:09:34,641 - main_check.py[line:1189] - INFO: mysql50扣分明细，连接数扣分:0，cpu使用率扣分:0，内存使用率扣分:0，总评分:100,扣分原因:
+2019-08-12 18:09:34,641 - main_check.py[line:1110] - INFO: mysql501：初始化mysql_repl表
+2019-08-12 18:09:34,663 - main_check.py[line:1122] - INFO: mysql501：获取Mysql数据库复制数据
+2019-08-12 18:09:34,663 - main_check.py[line:1125] - INFO: mysql501 :开始更新Mysql数据库评分信息
+2019-08-12 18:09:34,681 - main_check.py[line:1189] - INFO: mysql501扣分明细，连接数扣分:0，cpu使用率扣分:0，内存使用率扣分:0，总评分:100,扣分原因:
+2019-08-12 18:09:36,246 - main_check.py[line:108] - INFO: mysql50：初始化linux_net表
+2019-08-12 18:09:36,289 - main_check.py[line:119] - INFO: mysql50：获取网卡流量(网卡：eth0 接收：19.83 发送：45.23)
+2019-08-12 18:09:36,298 - main_check.py[line:119] - INFO: mysql50：获取网卡流量(网卡：eth1 接收：0.4 发送：0.0)
+2019-08-12 18:09:36,303 - main_check.py[line:119] - INFO: mysql50：获取网卡流量(网卡：pan0 接收：0.0 发送：0.0)
+2019-08-12 18:09:36,313 - main_check.py[line:129] - INFO: mysql50：初始化linux_io_stat表
+2019-08-12 18:09:36,329 - main_check.py[line:160] - INFO: mysql50：获取磁盘IO(磁盘名：sda 读取量：0.0 写入量：1.73)
+2019-08-12 18:09:36,342 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:09:43,351 - main_check.py[line:48] - ERROR: orcl19c 目标主机连接失败：[Errno 10060] 
+2019-08-12 18:09:43,351 - main_check.py[line:48] - ERROR: 18c_adg 目标主机连接失败：[Errno 10060] 
+2019-08-12 18:09:43,404 - main_check.py[line:57] - INFO: 18c_adg :开始更新linux主机评分信息
+2019-08-12 18:09:43,407 - main_check.py[line:57] - INFO: orcl19c :开始更新linux主机评分信息
+2019-08-12 18:09:43,427 - main_check.py[line:62] - INFO: 18c_adg扣分明细，总评分:0,扣分原因:connected error
+2019-08-12 18:09:43,427 - main_check.py[line:62] - INFO: orcl19c扣分明细，总评分:0,扣分原因:connected error
+2019-08-12 18:09:45,697 - main_check.py[line:349] - ERROR: orcl19c 数据库连接失败：ORA-12170: TNS: ӳʱ
+2019-08-12 18:09:45,697 - main_check.py[line:350] - INFO: orcl19c：初始化oracle_db表
+2019-08-12 18:09:45,733 - main_check.py[line:359] - INFO: orcl19c :开始更新数据库评分信息
+2019-08-12 18:09:45,749 - main_check.py[line:364] - INFO: orcl19c扣分明细，总评分:0,扣分原因:connected error
+2019-08-12 18:09:46,792 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 18:09:46,815 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:09:46,841 - main_check.py[line:223] - INFO: mysql50：初始化os_info表
+2019-08-12 18:09:46,858 - main_check.py[line:247] - INFO: mysql50：获取系统监控数据(CPU：55.0 MEM：44.0)
+2019-08-12 18:09:46,865 - main_check.py[line:251] - INFO: mysql50：开始获取文件系统监控信息
+2019-08-12 18:09:46,871 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:09:57,315 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 18:09:57,342 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:09:57,361 - main_check.py[line:256] - INFO: mysql50：初始化os_filesystem表
+2019-08-12 18:09:57,382 - main_check.py[line:269] - INFO: mysql50：获取文件系统使用率(路径名：/ 使用率：82%)
+2019-08-12 18:09:57,391 - main_check.py[line:273] - INFO: mysql50 :开始更新Linux主机评分信息
+2019-08-12 18:09:57,414 - main_check.py[line:328] - INFO: mysql50扣分明细，cpu使用率扣分:0，内存使用率扣分:0，总评分:100,扣分原因:
+2019-08-12 18:10:04,349 - main_check.py[line:1200] - ERROR: redis-6380 redis连接失败：Error 10060 connecting to 192.168.48.60:6380. .
+2019-08-12 18:10:04,349 - main_check.py[line:1201] - INFO: redis-6380：初始化redis表
+2019-08-12 18:10:04,351 - main_check.py[line:1200] - ERROR: Redis-6382 redis连接失败：Error 10060 connecting to 192.168.48.60:6382. .
+2019-08-12 18:10:04,351 - main_check.py[line:1201] - INFO: Redis-6384：初始化redis表
+2019-08-12 18:10:04,351 - main_check.py[line:1201] - INFO: Redis-6382：初始化redis表
+2019-08-12 18:10:04,351 - main_check.py[line:1201] - INFO: Redis-6383：初始化redis表
+2019-08-12 18:10:04,354 - main_check.py[line:1200] - ERROR: Redis-6385 redis连接失败：Error 10060 connecting to 192.168.48.60:6385. .
+2019-08-12 18:10:04,354 - main_check.py[line:1201] - INFO: Redis-6385：初始化redis表
+2019-08-12 18:10:04,355 - main_check.py[line:1200] - ERROR: redis-6381 redis连接失败：Error 10060 connecting to 192.168.48.60:6381. .
+2019-08-12 18:10:04,355 - main_check.py[line:1201] - INFO: redis-6381：初始化redis表
+2019-08-12 18:10:04,364 - main_check.py[line:1200] - ERROR: redis-6379 redis连接失败：Error 10060 connecting to 192.168.48.60:6379. .
+2019-08-12 18:10:04,364 - main_check.py[line:1201] - INFO: redis-6379：初始化redis表
+2019-08-12 18:10:04,434 - main_check.py[line:1209] - INFO: Redis-6385扣分明细，总评分:0,扣分原因:conected error
+2019-08-12 18:10:04,437 - main_check.py[line:1209] - INFO: Redis-6384扣分明细，总评分:0,扣分原因:conected error
+2019-08-12 18:10:04,437 - main_check.py[line:1209] - INFO: Redis-6382扣分明细，总评分:0,扣分原因:conected error
+2019-08-12 18:10:04,440 - main_check.py[line:1209] - INFO: Redis-6383扣分明细，总评分:0,扣分原因:conected error
+2019-08-12 18:10:04,483 - main_check.py[line:1209] - INFO: redis-6379扣分明细，总评分:0,扣分原因:conected error
+2019-08-12 18:10:04,500 - alarm.py[line:40] - INFO: 初始化告警信息表
+2019-08-12 18:10:04,553 - alarm.py[line:51] - INFO: 开始巡检：Oracle数据库通断告警
+2019-08-12 18:10:04,561 - alarm.py[line:69] - WARNING: orcl19c:Oracle数据库通断告警
+ 告警时间：2019-08-12 18:09:49 
+ 数据库url: 192.168.48.60:1521/pdb1
+2019-08-12 18:10:04,569 - alarm.py[line:51] - INFO: 开始巡检：Oracle数据库表空间使用率告警
+2019-08-12 18:10:04,575 - alarm.py[line:69] - WARNING: orcl19c:Oracle数据库表空间使用率告警
+ 告警时间：2019-08-12 18:09:49 
+ 数据库url: 192.168.48.60:1521/pdb1
+ 表空间名：SYSTEM
+ 表空间大小(GB)：0.27
+ 表空间使用率：97.79%
+ 表空间剩余大小(GB)：0.01
+2019-08-12 18:10:04,584 - alarm.py[line:69] - WARNING: orcl19c:Oracle数据库表空间使用率告警
+ 告警时间：2019-08-12 18:09:49 
+ 数据库url: 192.168.48.60:1521/pdb1
+ 表空间名：SYSAUX
+ 表空间大小(GB)：0.36
+ 表空间使用率：93.51%
+ 表空间剩余大小(GB)：0.02
+2019-08-12 18:10:04,592 - alarm.py[line:69] - WARNING: orcl18c_pdb1:Oracle数据库表空间使用率告警
+ 告警时间：2019-08-12 18:09:49 
+ 数据库url: 192.168.48.10:1521/pdb1
+ 表空间名：SYSTEM
+ 表空间大小(GB)：0.26
+ 表空间使用率：96.67%
+ 表空间剩余大小(GB)：0.01
+2019-08-12 18:10:04,601 - alarm.py[line:69] - WARNING: orcl18c_pdb1:Oracle数据库表空间使用率告警
+ 告警时间：2019-08-12 18:09:49 
+ 数据库url: 192.168.48.10:1521/pdb1
+ 表空间名：SYSAUX
+ 表空间大小(GB)：0.65
+ 表空间使用率：91.36%
+ 表空间剩余大小(GB)：0.06
+2019-08-12 18:10:04,611 - alarm.py[line:51] - INFO: 开始巡检：Oracle数据库临时表空间告警
+2019-08-12 18:10:04,617 - alarm.py[line:62] - INFO: Oracle数据库临时表空间告警:正常
+2019-08-12 18:10:04,617 - alarm.py[line:51] - INFO: 开始巡检：Oracle数据库Undo表空间告警
+2019-08-12 18:10:04,621 - alarm.py[line:62] - INFO: Oracle数据库Undo表空间告警:正常
+2019-08-12 18:10:04,621 - alarm.py[line:51] - INFO: 开始巡检：Oracle数据库连接数告警
+2019-08-12 18:10:04,627 - alarm.py[line:62] - INFO: Oracle数据库连接数告警:正常
+2019-08-12 18:10:04,627 - alarm.py[line:51] - INFO: 开始巡检：Oracle数据库adg延迟告警
+2019-08-12 18:10:04,632 - alarm.py[line:62] - INFO: Oracle数据库adg延迟告警:正常
+2019-08-12 18:10:04,632 - alarm.py[line:51] - INFO: 开始巡检：Oracle数据库后台日志告警
+2019-08-12 18:10:04,638 - alarm.py[line:69] - WARNING: orcl18c_pdb1:Oracle数据库后台日志告警
+ 告警时间：2019-08-12 18:09:49 
+ 数据库url: 192.168.48.10:1521/pdb1 
+ 异常信息:
+2019-08-12 18:10:04,647 - alarm.py[line:51] - INFO: 开始巡检：Oracle数据库综合性能告警
+2019-08-12 18:10:04,707 - alarm.py[line:69] - WARNING: orcl18c_pdb1:Oracle数据库综合性能告警
+ 告警时间：2019-08-12 18:09:49 
+ 数据库url: 192.168.48.10:1521/pdb1 
+ 等待事件数量:141
+2019-08-12 18:10:04,720 - alarm.py[line:51] - INFO: 开始巡检：Oracle数据库pga使用率告警
+2019-08-12 18:10:04,726 - alarm.py[line:69] - WARNING: orcl18c_pdb1:Oracle数据库PGA使用率告警
+ 告警时间：2019-08-12 18:09:49 
+ 数据库url: 192.168.48.10:1521/pdb1 
+ PGA使用大小(MB)：293.7
+ PGA使用率：160%
+2019-08-12 18:10:04,734 - alarm.py[line:51] - INFO: 开始巡检：Oracle数据库归档使用率告警
+2019-08-12 18:10:04,740 - alarm.py[line:62] - INFO: Oracle数据库归档使用率告警:正常
+2019-08-12 18:10:04,740 - alarm.py[line:51] - INFO: 开始巡检：Oracle数据库锁异常告警
+2019-08-12 18:10:04,743 - alarm.py[line:55] - INFO: Oracle数据库锁异常告警未采集到数据
+2019-08-12 18:10:04,743 - alarm.py[line:51] - INFO: 开始巡检：Oracle数据库密码过期告警
+2019-08-12 18:10:04,746 - alarm.py[line:55] - INFO: Oracle数据库密码过期告警未采集到数据
+2019-08-12 18:10:04,746 - alarm.py[line:51] - INFO: 开始巡检：Oracle失效索引告警
+2019-08-12 18:10:04,749 - alarm.py[line:55] - INFO: Oracle失效索引告警未采集到数据
+2019-08-12 18:10:04,749 - alarm.py[line:51] - INFO: 开始巡检：Linux主机通断告警
+2019-08-12 18:10:04,753 - alarm.py[line:69] - WARNING: 18c_adg:Linux主机通断告警
+ 告警时间：2019-08-12 18:09:49 
+ 主机IP: 192.168.48.20
+2019-08-12 18:10:04,766 - alarm.py[line:69] - WARNING: orcl19c:Linux主机通断告警
+ 告警时间：2019-08-12 18:09:49 
+ 主机IP: 192.168.48.60
+2019-08-12 18:10:04,778 - alarm.py[line:51] - INFO: 开始巡检：Linux主机CPU使用率告警
+2019-08-12 18:10:04,782 - alarm.py[line:62] - INFO: Linux主机CPU使用率告警:正常
+2019-08-12 18:10:04,782 - alarm.py[line:51] - INFO: 开始巡检：Linux主机内存使用率告警
+2019-08-12 18:10:04,788 - alarm.py[line:62] - INFO: Linux主机内存使用率告警:正常
+2019-08-12 18:10:04,788 - alarm.py[line:51] - INFO: 开始巡检：Linux主机文件系统使用率告警
+2019-08-12 18:10:04,795 - alarm.py[line:62] - INFO: Linux主机文件系统使用率告警:正常
+2019-08-12 18:10:04,795 - alarm.py[line:51] - INFO: 开始巡检：MySQL数据库通断告警
+2019-08-12 18:10:04,799 - alarm.py[line:62] - INFO: MySQL数据库通断告警:正常
+2019-08-12 18:10:04,799 - alarm.py[line:51] - INFO: 开始巡检：Linux主机swap使用率告警
+2019-08-12 18:10:04,805 - alarm.py[line:62] - INFO: Linux主机swap使用率告警:正常
+2019-08-12 18:10:04,805 - alarm.py[line:51] - INFO: 开始巡检：Redis通断告警
+2019-08-12 18:10:04,809 - alarm.py[line:69] - WARNING: redis-6379:Redis通断告警
+ 告警时间：2019-08-12 18:09:49 
+ Redis url: 192.168.48.60:6379
+2019-08-12 18:10:04,822 - alarm.py[line:69] - WARNING: redis-6380:Redis通断告警
+ 告警时间：2019-08-12 18:09:49 
+ Redis url: 192.168.48.60:6380
+2019-08-12 18:10:04,832 - alarm.py[line:69] - WARNING: Redis-6382:Redis通断告警
+ 告警时间：2019-08-12 18:09:49 
+ Redis url: 192.168.48.60:6382
+2019-08-12 18:10:04,842 - alarm.py[line:69] - WARNING: Redis-6383:Redis通断告警
+ 告警时间：2019-08-12 18:09:49 
+ Redis url: 192.168.48.60:6383
+2019-08-12 18:10:04,851 - alarm.py[line:69] - WARNING: Redis-6384:Redis通断告警
+ 告警时间：2019-08-12 18:09:49 
+ Redis url: 192.168.48.60:6384
+2019-08-12 18:10:04,861 - alarm.py[line:69] - WARNING: redis-orcl:Redis通断告警
+ 告警时间：2019-08-12 18:09:49 
+ Redis url: 192.168.48.10:6379
+2019-08-12 18:10:04,871 - alarm.py[line:51] - INFO: 开始巡检：Redis内存使用率告警
+2019-08-12 18:10:04,872 - alarm.py[line:55] - INFO: Redis内存使用率告警未采集到数据
+2019-08-12 18:10:04,872 - main_check.py[line:1403] - INFO: 600.0 秒后开始下一次轮询
+2019-08-12 18:20:04,875 - main_check.py[line:1293] - INFO: 清除os_info表无效监控数据
+2019-08-12 18:20:04,881 - main_check.py[line:1293] - INFO: 清除os_filesystem表无效监控数据
+2019-08-12 18:20:04,888 - main_check.py[line:1293] - INFO: 清除linux_rate表无效监控数据
+2019-08-12 18:20:04,894 - main_check.py[line:1301] - INFO: 清除oracle_tbs表无效监控数据
+2019-08-12 18:20:04,900 - main_check.py[line:1301] - INFO: 清除oracle_db表无效监控数据
+2019-08-12 18:20:04,907 - main_check.py[line:1301] - INFO: 清除oracle_db_event表无效监控数据
+2019-08-12 18:20:04,914 - main_check.py[line:1301] - INFO: 清除oracle_tmp_tbs表无效监控数据
+2019-08-12 18:20:04,918 - main_check.py[line:1301] - INFO: 清除oracle_undo_tbs表无效监控数据
+2019-08-12 18:20:04,926 - main_check.py[line:1301] - INFO: 清除oracle_db_rate表无效监控数据
+2019-08-12 18:20:04,933 - main_check.py[line:1301] - INFO: 清除oracle_invalid_index表无效监控数据
+2019-08-12 18:20:04,940 - main_check.py[line:1301] - INFO: 清除oracle_expired_pwd表无效监控数据
+2019-08-12 18:20:04,948 - main_check.py[line:1309] - INFO: 清除mysql_db表无效监控数据
+2019-08-12 18:20:04,956 - main_check.py[line:1309] - INFO: 清除mysql_db_rate表无效监控数据
+2019-08-12 18:20:04,961 - main_check.py[line:1309] - INFO: 清除mysql_repl表无效监控数据
+2019-08-12 18:20:04,969 - main_check.py[line:1317] - INFO: 清除redis表无效监控数据
+2019-08-12 18:20:04,976 - main_check.py[line:1325] - INFO: 清除web_url_stats表无效监控数据
+2019-08-12 18:20:04,983 - main_check.py[line:1333] - INFO: 清除tcp_stats表无效监控数据
+2019-08-12 18:20:05,013 - main_check.py[line:1359] - INFO: orcl 开始采集Linux主机信息
+2019-08-12 18:20:05,016 - main_check.py[line:1359] - INFO: 18c_adg 开始采集Linux主机信息
+2019-08-12 18:20:05,020 - main_check.py[line:1359] - INFO: orcl19c 开始采集Linux主机信息
+2019-08-12 18:20:05,025 - main_check.py[line:1359] - INFO: mysql50 开始采集Linux主机信息
+2019-08-12 18:20:05,029 - main_check.py[line:1359] - INFO: orcl1 开始采集Linux主机信息
+2019-08-12 18:20:05,032 - main_check.py[line:1359] - INFO: dbmon 开始采集Linux主机信息
+2019-08-12 18:20:05,036 - main_check.py[line:1368] - INFO: orcl18c_pdb1 开始采集oracle数据库信息
+2019-08-12 18:20:05,039 - main_check.py[line:1368] - INFO: orcl19c 开始采集oracle数据库信息
+2019-08-12 18:20:05,063 - main_check.py[line:1376] - INFO: mysql50 开始采集mysql数据库信息
+2019-08-12 18:20:05,068 - main_check.py[line:1376] - INFO: mysql501 开始采集mysql数据库信息
+2019-08-12 18:20:05,072 - main_check.py[line:1383] - INFO: Redis-6385 开始采集redis信息
+2019-08-12 18:20:05,075 - main_check.py[line:1383] - INFO: redis-6379 开始采集redis信息
+2019-08-12 18:20:05,079 - main_check.py[line:1383] - INFO: redis-6380 开始采集redis信息
+2019-08-12 18:20:05,084 - main_check.py[line:1383] - INFO: redis-6381 开始采集redis信息
+2019-08-12 18:20:05,088 - main_check.py[line:1383] - INFO: Redis-6382 开始采集redis信息
+2019-08-12 18:20:05,092 - main_check.py[line:1383] - INFO: Redis-6383 开始采集redis信息
+2019-08-12 18:20:05,095 - main_check.py[line:1383] - INFO: Redis-6384 开始采集redis信息
+2019-08-12 18:20:05,099 - main_check.py[line:1383] - INFO: redis-orcl 开始采集redis信息
+2019-08-12 18:20:05,104 - main_check.py[line:1389] - INFO: baidu 开始采集web信息
+2019-08-12 18:20:05,108 - main_check.py[line:1395] - INFO: orcl18c 开始采集tcp信息
+2019-08-12 18:20:07,836 - main_check.py[line:36] - INFO: dbmon：开始获取系统监控信息
+2019-08-12 18:20:07,862 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:20:07,871 - main_check.py[line:36] - INFO: orcl1：开始获取系统监控信息
+2019-08-12 18:20:07,871 - main_check.py[line:36] - INFO: orcl19c：开始获取系统监控信息
+2019-08-12 18:20:07,891 - main_check.py[line:781] - INFO: 等待2秒待Linux主机信息采集完毕
+2019-08-12 18:20:07,904 - main_check.py[line:808] - INFO: mysql501：开始获取mysql数据库监控信息
+2019-08-12 18:20:07,904 - main_check.py[line:812] - INFO: mysql501：获取第一次MySQL状态采样
+2019-08-12 18:20:07,921 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:20:07,926 - main_check.py[line:36] - INFO: orcl：开始获取系统监控信息
+2019-08-12 18:20:07,953 - main_check.py[line:36] - INFO: mysql50：开始获取系统监控信息
+2019-08-12 18:20:07,954 - main_check.py[line:1244] - INFO: baidu：初始化web_url_stats表
+2019-08-12 18:20:07,982 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:20:08,003 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:20:08,033 - main_check.py[line:36] - INFO: 18c_adg：开始获取系统监控信息
+2019-08-12 18:20:08,530 - main_check.py[line:332] - INFO: orcl19c等待2秒待linux主机信息采集完毕
+2019-08-12 18:20:08,611 - main_check.py[line:332] - INFO: orcl18c_pdb1等待2秒待linux主机信息采集完毕
+2019-08-12 18:20:08,622 - main_check.py[line:781] - INFO: 等待2秒待Linux主机信息采集完毕
+2019-08-12 18:20:08,657 - main_check.py[line:808] - INFO: mysql50：开始获取mysql数据库监控信息
+2019-08-12 18:20:08,657 - main_check.py[line:812] - INFO: mysql50：获取第一次MySQL状态采样
+2019-08-12 18:20:08,667 - main_check.py[line:1260] - INFO: orcl18c：初始化tcp_stats表
+2019-08-12 18:20:08,684 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 18:20:08,706 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:20:08,773 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 18:20:08,799 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 18:20:08,812 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:20:08,845 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:20:08,907 - main_check.py[line:815] - INFO: mysql501：获取第二次MySQL状态采样
+2019-08-12 18:20:08,927 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:20:09,661 - main_check.py[line:815] - INFO: mysql50：获取第二次MySQL状态采样
+2019-08-12 18:20:09,681 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:20:10,118 - main_check.py[line:1200] - ERROR: redis-orcl redis连接失败：Error 10061 connecting to 192.168.48.10:6379. .
+2019-08-12 18:20:10,118 - main_check.py[line:1201] - INFO: redis-orcl：初始化redis表
+2019-08-12 18:20:10,154 - main_check.py[line:1209] - INFO: redis-orcl扣分明细，总评分:0,扣分原因:conected error
+2019-08-12 18:20:11,036 - main_check.py[line:367] - INFO: orcl18c_pdb1：开始获取Oracle数据库表空间监控信息
+2019-08-12 18:20:11,148 - main_check.py[line:371] - INFO: orcl18c_pdb1：初始化oracle_tbs表
+2019-08-12 18:20:11,178 - main_check.py[line:387] - INFO: orcl18c_pdb1：获取Oracle数据库表空间使用率(表空间名：SYSTEM 使用率：96.67)
+2019-08-12 18:20:11,186 - main_check.py[line:387] - INFO: orcl18c_pdb1：获取Oracle数据库表空间使用率(表空间名：SYSAUX 使用率：91.36)
+2019-08-12 18:20:11,194 - main_check.py[line:387] - INFO: orcl18c_pdb1：获取Oracle数据库表空间使用率(表空间名：USERS 使用率：27.5)
+2019-08-12 18:20:11,201 - main_check.py[line:391] - INFO: orcl18c_pdb1：开始获取Oracle数据库监控信息
+2019-08-12 18:20:11,984 - main_check.py[line:108] - INFO: dbmon：初始化linux_net表
+2019-08-12 18:20:12,007 - main_check.py[line:119] - INFO: dbmon：获取网卡流量(网卡：eth0 接收：6.3 发送：20.4)
+2019-08-12 18:20:12,015 - main_check.py[line:129] - INFO: dbmon：初始化linux_io_stat表
+2019-08-12 18:20:12,029 - main_check.py[line:160] - INFO: dbmon：获取磁盘IO(磁盘名：sda 读取量：0.0 写入量：0.15)
+2019-08-12 18:20:12,048 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:20:12,288 - main_check.py[line:108] - INFO: orcl：初始化linux_net表
+2019-08-12 18:20:12,290 - main_check.py[line:108] - INFO: orcl1：初始化linux_net表
+2019-08-12 18:20:12,318 - main_check.py[line:119] - INFO: orcl：获取网卡流量(网卡：eth0 接收：24.47 发送：55.61)
+2019-08-12 18:20:12,322 - main_check.py[line:119] - INFO: orcl1：获取网卡流量(网卡：eth0 接收：25.02 发送：58.57)
+2019-08-12 18:20:12,325 - main_check.py[line:119] - INFO: orcl：获取网卡流量(网卡：pan0 接收：0.0 发送：0.0)
+2019-08-12 18:20:12,332 - main_check.py[line:119] - INFO: orcl1：获取网卡流量(网卡：pan0 接收：0.0 发送：0.0)
+2019-08-12 18:20:12,335 - main_check.py[line:129] - INFO: orcl：初始化linux_io_stat表
+2019-08-12 18:20:12,338 - main_check.py[line:129] - INFO: orcl1：初始化linux_io_stat表
+2019-08-12 18:20:12,357 - main_check.py[line:160] - INFO: orcl：获取磁盘IO(磁盘名：sda 读取量：0.09 写入量：0.31)
+2019-08-12 18:20:12,361 - main_check.py[line:160] - INFO: orcl1：获取磁盘IO(磁盘名：sda 读取量：0.09 写入量：0.33)
+2019-08-12 18:20:12,372 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:20:12,381 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:20:12,502 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 18:20:12,536 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:20:12,719 - main_check.py[line:223] - INFO: dbmon：初始化os_info表
+2019-08-12 18:20:12,733 - main_check.py[line:247] - INFO: dbmon：获取系统监控数据(CPU：20.44 MEM：13.0)
+2019-08-12 18:20:12,740 - main_check.py[line:251] - INFO: dbmon：开始获取文件系统监控信息
+2019-08-12 18:20:12,756 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:20:12,813 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 18:20:12,818 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 18:20:12,832 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:20:12,857 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:20:12,858 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:20:12,885 - main_check.py[line:223] - INFO: orcl1：初始化os_info表
+2019-08-12 18:20:12,888 - main_check.py[line:223] - INFO: orcl：初始化os_info表
+2019-08-12 18:20:12,907 - main_check.py[line:247] - INFO: orcl1：获取系统监控数据(CPU：60.37 MEM：33.0)
+2019-08-12 18:20:12,911 - main_check.py[line:247] - INFO: orcl：获取系统监控数据(CPU：60.78 MEM：33.0)
+2019-08-12 18:20:12,917 - main_check.py[line:251] - INFO: orcl1：开始获取文件系统监控信息
+2019-08-12 18:20:12,921 - main_check.py[line:251] - INFO: orcl：开始获取文件系统监控信息
+2019-08-12 18:20:12,940 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:20:12,943 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:20:13,246 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 18:20:13,282 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:20:13,345 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 18:20:13,355 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:20:13,423 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 18:20:13,457 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:20:13,460 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:20:13,463 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:20:13,486 - main_check.py[line:256] - INFO: dbmon：初始化os_filesystem表
+2019-08-12 18:20:13,493 - main_check.py[line:256] - INFO: orcl：初始化os_filesystem表
+2019-08-12 18:20:13,497 - main_check.py[line:256] - INFO: orcl1：初始化os_filesystem表
+2019-08-12 18:20:13,509 - main_check.py[line:269] - INFO: dbmon：获取文件系统使用率(路径名：/ 使用率：39%)
+2019-08-12 18:20:13,523 - main_check.py[line:269] - INFO: orcl：获取文件系统使用率(路径名：/ 使用率：92%)
+2019-08-12 18:20:13,529 - main_check.py[line:273] - INFO: dbmon :开始更新Linux主机评分信息
+2019-08-12 18:20:13,532 - main_check.py[line:273] - INFO: orcl :开始更新Linux主机评分信息
+2019-08-12 18:20:13,539 - main_check.py[line:269] - INFO: orcl1：获取文件系统使用率(路径名：/ 使用率：92%)
+2019-08-12 18:20:13,551 - main_check.py[line:273] - INFO: orcl1 :开始更新Linux主机评分信息
+2019-08-12 18:20:13,562 - main_check.py[line:328] - INFO: dbmon扣分明细，cpu使用率扣分:0，内存使用率扣分:0，总评分:100,扣分原因:
+2019-08-12 18:20:13,562 - main_check.py[line:328] - INFO: orcl扣分明细，cpu使用率扣分:0.37，内存使用率扣分:0，总评分:99.63,扣分原因:CPU使用率：60% 
+
+2019-08-12 18:20:13,575 - main_check.py[line:328] - INFO: orcl1扣分明细，cpu使用率扣分:0.37，内存使用率扣分:0，总评分:99.63,扣分原因:CPU使用率：60% 
+
+2019-08-12 18:20:13,895 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 18:20:13,923 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:20:13,992 - main_check.py[line:438] - INFO: orcl18c_pdb1：初始化oracle_db表
+2019-08-12 18:20:14,019 - main_check.py[line:506] - INFO: orcl18c_pdb1：获取Oracle数据库监控数据(数据库名：ORCL 数据库角色：PRIMARY 数据库状态：READ WRITE 连接数使用率：17 )
+2019-08-12 18:20:14,019 - main_check.py[line:509] - INFO: orcl18c_pdb1：开始获取Oracle数据库用户密码过期信息
+2019-08-12 18:20:14,075 - main_check.py[line:512] - INFO: orcl18c_pdb1：初始化oracle_expired_pwd表
+2019-08-12 18:20:14,078 - main_check.py[line:521] - INFO: orcl18c_pdb1：开始获取Oracle数据库等待事件信息
+2019-08-12 18:20:14,095 - main_check.py[line:525] - INFO: orcl18c_pdb1：初始化oracle_db_event表
+2019-08-12 18:20:14,253 - main_check.py[line:536] - INFO: orcl18c_pdb1：开始获取Oracle数据库锁等待信息
+2019-08-12 18:20:14,384 - main_check.py[line:540] - INFO: orcl18c_pdb1：初始化oracle_Lock表
+2019-08-12 18:20:14,387 - main_check.py[line:550] - INFO: orcl18c_pdb1：开始获取Oracle数据库无效索引信息
+2019-08-12 18:20:15,844 - main_check.py[line:554] - INFO: orcl18c_pdb1：初始化oracle_invalid_index表
+2019-08-12 18:20:15,848 - main_check.py[line:564] - INFO: orcl18c_pdb1：开始获取Oracle数据库临时表空间监控信息
+2019-08-12 18:20:15,891 - main_check.py[line:568] - INFO: orcl18c_pdb1：初始化oracle_tmp_tbs表
+2019-08-12 18:20:16,105 - main_check.py[line:579] - INFO: orcl18c_pdb1：获取Oracle数据库临时表空间使用率(temp表空间名：TEMP 使用率：0)
+2019-08-12 18:20:16,105 - main_check.py[line:582] - INFO: orcl18c_pdb1：开始获取Oracle数据库undo表空间监控信息
+2019-08-12 18:20:16,190 - main_check.py[line:585] - INFO: orcl18c_pdb1：初始化oracle_undo_tbs表
+2019-08-12 18:20:16,216 - main_check.py[line:596] - INFO: orcl18c_pdb1：获取Oracle数据库undo表空间使用率(undo表空间名：UNDOTBS1 使用率：11.96)
+2019-08-12 18:20:16,216 - main_check.py[line:599] - INFO: orcl18c_pdb1 :开始更新Oracle数据库评分信息
+2019-08-12 18:20:16,280 - main_check.py[line:668] - WARNING: orcl18c_pdb1：归档未采集到数据
+2019-08-12 18:20:16,309 - main_check.py[line:777] - INFO: orcl18c_pdb1扣分明细，连接数扣分:0，归档使用率扣分：, 等待事件扣分：, 表空间扣分:0，临时表空间扣分:0,Undo表空间扣分:0,cpu使用率扣分:0.37，内存使用率扣分:0，总评分:99.63,扣分原因:CPU使用率：60% 
+
+2019-08-12 18:20:18,790 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 18:20:18,803 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:20:19,423 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 18:20:19,469 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:20:19,700 - main_check.py[line:958] - INFO: mysql501：初始化mysql_big_table表
+2019-08-12 18:20:19,904 - main_check.py[line:978] - INFO: mysql501：初始化mysql_db表
+2019-08-12 18:20:19,930 - main_check.py[line:1022] - INFO: mysql501：获取Mysql数据库监控数据(IP：192.168.48.50 端口号：3306 连接使用率：0.00 连接状态：connected )
+2019-08-12 18:20:19,938 - main_check.py[line:1110] - INFO: mysql501：初始化mysql_repl表
+2019-08-12 18:20:19,960 - main_check.py[line:1122] - INFO: mysql501：获取Mysql数据库复制数据
+2019-08-12 18:20:19,960 - main_check.py[line:1125] - INFO: mysql501 :开始更新Mysql数据库评分信息
+2019-08-12 18:20:19,980 - main_check.py[line:1189] - INFO: mysql501扣分明细，连接数扣分:0，cpu使用率扣分:0，内存使用率扣分:0，总评分:100,扣分原因:
+2019-08-12 18:20:20,244 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 18:20:20,266 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:20:20,549 - main_check.py[line:958] - INFO: mysql50：初始化mysql_big_table表
+2019-08-12 18:20:20,704 - main_check.py[line:978] - INFO: mysql50：初始化mysql_db表
+2019-08-12 18:20:20,746 - main_check.py[line:1022] - INFO: mysql50：获取Mysql数据库监控数据(IP：192.168.48.50 端口号：3306 连接使用率：0.00 连接状态：connected )
+2019-08-12 18:20:20,753 - main_check.py[line:1110] - INFO: mysql50：初始化mysql_repl表
+2019-08-12 18:20:20,786 - main_check.py[line:1122] - INFO: mysql50：获取Mysql数据库复制数据
+2019-08-12 18:20:20,786 - main_check.py[line:1125] - INFO: mysql50 :开始更新Mysql数据库评分信息
+2019-08-12 18:20:20,806 - main_check.py[line:1189] - INFO: mysql50扣分明细，连接数扣分:0，cpu使用率扣分:0，内存使用率扣分:0，总评分:100,扣分原因:
+2019-08-12 18:20:21,891 - main_check.py[line:108] - INFO: mysql50：初始化linux_net表
+2019-08-12 18:20:21,923 - main_check.py[line:119] - INFO: mysql50：获取网卡流量(网卡：eth0 接收：31.51 发送：97.72)
+2019-08-12 18:20:21,933 - main_check.py[line:119] - INFO: mysql50：获取网卡流量(网卡：eth1 接收：0.2 发送：0.0)
+2019-08-12 18:20:21,940 - main_check.py[line:119] - INFO: mysql50：获取网卡流量(网卡：pan0 接收：0.0 发送：0.0)
+2019-08-12 18:20:21,948 - main_check.py[line:129] - INFO: mysql50：初始化linux_io_stat表
+2019-08-12 18:20:21,963 - main_check.py[line:160] - INFO: mysql50：获取磁盘IO(磁盘名：sda 读取量：0.0 写入量：1.49)
+2019-08-12 18:20:21,977 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:20:28,875 - main_check.py[line:48] - ERROR: orcl19c 目标主机连接失败：[Errno 10060] 
+2019-08-12 18:20:28,914 - main_check.py[line:57] - INFO: orcl19c :开始更新linux主机评分信息
+2019-08-12 18:20:28,930 - main_check.py[line:62] - INFO: orcl19c扣分明细，总评分:0,扣分原因:connected error
+2019-08-12 18:20:29,036 - main_check.py[line:48] - ERROR: 18c_adg 目标主机连接失败：[Errno 10060] 
+2019-08-12 18:20:29,072 - main_check.py[line:57] - INFO: 18c_adg :开始更新linux主机评分信息
+2019-08-12 18:20:29,088 - main_check.py[line:62] - INFO: 18c_adg扣分明细，总评分:0,扣分原因:connected error
+2019-08-12 18:20:31,865 - main_check.py[line:349] - ERROR: orcl19c 数据库连接失败：ORA-12170: TNS: ӳʱ
+2019-08-12 18:20:31,865 - main_check.py[line:350] - INFO: orcl19c：初始化oracle_db表
+2019-08-12 18:20:31,907 - main_check.py[line:359] - INFO: orcl19c :开始更新数据库评分信息
+2019-08-12 18:20:31,924 - main_check.py[line:364] - INFO: orcl19c扣分明细，总评分:0,扣分原因:connected error
+2019-08-12 18:20:32,427 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 18:20:32,446 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:20:32,467 - main_check.py[line:223] - INFO: mysql50：初始化os_info表
+2019-08-12 18:20:32,480 - main_check.py[line:247] - INFO: mysql50：获取系统监控数据(CPU：54.96 MEM：44.0)
+2019-08-12 18:20:32,486 - main_check.py[line:251] - INFO: mysql50：开始获取文件系统监控信息
+2019-08-12 18:20:32,493 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:20:42,936 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 18:20:42,957 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:20:42,976 - main_check.py[line:256] - INFO: mysql50：初始化os_filesystem表
+2019-08-12 18:20:42,990 - main_check.py[line:269] - INFO: mysql50：获取文件系统使用率(路径名：/ 使用率：82%)
+2019-08-12 18:20:42,999 - main_check.py[line:273] - INFO: mysql50 :开始更新Linux主机评分信息
+2019-08-12 18:20:43,019 - main_check.py[line:328] - INFO: mysql50扣分明细，cpu使用率扣分:0，内存使用率扣分:0，总评分:100,扣分原因:
+2019-08-12 18:20:49,875 - main_check.py[line:1200] - ERROR: Redis-6384 redis连接失败：Error 10060 connecting to 192.168.48.60:6384. .
+2019-08-12 18:20:49,875 - main_check.py[line:1201] - INFO: Redis-6384：初始化redis表
+2019-08-12 18:20:49,915 - main_check.py[line:1209] - INFO: Redis-6384扣分明细，总评分:0,扣分原因:conected error
+2019-08-12 18:20:49,993 - main_check.py[line:1200] - ERROR: Redis-6383 redis连接失败：Error 10060 connecting to 192.168.48.60:6383. .
+2019-08-12 18:20:49,993 - main_check.py[line:1201] - INFO: Redis-6383：初始化redis表
+2019-08-12 18:20:50,030 - main_check.py[line:1209] - INFO: Redis-6383扣分明细，总评分:0,扣分原因:conected error
+2019-08-12 18:20:50,260 - main_check.py[line:1200] - ERROR: redis-6380 redis连接失败：Error 10060 connecting to 192.168.48.60:6380. .
+2019-08-12 18:20:50,260 - main_check.py[line:1201] - INFO: redis-6380：初始化redis表
+2019-08-12 18:20:50,301 - main_check.py[line:1209] - INFO: redis-6380扣分明细，总评分:0,扣分原因:conected error
+2019-08-12 18:20:50,341 - main_check.py[line:1200] - ERROR: Redis-6385 redis连接失败：Error 10060 connecting to 192.168.48.60:6385. .
+2019-08-12 18:20:50,341 - main_check.py[line:1201] - INFO: Redis-6385：初始化redis表
+2019-08-12 18:20:50,354 - main_check.py[line:1200] - ERROR: redis-6381 redis连接失败：Error 10060 connecting to 192.168.48.60:6381. .
+2019-08-12 18:20:50,354 - main_check.py[line:1201] - INFO: redis-6381：初始化redis表
+2019-08-12 18:20:50,378 - main_check.py[line:1209] - INFO: Redis-6385扣分明细，总评分:0,扣分原因:conected error
+2019-08-12 18:20:50,397 - main_check.py[line:1209] - INFO: redis-6381扣分明细，总评分:0,扣分原因:conected error
+2019-08-12 18:20:50,427 - main_check.py[line:1200] - ERROR: redis-6379 redis连接失败：Error 10060 connecting to 192.168.48.60:6379. .
+2019-08-12 18:20:50,427 - main_check.py[line:1201] - INFO: redis-6379：初始化redis表
+2019-08-12 18:20:50,461 - main_check.py[line:1209] - INFO: redis-6379扣分明细，总评分:0,扣分原因:conected error
+2019-08-12 18:20:50,584 - main_check.py[line:1200] - ERROR: Redis-6382 redis连接失败：Error 10060 connecting to 192.168.48.60:6382. .
+2019-08-12 18:20:50,584 - main_check.py[line:1201] - INFO: Redis-6382：初始化redis表
+2019-08-12 18:20:50,621 - main_check.py[line:1209] - INFO: Redis-6382扣分明细，总评分:0,扣分原因:conected error
+2019-08-12 18:20:50,634 - alarm.py[line:40] - INFO: 初始化告警信息表
+2019-08-12 18:20:50,661 - alarm.py[line:51] - INFO: 开始巡检：Oracle数据库通断告警
+2019-08-12 18:20:50,667 - alarm.py[line:69] - WARNING: orcl19c:Oracle数据库通断告警
+ 告警时间：2019-08-12 18:20:35 
+ 数据库url: 192.168.48.60:1521/pdb1
+2019-08-12 18:20:50,680 - alarm.py[line:51] - INFO: 开始巡检：Oracle数据库表空间使用率告警
+2019-08-12 18:20:50,687 - alarm.py[line:69] - WARNING: orcl19c:Oracle数据库表空间使用率告警
+ 告警时间：2019-08-12 18:20:35 
+ 数据库url: 192.168.48.60:1521/pdb1
+ 表空间名：SYSTEM
+ 表空间大小(GB)：0.27
+ 表空间使用率：97.79%
+ 表空间剩余大小(GB)：0.01
+2019-08-12 18:20:50,700 - alarm.py[line:69] - WARNING: orcl19c:Oracle数据库表空间使用率告警
+ 告警时间：2019-08-12 18:20:35 
+ 数据库url: 192.168.48.60:1521/pdb1
+ 表空间名：SYSAUX
+ 表空间大小(GB)：0.36
+ 表空间使用率：93.51%
+ 表空间剩余大小(GB)：0.02
+2019-08-12 18:20:50,710 - alarm.py[line:69] - WARNING: orcl18c_pdb1:Oracle数据库表空间使用率告警
+ 告警时间：2019-08-12 18:20:35 
+ 数据库url: 192.168.48.10:1521/pdb1
+ 表空间名：SYSTEM
+ 表空间大小(GB)：0.26
+ 表空间使用率：96.67%
+ 表空间剩余大小(GB)：0.01
+2019-08-12 18:20:50,724 - alarm.py[line:69] - WARNING: orcl18c_pdb1:Oracle数据库表空间使用率告警
+ 告警时间：2019-08-12 18:20:35 
+ 数据库url: 192.168.48.10:1521/pdb1
+ 表空间名：SYSAUX
+ 表空间大小(GB)：0.65
+ 表空间使用率：91.36%
+ 表空间剩余大小(GB)：0.06
+2019-08-12 18:20:50,736 - alarm.py[line:51] - INFO: 开始巡检：Oracle数据库临时表空间告警
+2019-08-12 18:20:50,742 - alarm.py[line:62] - INFO: Oracle数据库临时表空间告警:正常
+2019-08-12 18:20:50,743 - alarm.py[line:51] - INFO: 开始巡检：Oracle数据库Undo表空间告警
+2019-08-12 18:20:50,749 - alarm.py[line:62] - INFO: Oracle数据库Undo表空间告警:正常
+2019-08-12 18:20:50,749 - alarm.py[line:51] - INFO: 开始巡检：Oracle数据库连接数告警
+2019-08-12 18:20:50,753 - alarm.py[line:62] - INFO: Oracle数据库连接数告警:正常
+2019-08-12 18:20:50,753 - alarm.py[line:51] - INFO: 开始巡检：Oracle数据库adg延迟告警
+2019-08-12 18:20:50,759 - alarm.py[line:62] - INFO: Oracle数据库adg延迟告警:正常
+2019-08-12 18:20:50,759 - alarm.py[line:51] - INFO: 开始巡检：Oracle数据库后台日志告警
+2019-08-12 18:20:50,766 - alarm.py[line:69] - WARNING: orcl18c_pdb1:Oracle数据库后台日志告警
+ 告警时间：2019-08-12 18:20:35 
+ 数据库url: 192.168.48.10:1521/pdb1 
+ 异常信息:
+2019-08-12 18:20:50,776 - alarm.py[line:51] - INFO: 开始巡检：Oracle数据库综合性能告警
+2019-08-12 18:20:50,819 - alarm.py[line:69] - WARNING: orcl18c_pdb1:Oracle数据库综合性能告警
+ 告警时间：2019-08-12 18:20:35 
+ 数据库url: 192.168.48.10:1521/pdb1 
+ 等待事件数量:138
+2019-08-12 18:20:50,832 - alarm.py[line:51] - INFO: 开始巡检：Oracle数据库pga使用率告警
+2019-08-12 18:20:50,838 - alarm.py[line:69] - WARNING: orcl18c_pdb1:Oracle数据库PGA使用率告警
+ 告警时间：2019-08-12 18:20:35 
+ 数据库url: 192.168.48.10:1521/pdb1 
+ PGA使用大小(MB)：291.5
+ PGA使用率：160%
+2019-08-12 18:20:50,851 - alarm.py[line:51] - INFO: 开始巡检：Oracle数据库归档使用率告警
+2019-08-12 18:20:50,858 - alarm.py[line:62] - INFO: Oracle数据库归档使用率告警:正常
+2019-08-12 18:20:50,858 - alarm.py[line:51] - INFO: 开始巡检：Oracle数据库锁异常告警
+2019-08-12 18:20:50,861 - alarm.py[line:55] - INFO: Oracle数据库锁异常告警未采集到数据
+2019-08-12 18:20:50,861 - alarm.py[line:51] - INFO: 开始巡检：Oracle数据库密码过期告警
+2019-08-12 18:20:50,864 - alarm.py[line:55] - INFO: Oracle数据库密码过期告警未采集到数据
+2019-08-12 18:20:50,864 - alarm.py[line:51] - INFO: 开始巡检：Oracle失效索引告警
+2019-08-12 18:20:50,867 - alarm.py[line:55] - INFO: Oracle失效索引告警未采集到数据
+2019-08-12 18:20:50,867 - alarm.py[line:51] - INFO: 开始巡检：Linux主机通断告警
+2019-08-12 18:20:50,872 - alarm.py[line:69] - WARNING: orcl19c:Linux主机通断告警
+ 告警时间：2019-08-12 18:20:35 
+ 主机IP: 192.168.48.60
+2019-08-12 18:20:50,884 - alarm.py[line:69] - WARNING: 18c_adg:Linux主机通断告警
+ 告警时间：2019-08-12 18:20:35 
+ 主机IP: 192.168.48.20
+2019-08-12 18:20:50,892 - alarm.py[line:51] - INFO: 开始巡检：Linux主机CPU使用率告警
+2019-08-12 18:20:50,898 - alarm.py[line:62] - INFO: Linux主机CPU使用率告警:正常
+2019-08-12 18:20:50,898 - alarm.py[line:51] - INFO: 开始巡检：Linux主机内存使用率告警
+2019-08-12 18:20:50,904 - alarm.py[line:62] - INFO: Linux主机内存使用率告警:正常
+2019-08-12 18:20:50,904 - alarm.py[line:51] - INFO: 开始巡检：Linux主机文件系统使用率告警
+2019-08-12 18:20:50,908 - alarm.py[line:62] - INFO: Linux主机文件系统使用率告警:正常
+2019-08-12 18:20:50,908 - alarm.py[line:51] - INFO: 开始巡检：MySQL数据库通断告警
+2019-08-12 18:20:50,914 - alarm.py[line:62] - INFO: MySQL数据库通断告警:正常
+2019-08-12 18:20:50,914 - alarm.py[line:51] - INFO: 开始巡检：Linux主机swap使用率告警
+2019-08-12 18:20:50,920 - alarm.py[line:62] - INFO: Linux主机swap使用率告警:正常
+2019-08-12 18:20:50,920 - alarm.py[line:51] - INFO: 开始巡检：Redis通断告警
+2019-08-12 18:20:50,926 - alarm.py[line:69] - WARNING: redis-6379:Redis通断告警
+ 告警时间：2019-08-12 18:20:35 
+ Redis url: 192.168.48.60:6379
+2019-08-12 18:20:50,936 - alarm.py[line:69] - WARNING: redis-6380:Redis通断告警
+ 告警时间：2019-08-12 18:20:35 
+ Redis url: 192.168.48.60:6380
+2019-08-12 18:20:50,944 - alarm.py[line:69] - WARNING: Redis-6382:Redis通断告警
+ 告警时间：2019-08-12 18:20:35 
+ Redis url: 192.168.48.60:6382
+2019-08-12 18:20:50,953 - alarm.py[line:69] - WARNING: Redis-6383:Redis通断告警
+ 告警时间：2019-08-12 18:20:35 
+ Redis url: 192.168.48.60:6383
+2019-08-12 18:20:50,963 - alarm.py[line:69] - WARNING: Redis-6384:Redis通断告警
+ 告警时间：2019-08-12 18:20:35 
+ Redis url: 192.168.48.60:6384
+2019-08-12 18:20:50,976 - alarm.py[line:69] - WARNING: redis-orcl:Redis通断告警
+ 告警时间：2019-08-12 18:20:35 
+ Redis url: 192.168.48.10:6379
+2019-08-12 18:20:50,987 - alarm.py[line:51] - INFO: 开始巡检：Redis内存使用率告警
+2019-08-12 18:20:50,990 - alarm.py[line:55] - INFO: Redis内存使用率告警未采集到数据
+2019-08-12 18:20:50,990 - main_check.py[line:1403] - INFO: 600.0 秒后开始下一次轮询
+2019-08-12 18:30:50,992 - main_check.py[line:1293] - INFO: 清除os_info表无效监控数据
+2019-08-12 18:30:50,999 - main_check.py[line:1293] - INFO: 清除os_filesystem表无效监控数据
+2019-08-12 18:30:51,005 - main_check.py[line:1293] - INFO: 清除linux_rate表无效监控数据
+2019-08-12 18:30:51,010 - main_check.py[line:1301] - INFO: 清除oracle_tbs表无效监控数据
+2019-08-12 18:30:51,016 - main_check.py[line:1301] - INFO: 清除oracle_db表无效监控数据
+2019-08-12 18:30:51,023 - main_check.py[line:1301] - INFO: 清除oracle_db_event表无效监控数据
+2019-08-12 18:30:51,029 - main_check.py[line:1301] - INFO: 清除oracle_tmp_tbs表无效监控数据
+2019-08-12 18:30:51,036 - main_check.py[line:1301] - INFO: 清除oracle_undo_tbs表无效监控数据
+2019-08-12 18:30:51,043 - main_check.py[line:1301] - INFO: 清除oracle_db_rate表无效监控数据
+2019-08-12 18:30:51,049 - main_check.py[line:1301] - INFO: 清除oracle_invalid_index表无效监控数据
+2019-08-12 18:30:51,056 - main_check.py[line:1301] - INFO: 清除oracle_expired_pwd表无效监控数据
+2019-08-12 18:30:51,062 - main_check.py[line:1309] - INFO: 清除mysql_db表无效监控数据
+2019-08-12 18:30:51,069 - main_check.py[line:1309] - INFO: 清除mysql_db_rate表无效监控数据
+2019-08-12 18:30:51,075 - main_check.py[line:1309] - INFO: 清除mysql_repl表无效监控数据
+2019-08-12 18:30:51,082 - main_check.py[line:1317] - INFO: 清除redis表无效监控数据
+2019-08-12 18:30:51,088 - main_check.py[line:1325] - INFO: 清除web_url_stats表无效监控数据
+2019-08-12 18:30:51,092 - main_check.py[line:1333] - INFO: 清除tcp_stats表无效监控数据
+2019-08-12 18:30:51,118 - main_check.py[line:1359] - INFO: orcl 开始采集Linux主机信息
+2019-08-12 18:30:51,122 - main_check.py[line:1359] - INFO: 18c_adg 开始采集Linux主机信息
+2019-08-12 18:30:51,127 - main_check.py[line:1359] - INFO: orcl19c 开始采集Linux主机信息
+2019-08-12 18:30:51,131 - main_check.py[line:1359] - INFO: mysql50 开始采集Linux主机信息
+2019-08-12 18:30:51,134 - main_check.py[line:1359] - INFO: orcl1 开始采集Linux主机信息
+2019-08-12 18:30:51,138 - main_check.py[line:1359] - INFO: dbmon 开始采集Linux主机信息
+2019-08-12 18:30:51,142 - main_check.py[line:1368] - INFO: orcl18c_pdb1 开始采集oracle数据库信息
+2019-08-12 18:30:51,147 - main_check.py[line:1368] - INFO: orcl19c 开始采集oracle数据库信息
+2019-08-12 18:30:51,151 - main_check.py[line:1376] - INFO: mysql50 开始采集mysql数据库信息
+2019-08-12 18:30:51,154 - main_check.py[line:1376] - INFO: mysql501 开始采集mysql数据库信息
+2019-08-12 18:30:51,158 - main_check.py[line:1383] - INFO: Redis-6385 开始采集redis信息
+2019-08-12 18:30:51,163 - main_check.py[line:1383] - INFO: redis-6379 开始采集redis信息
+2019-08-12 18:30:51,167 - main_check.py[line:1383] - INFO: redis-6380 开始采集redis信息
+2019-08-12 18:30:51,171 - main_check.py[line:1383] - INFO: redis-6381 开始采集redis信息
+2019-08-12 18:30:51,174 - main_check.py[line:1383] - INFO: Redis-6382 开始采集redis信息
+2019-08-12 18:30:51,178 - main_check.py[line:1383] - INFO: Redis-6383 开始采集redis信息
+2019-08-12 18:30:51,183 - main_check.py[line:1383] - INFO: Redis-6384 开始采集redis信息
+2019-08-12 18:30:51,187 - main_check.py[line:1383] - INFO: redis-orcl 开始采集redis信息
+2019-08-12 18:30:51,190 - main_check.py[line:1389] - INFO: baidu 开始采集web信息
+2019-08-12 18:30:51,194 - main_check.py[line:1395] - INFO: orcl18c 开始采集tcp信息
+2019-08-12 18:30:53,895 - main_check.py[line:36] - INFO: 18c_adg：开始获取系统监控信息
+2019-08-12 18:30:53,897 - main_check.py[line:1244] - INFO: baidu：初始化web_url_stats表
+2019-08-12 18:30:53,897 - main_check.py[line:332] - INFO: orcl19c等待2秒待linux主机信息采集完毕
+2019-08-12 18:30:53,897 - main_check.py[line:1260] - INFO: orcl18c：初始化tcp_stats表
+2019-08-12 18:30:53,938 - main_check.py[line:781] - INFO: 等待2秒待Linux主机信息采集完毕
+2019-08-12 18:30:53,974 - main_check.py[line:808] - INFO: mysql50：开始获取mysql数据库监控信息
+2019-08-12 18:30:53,974 - main_check.py[line:812] - INFO: mysql50：获取第一次MySQL状态采样
+2019-08-12 18:30:53,990 - main_check.py[line:36] - INFO: orcl19c：开始获取系统监控信息
+2019-08-12 18:30:54,078 - main_check.py[line:781] - INFO: 等待2秒待Linux主机信息采集完毕
+2019-08-12 18:30:54,131 - main_check.py[line:36] - INFO: orcl1：开始获取系统监控信息
+2019-08-12 18:30:54,140 - main_check.py[line:808] - INFO: mysql501：开始获取mysql数据库监控信息
+2019-08-12 18:30:54,141 - main_check.py[line:812] - INFO: mysql501：获取第一次MySQL状态采样
+2019-08-12 18:30:54,178 - main_check.py[line:36] - INFO: mysql50：开始获取系统监控信息
+2019-08-12 18:30:54,178 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:30:54,193 - main_check.py[line:332] - INFO: orcl18c_pdb1等待2秒待linux主机信息采集完毕
+2019-08-12 18:30:54,197 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:30:54,217 - main_check.py[line:36] - INFO: dbmon：开始获取系统监控信息
+2019-08-12 18:30:54,229 - main_check.py[line:36] - INFO: orcl：开始获取系统监控信息
+2019-08-12 18:30:54,230 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:30:54,236 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:30:54,861 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 18:30:54,861 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 18:30:54,868 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 18:30:54,880 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:30:54,888 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:30:54,907 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:30:54,980 - main_check.py[line:815] - INFO: mysql50：获取第二次MySQL状态采样
+2019-08-12 18:30:55,005 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:30:55,144 - main_check.py[line:815] - INFO: mysql501：获取第二次MySQL状态采样
+2019-08-12 18:30:55,165 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:30:56,217 - main_check.py[line:1200] - ERROR: redis-orcl redis连接失败：Error 10061 connecting to 192.168.48.10:6379. .
+2019-08-12 18:30:56,217 - main_check.py[line:1201] - INFO: redis-orcl：初始化redis表
+2019-08-12 18:30:56,292 - main_check.py[line:1209] - INFO: redis-orcl扣分明细，总评分:0,扣分原因:conected error
+2019-08-12 18:30:56,644 - main_check.py[line:367] - INFO: orcl18c_pdb1：开始获取Oracle数据库表空间监控信息
+2019-08-12 18:30:56,803 - main_check.py[line:371] - INFO: orcl18c_pdb1：初始化oracle_tbs表
+2019-08-12 18:30:56,829 - main_check.py[line:387] - INFO: orcl18c_pdb1：获取Oracle数据库表空间使用率(表空间名：SYSTEM 使用率：96.67)
+2019-08-12 18:30:56,838 - main_check.py[line:387] - INFO: orcl18c_pdb1：获取Oracle数据库表空间使用率(表空间名：SYSAUX 使用率：91.36)
+2019-08-12 18:30:56,845 - main_check.py[line:387] - INFO: orcl18c_pdb1：获取Oracle数据库表空间使用率(表空间名：USERS 使用率：27.5)
+2019-08-12 18:30:56,857 - main_check.py[line:391] - INFO: orcl18c_pdb1：开始获取Oracle数据库监控信息
+2019-08-12 18:30:58,049 - main_check.py[line:108] - INFO: dbmon：初始化linux_net表
+2019-08-12 18:30:58,081 - main_check.py[line:119] - INFO: dbmon：获取网卡流量(网卡：eth0 接收：6.92 发送：22.56)
+2019-08-12 18:30:58,088 - main_check.py[line:129] - INFO: dbmon：初始化linux_io_stat表
+2019-08-12 18:30:58,105 - main_check.py[line:160] - INFO: dbmon：获取磁盘IO(磁盘名：sda 读取量：0.0 写入量：0.14)
+2019-08-12 18:30:58,125 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:30:58,328 - main_check.py[line:108] - INFO: orcl1：初始化linux_net表
+2019-08-12 18:30:58,355 - main_check.py[line:119] - INFO: orcl1：获取网卡流量(网卡：eth0 接收：20.58 发送：52.14)
+2019-08-12 18:30:58,361 - main_check.py[line:119] - INFO: orcl1：获取网卡流量(网卡：pan0 接收：0.0 发送：0.0)
+2019-08-12 18:30:58,367 - main_check.py[line:129] - INFO: orcl1：初始化linux_io_stat表
+2019-08-12 18:30:58,378 - main_check.py[line:160] - INFO: orcl1：获取磁盘IO(磁盘名：sda 读取量：0.0 写入量：0.31)
+2019-08-12 18:30:58,390 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:30:58,479 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:30:58,492 - main_check.py[line:108] - INFO: orcl：初始化linux_net表
+2019-08-12 18:30:58,516 - main_check.py[line:119] - INFO: orcl：获取网卡流量(网卡：eth0 接收：19.03 发送：50.38)
+2019-08-12 18:30:58,525 - main_check.py[line:119] - INFO: orcl：获取网卡流量(网卡：pan0 接收：0.0 发送：0.0)
+2019-08-12 18:30:58,532 - main_check.py[line:129] - INFO: orcl：初始化linux_io_stat表
+2019-08-12 18:30:58,548 - main_check.py[line:160] - INFO: orcl：获取磁盘IO(磁盘名：sda 读取量：0.0 写入量：0.28)
+2019-08-12 18:30:58,562 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:30:58,569 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 18:30:58,614 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:30:58,783 - main_check.py[line:223] - INFO: dbmon：初始化os_info表
+2019-08-12 18:30:58,796 - main_check.py[line:247] - INFO: dbmon：获取系统监控数据(CPU：21.77 MEM：13.0)
+2019-08-12 18:30:58,806 - main_check.py[line:251] - INFO: dbmon：开始获取文件系统监控信息
+2019-08-12 18:30:58,813 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:30:58,844 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 18:30:58,872 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:30:58,891 - main_check.py[line:223] - INFO: orcl1：初始化os_info表
+2019-08-12 18:30:58,904 - main_check.py[line:247] - INFO: orcl1：获取系统监控数据(CPU：76.79 MEM：33.0)
+2019-08-12 18:30:58,914 - main_check.py[line:251] - INFO: orcl1：开始获取文件系统监控信息
+2019-08-12 18:30:58,921 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:30:58,989 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 18:30:59,002 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:30:59,065 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 18:30:59,069 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:30:59,094 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:30:59,115 - main_check.py[line:223] - INFO: orcl：初始化os_info表
+2019-08-12 18:30:59,132 - main_check.py[line:247] - INFO: orcl：获取系统监控数据(CPU：76.19 MEM：33.0)
+2019-08-12 18:30:59,141 - main_check.py[line:251] - INFO: orcl：开始获取文件系统监控信息
+2019-08-12 18:30:59,151 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:30:59,265 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 18:30:59,318 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:30:59,437 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 18:30:59,467 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:30:59,503 - main_check.py[line:256] - INFO: orcl1：初始化os_filesystem表
+2019-08-12 18:30:59,520 - main_check.py[line:269] - INFO: orcl1：获取文件系统使用率(路径名：/ 使用率：92%)
+2019-08-12 18:30:59,528 - main_check.py[line:256] - INFO: dbmon：初始化os_filesystem表
+2019-08-12 18:30:59,529 - main_check.py[line:273] - INFO: orcl1 :开始更新Linux主机评分信息
+2019-08-12 18:30:59,543 - main_check.py[line:269] - INFO: dbmon：获取文件系统使用率(路径名：/ 使用率：39%)
+2019-08-12 18:30:59,551 - main_check.py[line:273] - INFO: dbmon :开始更新Linux主机评分信息
+2019-08-12 18:30:59,555 - main_check.py[line:328] - INFO: orcl1扣分明细，cpu使用率扣分:16.79，内存使用率扣分:0，总评分:83.21,扣分原因:CPU使用率：76% 
+
+2019-08-12 18:30:59,562 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 18:30:59,576 - main_check.py[line:328] - INFO: dbmon扣分明细，cpu使用率扣分:0，内存使用率扣分:0，总评分:100,扣分原因:
+2019-08-12 18:30:59,588 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:30:59,621 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 18:30:59,657 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:30:59,684 - main_check.py[line:256] - INFO: orcl：初始化os_filesystem表
+2019-08-12 18:30:59,697 - main_check.py[line:269] - INFO: orcl：获取文件系统使用率(路径名：/ 使用率：92%)
+2019-08-12 18:30:59,700 - main_check.py[line:438] - INFO: orcl18c_pdb1：初始化oracle_db表
+2019-08-12 18:30:59,704 - main_check.py[line:273] - INFO: orcl :开始更新Linux主机评分信息
+2019-08-12 18:30:59,724 - main_check.py[line:506] - INFO: orcl18c_pdb1：获取Oracle数据库监控数据(数据库名：ORCL 数据库角色：PRIMARY 数据库状态：READ WRITE 连接数使用率：18 )
+2019-08-12 18:30:59,724 - main_check.py[line:509] - INFO: orcl18c_pdb1：开始获取Oracle数据库用户密码过期信息
+2019-08-12 18:30:59,730 - main_check.py[line:328] - INFO: orcl扣分明细，cpu使用率扣分:16.79，内存使用率扣分:0，总评分:83.21,扣分原因:CPU使用率：76% 
+
+2019-08-12 18:30:59,782 - main_check.py[line:512] - INFO: orcl18c_pdb1：初始化oracle_expired_pwd表
+2019-08-12 18:30:59,785 - main_check.py[line:521] - INFO: orcl18c_pdb1：开始获取Oracle数据库等待事件信息
+2019-08-12 18:30:59,798 - main_check.py[line:525] - INFO: orcl18c_pdb1：初始化oracle_db_event表
+2019-08-12 18:30:59,976 - main_check.py[line:536] - INFO: orcl18c_pdb1：开始获取Oracle数据库锁等待信息
+2019-08-12 18:31:00,111 - main_check.py[line:540] - INFO: orcl18c_pdb1：初始化oracle_Lock表
+2019-08-12 18:31:00,114 - main_check.py[line:550] - INFO: orcl18c_pdb1：开始获取Oracle数据库无效索引信息
+2019-08-12 18:31:01,625 - main_check.py[line:554] - INFO: orcl18c_pdb1：初始化oracle_invalid_index表
+2019-08-12 18:31:01,628 - main_check.py[line:564] - INFO: orcl18c_pdb1：开始获取Oracle数据库临时表空间监控信息
+2019-08-12 18:31:01,673 - main_check.py[line:568] - INFO: orcl18c_pdb1：初始化oracle_tmp_tbs表
+2019-08-12 18:31:01,696 - main_check.py[line:579] - INFO: orcl18c_pdb1：获取Oracle数据库临时表空间使用率(temp表空间名：TEMP 使用率：0)
+2019-08-12 18:31:01,697 - main_check.py[line:582] - INFO: orcl18c_pdb1：开始获取Oracle数据库undo表空间监控信息
+2019-08-12 18:31:01,792 - main_check.py[line:585] - INFO: orcl18c_pdb1：初始化oracle_undo_tbs表
+2019-08-12 18:31:01,821 - main_check.py[line:596] - INFO: orcl18c_pdb1：获取Oracle数据库undo表空间使用率(undo表空间名：UNDOTBS1 使用率：11.96)
+2019-08-12 18:31:01,821 - main_check.py[line:599] - INFO: orcl18c_pdb1 :开始更新Oracle数据库评分信息
+2019-08-12 18:31:01,888 - main_check.py[line:668] - WARNING: orcl18c_pdb1：归档未采集到数据
+2019-08-12 18:31:01,913 - main_check.py[line:777] - INFO: orcl18c_pdb1扣分明细，连接数扣分:0，归档使用率扣分：, 等待事件扣分：, 表空间扣分:0，临时表空间扣分:0,Undo表空间扣分:0,cpu使用率扣分:16.79，内存使用率扣分:0，总评分:83.21,扣分原因:CPU使用率：76% 
+
+2019-08-12 18:31:04,898 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 18:31:04,937 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:31:05,707 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 18:31:05,749 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:31:05,750 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:31:06,151 - main_check.py[line:958] - INFO: mysql501：初始化mysql_big_table表
+2019-08-12 18:31:06,404 - main_check.py[line:958] - INFO: mysql50：初始化mysql_big_table表
+2019-08-12 18:31:06,506 - main_check.py[line:978] - INFO: mysql501：初始化mysql_db表
+2019-08-12 18:31:06,546 - main_check.py[line:1022] - INFO: mysql501：获取Mysql数据库监控数据(IP：192.168.48.50 端口号：3306 连接使用率：0.00 连接状态：connected )
+2019-08-12 18:31:06,552 - main_check.py[line:1110] - INFO: mysql501：初始化mysql_repl表
+2019-08-12 18:31:06,578 - main_check.py[line:1122] - INFO: mysql501：获取Mysql数据库复制数据
+2019-08-12 18:31:06,578 - main_check.py[line:1125] - INFO: mysql501 :开始更新Mysql数据库评分信息
+2019-08-12 18:31:06,579 - main_check.py[line:978] - INFO: mysql50：初始化mysql_db表
+2019-08-12 18:31:06,608 - main_check.py[line:1189] - INFO: mysql501扣分明细，连接数扣分:0，cpu使用率扣分:0，内存使用率扣分:0，总评分:100,扣分原因:
+2019-08-12 18:31:06,615 - main_check.py[line:1022] - INFO: mysql50：获取Mysql数据库监控数据(IP：192.168.48.50 端口号：3306 连接使用率：0.00 连接状态：connected )
+2019-08-12 18:31:06,621 - main_check.py[line:1110] - INFO: mysql50：初始化mysql_repl表
+2019-08-12 18:31:06,647 - main_check.py[line:1122] - INFO: mysql50：获取Mysql数据库复制数据
+2019-08-12 18:31:06,647 - main_check.py[line:1125] - INFO: mysql50 :开始更新Mysql数据库评分信息
+2019-08-12 18:31:06,667 - main_check.py[line:1189] - INFO: mysql50扣分明细，连接数扣分:0，cpu使用率扣分:0，内存使用率扣分:0，总评分:100,扣分原因:
+2019-08-12 18:31:08,081 - main_check.py[line:108] - INFO: mysql50：初始化linux_net表
+2019-08-12 18:31:08,109 - main_check.py[line:119] - INFO: mysql50：获取网卡流量(网卡：eth0 接收：27.62 发送：49.45)
+2019-08-12 18:31:08,117 - main_check.py[line:119] - INFO: mysql50：获取网卡流量(网卡：eth1 接收：0.37 发送：0.0)
+2019-08-12 18:31:08,124 - main_check.py[line:119] - INFO: mysql50：获取网卡流量(网卡：pan0 接收：0.0 发送：0.0)
+2019-08-12 18:31:08,130 - main_check.py[line:129] - INFO: mysql50：初始化linux_io_stat表
+2019-08-12 18:31:08,144 - main_check.py[line:160] - INFO: mysql50：获取磁盘IO(磁盘名：sda 读取量：0.0 写入量：1.49)
+2019-08-12 18:31:08,158 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:31:14,898 - main_check.py[line:48] - ERROR: 18c_adg 目标主机连接失败：[Errno 10060] 
+2019-08-12 18:31:14,946 - main_check.py[line:57] - INFO: 18c_adg :开始更新linux主机评分信息
+2019-08-12 18:31:14,960 - main_check.py[line:62] - INFO: 18c_adg扣分明细，总评分:0,扣分原因:connected error
+2019-08-12 18:31:15,059 - main_check.py[line:48] - ERROR: orcl19c 目标主机连接失败：[Errno 10060] 
+2019-08-12 18:31:15,094 - main_check.py[line:57] - INFO: orcl19c :开始更新linux主机评分信息
+2019-08-12 18:31:15,111 - main_check.py[line:62] - INFO: orcl19c扣分明细，总评分:0,扣分原因:connected error
+2019-08-12 18:31:17,230 - main_check.py[line:349] - ERROR: orcl19c 数据库连接失败：ORA-12170: TNS: ӳʱ
+2019-08-12 18:31:17,230 - main_check.py[line:350] - INFO: orcl19c：初始化oracle_db表
+2019-08-12 18:31:17,265 - main_check.py[line:359] - INFO: orcl19c :开始更新数据库评分信息
+2019-08-12 18:31:17,283 - main_check.py[line:364] - INFO: orcl19c扣分明细，总评分:0,扣分原因:connected error
+2019-08-12 18:31:18,608 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 18:31:18,628 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:31:18,654 - main_check.py[line:223] - INFO: mysql50：初始化os_info表
+2019-08-12 18:31:18,667 - main_check.py[line:247] - INFO: mysql50：获取系统监控数据(CPU：60.77 MEM：44.0)
+2019-08-12 18:31:18,674 - main_check.py[line:251] - INFO: mysql50：开始获取文件系统监控信息
+2019-08-12 18:31:18,681 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:31:29,125 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 18:31:29,145 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:31:29,168 - main_check.py[line:256] - INFO: mysql50：初始化os_filesystem表
+2019-08-12 18:31:29,188 - main_check.py[line:269] - INFO: mysql50：获取文件系统使用率(路径名：/ 使用率：82%)
+2019-08-12 18:31:29,197 - main_check.py[line:273] - INFO: mysql50 :开始更新Linux主机评分信息
+2019-08-12 18:31:29,219 - main_check.py[line:328] - INFO: mysql50扣分明细，cpu使用率扣分:0.77，内存使用率扣分:0，总评分:99.23,扣分原因:CPU使用率：60% 
+
+2019-08-12 18:31:35,960 - main_check.py[line:1200] - ERROR: redis-6379 redis连接失败：Error 10060 connecting to 192.168.48.60:6379. .
+2019-08-12 18:31:35,960 - main_check.py[line:1201] - INFO: redis-6379：初始化redis表
+2019-08-12 18:31:35,963 - main_check.py[line:1200] - ERROR: Redis-6382 redis连接失败：Error 10060 connecting to 192.168.48.60:6382. .
+2019-08-12 18:31:35,963 - main_check.py[line:1201] - INFO: Redis-6382：初始化redis表
+2019-08-12 18:31:36,010 - main_check.py[line:1209] - INFO: redis-6379扣分明细，总评分:0,扣分原因:conected error
+2019-08-12 18:31:36,013 - main_check.py[line:1209] - INFO: Redis-6382扣分明细，总评分:0,扣分原因:conected error
+2019-08-12 18:31:36,180 - main_check.py[line:1200] - ERROR: redis-6380 redis连接失败：Error 10060 connecting to 192.168.48.60:6380. .
+2019-08-12 18:31:36,180 - main_check.py[line:1201] - INFO: redis-6380：初始化redis表
+2019-08-12 18:31:36,210 - main_check.py[line:1200] - ERROR: Redis-6383 redis连接失败：Error 10060 connecting to 192.168.48.60:6383. .
+2019-08-12 18:31:36,210 - main_check.py[line:1201] - INFO: Redis-6383：初始化redis表
+2019-08-12 18:31:36,213 - main_check.py[line:1209] - INFO: redis-6380扣分明细，总评分:0,扣分原因:conected error
+2019-08-12 18:31:36,217 - main_check.py[line:1200] - ERROR: Redis-6384 redis连接失败：Error 10060 connecting to 192.168.48.60:6384. .
+2019-08-12 18:31:36,217 - main_check.py[line:1201] - INFO: Redis-6384：初始化redis表
+2019-08-12 18:31:36,233 - main_check.py[line:1200] - ERROR: redis-6381 redis连接失败：Error 10060 connecting to 192.168.48.60:6381. .
+2019-08-12 18:31:36,233 - main_check.py[line:1201] - INFO: redis-6381：初始化redis表
+2019-08-12 18:31:36,250 - main_check.py[line:1209] - INFO: Redis-6383扣分明细，总评分:0,扣分原因:conected error
+2019-08-12 18:31:36,253 - main_check.py[line:1209] - INFO: Redis-6384扣分明细，总评分:0,扣分原因:conected error
+2019-08-12 18:31:36,279 - main_check.py[line:1209] - INFO: redis-6381扣分明细，总评分:0,扣分原因:conected error
+2019-08-12 18:31:36,319 - main_check.py[line:1200] - ERROR: Redis-6385 redis连接失败：Error 10060 connecting to 192.168.48.60:6385. .
+2019-08-12 18:31:36,319 - main_check.py[line:1201] - INFO: Redis-6385：初始化redis表
+2019-08-12 18:31:36,351 - main_check.py[line:1209] - INFO: Redis-6385扣分明细，总评分:0,扣分原因:conected error
+2019-08-12 18:31:36,369 - alarm.py[line:40] - INFO: 初始化告警信息表
+2019-08-12 18:31:36,398 - alarm.py[line:51] - INFO: 开始巡检：Oracle数据库通断告警
+2019-08-12 18:31:36,404 - alarm.py[line:69] - WARNING: orcl19c:Oracle数据库通断告警
+ 告警时间：2019-08-12 18:31:21 
+ 数据库url: 192.168.48.60:1521/pdb1
+2019-08-12 18:31:36,414 - alarm.py[line:51] - INFO: 开始巡检：Oracle数据库表空间使用率告警
+2019-08-12 18:31:36,420 - alarm.py[line:69] - WARNING: orcl19c:Oracle数据库表空间使用率告警
+ 告警时间：2019-08-12 18:31:21 
+ 数据库url: 192.168.48.60:1521/pdb1
+ 表空间名：SYSTEM
+ 表空间大小(GB)：0.27
+ 表空间使用率：97.79%
+ 表空间剩余大小(GB)：0.01
+2019-08-12 18:31:36,431 - alarm.py[line:69] - WARNING: orcl19c:Oracle数据库表空间使用率告警
+ 告警时间：2019-08-12 18:31:21 
+ 数据库url: 192.168.48.60:1521/pdb1
+ 表空间名：SYSAUX
+ 表空间大小(GB)：0.36
+ 表空间使用率：93.51%
+ 表空间剩余大小(GB)：0.02
+2019-08-12 18:31:36,444 - alarm.py[line:69] - WARNING: orcl18c_pdb1:Oracle数据库表空间使用率告警
+ 告警时间：2019-08-12 18:31:21 
+ 数据库url: 192.168.48.10:1521/pdb1
+ 表空间名：SYSTEM
+ 表空间大小(GB)：0.26
+ 表空间使用率：96.67%
+ 表空间剩余大小(GB)：0.01
+2019-08-12 18:31:36,457 - alarm.py[line:69] - WARNING: orcl18c_pdb1:Oracle数据库表空间使用率告警
+ 告警时间：2019-08-12 18:31:21 
+ 数据库url: 192.168.48.10:1521/pdb1
+ 表空间名：SYSAUX
+ 表空间大小(GB)：0.65
+ 表空间使用率：91.36%
+ 表空间剩余大小(GB)：0.06
+2019-08-12 18:31:36,470 - alarm.py[line:51] - INFO: 开始巡检：Oracle数据库临时表空间告警
+2019-08-12 18:31:36,476 - alarm.py[line:62] - INFO: Oracle数据库临时表空间告警:正常
+2019-08-12 18:31:36,477 - alarm.py[line:51] - INFO: 开始巡检：Oracle数据库Undo表空间告警
+2019-08-12 18:31:36,483 - alarm.py[line:62] - INFO: Oracle数据库Undo表空间告警:正常
+2019-08-12 18:31:36,483 - alarm.py[line:51] - INFO: 开始巡检：Oracle数据库连接数告警
+2019-08-12 18:31:36,489 - alarm.py[line:62] - INFO: Oracle数据库连接数告警:正常
+2019-08-12 18:31:36,489 - alarm.py[line:51] - INFO: 开始巡检：Oracle数据库adg延迟告警
+2019-08-12 18:31:36,496 - alarm.py[line:62] - INFO: Oracle数据库adg延迟告警:正常
+2019-08-12 18:31:36,496 - alarm.py[line:51] - INFO: 开始巡检：Oracle数据库后台日志告警
+2019-08-12 18:31:36,502 - alarm.py[line:69] - WARNING: orcl18c_pdb1:Oracle数据库后台日志告警
+ 告警时间：2019-08-12 18:31:21 
+ 数据库url: 192.168.48.10:1521/pdb1 
+ 异常信息:
+2019-08-12 18:31:36,516 - alarm.py[line:51] - INFO: 开始巡检：Oracle数据库综合性能告警
+2019-08-12 18:31:36,562 - alarm.py[line:62] - INFO: Oracle数据库综合性能告警:正常
+2019-08-12 18:31:36,562 - alarm.py[line:51] - INFO: 开始巡检：Oracle数据库pga使用率告警
+2019-08-12 18:31:36,569 - alarm.py[line:69] - WARNING: orcl18c_pdb1:Oracle数据库PGA使用率告警
+ 告警时间：2019-08-12 18:31:21 
+ 数据库url: 192.168.48.10:1521/pdb1 
+ PGA使用大小(MB)：292.8
+ PGA使用率：160%
+2019-08-12 18:31:36,581 - alarm.py[line:51] - INFO: 开始巡检：Oracle数据库归档使用率告警
+2019-08-12 18:31:36,585 - alarm.py[line:62] - INFO: Oracle数据库归档使用率告警:正常
+2019-08-12 18:31:36,585 - alarm.py[line:51] - INFO: 开始巡检：Oracle数据库锁异常告警
+2019-08-12 18:31:36,588 - alarm.py[line:55] - INFO: Oracle数据库锁异常告警未采集到数据
+2019-08-12 18:31:36,588 - alarm.py[line:51] - INFO: 开始巡检：Oracle数据库密码过期告警
+2019-08-12 18:31:36,592 - alarm.py[line:55] - INFO: Oracle数据库密码过期告警未采集到数据
+2019-08-12 18:31:36,592 - alarm.py[line:51] - INFO: 开始巡检：Oracle失效索引告警
+2019-08-12 18:31:36,595 - alarm.py[line:55] - INFO: Oracle失效索引告警未采集到数据
+2019-08-12 18:31:36,595 - alarm.py[line:51] - INFO: 开始巡检：Linux主机通断告警
+2019-08-12 18:31:36,601 - alarm.py[line:69] - WARNING: 18c_adg:Linux主机通断告警
+ 告警时间：2019-08-12 18:31:21 
+ 主机IP: 192.168.48.20
+2019-08-12 18:31:36,615 - alarm.py[line:69] - WARNING: orcl19c:Linux主机通断告警
+ 告警时间：2019-08-12 18:31:21 
+ 主机IP: 192.168.48.60
+2019-08-12 18:31:36,628 - alarm.py[line:51] - INFO: 开始巡检：Linux主机CPU使用率告警
+2019-08-12 18:31:36,634 - alarm.py[line:62] - INFO: Linux主机CPU使用率告警:正常
+2019-08-12 18:31:36,634 - alarm.py[line:51] - INFO: 开始巡检：Linux主机内存使用率告警
+2019-08-12 18:31:36,638 - alarm.py[line:62] - INFO: Linux主机内存使用率告警:正常
+2019-08-12 18:31:36,640 - alarm.py[line:51] - INFO: 开始巡检：Linux主机文件系统使用率告警
+2019-08-12 18:31:36,645 - alarm.py[line:62] - INFO: Linux主机文件系统使用率告警:正常
+2019-08-12 18:31:36,645 - alarm.py[line:51] - INFO: 开始巡检：MySQL数据库通断告警
+2019-08-12 18:31:36,651 - alarm.py[line:62] - INFO: MySQL数据库通断告警:正常
+2019-08-12 18:31:36,651 - alarm.py[line:51] - INFO: 开始巡检：Linux主机swap使用率告警
+2019-08-12 18:31:36,657 - alarm.py[line:62] - INFO: Linux主机swap使用率告警:正常
+2019-08-12 18:31:36,657 - alarm.py[line:51] - INFO: 开始巡检：Redis通断告警
+2019-08-12 18:31:36,664 - alarm.py[line:69] - WARNING: redis-6379:Redis通断告警
+ 告警时间：2019-08-12 18:31:21 
+ Redis url: 192.168.48.60:6379
+2019-08-12 18:31:36,678 - alarm.py[line:69] - WARNING: redis-6380:Redis通断告警
+ 告警时间：2019-08-12 18:31:21 
+ Redis url: 192.168.48.60:6380
+2019-08-12 18:31:36,690 - alarm.py[line:69] - WARNING: Redis-6382:Redis通断告警
+ 告警时间：2019-08-12 18:31:21 
+ Redis url: 192.168.48.60:6382
+2019-08-12 18:31:36,703 - alarm.py[line:69] - WARNING: Redis-6383:Redis通断告警
+ 告警时间：2019-08-12 18:31:21 
+ Redis url: 192.168.48.60:6383
+2019-08-12 18:31:36,717 - alarm.py[line:69] - WARNING: Redis-6384:Redis通断告警
+ 告警时间：2019-08-12 18:31:21 
+ Redis url: 192.168.48.60:6384
+2019-08-12 18:31:36,726 - alarm.py[line:69] - WARNING: redis-orcl:Redis通断告警
+ 告警时间：2019-08-12 18:31:21 
+ Redis url: 192.168.48.10:6379
+2019-08-12 18:31:36,739 - alarm.py[line:51] - INFO: 开始巡检：Redis内存使用率告警
+2019-08-12 18:31:36,742 - alarm.py[line:55] - INFO: Redis内存使用率告警未采集到数据
+2019-08-12 18:31:36,742 - main_check.py[line:1403] - INFO: 600.0 秒后开始下一次轮询
+2019-08-12 18:41:36,742 - main_check.py[line:1293] - INFO: 清除os_info表无效监控数据
+2019-08-12 18:41:36,750 - main_check.py[line:1293] - INFO: 清除os_filesystem表无效监控数据
+2019-08-12 18:41:36,759 - main_check.py[line:1293] - INFO: 清除linux_rate表无效监控数据
+2019-08-12 18:41:36,769 - main_check.py[line:1301] - INFO: 清除oracle_tbs表无效监控数据
+2019-08-12 18:41:36,776 - main_check.py[line:1301] - INFO: 清除oracle_db表无效监控数据
+2019-08-12 18:41:36,783 - main_check.py[line:1301] - INFO: 清除oracle_db_event表无效监控数据
+2019-08-12 18:41:36,790 - main_check.py[line:1301] - INFO: 清除oracle_tmp_tbs表无效监控数据
+2019-08-12 18:41:36,799 - main_check.py[line:1301] - INFO: 清除oracle_undo_tbs表无效监控数据
+2019-08-12 18:41:36,805 - main_check.py[line:1301] - INFO: 清除oracle_db_rate表无效监控数据
+2019-08-12 18:41:36,815 - main_check.py[line:1301] - INFO: 清除oracle_invalid_index表无效监控数据
+2019-08-12 18:41:36,822 - main_check.py[line:1301] - INFO: 清除oracle_expired_pwd表无效监控数据
+2019-08-12 18:41:36,831 - main_check.py[line:1309] - INFO: 清除mysql_db表无效监控数据
+2019-08-12 18:41:36,841 - main_check.py[line:1309] - INFO: 清除mysql_db_rate表无效监控数据
+2019-08-12 18:41:36,848 - main_check.py[line:1309] - INFO: 清除mysql_repl表无效监控数据
+2019-08-12 18:41:36,855 - main_check.py[line:1317] - INFO: 清除redis表无效监控数据
+2019-08-12 18:41:36,862 - main_check.py[line:1325] - INFO: 清除web_url_stats表无效监控数据
+2019-08-12 18:41:36,871 - main_check.py[line:1333] - INFO: 清除tcp_stats表无效监控数据
+2019-08-12 18:41:36,908 - main_check.py[line:1359] - INFO: orcl 开始采集Linux主机信息
+2019-08-12 18:41:36,914 - main_check.py[line:1359] - INFO: 18c_adg 开始采集Linux主机信息
+2019-08-12 18:41:36,917 - main_check.py[line:1359] - INFO: orcl19c 开始采集Linux主机信息
+2019-08-12 18:41:36,921 - main_check.py[line:1359] - INFO: mysql50 开始采集Linux主机信息
+2019-08-12 18:41:36,927 - main_check.py[line:1359] - INFO: orcl1 开始采集Linux主机信息
+2019-08-12 18:41:36,930 - main_check.py[line:1359] - INFO: dbmon 开始采集Linux主机信息
+2019-08-12 18:41:36,934 - main_check.py[line:1368] - INFO: orcl18c_pdb1 开始采集oracle数据库信息
+2019-08-12 18:41:36,940 - main_check.py[line:1368] - INFO: orcl19c 开始采集oracle数据库信息
+2019-08-12 18:41:36,944 - main_check.py[line:1376] - INFO: mysql50 开始采集mysql数据库信息
+2019-08-12 18:41:36,948 - main_check.py[line:1376] - INFO: mysql501 开始采集mysql数据库信息
+2019-08-12 18:41:36,953 - main_check.py[line:1383] - INFO: Redis-6385 开始采集redis信息
+2019-08-12 18:41:36,957 - main_check.py[line:1383] - INFO: redis-6379 开始采集redis信息
+2019-08-12 18:41:36,960 - main_check.py[line:1383] - INFO: redis-6380 开始采集redis信息
+2019-08-12 18:41:36,964 - main_check.py[line:1383] - INFO: redis-6381 开始采集redis信息
+2019-08-12 18:41:36,970 - main_check.py[line:1383] - INFO: Redis-6382 开始采集redis信息
+2019-08-12 18:41:36,973 - main_check.py[line:1383] - INFO: Redis-6383 开始采集redis信息
+2019-08-12 18:41:36,977 - main_check.py[line:1383] - INFO: Redis-6384 开始采集redis信息
+2019-08-12 18:41:36,983 - main_check.py[line:1383] - INFO: redis-orcl 开始采集redis信息
+2019-08-12 18:41:36,986 - main_check.py[line:1389] - INFO: baidu 开始采集web信息
+2019-08-12 18:41:36,990 - main_check.py[line:1395] - INFO: orcl18c 开始采集tcp信息
+2019-08-12 18:41:42,095 - main_check.py[line:36] - INFO: mysql50：开始获取系统监控信息
+2019-08-12 18:41:42,095 - main_check.py[line:781] - INFO: 等待2秒待Linux主机信息采集完毕
+2019-08-12 18:41:42,095 - main_check.py[line:36] - INFO: 18c_adg：开始获取系统监控信息
+2019-08-12 18:41:42,095 - main_check.py[line:1260] - INFO: orcl18c：初始化tcp_stats表
+2019-08-12 18:41:42,098 - main_check.py[line:1244] - INFO: baidu：初始化web_url_stats表
+2019-08-12 18:41:42,098 - main_check.py[line:781] - INFO: 等待2秒待Linux主机信息采集完毕
+2019-08-12 18:41:42,102 - main_check.py[line:36] - INFO: orcl19c：开始获取系统监控信息
+2019-08-12 18:41:42,102 - main_check.py[line:36] - INFO: orcl：开始获取系统监控信息
+2019-08-12 18:41:42,102 - main_check.py[line:332] - INFO: orcl18c_pdb1等待2秒待linux主机信息采集完毕
+2019-08-12 18:41:42,108 - main_check.py[line:332] - INFO: orcl19c等待2秒待linux主机信息采集完毕
+2019-08-12 18:41:42,111 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:41:42,112 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:41:42,114 - main_check.py[line:36] - INFO: dbmon：开始获取系统监控信息
+2019-08-12 18:41:42,117 - main_check.py[line:36] - INFO: orcl1：开始获取系统监控信息
+2019-08-12 18:41:42,125 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:41:42,131 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:41:42,157 - main_check.py[line:808] - INFO: mysql501：开始获取mysql数据库监控信息
+2019-08-12 18:41:42,157 - main_check.py[line:812] - INFO: mysql501：获取第一次MySQL状态采样
+2019-08-12 18:41:42,250 - main_check.py[line:808] - INFO: mysql50：开始获取mysql数据库监控信息
+2019-08-12 18:41:42,250 - main_check.py[line:812] - INFO: mysql50：获取第一次MySQL状态采样
+2019-08-12 18:41:43,124 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 18:41:43,125 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 18:41:43,150 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:41:43,153 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:41:43,164 - main_check.py[line:815] - INFO: mysql501：获取第二次MySQL状态采样
+2019-08-12 18:41:43,174 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:41:43,184 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:41:43,256 - main_check.py[line:815] - INFO: mysql50：获取第二次MySQL状态采样
+2019-08-12 18:41:43,279 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:41:44,151 - main_check.py[line:1200] - ERROR: redis-orcl redis连接失败：Error 10061 connecting to 192.168.48.10:6379. .
+2019-08-12 18:41:44,151 - main_check.py[line:1201] - INFO: redis-orcl：初始化redis表
+2019-08-12 18:41:44,187 - main_check.py[line:1209] - INFO: redis-orcl扣分明细，总评分:0,扣分原因:conected error
+2019-08-12 18:41:44,565 - main_check.py[line:367] - INFO: orcl18c_pdb1：开始获取Oracle数据库表空间监控信息
+2019-08-12 18:41:44,655 - main_check.py[line:371] - INFO: orcl18c_pdb1：初始化oracle_tbs表
+2019-08-12 18:41:44,676 - main_check.py[line:387] - INFO: orcl18c_pdb1：获取Oracle数据库表空间使用率(表空间名：SYSTEM 使用率：96.67)
+2019-08-12 18:41:44,680 - main_check.py[line:387] - INFO: orcl18c_pdb1：获取Oracle数据库表空间使用率(表空间名：SYSAUX 使用率：91.36)
+2019-08-12 18:41:44,687 - main_check.py[line:387] - INFO: orcl18c_pdb1：获取Oracle数据库表空间使用率(表空间名：USERS 使用率：27.5)
+2019-08-12 18:41:44,697 - main_check.py[line:391] - INFO: orcl18c_pdb1：开始获取Oracle数据库监控信息
+2019-08-12 18:41:46,380 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:41:46,562 - main_check.py[line:108] - INFO: dbmon：初始化linux_net表
+2019-08-12 18:41:46,585 - main_check.py[line:119] - INFO: dbmon：获取网卡流量(网卡：eth0 接收：6.29 发送：20.69)
+2019-08-12 18:41:46,592 - main_check.py[line:129] - INFO: dbmon：初始化linux_io_stat表
+2019-08-12 18:41:46,605 - main_check.py[line:160] - INFO: dbmon：获取磁盘IO(磁盘名：sda 读取量：0.0 写入量：0.13)
+2019-08-12 18:41:46,621 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:41:46,671 - main_check.py[line:108] - INFO: orcl：初始化linux_net表
+2019-08-12 18:41:46,696 - main_check.py[line:119] - INFO: orcl：获取网卡流量(网卡：eth0 接收：13.58 发送：38.83)
+2019-08-12 18:41:46,703 - main_check.py[line:119] - INFO: orcl：获取网卡流量(网卡：pan0 接收：0.0 发送：0.0)
+2019-08-12 18:41:46,710 - main_check.py[line:129] - INFO: orcl：初始化linux_io_stat表
+2019-08-12 18:41:46,727 - main_check.py[line:160] - INFO: orcl：获取磁盘IO(磁盘名：sda 读取量：0.0 写入量：0.23)
+2019-08-12 18:41:46,743 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:41:46,861 - main_check.py[line:108] - INFO: orcl1：初始化linux_net表
+2019-08-12 18:41:46,881 - main_check.py[line:119] - INFO: orcl1：获取网卡流量(网卡：eth0 接收：14.14 发送：40.92)
+2019-08-12 18:41:46,887 - main_check.py[line:119] - INFO: orcl1：获取网卡流量(网卡：pan0 接收：0.0 发送：0.0)
+2019-08-12 18:41:46,894 - main_check.py[line:129] - INFO: orcl1：初始化linux_io_stat表
+2019-08-12 18:41:46,901 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 18:41:46,911 - main_check.py[line:160] - INFO: orcl1：获取磁盘IO(磁盘名：sda 读取量：0.0 写入量：0.22)
+2019-08-12 18:41:46,924 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:41:46,941 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:41:47,026 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:41:47,105 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 18:41:47,145 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:41:47,220 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 18:41:47,246 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:41:47,266 - main_check.py[line:223] - INFO: orcl：初始化os_info表
+2019-08-12 18:41:47,280 - main_check.py[line:247] - INFO: orcl：获取系统监控数据(CPU：75.0 MEM：34.0)
+2019-08-12 18:41:47,289 - main_check.py[line:251] - INFO: orcl：开始获取文件系统监控信息
+2019-08-12 18:41:47,299 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:41:47,325 - main_check.py[line:223] - INFO: dbmon：初始化os_info表
+2019-08-12 18:41:47,338 - main_check.py[line:247] - INFO: dbmon：获取系统监控数据(CPU：21.05 MEM：13.0)
+2019-08-12 18:41:47,349 - main_check.py[line:251] - INFO: dbmon：开始获取文件系统监控信息
+2019-08-12 18:41:47,358 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:41:47,385 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 18:41:47,414 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:41:47,433 - main_check.py[line:223] - INFO: orcl1：初始化os_info表
+2019-08-12 18:41:47,453 - main_check.py[line:247] - INFO: orcl1：获取系统监控数据(CPU：76.02 MEM：34.0)
+2019-08-12 18:41:47,463 - main_check.py[line:251] - INFO: orcl1：开始获取文件系统监控信息
+2019-08-12 18:41:47,502 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:41:47,539 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 18:41:47,594 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:41:47,691 - main_check.py[line:438] - INFO: orcl18c_pdb1：初始化oracle_db表
+2019-08-12 18:41:47,743 - main_check.py[line:506] - INFO: orcl18c_pdb1：获取Oracle数据库监控数据(数据库名：ORCL 数据库角色：PRIMARY 数据库状态：READ WRITE 连接数使用率：18 )
+2019-08-12 18:41:47,743 - main_check.py[line:509] - INFO: orcl18c_pdb1：开始获取Oracle数据库用户密码过期信息
+2019-08-12 18:41:47,799 - main_check.py[line:512] - INFO: orcl18c_pdb1：初始化oracle_expired_pwd表
+2019-08-12 18:41:47,806 - main_check.py[line:521] - INFO: orcl18c_pdb1：开始获取Oracle数据库等待事件信息
+2019-08-12 18:41:47,819 - main_check.py[line:525] - INFO: orcl18c_pdb1：初始化oracle_db_event表
+2019-08-12 18:41:47,865 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 18:41:47,891 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:41:47,898 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 18:41:47,914 - main_check.py[line:256] - INFO: orcl：初始化os_filesystem表
+2019-08-12 18:41:47,934 - main_check.py[line:269] - INFO: orcl：获取文件系统使用率(路径名：/ 使用率：92%)
+2019-08-12 18:41:47,937 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:41:47,946 - main_check.py[line:273] - INFO: orcl :开始更新Linux主机评分信息
+2019-08-12 18:41:47,974 - main_check.py[line:328] - INFO: orcl扣分明细，cpu使用率扣分:15.0，内存使用率扣分:0，总评分:85.0,扣分原因:CPU使用率：75% 
+
+2019-08-12 18:41:48,005 - main_check.py[line:536] - INFO: orcl18c_pdb1：开始获取Oracle数据库锁等待信息
+2019-08-12 18:41:48,068 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 18:41:48,105 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:41:48,160 - main_check.py[line:256] - INFO: orcl1：初始化os_filesystem表
+2019-08-12 18:41:48,173 - main_check.py[line:269] - INFO: orcl1：获取文件系统使用率(路径名：/ 使用率：92%)
+2019-08-12 18:41:48,180 - main_check.py[line:273] - INFO: orcl1 :开始更新Linux主机评分信息
+2019-08-12 18:41:48,200 - main_check.py[line:328] - INFO: orcl1扣分明细，cpu使用率扣分:15.0，内存使用率扣分:0，总评分:85.0,扣分原因:CPU使用率：75% 
+
+2019-08-12 18:41:48,211 - main_check.py[line:256] - INFO: dbmon：初始化os_filesystem表
+2019-08-12 18:41:48,232 - main_check.py[line:269] - INFO: dbmon：获取文件系统使用率(路径名：/ 使用率：39%)
+2019-08-12 18:41:48,239 - main_check.py[line:273] - INFO: dbmon :开始更新Linux主机评分信息
+2019-08-12 18:41:48,239 - main_check.py[line:540] - INFO: orcl18c_pdb1：初始化oracle_Lock表
+2019-08-12 18:41:48,243 - main_check.py[line:550] - INFO: orcl18c_pdb1：开始获取Oracle数据库无效索引信息
+2019-08-12 18:41:48,259 - main_check.py[line:328] - INFO: dbmon扣分明细，cpu使用率扣分:0，内存使用率扣分:0，总评分:100,扣分原因:
+2019-08-12 18:41:50,092 - main_check.py[line:554] - INFO: orcl18c_pdb1：初始化oracle_invalid_index表
+2019-08-12 18:41:50,095 - main_check.py[line:564] - INFO: orcl18c_pdb1：开始获取Oracle数据库临时表空间监控信息
+2019-08-12 18:41:50,151 - main_check.py[line:568] - INFO: orcl18c_pdb1：初始化oracle_tmp_tbs表
+2019-08-12 18:41:50,174 - main_check.py[line:579] - INFO: orcl18c_pdb1：获取Oracle数据库临时表空间使用率(temp表空间名：TEMP 使用率：0)
+2019-08-12 18:41:50,174 - main_check.py[line:582] - INFO: orcl18c_pdb1：开始获取Oracle数据库undo表空间监控信息
+2019-08-12 18:41:50,278 - main_check.py[line:585] - INFO: orcl18c_pdb1：初始化oracle_undo_tbs表
+2019-08-12 18:41:50,303 - main_check.py[line:596] - INFO: orcl18c_pdb1：获取Oracle数据库undo表空间使用率(undo表空间名：UNDOTBS1 使用率：11.96)
+2019-08-12 18:41:50,303 - main_check.py[line:599] - INFO: orcl18c_pdb1 :开始更新Oracle数据库评分信息
+2019-08-12 18:41:50,371 - main_check.py[line:668] - WARNING: orcl18c_pdb1：归档未采集到数据
+2019-08-12 18:41:50,392 - main_check.py[line:777] - INFO: orcl18c_pdb1扣分明细，连接数扣分:0，归档使用率扣分：, 等待事件扣分：, 表空间扣分:0，临时表空间扣分:0,Undo表空间扣分:0,cpu使用率扣分:15.0，内存使用率扣分:0，总评分:85.0,扣分原因:CPU使用率：75% 
+
+2019-08-12 18:41:53,138 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 18:41:53,150 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:41:53,950 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 18:41:53,980 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:41:54,002 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 18:41:54,056 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:41:54,398 - main_check.py[line:958] - INFO: mysql501：初始化mysql_big_table表
+2019-08-12 18:41:54,657 - main_check.py[line:958] - INFO: mysql50：初始化mysql_big_table表
+2019-08-12 18:41:54,674 - main_check.py[line:978] - INFO: mysql501：初始化mysql_db表
+2019-08-12 18:41:54,711 - main_check.py[line:1022] - INFO: mysql501：获取Mysql数据库监控数据(IP：192.168.48.50 端口号：3306 连接使用率：0.00 连接状态：connected )
+2019-08-12 18:41:54,719 - main_check.py[line:1110] - INFO: mysql501：初始化mysql_repl表
+2019-08-12 18:41:54,750 - main_check.py[line:1122] - INFO: mysql501：获取Mysql数据库复制数据
+2019-08-12 18:41:54,750 - main_check.py[line:1125] - INFO: mysql501 :开始更新Mysql数据库评分信息
+2019-08-12 18:41:54,776 - main_check.py[line:1189] - INFO: mysql501扣分明细，连接数扣分:0，cpu使用率扣分:0.77，内存使用率扣分:0，总评分:99.23,扣分原因:CPU使用率：60% 
+
+2019-08-12 18:41:54,816 - main_check.py[line:978] - INFO: mysql50：初始化mysql_db表
+2019-08-12 18:41:54,838 - main_check.py[line:1022] - INFO: mysql50：获取Mysql数据库监控数据(IP：192.168.48.50 端口号：3306 连接使用率：0.00 连接状态：connected )
+2019-08-12 18:41:54,839 - main_check.py[line:1110] - INFO: mysql50：初始化mysql_repl表
+2019-08-12 18:41:54,859 - main_check.py[line:1122] - INFO: mysql50：获取Mysql数据库复制数据
+2019-08-12 18:41:54,859 - main_check.py[line:1125] - INFO: mysql50 :开始更新Mysql数据库评分信息
+2019-08-12 18:41:54,890 - main_check.py[line:1189] - INFO: mysql50扣分明细，连接数扣分:0，cpu使用率扣分:0.77，内存使用率扣分:0，总评分:99.23,扣分原因:CPU使用率：60% 
+
+2019-08-12 18:41:56,535 - main_check.py[line:108] - INFO: mysql50：初始化linux_net表
+2019-08-12 18:41:56,562 - main_check.py[line:119] - INFO: mysql50：获取网卡流量(网卡：eth0 接收：7.46 发送：27.29)
+2019-08-12 18:41:56,569 - main_check.py[line:119] - INFO: mysql50：获取网卡流量(网卡：eth1 接收：0.19 发送：0.0)
+2019-08-12 18:41:56,575 - main_check.py[line:119] - INFO: mysql50：获取网卡流量(网卡：pan0 接收：0.0 发送：0.0)
+2019-08-12 18:41:56,582 - main_check.py[line:129] - INFO: mysql50：初始化linux_io_stat表
+2019-08-12 18:41:56,595 - main_check.py[line:160] - INFO: mysql50：获取磁盘IO(磁盘名：sda 读取量：0.0 写入量：1.21)
+2019-08-12 18:41:56,609 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:42:03,096 - main_check.py[line:48] - ERROR: 18c_adg 目标主机连接失败：[Errno 10060] 
+2019-08-12 18:42:03,102 - main_check.py[line:48] - ERROR: orcl19c 目标主机连接失败：[Errno 10060] 
+2019-08-12 18:42:03,151 - main_check.py[line:57] - INFO: 18c_adg :开始更新linux主机评分信息
+2019-08-12 18:42:03,155 - main_check.py[line:57] - INFO: orcl19c :开始更新linux主机评分信息
+2019-08-12 18:42:03,174 - main_check.py[line:62] - INFO: 18c_adg扣分明细，总评分:0,扣分原因:connected error
+2019-08-12 18:42:03,176 - main_check.py[line:62] - INFO: orcl19c扣分明细，总评分:0,扣分原因:connected error
+2019-08-12 18:42:05,483 - main_check.py[line:349] - ERROR: orcl19c 数据库连接失败：ORA-12170: TNS: ӳʱ
+2019-08-12 18:42:05,483 - main_check.py[line:350] - INFO: orcl19c：初始化oracle_db表
+2019-08-12 18:42:05,520 - main_check.py[line:359] - INFO: orcl19c :开始更新数据库评分信息
+2019-08-12 18:42:05,536 - main_check.py[line:364] - INFO: orcl19c扣分明细，总评分:0,扣分原因:connected error
+2019-08-12 18:42:07,069 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 18:42:07,095 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:42:07,119 - main_check.py[line:223] - INFO: mysql50：初始化os_info表
+2019-08-12 18:42:07,134 - main_check.py[line:247] - INFO: mysql50：获取系统监控数据(CPU：53.99 MEM：44.0)
+2019-08-12 18:42:07,144 - main_check.py[line:251] - INFO: mysql50：开始获取文件系统监控信息
+2019-08-12 18:42:07,151 - transport.py[line:1685] - INFO: Connected (version 2.0, client OpenSSH_5.3)
+2019-08-12 18:42:17,601 - transport.py[line:1685] - INFO: Authentication (publickey) failed.
+2019-08-12 18:42:17,631 - transport.py[line:1685] - INFO: Authentication (password) successful!
+2019-08-12 18:42:17,648 - main_check.py[line:256] - INFO: mysql50：初始化os_filesystem表
+2019-08-12 18:42:17,664 - main_check.py[line:269] - INFO: mysql50：获取文件系统使用率(路径名：/ 使用率：82%)
+2019-08-12 18:42:17,674 - main_check.py[line:273] - INFO: mysql50 :开始更新Linux主机评分信息
+2019-08-12 18:42:17,691 - main_check.py[line:328] - INFO: mysql50扣分明细，cpu使用率扣分:0，内存使用率扣分:0，总评分:100,扣分原因:
+2019-08-12 18:42:24,101 - main_check.py[line:1200] - ERROR: redis-6379 redis连接失败：Error 10060 connecting to 192.168.48.60:6379. .
+2019-08-12 18:42:24,101 - main_check.py[line:1201] - INFO: redis-6381：初始化redis表
+2019-08-12 18:42:24,101 - main_check.py[line:1201] - INFO: redis-6379：初始化redis表
+2019-08-12 18:42:24,102 - main_check.py[line:1200] - ERROR: Redis-6385 redis连接失败：Error 10060 connecting to 192.168.48.60:6385. .
+2019-08-12 18:42:24,102 - main_check.py[line:1201] - INFO: Redis-6385：初始化redis表
+2019-08-12 18:42:24,104 - main_check.py[line:1200] - ERROR: Redis-6382 redis连接失败：Error 10060 connecting to 192.168.48.60:6382. .
+2019-08-12 18:42:24,104 - main_check.py[line:1201] - INFO: Redis-6383：初始化redis表
+2019-08-12 18:42:24,104 - main_check.py[line:1201] - INFO: Redis-6382：初始化redis表
+2019-08-12 18:42:24,114 - main_check.py[line:1200] - ERROR: Redis-6384 redis连接失败：Error 10060 connecting to 192.168.48.60:6384. .
+2019-08-12 18:42:24,114 - main_check.py[line:1200] - ERROR: redis-6380 redis连接失败：Error 10060 connecting to 192.168.48.60:6380. .
+2019-08-12 18:42:24,114 - main_check.py[line:1201] - INFO: Redis-6384：初始化redis表
+2019-08-12 18:42:24,115 - main_check.py[line:1201] - INFO: redis-6380：初始化redis表
+2019-08-12 18:42:24,187 - main_check.py[line:1209] - INFO: Redis-6385扣分明细，总评分:0,扣分原因:conected error
+2019-08-12 18:42:24,190 - main_check.py[line:1209] - INFO: Redis-6383扣分明细，总评分:0,扣分原因:conected error
+2019-08-12 18:42:24,190 - main_check.py[line:1209] - INFO: Redis-6382扣分明细，总评分:0,扣分原因:conected error
+2019-08-12 18:42:24,190 - main_check.py[line:1209] - INFO: redis-6381扣分明细，总评分:0,扣分原因:conected error
+2019-08-12 18:42:24,194 - main_check.py[line:1209] - INFO: Redis-6384扣分明细，总评分:0,扣分原因:conected error
+2019-08-12 18:42:24,214 - main_check.py[line:1209] - INFO: redis-6380扣分明细，总评分:0,扣分原因:conected error
+2019-08-12 18:42:24,240 - alarm.py[line:40] - INFO: 初始化告警信息表
+2019-08-12 18:42:24,263 - alarm.py[line:51] - INFO: 开始巡检：Oracle数据库通断告警
+2019-08-12 18:42:24,266 - alarm.py[line:69] - WARNING: orcl19c:Oracle数据库通断告警
+ 告警时间：2019-08-12 18:42:09 
+ 数据库url: 192.168.48.60:1521/pdb1
+2019-08-12 18:42:24,275 - alarm.py[line:51] - INFO: 开始巡检：Oracle数据库表空间使用率告警
+2019-08-12 18:42:24,279 - alarm.py[line:69] - WARNING: orcl19c:Oracle数据库表空间使用率告警
+ 告警时间：2019-08-12 18:42:09 
+ 数据库url: 192.168.48.60:1521/pdb1
+ 表空间名：SYSTEM
+ 表空间大小(GB)：0.27
+ 表空间使用率：97.79%
+ 表空间剩余大小(GB)：0.01
+2019-08-12 18:42:24,289 - alarm.py[line:69] - WARNING: orcl19c:Oracle数据库表空间使用率告警
+ 告警时间：2019-08-12 18:42:09 
+ 数据库url: 192.168.48.60:1521/pdb1
+ 表空间名：SYSAUX
+ 表空间大小(GB)：0.36
+ 表空间使用率：93.51%
+ 表空间剩余大小(GB)：0.02
+2019-08-12 18:42:24,299 - alarm.py[line:69] - WARNING: orcl18c_pdb1:Oracle数据库表空间使用率告警
+ 告警时间：2019-08-12 18:42:09 
+ 数据库url: 192.168.48.10:1521/pdb1
+ 表空间名：SYSTEM
+ 表空间大小(GB)：0.26
+ 表空间使用率：96.67%
+ 表空间剩余大小(GB)：0.01
+2019-08-12 18:42:24,308 - alarm.py[line:69] - WARNING: orcl18c_pdb1:Oracle数据库表空间使用率告警
+ 告警时间：2019-08-12 18:42:09 
+ 数据库url: 192.168.48.10:1521/pdb1
+ 表空间名：SYSAUX
+ 表空间大小(GB)：0.65
+ 表空间使用率：91.36%
+ 表空间剩余大小(GB)：0.06
+2019-08-12 18:42:24,318 - alarm.py[line:51] - INFO: 开始巡检：Oracle数据库临时表空间告警
+2019-08-12 18:42:24,325 - alarm.py[line:62] - INFO: Oracle数据库临时表空间告警:正常
+2019-08-12 18:42:24,325 - alarm.py[line:51] - INFO: 开始巡检：Oracle数据库Undo表空间告警
+2019-08-12 18:42:24,329 - alarm.py[line:62] - INFO: Oracle数据库Undo表空间告警:正常
+2019-08-12 18:42:24,329 - alarm.py[line:51] - INFO: 开始巡检：Oracle数据库连接数告警
+2019-08-12 18:42:24,334 - alarm.py[line:62] - INFO: Oracle数据库连接数告警:正常
+2019-08-12 18:42:24,335 - alarm.py[line:51] - INFO: 开始巡检：Oracle数据库adg延迟告警
+2019-08-12 18:42:24,339 - alarm.py[line:62] - INFO: Oracle数据库adg延迟告警:正常
+2019-08-12 18:42:24,341 - alarm.py[line:51] - INFO: 开始巡检：Oracle数据库后台日志告警
+2019-08-12 18:42:24,345 - alarm.py[line:69] - WARNING: orcl18c_pdb1:Oracle数据库后台日志告警
+ 告警时间：2019-08-12 18:42:09 
+ 数据库url: 192.168.48.10:1521/pdb1 
+ 异常信息:
+2019-08-12 18:42:24,354 - alarm.py[line:51] - INFO: 开始巡检：Oracle数据库综合性能告警
+2019-08-12 18:42:24,404 - alarm.py[line:62] - INFO: Oracle数据库综合性能告警:正常
+2019-08-12 18:42:24,405 - alarm.py[line:51] - INFO: 开始巡检：Oracle数据库pga使用率告警
+2019-08-12 18:42:24,410 - alarm.py[line:69] - WARNING: orcl18c_pdb1:Oracle数据库PGA使用率告警
+ 告警时间：2019-08-12 18:42:09 
+ 数据库url: 192.168.48.10:1521/pdb1 
+ PGA使用大小(MB)：296
+ PGA使用率：160%
+2019-08-12 18:42:24,417 - alarm.py[line:51] - INFO: 开始巡检：Oracle数据库归档使用率告警
+2019-08-12 18:42:24,421 - alarm.py[line:62] - INFO: Oracle数据库归档使用率告警:正常
+2019-08-12 18:42:24,421 - alarm.py[line:51] - INFO: 开始巡检：Oracle数据库锁异常告警
+2019-08-12 18:42:24,424 - alarm.py[line:55] - INFO: Oracle数据库锁异常告警未采集到数据
+2019-08-12 18:42:24,424 - alarm.py[line:51] - INFO: 开始巡检：Oracle数据库密码过期告警
+2019-08-12 18:42:24,426 - alarm.py[line:55] - INFO: Oracle数据库密码过期告警未采集到数据
+2019-08-12 18:42:24,426 - alarm.py[line:51] - INFO: 开始巡检：Oracle失效索引告警
+2019-08-12 18:42:24,427 - alarm.py[line:55] - INFO: Oracle失效索引告警未采集到数据
+2019-08-12 18:42:24,427 - alarm.py[line:51] - INFO: 开始巡检：Linux主机通断告警
+2019-08-12 18:42:24,433 - alarm.py[line:69] - WARNING: 18c_adg:Linux主机通断告警
+ 告警时间：2019-08-12 18:42:09 
+ 主机IP: 192.168.48.20
+2019-08-12 18:42:24,440 - alarm.py[line:69] - WARNING: orcl19c:Linux主机通断告警
+ 告警时间：2019-08-12 18:42:09 
+ 主机IP: 192.168.48.60
+2019-08-12 18:42:24,450 - alarm.py[line:51] - INFO: 开始巡检：Linux主机CPU使用率告警
+2019-08-12 18:42:24,454 - alarm.py[line:62] - INFO: Linux主机CPU使用率告警:正常
+2019-08-12 18:42:24,454 - alarm.py[line:51] - INFO: 开始巡检：Linux主机内存使用率告警
+2019-08-12 18:42:24,460 - alarm.py[line:62] - INFO: Linux主机内存使用率告警:正常
+2019-08-12 18:42:24,460 - alarm.py[line:51] - INFO: 开始巡检：Linux主机文件系统使用率告警
+2019-08-12 18:42:24,463 - alarm.py[line:62] - INFO: Linux主机文件系统使用率告警:正常
+2019-08-12 18:42:24,463 - alarm.py[line:51] - INFO: 开始巡检：MySQL数据库通断告警
+2019-08-12 18:42:24,467 - alarm.py[line:62] - INFO: MySQL数据库通断告警:正常
+2019-08-12 18:42:24,467 - alarm.py[line:51] - INFO: 开始巡检：Linux主机swap使用率告警
+2019-08-12 18:42:24,471 - alarm.py[line:62] - INFO: Linux主机swap使用率告警:正常
+2019-08-12 18:42:24,471 - alarm.py[line:51] - INFO: 开始巡检：Redis通断告警
+2019-08-12 18:42:24,476 - alarm.py[line:69] - WARNING: redis-6379:Redis通断告警
+ 告警时间：2019-08-12 18:42:09 
+ Redis url: 192.168.48.60:6379
+2019-08-12 18:42:24,484 - alarm.py[line:69] - WARNING: redis-6380:Redis通断告警
+ 告警时间：2019-08-12 18:42:09 
+ Redis url: 192.168.48.60:6380
+2019-08-12 18:42:24,493 - alarm.py[line:69] - WARNING: Redis-6382:Redis通断告警
+ 告警时间：2019-08-12 18:42:09 
+ Redis url: 192.168.48.60:6382
+2019-08-12 18:42:24,502 - alarm.py[line:69] - WARNING: Redis-6383:Redis通断告警
+ 告警时间：2019-08-12 18:42:09 
+ Redis url: 192.168.48.60:6383
+2019-08-12 18:42:24,507 - alarm.py[line:69] - WARNING: Redis-6384:Redis通断告警
+ 告警时间：2019-08-12 18:42:09 
+ Redis url: 192.168.48.60:6384
+2019-08-12 18:42:24,517 - alarm.py[line:69] - WARNING: redis-orcl:Redis通断告警
+ 告警时间：2019-08-12 18:42:09 
+ Redis url: 192.168.48.10:6379
+2019-08-12 18:42:24,526 - alarm.py[line:51] - INFO: 开始巡检：Redis内存使用率告警
+2019-08-12 18:42:24,529 - alarm.py[line:55] - INFO: Redis内存使用率告警未采集到数据
+2019-08-12 18:42:24,529 - main_check.py[line:1403] - INFO: 600.0 秒后开始下一次轮询

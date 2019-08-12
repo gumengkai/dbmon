@@ -209,6 +209,19 @@ def task_model(task_model):
         task = 'mysql_mon.tasks.mysql_fullbackup'
     return task
 
+# 取指定参数
+def get_mysql_para(conn,par):
+    curs = conn.cursor()
+    para = curs.execute("show global variables like '%s'" %par)
+    para_list = curs.fetchall()
+    curs.close()
+    return para_list[0][1]
+
+def get_oracle_para(conn,para):
+    cur = conn.cursor()
+    sql = "select a.VALUE from v$parameter a where a.name='%s' " %para
+    cur.execute(sql)
+    return cur.fetchall()
 
 if __name__ == '__main__':
     conf = ConfigParser.ConfigParser()

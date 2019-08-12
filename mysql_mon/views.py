@@ -27,6 +27,7 @@ import check_alarm.check_mysql as check_msql
 import frame.log_parse as logparser
 import tasks as task
 from django.contrib import messages
+import paramiko
 
 # Create your views here.
 
@@ -468,3 +469,27 @@ def mysql_ctl(request):
             return render_to_response('mysql_mon/mysql_ctl.html',
                                       {'messageinfo_list': messageinfo_list, 'mysql_ctls': mysql_ctls, 'now': now,
                                        'msg_last_content': msg_last_content, 'tim_last': tim_last})
+
+@login_required(login_url='/login')
+def get_mysql_errorlog(request):
+
+    tags = request.GET.get('tags')
+
+    sql = '''select host,port,user,password,user_os,password_os from tab_mysql_servers where tags='%s' ''' % tags
+    mysqlinfo = tools.mysql_query(sql)
+    host,port,user,password,user_os,password_os = mysqlinfo[0]
+    password = base64.decodestring(password)
+    password_os = base64.decodestring(password_os)
+    # 后台日志参数
+    conn =  MySQLdb.connect(host=host, user=user, passwd=password, port=int(port), connect_timeout=5, charset='utf8')
+    errorlog_file = tools.get_mysql_para(conn,'log_error')
+
+    ssh_client = paramiko.SSHClient()
+    ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    ssh_client.connect(host, 22, user_os, password_os)
+    command = 'tail -300 %s' %errorlog_file
+    std_in, std_out, std_err = ssh_client.exec_command(command)
+    errorlog = std_out.read()
+
+    return render_to_response('frame/show_log.html',
+                              {'tags':tags,'log':errorlog})
