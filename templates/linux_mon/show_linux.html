@@ -33,13 +33,13 @@
                 {% for osinfo in osinfo_list %}
                  <tr>
                  <td>{{ forloop.counter }} </td>
-                     <td>{{ osinfo.tags }} </td>
+                 <td><a href="/linux_monitor?tagsdefault={{ osinfo.tags }}">{{ osinfo.tags}}</a></td>
                  <td>{{ osinfo.host}} </td>
                  <td>{{ osinfo.host_name}} </td>
-                     <td>{{ osinfo.updays}} </td>
-                     <td>{{ osinfo.recv_kbps}} </td>
-                     <td>{{ osinfo.send_kbps}} </td>
-                     <td>{{ osinfo.load1}} </td>
+                 <td>{{ osinfo.updays}} </td>
+                 <td>{{ osinfo.recv_kbps}} </td>
+                 <td>{{ osinfo.send_kbps}} </td>
+                 <td>{{ osinfo.load1}} </td>
                  <td><span class="badge bg-{{ osinfo.cpu_rate_level }}">{{ osinfo.cpu_used }}%</span></td>
                  <td><span class="badge bg-{{ osinfo.mem_rate_level }}">{{ osinfo.mem_used }}%</span></td>
                  <td><span class="badge bg-{{ osinfo.rate_level }}">{{ osinfo.mon_status }}</span></td>

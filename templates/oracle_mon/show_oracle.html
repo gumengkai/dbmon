@@ -44,7 +44,7 @@
                  {% for dbinfo in dbinfos %}
                  <tr>
                  <td>{{ forloop.counter }} </td>
-                 <td>{{ dbinfo.tags}} </td>
+                 <td><a href="/oracle_monitor?tagsdefault={{ dbinfo.tags }}">{{ dbinfo.tags}}</a></td>
                  <td>{{ dbinfo.host}} </td>
                  <td>{{ dbinfo.port}} </td>
                  <td>{{ dbinfo.instance_name}}</td>

@@ -533,8 +533,12 @@ def get_oracle_alert(conn,tags,host,user,password,ssh_port,version):
     ssh_client = paramiko.SSHClient()
     ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     ssh_client.connect(host, ssh_port, user, password)
-    command = 'tail -300 %s/alert_*.log' %diag_trace_dir
-    std_in, std_out, std_err = ssh_client.exec_command(command)
+    logfile = '%s/alert_*.log' %diag_trace_dir
+    # 更新配置表中日志路径
+    sql = "update tab_oracle_servers set logfile='%s' where tags='%s' " %(logfile,tags)
+    tools.mysql_exec(sql,'')
+    cmd = 'tail -300 %s' %logfile
+    std_in, std_out, std_err = ssh_client.exec_command(cmd)
     fd = std_out
     log = fd.read()
     # 清空原日志数据
@@ -545,12 +549,15 @@ def get_oracle_alert(conn,tags,host,user,password,ssh_port,version):
 def get_mysql_alert(conn,tags,host,user,password):
     # 取后台日志路径
     alert_log = check_mysql.get_mysql_para(conn,'log_error')
+    sql = "update tab_mysql_servers set logfile='%s' where tags='%s' " % (alert_log, tags)
+
+    tools.mysql_exec(sql, '')
     # 建立ssh连接，抓取后台日志
     ssh_client = paramiko.SSHClient()
     ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     ssh_client.connect(host, 22, user, password)
-    command = 'tail -300 %s' %alert_log
-    std_in, std_out, std_err = ssh_client.exec_command(command)
+    cmd = 'tail -300 %s' %alert_log
+    std_in, std_out, std_err = ssh_client.exec_command(cmd)
     fd = std_out
     log = fd.read()
     # 清空原日志数据

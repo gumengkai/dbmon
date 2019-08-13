@@ -229,11 +229,12 @@ def check_err(conn,host,user,password,ssh_port):
     cur.execute(diag_trace_sql)
     diag_trace = cur.fetchall()
     diag_trace_dir =  diag_trace[0][0]
+    logfile = '%s/alert_*.log' %diag_trace_dir
 
     ssh_client = paramiko.SSHClient()
     ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     ssh_client.connect(host, ssh_port, user, password)
-    cmd = 'tail -300 %s/alert_*.log |grep -A 3 ORA-' %diag_trace_dir
+    cmd = 'tail -300 %s |grep -A 3 ORA-' %logfile
     std_in, std_out, std_err = ssh_client.exec_command(cmd)
     stdout = std_out.read().decode('gbk')
     stderr = std_err.read().decode()

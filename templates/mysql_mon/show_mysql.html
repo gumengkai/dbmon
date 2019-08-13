@@ -39,7 +39,7 @@
                 {% for dbinfo in dbinfos %}
                  <tr>
                  <td>{{ forloop.counter }} </td>
-                     <td>{{ dbinfo.tags}} </td>
+                 <td><a href="/mysql_monitor?tagsdefault={{ dbinfo.tags }}">{{ dbinfo.tags}}</a> </td>
                  <td>{{ dbinfo.host}} </td>
                  <td>{{ dbinfo.port}} </td>
                  <td>{{ dbinfo.version}} </td>

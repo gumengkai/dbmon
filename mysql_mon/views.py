@@ -475,19 +475,20 @@ def get_mysql_errorlog(request):
 
     tags = request.GET.get('tags')
 
-    sql = '''select host,port,user,password,user_os,password_os from tab_mysql_servers where tags='%s' ''' % tags
+    sql = '''select host,port,user,password,user_os,password_os,ssh_port_os,logfile from tab_mysql_servers where tags='%s' ''' % tags
     mysqlinfo = tools.mysql_query(sql)
-    host,port,user,password,user_os,password_os = mysqlinfo[0]
+    host,port,user,password,user_os,password_os,ssh_port_os,logfile = mysqlinfo[0]
     password = base64.decodestring(password)
     password_os = base64.decodestring(password_os)
-    # 后台日志参数
-    conn =  MySQLdb.connect(host=host, user=user, passwd=password, port=int(port), connect_timeout=5, charset='utf8')
-    errorlog_file = tools.get_mysql_para(conn,'log_error')
+    if not logfile:
+        # 后台日志参数
+        conn = MySQLdb.connect(host=host, user=user, passwd=password, port=int(port), connect_timeout=5, charset='utf8')
+        logfile = tools.get_mysql_para(conn, 'log_error')
 
     ssh_client = paramiko.SSHClient()
     ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh_client.connect(host, 22, user_os, password_os)
-    command = 'tail -300 %s' %errorlog_file
+    ssh_client.connect(host, ssh_port_os, user_os, password_os)
+    command = 'tail -300 %s' %logfile
     std_in, std_out, std_err = ssh_client.exec_command(command)
     errorlog = std_out.read()
 

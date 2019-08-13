@@ -2047,24 +2047,27 @@ def get_oracle_log(request):
 
     tags = request.GET.get('tags')
 
-    sql = '''select host,port,service_name,user,password,user_os,password_os,ssh_port_os from tab_oracle_servers where tags='%s' ''' % tags
+    sql = '''select host,port,service_name,user,password,user_os,password_os,ssh_port_os,logfile from tab_oracle_servers where tags='%s' ''' % tags
     oracleinfo = tools.mysql_query(sql)
-    host,port,service_name,user,password,user_os,password_os,ssh_port_os = oracleinfo[0]
+    host,port,service_name,user,password,user_os,password_os,ssh_port_os,logfile = oracleinfo[0]
     password = base64.decodestring(password)
     password_os = base64.decodestring(password_os)
-    # 后台日志参数
-    url = host + ':' + port + '/' + service_name
-    conn =  cx_Oracle.connect(user,password,url)
-    cur = conn.cursor()
-    sql = "select value from v$diag_info where name = 'Diag Trace'"
-    cur.execute(sql)
-    # 后台日志路径
-    log_path, = cur.fetchone()
+    if not logfile:
+        # 后台日志参数
+        url = host + ':' + port + '/' + service_name
+        conn = cx_Oracle.connect(user, password, url)
+        cur = conn.cursor()
+        sql = "select value from v$diag_info where name = 'Diag Trace'"
+        cur.execute(sql)
+        # 后台日志路径
+        log_path, = cur.fetchone()
+        logfile = '%s/alert_*.log' %log_path
+
     # ssh到主机获取日志内容
     ssh_client = paramiko.SSHClient()
     ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     ssh_client.connect(host, ssh_port_os, user_os, password_os)
-    cmd = 'tail -300 %s/alert_*.log' %log_path
+    cmd = 'tail -300 %s' %logfile
     std_in, std_out, std_err = ssh_client.exec_command(cmd)
     log = std_out.read()
 
