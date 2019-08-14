@@ -226,13 +226,13 @@ def check_linux(tags,host,host_name,user,password,ssh_port):
         delete_sql = "delete from os_info where tags = '%s'" % tags
         tools.mysql_exec(delete_sql, '')
 
-        insert_os_info_sql = 'insert into os_info(tags,host,host_name,updays,recv_kbps,send_kbps,load1,load5,load15,cpu_sys,cpu_iowait,cpu_user,cpu_used,cpu_rate_level,' \
+        insert_os_info_sql = 'insert into os_info(tags,host,ssh_port,host_name,updays,recv_kbps,send_kbps,load1,load5,load15,cpu_sys,cpu_iowait,cpu_user,cpu_used,cpu_rate_level,' \
                              'mem_used,mem_cache,mem_buffer,mem_free,mem_used_mb,swap_used,swap_free,pgin,pgout,swapin,swapout,pgfault,pgmajfault,mem_rate_level,' \
                              'tcp_close,tcp_timewait,tcp_connected,tcp_syn,tcp_listen,' \
                              'iops,read_mb,write_mb,proc_new,proc_running,proc_block,intr,ctx,softirq,' \
                              'hostname,ostype,kernel,frame,linux_version,cpu_mode,cpu_cache,processor,virtual_cnt,cpu_speed,Memtotal,ipinfo,mon_status,rate_level) ' \
-                             'value(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)'
-        value = (tags, host, host_name, up_days, recv_kbps, send_kbps, load1, load5, load15,
+                             'value(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)'
+        value = (tags, host, ssh_port,host_name, up_days, recv_kbps, send_kbps, load1, load5, load15,
                  cpu_sys, cpu_iowait, cpu_user, cpu_used, cpu_rate_level,
                  mem_used, mem_cache, mem_buffer, mem_free, mem_used_mb, swap_used, swap_free, pgin, pgout, swapin,
                  swapout,

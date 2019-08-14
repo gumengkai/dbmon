@@ -39,6 +39,7 @@ class OsFilesystemHis(models.Model):
 class OsInfo(models.Model):
     tags = models.CharField(max_length=255)
     host = models.CharField(max_length=255)
+    ssh_port = models.IntegerField()
     host_name = models.CharField(max_length=255)
     updays = models.FloatField(blank=True, null=True)
     recv_kbps = models.FloatField(blank=True, null=True)
@@ -103,6 +104,7 @@ class OsInfo(models.Model):
 class OsInfoHis(models.Model):
     tags = models.CharField(max_length=255)
     host = models.CharField(max_length=255)
+    ssh_port = models.IntegerField()
     host_name = models.CharField(max_length=255)
     updays = models.FloatField(blank=True, null=True)
     recv_kbps = models.FloatField(blank=True, null=True)

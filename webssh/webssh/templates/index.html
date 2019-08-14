@@ -38,7 +38,7 @@
           </div>
           <div class="col" hidden>
             <label for="Port">Port</label>
-            <input class="form-control" type="number" id="port" name="port"  value="22" min=1 max=65535 hidden>
+            <input class="form-control" type="number" id="port" name="port"  value="" min=1 max=65535 hidden>
           </div>
         </div>
         <div class="row">
@@ -53,7 +53,7 @@
         </div>
         {% module xsrf_form_html() %}
         <button type="submit" class="btn btn-primary">连接</button>
-          <a href="#" class="text-center" style="color: red">用户名:oracle 密码:oracle</a>
+          <a href="#" class="text-center" style="color: red"></a>
       </form>
 
     </div>
@@ -76,6 +76,8 @@
 	window.onload = function(){
 	    var host = $.getUrlParam('host');
 		$("#hostname").val(host);
+        var port = $.getUrlParam('ssh_port');
+		$("#port").val(port);
 	}
 </script>
 

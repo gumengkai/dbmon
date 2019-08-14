@@ -45,7 +45,7 @@
                  <td><span class="badge bg-{{ osinfo.rate_level }}">{{ osinfo.mon_status }}</span></td>
                  <td>
                    <a href="#">
-                      <button type="button" class="btn btn-xs btn-primary" onclick="return pop('{{ osinfo.tags }}','{{ osinfo.host }}')" >Webssh</button></a>
+                      <button type="button" class="btn btn-xs btn-primary" onclick="return pop('{{ osinfo.host }}','{{ osinfo.ssh_port }}')" >Webssh</button></a>
                  </td>
                  </tr>
                  {% endfor %}
@@ -65,7 +65,7 @@ function pop(m,n){
     ,area: ['700px', '550px']
     ,shade: 0
     ,maxmin: true,
-    content: ['http://192.168.48.70:8888?host='+n,],
+    content: ['http://192.168.48.60:8888?host='+m +'&ssh_port='+ n],
     btn: ['关闭所有'] //只是为了演示
     ,btn2: function(){
       layer.closeAll();
