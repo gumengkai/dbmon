@@ -16,7 +16,7 @@ django-celery==3.3.0
 django-ckeditor==5.7.1
 django-crontab==0.7.1
 django-js-asset==1.2.2
-ecdsa==0.13
+ecdsa==0.13.3
 enum34==1.1.6
 futures==3.3.0
 idna==2.8
