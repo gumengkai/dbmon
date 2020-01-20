@@ -1,3 +1,5 @@
+## 说明：该项目已停止开发，请移步新的监控项目，基于前后端分离结构：https://github.com/gumengkai/db_monitor
+
 # 总体介绍
 
 python+Django数据库监控平台
@@ -9,8 +11,6 @@ python+Django数据库监控平台
 特色：支持主机、Oracle、MySQL基础数据监控及性能监控，以评分形式展示各项服务健康度，关键指标形成dashboard趋势分析，自定义告警阈值，支持邮件告警，采用celery任务管理机制，
 
 qq交流群：916746047 
-
-说明：该项目已停止开发，本人正在做新的监控系统，基于python3/django2/vue,由于项目未完，代码暂未上传github,有兴趣可以通过下面的链接或qq群了解下。
 
 新监控Demo(建议chrome访问)：
 http://122.51.204.250:8080
