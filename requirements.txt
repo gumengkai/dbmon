@@ -32,7 +32,7 @@ pyasn1==0.4.5
 pycparser==2.19
 pycrypto==2.6.1
 pyExcelerator==0.6.4.1
-Pygments==2.4.2
+Pygments==2.7.4
 PyNaCl==1.2.1
 pytz==2019.1
 redis==3.2.1
