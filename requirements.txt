@@ -4,7 +4,7 @@ asn1crypto==0.22.0
 backports-abc==0.5
 bcrypt==3.1.7
 billiard==3.3.0.20
-celery==3.1.18
+celery==5.2.2
 certifi==0.0.8
 cffi==1.12.3
 chardet==3.0.4
