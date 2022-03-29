@@ -25,7 +25,7 @@ kombu==3.0.30
 Markdown==3.1.1
 mistune==0.8.4
 MySQL-python==1.2.5
-paramiko==2.3.3
+paramiko==2.10.1
 pexpect==4.7.0
 ptyprocess==0.6.0
 pyasn1==0.4.5

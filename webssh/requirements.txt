@@ -1,2 +1,2 @@
-paramiko==2.3.3
+paramiko==2.10.1
 tornado==5.1.1
