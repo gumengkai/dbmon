@@ -23,7 +23,7 @@ idna==2.8
 ipaddress==1.0.22
 kombu==3.0.30
 Markdown==3.1.1
-mistune==0.8.4
+mistune==2.0.3
 MySQL-python==1.2.5
 paramiko==2.3.3
 pexpect==4.7.0
