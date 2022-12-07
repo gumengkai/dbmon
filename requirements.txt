@@ -5,7 +5,7 @@ backports-abc==0.5
 bcrypt==3.1.7
 billiard==3.3.0.20
 celery==3.1.18
-certifi==0.0.8
+certifi==2022.12.7
 cffi==1.12.3
 chardet==3.0.4
 cryptography==2.7
